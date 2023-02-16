@@ -46,7 +46,7 @@ export class FlatfileClient {
                         },
                     });
                     if (response.ok) {
-                        this.token = (response.body as any).data.accessToken;
+                        this.token = (response.body as any)?.data?.accessToken;
                     }
                 }
                 return this.token;
