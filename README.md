@@ -9,6 +9,7 @@ The Flatfile Node.js library provides convenient access to the Flatfile API from
 API reference documentation is available [here](https://flatfile.stoplight.io/docs/v10).
 
 ## Installation
+
 ```
 npm install --save @fern-api/flatfile
 # or
@@ -31,7 +32,7 @@ const environment = await flatfile.environments.create({
   name: 'dev',
   isProd: false,
   newSpacesInherit: false,
-  guestAuthentication: ['shared_link'],
+  guestAuthentication: [Flatfile.GuestAuthentication.SharedLink],
 });
 
 console.log('Created environment with id', environment.id);
@@ -46,9 +47,9 @@ try {
   await client.agents.get("environment-id", "agent-id");
 } catch (err) {
   if (err instanceof FlatfileError) {
-    console.log(err.statusCode) // 400
-    console.log(err.name) // BadRequestError
-    console.log(err.message); 
+    console.log(err.statusCode); // 400
+    console.log(err.message); // "BadRequestError"
+    console.log(err.body); // list of errors
   }
 }
 ```
@@ -61,9 +62,9 @@ Error codes are as followed:
 | 404         | `NotFoundError`            |
 
 
-## Events
+## Handling events
 
-The flatfile platform emits different events (e.g. user:added, webhook:removed). The SDK has first-class support for union types that make it easy to handle specific events. 
+The flatfile platform emits different events (e.g. `user:added`, `webhook:removed`). The SDK uses [discriminated unions](https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html#discriminating-unions) that make it easy to handle specific events. 
 
 ```ts
 const event = eventResponse.data;
