@@ -13,7 +13,7 @@ import { Client as ConfigClient } from "../resources/config/client/Client";
 export declare namespace Client {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        token?: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 
