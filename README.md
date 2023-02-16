@@ -22,26 +22,19 @@ yarn add @fern-api/flatfile
 ```typescript
 import { Flatfile, FlatfileClient } from '@fern-api/flatfile';
 
-const client = new FlatfileClient({
+const flatfile = new FlatfileClient({
   clientId: 'YOUR_CLIENT_ID',
   clientSecret: 'YOUR_CLIENT_SECRET',
 });
 
-const response = await client.events.create(
-  'environment-id',
-  Flatfile.Event.jobStarted({
-    domain: Flatfile.Domain.File,
-    topic: Flatfile.EventTopic.JobStarted,
-    context: {
-      accountId: 'account-id',
-      environmentId: 'environment-id',
-    },
-    payload: {
-      type: Flatfile.JobPayloadType.File,
-      operation: Flatfile.JobOperationType.Extract,
-    },
-  })
-);
+const environment = await flatfile.environments.create({
+  name: 'dev',
+  isProd: false,
+  newSpacesInherit: false,
+  guestAuthentication: ['shared_link'],
+});
+
+console.log('Created environment with id', environment.id);
 ```
 
 ## Handling errors
@@ -66,6 +59,21 @@ Error codes are as followed:
 | ----------- | -------------------------- |
 | 400         | `BadRequestError`          |
 | 404         | `NotFoundError`            |
+
+
+## Events
+
+The flatfile platform emits different events (e.g. user:added, webhook:removed). The SDK has first-class support for union types that make it easy to handle specific events. 
+
+```ts
+const event = eventResponse.data;
+if (event.type === 'job:started') {
+  console.log(event.payload.operation); // FILE
+  console.log(event.payload.type); // PIPELINE
+} else if (event.type === 'records:created') {
+  console.log(event.payload.count) // 100
+}
+```
 
 
 ## Beta status
