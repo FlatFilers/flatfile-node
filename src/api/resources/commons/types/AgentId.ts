@@ -4,5 +4,8 @@
 
 /**
  * Agent ID
+ *
+ * @example
+ *     "us_ag_qGZbKwDW"
  */
 export type AgentId = string;

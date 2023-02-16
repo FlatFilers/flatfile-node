@@ -4,5 +4,8 @@
 
 /**
  * Space Config ID
+ *
+ * @example
+ *     "us_sc_uj691wck"
  */
 export type SpaceConfigId = string;

@@ -4,6 +4,9 @@
 
 import { Flatfile } from "@fern-api/flatfile";
 
+/**
+ * A `true` or `false` value type. Matching engines should attempt to resolve all common ways of representing this value and it should usually be displayed as a checkbox.
+ */
 export interface BooleanProperty extends Flatfile.BaseProperty {
     config?: Flatfile.BooleanPropertyConfig;
 }

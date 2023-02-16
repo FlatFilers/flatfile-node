@@ -6,6 +6,14 @@ import { Flatfile } from "@fern-api/flatfile";
 
 /**
  * Properties used to create a new environment
+ *
+ * @example
+ *     {
+ *         name: "dev",
+ *         isProd: false,
+ *         newSpacesInherit: false,
+ *         guestAuthentication: [Flatfile.GuestAuthentication.MagicLink]
+ *     }
  */
 export interface EnvironmentConfig {
     /** The name of the environment */

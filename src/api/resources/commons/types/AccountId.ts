@@ -4,5 +4,8 @@
 
 /**
  * Account ID
+ *
+ * @example
+ *     "us_acc_uj6s91wc"
  */
 export type AccountId = string;

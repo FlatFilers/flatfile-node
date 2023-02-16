@@ -4,5 +4,8 @@
 
 /**
  * Pipeline Job ID
+ *
+ * @example
+ *     "us_jb_UQg89Drd"
  */
 export type JobId = string;

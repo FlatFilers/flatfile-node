@@ -4,5 +4,8 @@
 
 /**
  * User ID
+ *
+ * @example
+ *     "us_usr_a7Ws9cue"
  */
 export type UserId = string;

@@ -4,5 +4,8 @@
 
 /**
  * Environment ID
+ *
+ * @example
+ *     "us_env_hVXkXs0b"
  */
 export type EnvironmentId = string;

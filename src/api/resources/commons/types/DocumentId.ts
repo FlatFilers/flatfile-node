@@ -4,5 +4,8 @@
 
 /**
  * Document ID
+ *
+ * @example
+ *     "us_dc_KwDW6cfH"
  */
 export type DocumentId = string;

@@ -4,6 +4,13 @@
 
 /**
  * pagination info
+ *
+ * @example
+ *     {
+ *         currentPage: 3,
+ *         pageCount: 50,
+ *         totalCount: 100
+ *     }
  */
 export interface Pagination {
     /** current page of results */

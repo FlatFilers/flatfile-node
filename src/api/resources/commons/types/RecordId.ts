@@ -4,5 +4,8 @@
 
 /**
  * Record ID
+ *
+ * @example
+ *     "us_rc_a7W9cuesESa7W9cu"
  */
 export type RecordId = string;

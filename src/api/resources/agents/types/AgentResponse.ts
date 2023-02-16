@@ -4,6 +4,16 @@
 
 import { Flatfile } from "@fern-api/flatfile";
 
+/**
+ * @example
+ *     {
+ *         data: {
+ *             topics: [Flatfile.EventTopic.UploadStarted],
+ *             compiler: Flatfile.Compiler.Js,
+ *             source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
+ *         }
+ *     }
+ */
 export interface AgentResponse {
     data?: Flatfile.Agent;
 }

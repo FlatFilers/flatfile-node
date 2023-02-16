@@ -6,6 +6,13 @@ import { Flatfile } from "@fern-api/flatfile";
 
 /**
  * Properties used to create a new agent
+ *
+ * @example
+ *     {
+ *         topics: [Flatfile.EventTopic.UploadStarted],
+ *         compiler: Flatfile.Compiler.Js,
+ *         source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
+ *     }
  */
 export interface Agent {
     /** The topics the agent should listen for */

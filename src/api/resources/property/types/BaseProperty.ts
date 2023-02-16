@@ -9,5 +9,5 @@ export interface BaseProperty {
     /** User friendly field name */
     label?: string;
     description?: string;
-    constraints: Flatfile.Constraint[];
+    constraints?: Flatfile.Constraint[];
 }

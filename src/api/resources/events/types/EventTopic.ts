@@ -4,6 +4,9 @@
 
 /**
  * The topic of the event
+ *
+ * @example
+ *     Flatfile.EventTopic.UploadStarted
  */
 export type EventTopic =
     | "space:added"

@@ -4,5 +4,8 @@
 
 /**
  * Space ID
+ *
+ * @example
+ *     "us_sp_DrdXetPN"
  */
 export type SpaceId = string;

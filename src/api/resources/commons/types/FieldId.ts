@@ -4,5 +4,8 @@
 
 /**
  * Field ID
+ *
+ * @example
+ *     "additionalProp1"
  */
 export type FieldId = string;

@@ -4,5 +4,8 @@
 
 /**
  * Workbook ID
+ *
+ * @example
+ *     "us_wb_qGZbKwDW"
  */
 export type WorkbookId = string;

@@ -16,3 +16,5 @@ export * from "./ReferencePropertyRelationship";
 export * from "./Constraint";
 export * from "./UniqueConstraint";
 export * from "./UniqueConstraintConfig";
+export * from "./StringConfig";
+export * from "./StringConfigOptions";

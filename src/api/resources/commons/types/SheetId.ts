@@ -4,5 +4,8 @@
 
 /**
  * Sheet ID
+ *
+ * @example
+ *     "us_sh_fHfzjzHb"
  */
 export type SheetId = string;

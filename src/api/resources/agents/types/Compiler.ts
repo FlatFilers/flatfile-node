@@ -4,6 +4,9 @@
 
 /**
  * The compiler of the agent
+ *
+ * @example
+ *     Flatfile.Compiler.Js
  */
 export type Compiler = "js";
 

@@ -4,6 +4,11 @@
 
 /**
  * Informs whether or not a request was successful
+ *
+ * @example
+ *     {
+ *         success: true
+ *     }
  */
 export interface Success {
     success: boolean;

@@ -4,5 +4,8 @@
 
 /**
  * Version ID
+ *
+ * @example
+ *     "us_vr_jte4tzVn"
  */
 export type VersionId = string;

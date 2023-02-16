@@ -4,5 +4,8 @@
 
 /**
  * File ID
+ *
+ * @example
+ *     "us_fl_qGZbKwDW"
  */
 export type FileId = string;

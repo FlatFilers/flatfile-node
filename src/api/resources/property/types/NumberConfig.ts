@@ -3,7 +3,10 @@
  */
 
 /**
- * Optional configuration
+ * @example
+ *     {
+ *         decimalPlaces: 2
+ *     }
  */
 export interface NumberConfig {
     /** Number of decimal places to round data to */

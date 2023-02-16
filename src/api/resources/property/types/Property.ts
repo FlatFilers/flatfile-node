@@ -4,6 +4,77 @@
 
 import { Flatfile } from "@fern-api/flatfile";
 
+/**
+ * @example
+ *     Flatfile.Property.string({
+ *         key: "code",
+ *         label: "Product Code",
+ *         description: "Unique identifier defining an individual product.",
+ *         constraints: [Flatfile.Constraint.unique({
+ *                 config: {
+ *                     caseSensitive: false
+ *                 }
+ *             })],
+ *         config: {
+ *             size: Flatfile.StringConfigOptions.Tiny
+ *         }
+ *     })
+ *
+ * @example
+ *     Flatfile.Property.number({
+ *         key: "price",
+ *         config: {
+ *             decimalPlaces: 2
+ *         }
+ *     })
+ *
+ * @example
+ *     Flatfile.Property.boolean({
+ *         key: "editable",
+ *         config: {
+ *             allowIndeterminate: true
+ *         }
+ *     })
+ *
+ * @example
+ *     Flatfile.Property.date({})
+ *
+ * @example
+ *     Flatfile.Property.enum({
+ *         key: "category",
+ *         label: "Product Category",
+ *         isArray: false,
+ *         multi: true,
+ *         config: {
+ *             allowCustom: false,
+ *             options: [{
+ *                     value: 9,
+ *                     label: "Kitchenware",
+ *                     icon: "pots-and-pans",
+ *                     color: "#f00000",
+ *                     meta: {
+ *                         "product_code_prefix": "KI-"
+ *                     }
+ *                 }, {
+ *                     value: 9,
+ *                     label: "Clothing",
+ *                     meta: {
+ *                         "product_code_prefix": "CL-"
+ *                     }
+ *                 }]
+ *         }
+ *     })
+ *
+ * @example
+ *     Flatfile.Property.reference({
+ *         key: "user reference",
+ *         config: {
+ *             ref: "/sheet/users/3",
+ *             relationship: Flatfile.ReferencePropertyRelationship.HasMany,
+ *             key: "id"
+ *         }
+ *     })
+ */
 export type Property =
     | Flatfile.Property.String
     | Flatfile.Property.Number

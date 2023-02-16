@@ -9,6 +9,7 @@ import * as core from "../../../../core";
 export const EnumProperty: core.serialization.ObjectSchema<serializers.EnumProperty.Raw, Flatfile.EnumProperty> =
     core.serialization
         .object({
+            multi: core.serialization.boolean().optional(),
             config: core.serialization.lazyObject(async () => (await import("../../..")).EnumPropertyConfig),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseProperty))
@@ -16,6 +17,7 @@ export const EnumProperty: core.serialization.ObjectSchema<serializers.EnumPrope
 
 export declare namespace EnumProperty {
     interface Raw extends serializers.BaseProperty.Raw, serializers.ArrayableProperty.Raw {
+        multi?: boolean | null;
         config: serializers.EnumPropertyConfig.Raw;
     }
 }

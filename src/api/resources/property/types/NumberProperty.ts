@@ -4,7 +4,9 @@
 
 import { Flatfile } from "@fern-api/flatfile";
 
+/**
+ * Defines a property that should be stored and read as either an integer or floating point number. Database engines should look at the configuration to determine ideal storage format.
+ */
 export interface NumberProperty extends Flatfile.BaseProperty, Flatfile.ArrayableProperty {
-    /** Optional configuration */
     config?: Flatfile.NumberConfig;
 }

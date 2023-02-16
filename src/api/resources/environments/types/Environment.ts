@@ -4,6 +4,17 @@
 
 import { Flatfile } from "@fern-api/flatfile";
 
+/**
+ * @example
+ *     {
+ *         name: "dev",
+ *         isProd: false,
+ *         newSpacesInherit: false,
+ *         guestAuthentication: [Flatfile.GuestAuthentication.MagicLink],
+ *         id: "us_env_hVXkXs0b",
+ *         accountId: "us_acc_uj6s91wc"
+ *     }
+ */
 export interface Environment extends Flatfile.EnvironmentConfig {
     id: Flatfile.EnvironmentId;
     accountId?: Flatfile.AccountId;

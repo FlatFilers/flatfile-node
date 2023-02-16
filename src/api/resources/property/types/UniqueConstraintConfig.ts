@@ -4,7 +4,7 @@
 
 export interface UniqueConstraintConfig {
     /** Ignore casing when determining uniqueness */
-    caseSensitive: boolean;
+    caseSensitive?: boolean;
     /** Do not flag empty values as duplicate */
-    ignoreEmpty: boolean;
+    ignoreEmpty?: boolean;
 }

@@ -6,6 +6,14 @@ import { Flatfile } from "@fern-api/flatfile";
 
 /**
  * A log of an agent execution
+ *
+ * @example
+ *     {
+ *         eventId: "us_evt_9cuesESa7W9cuesE",
+ *         success: true,
+ *         createdAt: "2022-09-18T00:19:57.007Z",
+ *         log: "SUCCESS"
+ *     }
  */
 export interface AgentLog {
     eventId: Flatfile.EventId;

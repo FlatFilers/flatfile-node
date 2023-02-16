@@ -10,13 +10,13 @@ export const UniqueConstraintConfig: core.serialization.ObjectSchema<
     serializers.UniqueConstraintConfig.Raw,
     Flatfile.UniqueConstraintConfig
 > = core.serialization.object({
-    caseSensitive: core.serialization.property("case_sensitive", core.serialization.boolean()),
-    ignoreEmpty: core.serialization.property("ignore_empty", core.serialization.boolean()),
+    caseSensitive: core.serialization.property("case_sensitive", core.serialization.boolean().optional()),
+    ignoreEmpty: core.serialization.property("ignore_empty", core.serialization.boolean().optional()),
 });
 
 export declare namespace UniqueConstraintConfig {
     interface Raw {
-        case_sensitive: boolean;
-        ignore_empty: boolean;
+        case_sensitive?: boolean | null;
+        ignore_empty?: boolean | null;
     }
 }

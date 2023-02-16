@@ -4,6 +4,9 @@
 
 /**
  * The domain of the event
+ *
+ * @example
+ *     Flatfile.Domain.Job
  */
 export type Domain = "file" | "space" | "workbook" | "job";
 
