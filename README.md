@@ -1,16 +1,16 @@
-# {Company} Node Library
+# Flatfile Node Library
 
-[![npm shield](https://img.shields.io/npm/v/@fern-api/{company})](https://www.npmjs.com/package/@fern-api/{company})
+[![npm shield](https://img.shields.io/npm/v/@fern-api/flatfile)](https://www.npmjs.com/package/@fern-api/{company})
 
-The {Company} Node.js library provides access to the {Company} API from JavaScript/TypeScript.
+The {Company} Node.js library provides access to the Flatfile API from JavaScript/TypeScript.
 
 ## Documentation
 
-API reference documentation is available [here](docs_url).
+API reference documentation is available [here](https://flatfile.stoplight.io/docs/v10).
 
 ## Usage
 
-[![Try it out](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](TODO)
+[![Try it out](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/flatfile-typescript-sdk?file=app.ts&view=editor)
 
 ```typescript
 import { TODO } from "TODO";
