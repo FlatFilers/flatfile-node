@@ -76,6 +76,21 @@ if (event.type === 'job:started') {
 }
 ```
 
+## Fields
+
+The SDK uses [discriminated unions](https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html#discriminating-unions) that make it easy to introspect different fields.
+
+```ts
+for (const field of sheet.config.fields) {
+    if (field.type === 'boolean') {
+      console.log(field.config?.allowIndeterminate); // false
+    } else if (field.type === "number") {
+      console.log(field.config?.decimalPlaces); // 2
+    } else if (field.type === "enum") {
+      console.log(field.config.allowCustom); // true
+    }
+}
+```
 
 ## Beta status
 
