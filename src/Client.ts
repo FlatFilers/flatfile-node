@@ -19,7 +19,7 @@ import { Client as WorkbooksClient } from "./api/resources/workbooks/client/Clie
 export declare namespace FlatfileClient {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        token?: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 
