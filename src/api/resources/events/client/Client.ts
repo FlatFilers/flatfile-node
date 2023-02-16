@@ -125,11 +125,15 @@ export class Client {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parse(_response.error.body as serializers.BadRequestError.Raw)
+                        await serializers.BadRequestError.parseOrThrow(
+                            _response.error.body as serializers.BadRequestError.Raw
+                        )
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.NotFoundError.parse(_response.error.body as serializers.NotFoundError.Raw)
+                        await serializers.NotFoundError.parseOrThrow(
+                            _response.error.body as serializers.NotFoundError.Raw
+                        )
                     );
                 default:
                     throw new errors.FlatfileError({

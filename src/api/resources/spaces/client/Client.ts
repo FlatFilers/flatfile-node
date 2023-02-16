@@ -70,7 +70,9 @@ export class Client {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parse(_response.error.body as serializers.BadRequestError.Raw)
+                        await serializers.BadRequestError.parseOrThrow(
+                            _response.error.body as serializers.BadRequestError.Raw
+                        )
                     );
                 default:
                     throw new errors.FlatfileError({
