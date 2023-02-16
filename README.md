@@ -1,12 +1,19 @@
-# Flatfile Node Library
+# Flatfile Node API Library
 
 [![npm shield](https://img.shields.io/npm/v/@fern-api/flatfile)](https://www.npmjs.com/package/@fern-api/flatfile)
 
-The Flatfile Node.js library provides access to the Flatfile API from JavaScript/TypeScript.
+The Flatfile Node.js library provides convenient access to the Flatfile API from JavaScript/TypeScript.
 
 ## Documentation
 
 API reference documentation is available [here](https://flatfile.stoplight.io/docs/v10).
+
+## Installation
+```
+npm install --save @fern-api/flatfile
+# or
+yarn add @fern-api/flatfile
+```
 
 ## Usage
 
@@ -36,6 +43,30 @@ const response = await client.events.create(
   })
 );
 ```
+
+## Handling errors
+
+When the API returns a non-success status code (4xx or 5xx response), a subclass of [FlatfileError](https://github.com/fern-flatfile/flatfile-node/blob/main/src/errors/FlatfileError.ts) will be thrown:
+
+```ts
+try {
+  await client.agents.get("environment-id", "agent-id");
+} catch (err) {
+  if (err instanceof FlatfileError) {
+    console.log(err.statusCode) // 400
+    console.log(err.name) // BadRequestError
+    console.log(err.message); 
+  }
+}
+```
+
+Error codes are as followed:
+
+| Status Code | Error Type                 |
+| ----------- | -------------------------- |
+| 400         | `BadRequestError`          |
+| 404         | `NotFoundError`            |
+
 
 ## Beta status
 
