@@ -18,7 +18,7 @@ yarn add @fern-api/flatfile
 
 ## Usage
 
-[![Try it out](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/flatfile-typescript-sdk?file=app.ts&view=editor)
+[![Try it out](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/flatfile-typescript-sdk-7xtsm5?file=app.ts&view=editor)
 
 ```typescript
 import { Flatfile, FlatfileClient } from '@fern-api/flatfile';
