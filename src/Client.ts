@@ -5,17 +5,17 @@
 import urlJoin from "url-join";
 import * as environments from "./environments";
 import * as core from "./core";
-import { Client as AgentsClient } from "./api/resources/agents/client/Client";
-import { Client as DocumentsClient } from "./api/resources/documents/client/Client";
-import { Client as EnvironmentsClient } from "./api/resources/environments/client/Client";
-import { Client as EventsClient } from "./api/resources/events/client/Client";
-import { Client as FilesClient } from "./api/resources/files/client/Client";
-import { Client as GuestsClient } from "./api/resources/guests/client/Client";
-import { Client as JobsClient } from "./api/resources/jobs/client/Client";
-import { Client as SheetsClient } from "./api/resources/sheets/client/Client";
-import { Client as SpacesClient } from "./api/resources/spaces/client/Client";
-import { Client as UsersClient } from "./api/resources/users/client/Client";
-import { Client as WorkbooksClient } from "./api/resources/workbooks/client/Client";
+import { Agents } from "./api/resources/agents/client/Client";
+import { Documents } from "./api/resources/documents/client/Client";
+import { Environments } from "./api/resources/environments/client/Client";
+import { Events } from "./api/resources/events/client/Client";
+import { Files } from "./api/resources/files/client/Client";
+import { Guests } from "./api/resources/guests/client/Client";
+import { Jobs } from "./api/resources/jobs/client/Client";
+import { Sheets } from "./api/resources/sheets/client/Client";
+import { Spaces } from "./api/resources/spaces/client/Client";
+import { Users } from "./api/resources/users/client/Client";
+import { Workbooks } from "./api/resources/workbooks/client/Client";
 
 export declare namespace FlatfileClient {
     interface Options {
@@ -54,69 +54,69 @@ export class FlatfileClient {
         };
     }
 
-    private _agents: AgentsClient | undefined;
+    private _agents: Agents | undefined;
 
-    public get agents(): AgentsClient {
-        return (this._agents ??= new AgentsClient(this.options));
+    public get agents(): Agents {
+        return (this._agents ??= new Agents(this.options));
     }
 
-    private _documents: DocumentsClient | undefined;
+    private _documents: Documents | undefined;
 
-    public get documents(): DocumentsClient {
-        return (this._documents ??= new DocumentsClient(this.options));
+    public get documents(): Documents {
+        return (this._documents ??= new Documents(this.options));
     }
 
-    private _environments: EnvironmentsClient | undefined;
+    private _environments: Environments | undefined;
 
-    public get environments(): EnvironmentsClient {
-        return (this._environments ??= new EnvironmentsClient(this.options));
+    public get environments(): Environments {
+        return (this._environments ??= new Environments(this.options));
     }
 
-    private _events: EventsClient | undefined;
+    private _events: Events | undefined;
 
-    public get events(): EventsClient {
-        return (this._events ??= new EventsClient(this.options));
+    public get events(): Events {
+        return (this._events ??= new Events(this.options));
     }
 
-    private _files: FilesClient | undefined;
+    private _files: Files | undefined;
 
-    public get files(): FilesClient {
-        return (this._files ??= new FilesClient(this.options));
+    public get files(): Files {
+        return (this._files ??= new Files(this.options));
     }
 
-    private _guests: GuestsClient | undefined;
+    private _guests: Guests | undefined;
 
-    public get guests(): GuestsClient {
-        return (this._guests ??= new GuestsClient(this.options));
+    public get guests(): Guests {
+        return (this._guests ??= new Guests(this.options));
     }
 
-    private _jobs: JobsClient | undefined;
+    private _jobs: Jobs | undefined;
 
-    public get jobs(): JobsClient {
-        return (this._jobs ??= new JobsClient(this.options));
+    public get jobs(): Jobs {
+        return (this._jobs ??= new Jobs(this.options));
     }
 
-    private _sheets: SheetsClient | undefined;
+    private _sheets: Sheets | undefined;
 
-    public get sheets(): SheetsClient {
-        return (this._sheets ??= new SheetsClient(this.options));
+    public get sheets(): Sheets {
+        return (this._sheets ??= new Sheets(this.options));
     }
 
-    private _spaces: SpacesClient | undefined;
+    private _spaces: Spaces | undefined;
 
-    public get spaces(): SpacesClient {
-        return (this._spaces ??= new SpacesClient(this.options));
+    public get spaces(): Spaces {
+        return (this._spaces ??= new Spaces(this.options));
     }
 
-    private _users: UsersClient | undefined;
+    private _users: Users | undefined;
 
-    public get users(): UsersClient {
-        return (this._users ??= new UsersClient(this.options));
+    public get users(): Users {
+        return (this._users ??= new Users(this.options));
     }
 
-    private _workbooks: WorkbooksClient | undefined;
+    private _workbooks: Workbooks | undefined;
 
-    public get workbooks(): WorkbooksClient {
-        return (this._workbooks ??= new WorkbooksClient(this.options));
+    public get workbooks(): Workbooks {
+        return (this._workbooks ??= new Workbooks(this.options));
     }
 }
