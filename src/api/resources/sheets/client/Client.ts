@@ -9,15 +9,15 @@ import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
 
-export declare namespace Client {
+export declare namespace Sheets {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 
-export class Client {
-    constructor(private readonly options: Client.Options) {}
+export class Sheets {
+    constructor(private readonly options: Sheets.Options) {}
 
     /**
      * Returns sheets in a workbook

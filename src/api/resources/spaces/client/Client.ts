@@ -8,17 +8,17 @@ import { Flatfile } from "@flatfile/api-beta";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
-import { Client as ConfigClient } from "../resources/config/client/Client";
+import { Config } from "../resources/config/client/Client";
 
-export declare namespace Client {
+export declare namespace Spaces {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 
-export class Client {
-    constructor(private readonly options: Client.Options) {}
+export class Spaces {
+    constructor(private readonly options: Spaces.Options) {}
 
     /**
      * Returns all spaces for an account or environment
@@ -313,9 +313,9 @@ export class Client {
         }
     }
 
-    private _config: ConfigClient | undefined;
+    private _config: Config | undefined;
 
-    public get config(): ConfigClient {
-        return (this._config ??= new ConfigClient(this.options));
+    public get config(): Config {
+        return (this._config ??= new Config(this.options));
     }
 }

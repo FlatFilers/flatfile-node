@@ -9,15 +9,15 @@ import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
 
-export declare namespace Client {
+export declare namespace Agents {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 
-export class Client {
-    constructor(private readonly options: Client.Options) {}
+export class Agents {
+    constructor(private readonly options: Agents.Options) {}
 
     public async list(environmentId: Flatfile.EnvironmentId): Promise<Flatfile.ListAgentsResponse> {
         const _response = await core.fetcher({

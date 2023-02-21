@@ -9,15 +9,15 @@ import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
 
-export declare namespace Client {
+export declare namespace Documents {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 
-export class Client {
-    constructor(private readonly options: Client.Options) {}
+export class Documents {
+    constructor(private readonly options: Documents.Options) {}
 
     /**
      * Returns all documents for a space
