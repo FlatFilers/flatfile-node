@@ -1,6 +1,6 @@
 # Flatfile Node API Library
 
-[![npm shield](https://img.shields.io/npm/v/@fern-api/flatfile)](https://www.npmjs.com/package/@fern-api/flatfile)
+[![npm shield](https://img.shields.io/npm/v/@fern-api/flatfile)](https://www.npmjs.com/package/@flatfile/api-beta)
 
 The Flatfile Node.js library provides convenient access to the Flatfile API from JavaScript/TypeScript.
 
@@ -11,9 +11,9 @@ API reference documentation is available [here](https://flatfile.stoplight.io/do
 ## Installation
 
 ```
-npm install --save @fern-api/flatfile
+npm install --save @flatfile/api-beta
 # or
-yarn add @fern-api/flatfile
+yarn add @flatfile/api-beta
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ yarn add @fern-api/flatfile
 [![Try it out](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/flatfile-typescript-sdk-7xtsm5?file=app.ts&view=editor)
 
 ```typescript
-import { Flatfile, FlatfileClient } from '@fern-api/flatfile';
+import { Flatfile, FlatfileClient } from '@flatfile/api-beta';
 
 const flatfile = new FlatfileClient({
   clientId: 'YOUR_CLIENT_ID',
@@ -98,6 +98,6 @@ This SDK is in beta, and there may be breaking changes between versions without 
 
 ## Contributing
 
-While we value open-source contributions to this SDK, this library is generated programmatically. Additions made directly to this library would have to be moved over to our generation code, otherwise they would be overwritten upon the next generated release. Feel free to open a PR as a proof of concept, but know that we will not be able to merge it as-is. We suggest [opening an issue](https://github.com/fern-flatfile/flatfile-node/issues) first to discuss with us!
+While we value open-source contributions to this SDK, this library is generated programmatically. Additions made directly to this library would have to be moved over to our generation code, otherwise they would be overwritten upon the next generated release. Feel free to open a PR as a proof of concept, but know that we will not be able to merge it as-is. We suggest [opening an issue](https://github.com/FlatFilers/flatfile-node/issues) first to discuss with us!
 
 On the other hand, contributions to the README are always very welcome!
