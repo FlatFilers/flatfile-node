@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@fern-api/flatfile";
+import { Flatfile } from "@flatfile/api-beta";
 import * as core from "../../../../core";
 
 export const NumberProperty: core.serialization.ObjectSchema<serializers.NumberProperty.Raw, Flatfile.NumberProperty> =

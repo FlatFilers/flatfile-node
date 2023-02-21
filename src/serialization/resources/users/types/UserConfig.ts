@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@fern-api/flatfile";
+import { Flatfile } from "@flatfile/api-beta";
 import * as core from "../../../../core";
 
 export const UserConfig: core.serialization.ObjectSchema<serializers.UserConfig.Raw, Flatfile.UserConfig> =
