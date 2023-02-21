@@ -10,11 +10,11 @@ export const EnvironmentResponse: core.serialization.ObjectSchema<
     serializers.EnvironmentResponse.Raw,
     Flatfile.EnvironmentResponse
 > = core.serialization.object({
-    data: core.serialization.lazyObject(async () => (await import("../../..")).Environment).optional(),
+    data: core.serialization.lazyObject(async () => (await import("../../..")).Environment),
 });
 
 export declare namespace EnvironmentResponse {
     interface Raw {
-        data?: serializers.Environment.Raw | null;
+        data: serializers.Environment.Raw;
     }
 }

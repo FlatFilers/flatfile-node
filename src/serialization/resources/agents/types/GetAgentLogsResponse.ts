@@ -11,14 +11,12 @@ export const GetAgentLogsResponse: core.serialization.ObjectSchema<
     Flatfile.GetAgentLogsResponse
 > = core.serialization.object({
     pagination: core.serialization.lazyObject(async () => (await import("../../..")).Pagination).optional(),
-    data: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("../../..")).AgentLog))
-        .optional(),
+    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).AgentLog)),
 });
 
 export declare namespace GetAgentLogsResponse {
     interface Raw {
         pagination?: serializers.Pagination.Raw | null;
-        data?: serializers.AgentLog.Raw[] | null;
+        data: serializers.AgentLog.Raw[];
     }
 }

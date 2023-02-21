@@ -10,13 +10,13 @@ export const ListSpaceConfigsResponse: core.serialization.ObjectSchema<
     serializers.spaces.ListSpaceConfigsResponse.Raw,
     Flatfile.spaces.ListSpaceConfigsResponse
 > = core.serialization.object({
-    data: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("../../../../..")).spaces.SpacePattern))
-        .optional(),
+    data: core.serialization.list(
+        core.serialization.lazyObject(async () => (await import("../../../../..")).spaces.SpacePattern)
+    ),
 });
 
 export declare namespace ListSpaceConfigsResponse {
     interface Raw {
-        data?: serializers.spaces.SpacePattern.Raw[] | null;
+        data: serializers.spaces.SpacePattern.Raw[];
     }
 }

@@ -5,5 +5,5 @@
 import { Flatfile } from "@fern-api/flatfile";
 
 export interface WorkbookResponse {
-    data?: Flatfile.Workbook;
+    data: Flatfile.Workbook;
 }

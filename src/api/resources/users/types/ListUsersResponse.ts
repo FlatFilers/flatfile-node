@@ -5,5 +5,5 @@
 import { Flatfile } from "@fern-api/flatfile";
 
 export interface ListUsersResponse {
-    data?: Flatfile.User[];
+    data: Flatfile.User[];
 }

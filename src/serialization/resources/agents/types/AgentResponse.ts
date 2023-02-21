@@ -8,11 +8,11 @@ import * as core from "../../../../core";
 
 export const AgentResponse: core.serialization.ObjectSchema<serializers.AgentResponse.Raw, Flatfile.AgentResponse> =
     core.serialization.object({
-        data: core.serialization.lazyObject(async () => (await import("../../..")).Agent).optional(),
+        data: core.serialization.lazyObject(async () => (await import("../../..")).Agent),
     });
 
 export declare namespace AgentResponse {
     interface Raw {
-        data?: serializers.Agent.Raw | null;
+        data: serializers.Agent.Raw;
     }
 }

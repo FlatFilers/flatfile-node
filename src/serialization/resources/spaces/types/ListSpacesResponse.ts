@@ -11,14 +11,12 @@ export const ListSpacesResponse: core.serialization.ObjectSchema<
     Flatfile.spaces.ListSpacesResponse
 > = core.serialization.object({
     pagination: core.serialization.lazyObject(async () => (await import("../../..")).Pagination).optional(),
-    data: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("../../..")).spaces.Space))
-        .optional(),
+    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).spaces.Space)),
 });
 
 export declare namespace ListSpacesResponse {
     interface Raw {
         pagination?: serializers.Pagination.Raw | null;
-        data?: serializers.spaces.Space.Raw[] | null;
+        data: serializers.spaces.Space.Raw[];
     }
 }

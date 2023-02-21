@@ -8,11 +8,11 @@ import * as core from "../../../../core";
 
 export const JobPlanObject: core.serialization.ObjectSchema<serializers.JobPlanObject.Raw, Flatfile.JobPlanObject> =
     core.serialization.object({
-        data: core.serialization.lazyObject(async () => (await import("../../..")).JobPlan).optional(),
+        data: core.serialization.lazyObject(async () => (await import("../../..")).JobPlan),
     });
 
 export declare namespace JobPlanObject {
     interface Raw {
-        data?: serializers.JobPlan.Raw | null;
+        data: serializers.JobPlan.Raw;
     }
 }

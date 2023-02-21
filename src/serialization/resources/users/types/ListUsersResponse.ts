@@ -10,13 +10,11 @@ export const ListUsersResponse: core.serialization.ObjectSchema<
     serializers.ListUsersResponse.Raw,
     Flatfile.ListUsersResponse
 > = core.serialization.object({
-    data: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("../../..")).User))
-        .optional(),
+    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).User)),
 });
 
 export declare namespace ListUsersResponse {
     interface Raw {
-        data?: serializers.User.Raw[] | null;
+        data: serializers.User.Raw[];
     }
 }

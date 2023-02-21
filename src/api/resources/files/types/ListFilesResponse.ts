@@ -5,5 +5,5 @@
 import { Flatfile } from "@fern-api/flatfile";
 
 export interface ListFilesResponse {
-    data?: Flatfile.File[];
+    data: Flatfile.File[];
 }

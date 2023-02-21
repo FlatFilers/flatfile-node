@@ -10,11 +10,11 @@ export const ExchangeTokenResponse: core.serialization.ObjectSchema<
     serializers.ExchangeTokenResponse.Raw,
     Flatfile.ExchangeTokenResponse
 > = core.serialization.object({
-    data: core.serialization.lazyObject(async () => (await import("../../..")).ExchangeTokenData).optional(),
+    data: core.serialization.lazyObject(async () => (await import("../../..")).ExchangeTokenData),
 });
 
 export declare namespace ExchangeTokenResponse {
     interface Raw {
-        data?: serializers.ExchangeTokenData.Raw | null;
+        data: serializers.ExchangeTokenData.Raw;
     }
 }

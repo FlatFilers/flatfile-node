@@ -5,5 +5,5 @@
 import { Flatfile } from "@fern-api/flatfile";
 
 export interface JobResponse {
-    data?: Flatfile.Job;
+    data: Flatfile.Job;
 }

@@ -10,11 +10,11 @@ export const RecordsResponse: core.serialization.ObjectSchema<
     serializers.RecordsResponse.Raw,
     Flatfile.RecordsResponse
 > = core.serialization.object({
-    data: core.serialization.lazyObject(async () => (await import("../../..")).RecordsResponseData).optional(),
+    data: core.serialization.lazyObject(async () => (await import("../../..")).RecordsResponseData),
 });
 
 export declare namespace RecordsResponse {
     interface Raw {
-        data?: serializers.RecordsResponseData.Raw | null;
+        data: serializers.RecordsResponseData.Raw;
     }
 }

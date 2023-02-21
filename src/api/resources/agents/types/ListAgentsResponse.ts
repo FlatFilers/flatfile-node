@@ -15,5 +15,5 @@ import { Flatfile } from "@fern-api/flatfile";
  *     }
  */
 export interface ListAgentsResponse {
-    data?: Flatfile.Agent[];
+    data: Flatfile.Agent[];
 }

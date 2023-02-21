@@ -5,5 +5,5 @@
 import { Flatfile } from "@fern-api/flatfile";
 
 export interface ExchangeTokenResponse {
-    data?: Flatfile.ExchangeTokenData;
+    data: Flatfile.ExchangeTokenData;
 }

@@ -8,11 +8,11 @@ import * as core from "../../../../core";
 
 export const EventResponse: core.serialization.ObjectSchema<serializers.EventResponse.Raw, Flatfile.EventResponse> =
     core.serialization.object({
-        data: core.serialization.lazy(async () => (await import("../../..")).Event).optional(),
+        data: core.serialization.lazy(async () => (await import("../../..")).Event),
     });
 
 export declare namespace EventResponse {
     interface Raw {
-        data?: serializers.Event.Raw | null;
+        data: serializers.Event.Raw;
     }
 }

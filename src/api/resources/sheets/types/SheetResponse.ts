@@ -5,5 +5,5 @@
 import { Flatfile } from "@fern-api/flatfile";
 
 export interface SheetResponse {
-    data?: Flatfile.Sheet;
+    data: Flatfile.Sheet;
 }

@@ -5,5 +5,5 @@
 import { Flatfile } from "@fern-api/flatfile";
 
 export interface JobPlanObject {
-    data?: Flatfile.JobPlan;
+    data: Flatfile.JobPlan;
 }

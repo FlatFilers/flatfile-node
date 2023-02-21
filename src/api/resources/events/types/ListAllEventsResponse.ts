@@ -5,5 +5,5 @@
 import { Flatfile } from "@fern-api/flatfile";
 
 export interface ListAllEventsResponse {
-    data?: Flatfile.Event[];
+    data: Flatfile.Event[];
 }

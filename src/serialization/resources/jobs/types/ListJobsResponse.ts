@@ -10,11 +10,11 @@ export const ListJobsResponse: core.serialization.ObjectSchema<
     serializers.ListJobsResponse.Raw,
     Flatfile.ListJobsResponse
 > = core.serialization.object({
-    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Job)).optional(),
+    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Job)),
 });
 
 export declare namespace ListJobsResponse {
     interface Raw {
-        data?: serializers.Job.Raw[] | null;
+        data: serializers.Job.Raw[];
     }
 }

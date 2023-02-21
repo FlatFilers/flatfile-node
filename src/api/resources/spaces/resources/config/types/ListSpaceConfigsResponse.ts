@@ -5,5 +5,5 @@
 import { Flatfile } from "@fern-api/flatfile";
 
 export interface ListSpaceConfigsResponse {
-    data?: Flatfile.spaces.SpacePattern[];
+    data: Flatfile.spaces.SpacePattern[];
 }

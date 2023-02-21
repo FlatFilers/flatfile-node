@@ -6,5 +6,5 @@ import { Flatfile } from "@fern-api/flatfile";
 
 export interface ListSpacesResponse {
     pagination?: Flatfile.Pagination;
-    data?: Flatfile.spaces.Space[];
+    data: Flatfile.spaces.Space[];
 }

@@ -22,5 +22,5 @@ import { Flatfile } from "@fern-api/flatfile";
  */
 export interface GetAgentLogsResponse {
     pagination?: Flatfile.Pagination;
-    data?: Flatfile.AgentLog[];
+    data: Flatfile.AgentLog[];
 }

@@ -8,11 +8,11 @@ import * as core from "../../../../core";
 
 export const FileResponse: core.serialization.ObjectSchema<serializers.FileResponse.Raw, Flatfile.FileResponse> =
     core.serialization.object({
-        data: core.serialization.lazyObject(async () => (await import("../../..")).File).optional(),
+        data: core.serialization.lazyObject(async () => (await import("../../..")).File),
     });
 
 export declare namespace FileResponse {
     interface Raw {
-        data?: serializers.File.Raw | null;
+        data: serializers.File.Raw;
     }
 }

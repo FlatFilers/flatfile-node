@@ -5,5 +5,5 @@
 import { Flatfile } from "@fern-api/flatfile";
 
 export interface SpaceResponse {
-    data?: Flatfile.spaces.Space;
+    data: Flatfile.spaces.Space;
 }

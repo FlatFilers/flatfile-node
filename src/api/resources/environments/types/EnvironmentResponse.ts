@@ -5,5 +5,5 @@
 import { Flatfile } from "@fern-api/flatfile";
 
 export interface EnvironmentResponse {
-    data?: Flatfile.Environment;
+    data: Flatfile.Environment;
 }

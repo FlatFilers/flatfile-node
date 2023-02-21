@@ -10,11 +10,11 @@ export const GetFieldsResponse: core.serialization.ObjectSchema<
     serializers.GetFieldsResponse.Raw,
     Flatfile.GetFieldsResponse
 > = core.serialization.object({
-    data: core.serialization.lazy(async () => (await import("../../..")).FieldResponse).optional(),
+    data: core.serialization.lazy(async () => (await import("../../..")).FieldResponse),
 });
 
 export declare namespace GetFieldsResponse {
     interface Raw {
-        data?: serializers.FieldResponse.Raw | null;
+        data: serializers.FieldResponse.Raw;
     }
 }

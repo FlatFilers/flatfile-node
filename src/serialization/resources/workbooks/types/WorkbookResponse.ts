@@ -10,11 +10,11 @@ export const WorkbookResponse: core.serialization.ObjectSchema<
     serializers.WorkbookResponse.Raw,
     Flatfile.WorkbookResponse
 > = core.serialization.object({
-    data: core.serialization.lazyObject(async () => (await import("../../..")).Workbook).optional(),
+    data: core.serialization.lazyObject(async () => (await import("../../..")).Workbook),
 });
 
 export declare namespace WorkbookResponse {
     interface Raw {
-        data?: serializers.Workbook.Raw | null;
+        data: serializers.Workbook.Raw;
     }
 }
