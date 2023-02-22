@@ -42,7 +42,7 @@ export class FlatfileClient {
                         method: "POST",
                         body: {
                             clientId: options.clientId,
-                            clientSecret: options.clientSecret,
+                            secret: options.clientSecret,
                         },
                     });
                     if (response.ok) {
