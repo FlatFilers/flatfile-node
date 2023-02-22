@@ -3,7 +3,7 @@
  */
 
 export const FlatfileEnvironment = {
-    Production: "https://api.flatfile.com/v1",
+    Production: "https://api.x.flatfile.com/v1",
 } as const;
 
 export type FlatfileEnvironment = typeof FlatfileEnvironment.Production;
