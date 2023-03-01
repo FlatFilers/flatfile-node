@@ -59,7 +59,7 @@ export class Events {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/environments/${await serializers.EnvironmentId.jsonOrThrow(environmentId)}/events/`
+                `/environments/${await serializers.EnvironmentId.jsonOrThrow(environmentId)}/events`
             ),
             method: "GET",
             headers: {
@@ -107,7 +107,7 @@ export class Events {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/environments/${await serializers.EnvironmentId.jsonOrThrow(environmentId)}/events/`
+                `/environments/${await serializers.EnvironmentId.jsonOrThrow(environmentId)}/events`
             ),
             method: "POST",
             headers: {
@@ -167,7 +167,7 @@ export class Events {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/environments/${await serializers.EnvironmentId.jsonOrThrow(
                     environmentId
-                )}/events//${await serializers.EventId.jsonOrThrow(eventId)}`
+                )}/events/${await serializers.EventId.jsonOrThrow(eventId)}`
             ),
             method: "GET",
             headers: {
@@ -208,7 +208,7 @@ export class Events {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/environments/${await serializers.EnvironmentId.jsonOrThrow(
                     environmentId
-                )}/events//${await serializers.EventId.jsonOrThrow(eventId)}/ack`
+                )}/events/${await serializers.EventId.jsonOrThrow(eventId)}/ack`
             ),
             method: "POST",
             headers: {

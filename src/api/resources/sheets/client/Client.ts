@@ -26,7 +26,7 @@ export class Sheets {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/workbooks/${await serializers.WorkbookId.jsonOrThrow(workbookId)}/sheets/`
+                `/workbooks/${await serializers.WorkbookId.jsonOrThrow(workbookId)}/sheets`
             ),
             method: "GET",
             headers: {
@@ -71,7 +71,7 @@ export class Sheets {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/workbooks/${await serializers.WorkbookId.jsonOrThrow(
                     workbookId
-                )}/sheets//${await serializers.SheetId.jsonOrThrow(sheetId)}`
+                )}/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}`
             ),
             method: "GET",
             headers: {
@@ -167,7 +167,7 @@ export class Sheets {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/workbooks/${await serializers.WorkbookId.jsonOrThrow(
                     workbookId
-                )}/sheets//${await serializers.SheetId.jsonOrThrow(sheetId)}/records`
+                )}/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/records`
             ),
             method: "GET",
             headers: {
@@ -216,7 +216,7 @@ export class Sheets {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/workbooks/${await serializers.WorkbookId.jsonOrThrow(
                     workbookId
-                )}/sheets//${await serializers.SheetId.jsonOrThrow(sheetId)}/records`
+                )}/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/records`
             ),
             method: "PUT",
             headers: {
@@ -265,7 +265,7 @@ export class Sheets {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/workbooks/${await serializers.WorkbookId.jsonOrThrow(
                     workbookId
-                )}/sheets//${await serializers.SheetId.jsonOrThrow(sheetId)}/records`
+                )}/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/records`
             ),
             method: "POST",
             headers: {
@@ -310,7 +310,7 @@ export class Sheets {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/workbooks/${await serializers.WorkbookId.jsonOrThrow(
                     workbookId
-                )}/sheets//${await serializers.SheetId.jsonOrThrow(sheetId)}/records`
+                )}/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/records`
             ),
             method: "DELETE",
             headers: {
@@ -380,7 +380,7 @@ export class Sheets {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/workbooks/${await serializers.WorkbookId.jsonOrThrow(
                     workbookId
-                )}/sheets//${await serializers.SheetId.jsonOrThrow(sheetId)}/download`
+                )}/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/download`
             ),
             method: "GET",
             headers: {
@@ -460,7 +460,7 @@ export class Sheets {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/workbooks/${await serializers.WorkbookId.jsonOrThrow(
                     workbookId
-                )}/sheets//${await serializers.SheetId.jsonOrThrow(sheetId)}/fields`
+                )}/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/fields`
             ),
             method: "GET",
             headers: {
@@ -537,7 +537,7 @@ export class Sheets {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/workbooks/${await serializers.WorkbookId.jsonOrThrow(
                     workbookId
-                )}/sheets//${await serializers.SheetId.jsonOrThrow(
+                )}/sheets/${await serializers.SheetId.jsonOrThrow(
                     sheetId
                 )}/fields/${await serializers.FieldId.jsonOrThrow(fieldId)}`
             ),
@@ -600,7 +600,7 @@ export class Sheets {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/workbooks/${await serializers.WorkbookId.jsonOrThrow(
                     workbookId
-                )}/sheets//${await serializers.SheetId.jsonOrThrow(
+                )}/sheets/${await serializers.SheetId.jsonOrThrow(
                     sheetId
                 )}/fields/${await serializers.FieldId.jsonOrThrow(fieldId)}/find/${searchValue}`
             ),
@@ -663,7 +663,7 @@ export class Sheets {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/workbooks/${await serializers.WorkbookId.jsonOrThrow(
                     workbookId
-                )}/sheets//${await serializers.SheetId.jsonOrThrow(
+                )}/sheets/${await serializers.SheetId.jsonOrThrow(
                     sheetId
                 )}/fields/${await serializers.FieldId.jsonOrThrow(fieldId)}/replace/${searchValue}`
             ),
@@ -714,7 +714,7 @@ export class Sheets {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/workbooks/${await serializers.WorkbookId.jsonOrThrow(
                     workbookId
-                )}/sheets//${await serializers.SheetId.jsonOrThrow(sheetId)}/versions`
+                )}/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/versions`
             ),
             method: "POST",
             headers: {

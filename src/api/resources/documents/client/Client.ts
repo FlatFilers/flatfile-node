@@ -28,7 +28,7 @@ export class Documents {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}/documents/`
+                `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}/documents`
             ),
             method: "GET",
             headers: {
@@ -91,7 +91,7 @@ export class Documents {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}/documents/`
+                `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}/documents`
             ),
             method: "POST",
             headers: {
@@ -153,7 +153,7 @@ export class Documents {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(
                     spaceId
-                )}/documents//${await serializers.DocumentId.jsonOrThrow(documentId)}`
+                )}/documents/${await serializers.DocumentId.jsonOrThrow(documentId)}`
             ),
             method: "GET",
             headers: {
@@ -218,7 +218,7 @@ export class Documents {
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(
                     spaceId
-                )}/documents//${await serializers.DocumentId.jsonOrThrow(documentId)}`
+                )}/documents/${await serializers.DocumentId.jsonOrThrow(documentId)}`
             ),
             method: "PATCH",
             headers: {
