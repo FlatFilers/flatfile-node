@@ -6,22 +6,15 @@ import { Flatfile } from "@flatfile/api-beta";
 
 export interface GetRecordsRequest {
     versionId?: string;
-    /**
-     * Name of field by which to sort records
-     */
-    sortField?: string;
-    /**
-     * Sort direction - asc (ascending) or desc (descending)
-     */
+    sortField?: Flatfile.SortField;
     sortDirection?: Flatfile.SortDirection;
-    /**
-     * Options to filter records
-     */
     filter?: Flatfile.Filter;
     /**
      * Name of field by which to filter records
      */
-    filterField?: string;
+    filterField?: Flatfile.FilterField;
+    searchValue?: Flatfile.SearchValue;
+    searchField?: Flatfile.SearchField;
     /**
      * Number of records to return in a page (default 1000 if pageNumber included)
      */
@@ -34,8 +27,4 @@ export interface GetRecordsRequest {
      * Include counts for the total records, valid records and records with errors
      */
     includeCounts?: boolean;
-    /**
-     * Search the entire sheet for the given value, returning matching rows
-     */
-    searchValue?: string;
 }

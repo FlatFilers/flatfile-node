@@ -74,7 +74,7 @@ export class Jobs {
         }
     }
 
-    public async create(request: Flatfile.JobConfig): Promise<Flatfile.Job> {
+    public async create(request: Flatfile.JobConfig): Promise<Flatfile.JobResponse> {
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/jobs"),
             method: "POST",
@@ -84,7 +84,7 @@ export class Jobs {
             body: await serializers.JobConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.Job.parseOrThrow(_response.body as serializers.Job.Raw, {
+            return await serializers.JobResponse.parseOrThrow(_response.body as serializers.JobResponse.Raw, {
                 allowUnknownKeys: true,
             });
         }
@@ -111,7 +111,7 @@ export class Jobs {
         }
     }
 
-    public async get(jobId: Flatfile.JobId): Promise<Flatfile.Job> {
+    public async get(jobId: Flatfile.JobId): Promise<Flatfile.JobResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
@@ -123,7 +123,47 @@ export class Jobs {
             },
         });
         if (_response.ok) {
-            return await serializers.Job.parseOrThrow(_response.body as serializers.Job.Raw, {
+            return await serializers.JobResponse.parseOrThrow(_response.body as serializers.JobResponse.Raw, {
+                allowUnknownKeys: true,
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    public async update(jobId: Flatfile.JobId, request: Flatfile.JobUpdate): Promise<Flatfile.JobResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}`
+            ),
+            method: "PATCH",
+            headers: {
+                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+            },
+            body: await serializers.JobUpdate.jsonOrThrow(request),
+        });
+        if (_response.ok) {
+            return await serializers.JobResponse.parseOrThrow(_response.body as serializers.JobResponse.Raw, {
                 allowUnknownKeys: true,
             });
         }

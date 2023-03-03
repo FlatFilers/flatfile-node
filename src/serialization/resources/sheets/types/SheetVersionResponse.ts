@@ -6,14 +6,14 @@ import * as serializers from "../../..";
 import { Flatfile } from "@flatfile/api-beta";
 import * as core from "../../../../core";
 
-export const CreateSheetVersionResponse: core.serialization.ObjectSchema<
-    serializers.CreateSheetVersionResponse.Raw,
-    Flatfile.CreateSheetVersionResponse
+export const SheetVersionResponse: core.serialization.ObjectSchema<
+    serializers.SheetVersionResponse.Raw,
+    Flatfile.SheetVersionResponse
 > = core.serialization.object({
     data: core.serialization.lazy(async () => (await import("../../..")).VersionId),
 });
 
-export declare namespace CreateSheetVersionResponse {
+export declare namespace SheetVersionResponse {
     interface Raw {
         data: serializers.VersionId.Raw;
     }

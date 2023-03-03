@@ -4,6 +4,6 @@
 
 import { Flatfile } from "@flatfile/api-beta";
 
-export interface CreateSheetVersionResponse {
+export interface SheetVersionResponse {
     data: Flatfile.VersionId;
 }

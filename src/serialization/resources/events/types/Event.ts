@@ -31,6 +31,7 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "sheet:validated": core.serialization.lazyObject(async () => (await import("../../..")).SheetValidatedEvent),
         "action:triggered": core.serialization.lazyObject(async () => (await import("../../..")).ActionTriggeredEvent),
         "file:deleted": core.serialization.lazyObject(async () => (await import("../../..")).FileDeletedEvent),
+        "client:init": core.serialization.lazyObject(async () => (await import("../../..")).ClientInitializedEvent),
     })
     .transform<Flatfile.Event>({
         transform: (value) => {
@@ -81,6 +82,8 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
                     return Flatfile.Event.actionTriggered(value);
                 case "file:deleted":
                     return Flatfile.Event.fileDeleted(value);
+                case "client:init":
+                    return Flatfile.Event.clientInitialized(value);
                 default:
                     return Flatfile.Event._unknown(value);
             }
@@ -112,7 +115,8 @@ export declare namespace Event {
         | Event.RecordsDeleted
         | Event.SheetValidated
         | Event.ActionTriggered
-        | Event.FileDeleted;
+        | Event.FileDeleted
+        | Event.ClientInitialized;
 
     interface SpaceAdded extends serializers.SpaceAddedEvent.Raw {
         type: "space:added";
@@ -204,5 +208,9 @@ export declare namespace Event {
 
     interface FileDeleted extends serializers.FileDeletedEvent.Raw {
         type: "file:deleted";
+    }
+
+    interface ClientInitialized extends serializers.ClientInitializedEvent.Raw {
+        type: "client:init";
     }
 }

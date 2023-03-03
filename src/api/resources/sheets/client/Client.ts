@@ -107,6 +107,54 @@ export class Sheets {
     }
 
     /**
+     * Trigger data hooks and validation to run on a sheet
+     */
+    public async validate(
+        workbookId: Flatfile.WorkbookId,
+        sheetId: Flatfile.SheetId
+    ): Promise<Flatfile.SheetVersionResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                `/workbooks/${await serializers.WorkbookId.jsonOrThrow(
+                    workbookId
+                )}/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/validate`
+            ),
+            method: "GET",
+            headers: {
+                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+            },
+        });
+        if (_response.ok) {
+            return await serializers.SheetVersionResponse.parseOrThrow(
+                _response.body as serializers.SheetVersionResponse.Raw,
+                { allowUnknownKeys: true }
+            );
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
      * Returns records from a sheet in a workbook
      */
     public async getRecords(
@@ -120,10 +168,11 @@ export class Sheets {
             sortDirection,
             filter,
             filterField,
+            searchValue,
+            searchField,
             pageSize,
             pageNumber,
             includeCounts,
-            searchValue,
         } = request;
         const _queryParams = new URLSearchParams();
         if (versionId != null) {
@@ -146,6 +195,14 @@ export class Sheets {
             _queryParams.append("filterField", filterField);
         }
 
+        if (searchValue != null) {
+            _queryParams.append("searchValue", searchValue);
+        }
+
+        if (searchField != null) {
+            _queryParams.append("searchField", searchField);
+        }
+
         if (pageSize != null) {
             _queryParams.append("pageSize", pageSize.toString());
         }
@@ -156,10 +213,6 @@ export class Sheets {
 
         if (includeCounts != null) {
             _queryParams.append("includeCounts", includeCounts.toString());
-        }
-
-        if (searchValue != null) {
-            _queryParams.append("searchValue", searchValue);
         }
 
         const _response = await core.fetcher({
@@ -353,7 +406,7 @@ export class Sheets {
         sheetId: Flatfile.SheetId,
         request: Flatfile.GetRecordsCsvRequest = {}
     ): Promise<string> {
-        const { versionId, sortField, sortDirection, filter, filterField } = request;
+        const { versionId, sortField, sortDirection, filter, filterField, searchValue, searchField } = request;
         const _queryParams = new URLSearchParams();
         if (versionId != null) {
             _queryParams.append("versionId", versionId);
@@ -373,6 +426,14 @@ export class Sheets {
 
         if (filterField != null) {
             _queryParams.append("filterField", filterField);
+        }
+
+        if (searchValue != null) {
+            _queryParams.append("searchValue", searchValue);
+        }
+
+        if (searchField != null) {
+            _queryParams.append("searchField", searchField);
         }
 
         const _response = await core.fetcher({
@@ -708,7 +769,7 @@ export class Sheets {
     public async createVersion(
         workbookId: Flatfile.WorkbookId,
         sheetId: Flatfile.SheetId
-    ): Promise<Flatfile.CreateSheetVersionResponse> {
+    ): Promise<Flatfile.SheetVersionResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
@@ -722,8 +783,8 @@ export class Sheets {
             },
         });
         if (_response.ok) {
-            return await serializers.CreateSheetVersionResponse.parseOrThrow(
-                _response.body as serializers.CreateSheetVersionResponse.Raw,
+            return await serializers.SheetVersionResponse.parseOrThrow(
+                _response.body as serializers.SheetVersionResponse.Raw,
                 { allowUnknownKeys: true }
             );
         }

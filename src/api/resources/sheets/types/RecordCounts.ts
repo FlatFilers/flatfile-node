@@ -6,4 +6,5 @@ export interface RecordCounts {
     total?: number;
     valid?: number;
     error?: number;
+    filtered?: number;
 }

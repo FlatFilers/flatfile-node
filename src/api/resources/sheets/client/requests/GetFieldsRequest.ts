@@ -5,13 +5,7 @@
 import { Flatfile } from "@flatfile/api-beta";
 
 export interface GetFieldsRequest {
-    /**
-     * Name of field by which to sort records
-     */
-    sortField?: string;
-    /**
-     * Sort direction - asc (ascending) or desc (descending)
-     */
+    sortField?: Flatfile.SortField;
     sortDirection?: Flatfile.SortDirection;
     /**
      * Options to filter records

@@ -2,6 +2,7 @@ export * from "./ListJobsResponse";
 export * from "./JobResponse";
 export * from "./Job";
 export * from "./JobConfig";
+export * from "./JobUpdate";
 export * from "./FileOrWorkbookId";
 export * from "./DeleteJobConfig";
 export * from "./FileJobConfig";

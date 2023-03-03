@@ -17,6 +17,7 @@ export const BaseEvent: core.serialization.ObjectSchema<serializers.BaseEvent.Ra
         createdAt: core.serialization.string().optional(),
         acknowledgedAt: core.serialization.string().optional(),
         acknowledgedBy: core.serialization.string().optional(),
+        target: core.serialization.string().optional(),
     });
 
 export declare namespace BaseEvent {
@@ -30,5 +31,6 @@ export declare namespace BaseEvent {
         createdAt?: string | null;
         acknowledgedAt?: string | null;
         acknowledgedBy?: string | null;
+        target?: string | null;
     }
 }

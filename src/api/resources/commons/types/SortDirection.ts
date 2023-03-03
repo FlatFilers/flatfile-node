@@ -3,6 +3,8 @@
  */
 
 /**
+ * Sort direction - asc (ascending) or desc (descending)
+ *
  * @example
  *     Flatfile.SortDirection.Asc
  */

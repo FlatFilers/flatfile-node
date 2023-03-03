@@ -22,4 +22,5 @@ export interface BaseEvent {
     acknowledgedAt?: string;
     /** The actor (user or system) who acknowledged the event */
     acknowledgedBy?: string;
+    target?: string;
 }

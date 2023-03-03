@@ -11,7 +11,9 @@ export const DeleteJobConfig: core.serialization.ObjectSchema<
     Flatfile.DeleteJobConfig
 > = core.serialization.object({
     filter: core.serialization.lazy(async () => (await import("../../..")).Filter),
-    filterField: core.serialization.string().optional(),
+    filterField: core.serialization.lazy(async () => (await import("../../..")).FilterField).optional(),
+    searchValue: core.serialization.lazy(async () => (await import("../../..")).SearchValue).optional(),
+    searchField: core.serialization.lazy(async () => (await import("../../..")).SearchField).optional(),
     sheet: core.serialization.lazy(async () => (await import("../../..")).SheetId),
     exceptions: core.serialization
         .list(core.serialization.lazy(async () => (await import("../../..")).RecordId))
@@ -21,7 +23,9 @@ export const DeleteJobConfig: core.serialization.ObjectSchema<
 export declare namespace DeleteJobConfig {
     interface Raw {
         filter: serializers.Filter.Raw;
-        filterField?: string | null;
+        filterField?: serializers.FilterField.Raw | null;
+        searchValue?: serializers.SearchValue.Raw | null;
+        searchField?: serializers.SearchField.Raw | null;
         sheet: serializers.SheetId.Raw;
         exceptions?: serializers.RecordId.Raw[] | null;
     }

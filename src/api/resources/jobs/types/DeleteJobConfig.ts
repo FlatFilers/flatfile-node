@@ -9,8 +9,9 @@ import { Flatfile } from "@flatfile/api-beta";
  */
 export interface DeleteJobConfig {
     filter: Flatfile.Filter;
-    /** Name of field by which to filter records */
-    filterField?: string;
+    filterField?: Flatfile.FilterField;
+    searchValue?: Flatfile.SearchValue;
+    searchField?: Flatfile.SearchField;
     sheet: Flatfile.SheetId;
     exceptions?: Flatfile.RecordId[];
 }

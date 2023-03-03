@@ -20,4 +20,4 @@ export * from "./GetFieldsResponse";
 export * from "./FieldResponse";
 export * from "./FieldsData";
 export * from "./FieldData";
-export * from "./CreateSheetVersionResponse";
+export * from "./SheetVersionResponse";

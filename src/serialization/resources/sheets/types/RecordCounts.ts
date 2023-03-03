@@ -11,6 +11,7 @@ export const RecordCounts: core.serialization.ObjectSchema<serializers.RecordCou
         total: core.serialization.number().optional(),
         valid: core.serialization.number().optional(),
         error: core.serialization.number().optional(),
+        filtered: core.serialization.number().optional(),
     });
 
 export declare namespace RecordCounts {
@@ -18,5 +19,6 @@ export declare namespace RecordCounts {
         total?: number | null;
         valid?: number | null;
         error?: number | null;
+        filtered?: number | null;
     }
 }

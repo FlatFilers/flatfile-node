@@ -9,4 +9,8 @@ export interface ListGuestsRequest {
      * ID of space to return
      */
     spaceId: Flatfile.SpaceId;
+    /**
+     * Email of guest to return
+     */
+    email?: string;
 }

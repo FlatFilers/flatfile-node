@@ -20,3 +20,7 @@ export * from "./SortDirection";
 export * from "./Success";
 export * from "./Error";
 export * from "./Filter";
+export * from "./FilterField";
+export * from "./SearchField";
+export * from "./SearchValue";
+export * from "./SortField";

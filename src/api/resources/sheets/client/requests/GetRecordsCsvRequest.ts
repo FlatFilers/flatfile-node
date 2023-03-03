@@ -6,10 +6,7 @@ import { Flatfile } from "@flatfile/api-beta";
 
 export interface GetRecordsCsvRequest {
     versionId?: string;
-    /**
-     * Name of field by which to sort records
-     */
-    sortField?: string;
+    sortField?: Flatfile.SortField;
     /**
      * Sort direction - asc (ascending) or desc (descending)
      */
@@ -18,8 +15,7 @@ export interface GetRecordsCsvRequest {
      * Options to filter records
      */
     filter?: Flatfile.Filter;
-    /**
-     * Name of field by which to filter records
-     */
-    filterField?: string;
+    filterField?: Flatfile.FilterField;
+    searchValue?: Flatfile.SearchValue;
+    searchField?: Flatfile.SearchField;
 }

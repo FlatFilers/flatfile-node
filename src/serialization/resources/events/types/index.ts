@@ -24,6 +24,7 @@ export * from "./RecordsDeletedEvent";
 export * from "./SheetValidatedEvent";
 export * from "./ActionTriggeredEvent";
 export * from "./FileDeletedEvent";
+export * from "./ClientInitializedEvent";
 export * from "./RecordsPayload";
 export * from "./JobPayload";
 export * from "./JobFailedPayload";

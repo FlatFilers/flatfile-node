@@ -31,6 +31,7 @@ export type Event =
     | Flatfile.Event.SheetValidated
     | Flatfile.Event.ActionTriggered
     | Flatfile.Event.FileDeleted
+    | Flatfile.Event.ClientInitialized
     | Flatfile.Event._Unknown;
 
 export declare namespace Event {
@@ -126,6 +127,10 @@ export declare namespace Event {
         type: "file:deleted";
     }
 
+    interface ClientInitialized extends Flatfile.ClientInitializedEvent, _Utils {
+        type: "client:init";
+    }
+
     interface _Unknown extends _Utils {
         type: void;
     }
@@ -158,6 +163,7 @@ export declare namespace Event {
         sheetValidated: (value: Flatfile.SheetValidatedEvent) => _Result;
         actionTriggered: (value: Flatfile.ActionTriggeredEvent) => _Result;
         fileDeleted: (value: Flatfile.FileDeletedEvent) => _Result;
+        clientInitialized: (value: Flatfile.ClientInitializedEvent) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -402,6 +408,19 @@ export const Event = {
         };
     },
 
+    clientInitialized: (value: Flatfile.ClientInitializedEvent): Flatfile.Event.ClientInitialized => {
+        return {
+            ...value,
+            type: "client:init",
+            _visit: function <_Result>(
+                this: Flatfile.Event.ClientInitialized,
+                visitor: Flatfile.Event._Visitor<_Result>
+            ) {
+                return Flatfile.Event._visit(this, visitor);
+            },
+        };
+    },
+
     _unknown: (value: { type: string }): Flatfile.Event._Unknown => {
         return {
             ...(value as any),
@@ -459,6 +478,8 @@ export const Event = {
                 return visitor.actionTriggered(value);
             case "file:deleted":
                 return visitor.fileDeleted(value);
+            case "client:init":
+                return visitor.clientInitialized(value);
             default:
                 return visitor._other(value as any);
         }

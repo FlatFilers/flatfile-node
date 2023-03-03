@@ -23,9 +23,13 @@ export class Guests {
      * Returns all guests
      */
     public async list(request: Flatfile.ListGuestsRequest): Promise<Flatfile.ListGuestsResponse> {
-        const { spaceId } = request;
+        const { spaceId, email } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("spaceId", spaceId);
+        if (email != null) {
+            _queryParams.append("email", email);
+        }
+
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "guests"),
             method: "GET",

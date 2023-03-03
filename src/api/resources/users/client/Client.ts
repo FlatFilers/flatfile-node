@@ -22,13 +22,20 @@ export class Users {
     /**
      * Gets a list of users
      */
-    public async list(): Promise<Flatfile.ListUsersResponse> {
+    public async list(request: Flatfile.ListUsersRequest = {}): Promise<Flatfile.ListUsersResponse> {
+        const { email } = request;
+        const _queryParams = new URLSearchParams();
+        if (email != null) {
+            _queryParams.append("email", email);
+        }
+
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "users"),
             method: "GET",
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            queryParameters: _queryParams,
         });
         if (_response.ok) {
             return await serializers.ListUsersResponse.parseOrThrow(
