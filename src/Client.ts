@@ -5,6 +5,7 @@
 import urlJoin from "url-join";
 import * as environments from "./environments";
 import * as core from "./core";
+import * as errors from "./errors";
 import { Agents } from "./api/resources/agents/client/Client";
 import { Documents } from "./api/resources/documents/client/Client";
 import { Environments } from "./api/resources/environments/client/Client";
@@ -20,20 +21,20 @@ import { Workbooks } from "./api/resources/workbooks/client/Client";
 export declare namespace FlatfileClient {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        clientId?: core.Supplier<string>;
-        clientSecret?: core.Supplier<string>;
+        clientId: core.Supplier<string>;
+        clientSecret: core.Supplier<string>;
     }
 }
 
 export class FlatfileClient {
     private token: string | undefined;
-    private options: { environment?: string; token: () => Promise<string | undefined> };
+    private options: { environment?: string; token: () => Promise<string> };
 
     constructor(options: FlatfileClient.Options) {
         this.options = {
             environment: options.environment,
             token: async () => {
-                if (this.token == null && options.clientId != null && options.clientSecret != null) {
+                if (this.token == null) {
                     const response = await core.fetcher({
                         url: urlJoin(
                             this.options.environment ?? environments.FlatfileEnvironment.Production,
@@ -48,6 +49,9 @@ export class FlatfileClient {
                     if (response.ok) {
                         this.token = (response.body as any)?.data?.accessToken;
                     }
+                }
+                if (this.token == null) {
+                    throw new errors.FlatfileError({ message: "Failed to authenticate" });
                 }
                 return this.token;
             },
