@@ -6,20 +6,14 @@ import * as serializers from "../../..";
 import { Flatfile } from "@flatfile/api-beta";
 import * as core from "../../../../core";
 
-export const Agent: core.serialization.ObjectSchema<serializers.Agent.Raw, Flatfile.Agent> = core.serialization.object({
-    id: core.serialization.lazy(async () => (await import("../../..")).AgentId),
-    topics: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../..")).EventTopic))
-        .optional(),
-    compiler: core.serialization.lazy(async () => (await import("../../..")).Compiler).optional(),
-    source: core.serialization.string().optional(),
-});
+export const Agent: core.serialization.ObjectSchema<serializers.Agent.Raw, Flatfile.Agent> = core.serialization
+    .object({
+        id: core.serialization.lazy(async () => (await import("../../..")).AgentId),
+    })
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).AgentConfig));
 
 export declare namespace Agent {
-    interface Raw {
+    interface Raw extends serializers.AgentConfig.Raw {
         id: serializers.AgentId.Raw;
-        topics?: serializers.EventTopic.Raw[] | null;
-        compiler?: serializers.Compiler.Raw | null;
-        source?: string | null;
     }
 }

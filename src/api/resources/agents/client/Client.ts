@@ -61,7 +61,7 @@ export class Agents {
      */
     public async create(
         environmentId: Flatfile.EnvironmentId,
-        request: Flatfile.Agent
+        request: Flatfile.AgentConfig
     ): Promise<Flatfile.AgentResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -72,7 +72,7 @@ export class Agents {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
-            body: await serializers.Agent.jsonOrThrow(request),
+            body: await serializers.AgentConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
             return await serializers.AgentResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });

@@ -5,14 +5,20 @@
 import { Flatfile } from "@flatfile/api-beta";
 
 /**
+ * Properties used to create a new agent
+ *
  * @example
  *     {
- *         id: "123",
  *         topics: [Flatfile.EventTopic.UploadStarted],
  *         compiler: Flatfile.Compiler.Js,
  *         source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
  *     }
  */
-export interface Agent extends Flatfile.AgentConfig {
-    id: Flatfile.AgentId;
+export interface AgentConfig {
+    /** The topics the agent should listen for */
+    topics?: Flatfile.EventTopic[];
+    /** The compiler of the agent */
+    compiler?: Flatfile.Compiler;
+    /** The source of the agent */
+    source?: string;
 }
