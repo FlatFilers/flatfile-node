@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Environments {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        token?: core.Supplier<core.BearerToken | undefined>;
+        token: core.Supplier<core.BearerToken>;
     }
 }
 
@@ -31,10 +31,7 @@ export class Environments {
             },
         });
         if (_response.ok) {
-            return await serializers.ListEnvironmentsResponse.parseOrThrow(
-                _response.body as serializers.ListEnvironmentsResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.ListEnvironmentsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -72,9 +69,7 @@ export class Environments {
             body: await serializers.EnvironmentConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.Environment.parseOrThrow(_response.body as serializers.Environment.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.Environment.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -114,9 +109,7 @@ export class Environments {
             },
         });
         if (_response.ok) {
-            return await serializers.Environment.parseOrThrow(_response.body as serializers.Environment.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.Environment.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -157,9 +150,7 @@ export class Environments {
             body: await serializers.EnvironmentConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.Environment.parseOrThrow(_response.body as serializers.Environment.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.Environment.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -210,10 +201,7 @@ export class Environments {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.GetAgentLogsResponse.parseOrThrow(
-                _response.body as serializers.GetAgentLogsResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.GetAgentLogsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {

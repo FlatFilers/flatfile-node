@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Workbooks {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        token?: core.Supplier<core.BearerToken | undefined>;
+        token: core.Supplier<core.BearerToken>;
     }
 }
 
@@ -38,10 +38,7 @@ export class Workbooks {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.ListWorkbooksResponse.parseOrThrow(
-                _response.body as serializers.ListWorkbooksResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.ListWorkbooksResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -79,9 +76,7 @@ export class Workbooks {
             body: await serializers.WorkbookConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.WorkbookResponse.parseOrThrow(_response.body as serializers.WorkbookResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.WorkbookResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -121,9 +116,7 @@ export class Workbooks {
             },
         });
         if (_response.ok) {
-            return await serializers.WorkbookResponse.parseOrThrow(_response.body as serializers.WorkbookResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.WorkbookResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -163,9 +156,7 @@ export class Workbooks {
             },
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body as serializers.Success.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.Success.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {

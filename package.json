@@ -1,6 +1,6 @@
 {
     "name": "@flatfile/api-beta",
-    "version": "0.1.9",
+    "version": "0.2.0",
     "private": false,
     "repository": "https://github.com/FlatFilers/flatfile-node",
     "files": [
@@ -25,10 +25,7 @@
     "dependencies": {
         "url-join": "4.0.1",
         "@types/url-join": "4.0.1",
-        "basic-auth": "2.0.1",
-        "@types/basic-auth": "1.1.3",
         "js-base64": "3.7.2",
-        "buffer": "6.0.3",
         "axios": "0.27.2"
     },
     "devDependencies": {

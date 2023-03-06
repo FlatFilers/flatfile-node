@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Users {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        token?: core.Supplier<core.BearerToken | undefined>;
+        token: core.Supplier<core.BearerToken>;
     }
 }
 
@@ -38,10 +38,7 @@ export class Users {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.ListUsersResponse.parseOrThrow(
-                _response.body as serializers.ListUsersResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.ListUsersResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -79,9 +76,7 @@ export class Users {
             body: await serializers.UserConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.UserResponse.parseOrThrow(_response.body as serializers.UserResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.UserResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -121,9 +116,7 @@ export class Users {
             },
         });
         if (_response.ok) {
-            return await serializers.UserResponse.parseOrThrow(_response.body as serializers.UserResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.UserResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -178,10 +171,7 @@ export class Users {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.ListApiTokensResponse.parseOrThrow(
-                _response.body as serializers.ListApiTokensResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.ListApiTokensResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -266,10 +256,7 @@ export class Users {
             body: await serializers.ExchangeTokenRequest.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.ExchangeTokenResponse.parseOrThrow(
-                _response.body as serializers.ExchangeTokenResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.ExchangeTokenResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {

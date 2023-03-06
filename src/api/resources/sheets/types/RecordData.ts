@@ -7,4 +7,4 @@ import { Flatfile } from "@flatfile/api-beta";
 /**
  * A single row of data in a Sheet
  */
-export type RecordData = Record<string, Flatfile.CellValue | undefined>;
+export type RecordData = Record<string, Flatfile.CellValue>;

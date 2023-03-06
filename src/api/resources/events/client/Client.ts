@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Events {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        token?: core.Supplier<core.BearerToken | undefined>;
+        token: core.Supplier<core.BearerToken>;
     }
 }
 
@@ -68,10 +68,7 @@ export class Events {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.ListAllEventsResponse.parseOrThrow(
-                _response.body as serializers.ListAllEventsResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.ListAllEventsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -116,24 +113,18 @@ export class Events {
             body: await serializers.Event.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.EventResponse.parseOrThrow(_response.body as serializers.EventResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.EventResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(
-                            _response.error.body as serializers.BadRequestError.Raw
-                        )
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.NotFoundError.parseOrThrow(
-                            _response.error.body as serializers.NotFoundError.Raw
-                        )
+                        await serializers.NotFoundError.parseOrThrow(_response.error.body)
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -175,9 +166,7 @@ export class Events {
             },
         });
         if (_response.ok) {
-            return await serializers.EventResponse.parseOrThrow(_response.body as serializers.EventResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.EventResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -216,9 +205,7 @@ export class Events {
             },
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body as serializers.Success.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.Success.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {

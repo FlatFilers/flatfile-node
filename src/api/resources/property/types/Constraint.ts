@@ -4,101 +4,18 @@
 
 import { Flatfile } from "@flatfile/api-beta";
 
-export type Constraint =
-    | Flatfile.Constraint.Required
-    | Flatfile.Constraint.Unique
-    | Flatfile.Constraint.Computed
-    | Flatfile.Constraint._Unknown;
+export type Constraint = Flatfile.Constraint.Required | Flatfile.Constraint.Unique | Flatfile.Constraint.Computed;
 
 export declare namespace Constraint {
-    interface Required extends _Utils {
+    interface Required {
         type: "required";
     }
 
-    interface Unique extends Flatfile.UniqueConstraint, _Utils {
+    interface Unique extends Flatfile.UniqueConstraint {
         type: "unique";
     }
 
-    interface Computed extends _Utils {
+    interface Computed {
         type: "computed";
     }
-
-    interface _Unknown extends _Utils {
-        type: void;
-    }
-
-    interface _Utils {
-        _visit: <_Result>(visitor: Flatfile.Constraint._Visitor<_Result>) => _Result;
-    }
-
-    interface _Visitor<_Result> {
-        required: () => _Result;
-        unique: (value: Flatfile.UniqueConstraint) => _Result;
-        computed: () => _Result;
-        _other: (value: { type: string }) => _Result;
-    }
 }
-
-export const Constraint = {
-    required: (): Flatfile.Constraint.Required => {
-        return {
-            type: "required",
-            _visit: function <_Result>(
-                this: Flatfile.Constraint.Required,
-                visitor: Flatfile.Constraint._Visitor<_Result>
-            ) {
-                return Flatfile.Constraint._visit(this, visitor);
-            },
-        };
-    },
-
-    unique: (value: Flatfile.UniqueConstraint): Flatfile.Constraint.Unique => {
-        return {
-            ...value,
-            type: "unique",
-            _visit: function <_Result>(
-                this: Flatfile.Constraint.Unique,
-                visitor: Flatfile.Constraint._Visitor<_Result>
-            ) {
-                return Flatfile.Constraint._visit(this, visitor);
-            },
-        };
-    },
-
-    computed: (): Flatfile.Constraint.Computed => {
-        return {
-            type: "computed",
-            _visit: function <_Result>(
-                this: Flatfile.Constraint.Computed,
-                visitor: Flatfile.Constraint._Visitor<_Result>
-            ) {
-                return Flatfile.Constraint._visit(this, visitor);
-            },
-        };
-    },
-
-    _unknown: (value: { type: string }): Flatfile.Constraint._Unknown => {
-        return {
-            ...(value as any),
-            _visit: function <_Result>(
-                this: Flatfile.Constraint._Unknown,
-                visitor: Flatfile.Constraint._Visitor<_Result>
-            ) {
-                return Flatfile.Constraint._visit(this, visitor);
-            },
-        };
-    },
-
-    _visit: <_Result>(value: Flatfile.Constraint, visitor: Flatfile.Constraint._Visitor<_Result>): _Result => {
-        switch (value.type) {
-            case "required":
-                return visitor.required();
-            case "unique":
-                return visitor.unique(value);
-            case "computed":
-                return visitor.computed();
-            default:
-                return visitor._other(value as any);
-        }
-    },
-} as const;

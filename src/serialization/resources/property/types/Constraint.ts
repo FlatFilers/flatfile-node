@@ -13,19 +13,8 @@ export const Constraint: core.serialization.Schema<serializers.Constraint.Raw, F
         computed: core.serialization.object({}),
     })
     .transform<Flatfile.Constraint>({
-        transform: (value) => {
-            switch (value.type) {
-                case "required":
-                    return Flatfile.Constraint.required();
-                case "unique":
-                    return Flatfile.Constraint.unique(value);
-                case "computed":
-                    return Flatfile.Constraint.computed();
-                default:
-                    return Flatfile.Constraint._unknown(value);
-            }
-        },
-        untransform: ({ _visit, ...value }) => value as any,
+        transform: (value) => value,
+        untransform: (value) => value,
     });
 
 export declare namespace Constraint {

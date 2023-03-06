@@ -7,4 +7,4 @@ import { Flatfile } from "@flatfile/api-beta";
 /**
  * A field with one or many records
  */
-export type FieldResponse = Record<string, Flatfile.FieldsData | undefined>;
+export type FieldResponse = Record<string, Flatfile.FieldsData>;

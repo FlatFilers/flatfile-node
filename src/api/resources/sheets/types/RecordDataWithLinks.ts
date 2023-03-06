@@ -7,4 +7,4 @@ import { Flatfile } from "@flatfile/api-beta";
 /**
  * A single row of data in a Sheet, including links to related rows
  */
-export type RecordDataWithLinks = Record<string, Flatfile.CellValueWithLinks | undefined>;
+export type RecordDataWithLinks = Record<string, Flatfile.CellValueWithLinks>;

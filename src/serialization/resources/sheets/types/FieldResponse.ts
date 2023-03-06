@@ -9,9 +9,9 @@ import * as core from "../../../../core";
 export const FieldResponse: core.serialization.Schema<serializers.FieldResponse.Raw, Flatfile.FieldResponse> =
     core.serialization.record(
         core.serialization.string(),
-        core.serialization.lazy(async () => (await import("../../..")).FieldsData).optional()
+        core.serialization.lazy(async () => (await import("../../..")).FieldsData)
     );
 
 export declare namespace FieldResponse {
-    type Raw = Record<string, serializers.FieldsData.Raw | null | undefined>;
+    type Raw = Record<string, serializers.FieldsData.Raw>;
 }

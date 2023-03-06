@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Agents {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        token?: core.Supplier<core.BearerToken | undefined>;
+        token: core.Supplier<core.BearerToken>;
     }
 }
 
@@ -31,10 +31,7 @@ export class Agents {
             },
         });
         if (_response.ok) {
-            return await serializers.ListAgentsResponse.parseOrThrow(
-                _response.body as serializers.ListAgentsResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.ListAgentsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -78,18 +75,14 @@ export class Agents {
             body: await serializers.Agent.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.AgentResponse.parseOrThrow(_response.body as serializers.AgentResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.AgentResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(
-                            _response.error.body as serializers.BadRequestError.Raw
-                        )
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -135,24 +128,18 @@ export class Agents {
             },
         });
         if (_response.ok) {
-            return await serializers.AgentResponse.parseOrThrow(_response.body as serializers.AgentResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.AgentResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(
-                            _response.error.body as serializers.BadRequestError.Raw
-                        )
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.NotFoundError.parseOrThrow(
-                            _response.error.body as serializers.NotFoundError.Raw
-                        )
+                        await serializers.NotFoundError.parseOrThrow(_response.error.body)
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -198,25 +185,18 @@ export class Agents {
             },
         });
         if (_response.ok) {
-            return await serializers.GetAgentLogsResponse.parseOrThrow(
-                _response.body as serializers.GetAgentLogsResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.GetAgentLogsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(
-                            _response.error.body as serializers.BadRequestError.Raw
-                        )
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.NotFoundError.parseOrThrow(
-                            _response.error.body as serializers.NotFoundError.Raw
-                        )
+                        await serializers.NotFoundError.parseOrThrow(_response.error.body)
                     );
                 default:
                     throw new errors.FlatfileError({

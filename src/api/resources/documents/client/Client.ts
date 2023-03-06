@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Documents {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        token?: core.Supplier<core.BearerToken | undefined>;
+        token: core.Supplier<core.BearerToken>;
     }
 }
 
@@ -36,25 +36,18 @@ export class Documents {
             },
         });
         if (_response.ok) {
-            return await serializers.ListDocumentsResponse.parseOrThrow(
-                _response.body as serializers.ListDocumentsResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.ListDocumentsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(
-                            _response.error.body as serializers.BadRequestError.Raw
-                        )
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.NotFoundError.parseOrThrow(
-                            _response.error.body as serializers.NotFoundError.Raw
-                        )
+                        await serializers.NotFoundError.parseOrThrow(_response.error.body)
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -100,24 +93,18 @@ export class Documents {
             body: await serializers.DocumentConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.DocumentResponse.parseOrThrow(_response.body as serializers.DocumentResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.DocumentResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(
-                            _response.error.body as serializers.BadRequestError.Raw
-                        )
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.NotFoundError.parseOrThrow(
-                            _response.error.body as serializers.NotFoundError.Raw
-                        )
+                        await serializers.NotFoundError.parseOrThrow(_response.error.body)
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -161,24 +148,18 @@ export class Documents {
             },
         });
         if (_response.ok) {
-            return await serializers.DocumentResponse.parseOrThrow(_response.body as serializers.DocumentResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.DocumentResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(
-                            _response.error.body as serializers.BadRequestError.Raw
-                        )
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.NotFoundError.parseOrThrow(
-                            _response.error.body as serializers.NotFoundError.Raw
-                        )
+                        await serializers.NotFoundError.parseOrThrow(_response.error.body)
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -227,24 +208,18 @@ export class Documents {
             body: await serializers.DocumentConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.DocumentResponse.parseOrThrow(_response.body as serializers.DocumentResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.DocumentResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(
-                            _response.error.body as serializers.BadRequestError.Raw
-                        )
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.NotFoundError.parseOrThrow(
-                            _response.error.body as serializers.NotFoundError.Raw
-                        )
+                        await serializers.NotFoundError.parseOrThrow(_response.error.body)
                     );
                 default:
                     throw new errors.FlatfileError({

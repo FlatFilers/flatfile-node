@@ -16,25 +16,8 @@ export const Property: core.serialization.Schema<serializers.Property.Raw, Flatf
         reference: core.serialization.lazyObject(async () => (await import("../../..")).ReferenceProperty),
     })
     .transform<Flatfile.Property>({
-        transform: (value) => {
-            switch (value.type) {
-                case "string":
-                    return Flatfile.Property.string(value);
-                case "number":
-                    return Flatfile.Property.number(value);
-                case "boolean":
-                    return Flatfile.Property.boolean(value);
-                case "date":
-                    return Flatfile.Property.date(value);
-                case "enum":
-                    return Flatfile.Property.enum(value);
-                case "reference":
-                    return Flatfile.Property.reference(value);
-                default:
-                    return Flatfile.Property._unknown(value);
-            }
-        },
-        untransform: ({ _visit, ...value }) => value as any,
+        transform: (value) => value,
+        untransform: (value) => value,
     });
 
 export declare namespace Property {

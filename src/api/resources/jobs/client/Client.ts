@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Jobs {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        token?: core.Supplier<core.BearerToken | undefined>;
+        token: core.Supplier<core.BearerToken>;
     }
 }
 
@@ -47,9 +47,7 @@ export class Jobs {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.ListJobsResponse.parseOrThrow(_response.body as serializers.ListJobsResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.ListJobsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -84,9 +82,7 @@ export class Jobs {
             body: await serializers.JobConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.JobResponse.parseOrThrow(_response.body as serializers.JobResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.JobResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -123,9 +119,7 @@ export class Jobs {
             },
         });
         if (_response.ok) {
-            return await serializers.JobResponse.parseOrThrow(_response.body as serializers.JobResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.JobResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -163,9 +157,7 @@ export class Jobs {
             body: await serializers.JobUpdate.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.JobResponse.parseOrThrow(_response.body as serializers.JobResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.JobResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -202,9 +194,7 @@ export class Jobs {
             },
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body as serializers.Success.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.Success.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -244,9 +234,7 @@ export class Jobs {
             },
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body as serializers.Success.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.Success.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -286,9 +274,7 @@ export class Jobs {
             },
         });
         if (_response.ok) {
-            return await serializers.JobPlan.parseOrThrow(_response.body as serializers.JobPlan.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.JobPlan.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -332,9 +318,7 @@ export class Jobs {
             body: await serializers.JobExecutionPlanConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.JobPlan.parseOrThrow(_response.body as serializers.JobPlan.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.JobPlan.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -378,9 +362,7 @@ export class Jobs {
             body: await serializers.JobExecutionPlanConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.JobPlan.parseOrThrow(_response.body as serializers.JobPlan.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.JobPlan.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {

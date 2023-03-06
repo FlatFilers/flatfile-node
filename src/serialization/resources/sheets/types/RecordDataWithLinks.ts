@@ -11,9 +11,9 @@ export const RecordDataWithLinks: core.serialization.Schema<
     Flatfile.RecordDataWithLinks
 > = core.serialization.record(
     core.serialization.string(),
-    core.serialization.lazyObject(async () => (await import("../../..")).CellValueWithLinks).optional()
+    core.serialization.lazyObject(async () => (await import("../../..")).CellValueWithLinks)
 );
 
 export declare namespace RecordDataWithLinks {
-    type Raw = Record<string, serializers.CellValueWithLinks.Raw | null | undefined>;
+    type Raw = Record<string, serializers.CellValueWithLinks.Raw>;
 }

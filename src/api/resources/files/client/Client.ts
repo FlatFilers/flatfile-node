@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Files {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        token?: core.Supplier<core.BearerToken | undefined>;
+        token: core.Supplier<core.BearerToken>;
     }
 }
 
@@ -35,10 +35,7 @@ export class Files {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.ListFilesResponse.parseOrThrow(
-                _response.body as serializers.ListFilesResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.ListFilesResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -73,9 +70,7 @@ export class Files {
             body: await serializers.CreateFileRequest.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.FileResponse.parseOrThrow(_response.body as serializers.FileResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.FileResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -109,9 +104,7 @@ export class Files {
             },
         });
         if (_response.ok) {
-            return await serializers.FileResponse.parseOrThrow(_response.body as serializers.FileResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.FileResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -145,9 +138,7 @@ export class Files {
             },
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body as serializers.Success.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.Success.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -185,9 +176,7 @@ export class Files {
             body: await serializers.UpdateFileRequest.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.FileResponse.parseOrThrow(_response.body as serializers.FileResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.FileResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -224,10 +213,7 @@ export class Files {
             },
         });
         if (_response.ok) {
-            return await serializers.files.download.Response.parseOrThrow(
-                _response.body as serializers.files.download.Response.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.files.download.Response.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {

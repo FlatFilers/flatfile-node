@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Sheets {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        token?: core.Supplier<core.BearerToken | undefined>;
+        token: core.Supplier<core.BearerToken>;
     }
 }
 
@@ -34,10 +34,7 @@ export class Sheets {
             },
         });
         if (_response.ok) {
-            return await serializers.ListSheetsResponse.parseOrThrow(
-                _response.body as serializers.ListSheetsResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.ListSheetsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -79,9 +76,7 @@ export class Sheets {
             },
         });
         if (_response.ok) {
-            return await serializers.SheetResponse.parseOrThrow(_response.body as serializers.SheetResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.SheetResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -126,10 +121,7 @@ export class Sheets {
             },
         });
         if (_response.ok) {
-            return await serializers.SheetVersionResponse.parseOrThrow(
-                _response.body as serializers.SheetVersionResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.SheetVersionResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -229,9 +221,7 @@ export class Sheets {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.RecordsResponse.parseOrThrow(_response.body as serializers.RecordsResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.RecordsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -278,9 +268,7 @@ export class Sheets {
             body: await serializers.UpdateRecordsRequest.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.RecordsResponse.parseOrThrow(_response.body as serializers.RecordsResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.RecordsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -327,9 +315,7 @@ export class Sheets {
             body: await serializers.sheets.insertRecords.Request.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.RecordsResponse.parseOrThrow(_response.body as serializers.RecordsResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.RecordsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -371,9 +357,7 @@ export class Sheets {
             },
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body as serializers.Success.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.Success.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -450,10 +434,9 @@ export class Sheets {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.sheets.getRecordsAsCsv.Response.parseOrThrow(
-                _response.body as serializers.sheets.getRecordsAsCsv.Response.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.sheets.getRecordsAsCsv.Response.parseOrThrow(_response.body, {
+                allowUnknownKeys: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -530,10 +513,7 @@ export class Sheets {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.GetFieldsResponse.parseOrThrow(
-                _response.body as serializers.GetFieldsResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.GetFieldsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -609,9 +589,7 @@ export class Sheets {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.FieldResponse.parseOrThrow(_response.body as serializers.FieldResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.FieldResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -672,9 +650,7 @@ export class Sheets {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.RecordsResponse.parseOrThrow(_response.body as serializers.RecordsResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.RecordsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -736,9 +712,7 @@ export class Sheets {
             body: await serializers.FindAndReplaceRecordRequest.jsonOrThrow(_body),
         });
         if (_response.ok) {
-            return await serializers.RecordsResponse.parseOrThrow(_response.body as serializers.RecordsResponse.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.RecordsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -783,10 +757,7 @@ export class Sheets {
             },
         });
         if (_response.ok) {
-            return await serializers.SheetVersionResponse.parseOrThrow(
-                _response.body as serializers.SheetVersionResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.SheetVersionResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {

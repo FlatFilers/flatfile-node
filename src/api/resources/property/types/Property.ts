@@ -81,142 +81,30 @@ export type Property =
     | Flatfile.Property.Boolean
     | Flatfile.Property.Date_
     | Flatfile.Property.Enum
-    | Flatfile.Property.Reference
-    | Flatfile.Property._Unknown;
+    | Flatfile.Property.Reference;
 
 export declare namespace Property {
-    interface String extends Flatfile.StringProperty, _Utils {
+    interface String extends Flatfile.StringProperty {
         type: "string";
     }
 
-    interface Number extends Flatfile.NumberProperty, _Utils {
+    interface Number extends Flatfile.NumberProperty {
         type: "number";
     }
 
-    interface Boolean extends Flatfile.BooleanProperty, _Utils {
+    interface Boolean extends Flatfile.BooleanProperty {
         type: "boolean";
     }
 
-    interface Date_ extends Flatfile.DateProperty, _Utils {
+    interface Date_ extends Flatfile.DateProperty {
         type: "date";
     }
 
-    interface Enum extends Flatfile.EnumProperty, _Utils {
+    interface Enum extends Flatfile.EnumProperty {
         type: "enum";
     }
 
-    interface Reference extends Flatfile.ReferenceProperty, _Utils {
+    interface Reference extends Flatfile.ReferenceProperty {
         type: "reference";
     }
-
-    interface _Unknown extends _Utils {
-        type: void;
-    }
-
-    interface _Utils {
-        _visit: <_Result>(visitor: Flatfile.Property._Visitor<_Result>) => _Result;
-    }
-
-    interface _Visitor<_Result> {
-        string: (value: Flatfile.StringProperty) => _Result;
-        number: (value: Flatfile.NumberProperty) => _Result;
-        boolean: (value: Flatfile.BooleanProperty) => _Result;
-        date: (value: Flatfile.DateProperty) => _Result;
-        enum: (value: Flatfile.EnumProperty) => _Result;
-        reference: (value: Flatfile.ReferenceProperty) => _Result;
-        _other: (value: { type: string }) => _Result;
-    }
 }
-
-export const Property = {
-    string: (value: Flatfile.StringProperty): Flatfile.Property.String => {
-        return {
-            ...value,
-            type: "string",
-            _visit: function <_Result>(this: Flatfile.Property.String, visitor: Flatfile.Property._Visitor<_Result>) {
-                return Flatfile.Property._visit(this, visitor);
-            },
-        };
-    },
-
-    number: (value: Flatfile.NumberProperty): Flatfile.Property.Number => {
-        return {
-            ...value,
-            type: "number",
-            _visit: function <_Result>(this: Flatfile.Property.Number, visitor: Flatfile.Property._Visitor<_Result>) {
-                return Flatfile.Property._visit(this, visitor);
-            },
-        };
-    },
-
-    boolean: (value: Flatfile.BooleanProperty): Flatfile.Property.Boolean => {
-        return {
-            ...value,
-            type: "boolean",
-            _visit: function <_Result>(this: Flatfile.Property.Boolean, visitor: Flatfile.Property._Visitor<_Result>) {
-                return Flatfile.Property._visit(this, visitor);
-            },
-        };
-    },
-
-    date: (value: Flatfile.DateProperty): Flatfile.Property.Date_ => {
-        return {
-            ...value,
-            type: "date",
-            _visit: function <_Result>(this: Flatfile.Property.Date_, visitor: Flatfile.Property._Visitor<_Result>) {
-                return Flatfile.Property._visit(this, visitor);
-            },
-        };
-    },
-
-    enum: (value: Flatfile.EnumProperty): Flatfile.Property.Enum => {
-        return {
-            ...value,
-            type: "enum",
-            _visit: function <_Result>(this: Flatfile.Property.Enum, visitor: Flatfile.Property._Visitor<_Result>) {
-                return Flatfile.Property._visit(this, visitor);
-            },
-        };
-    },
-
-    reference: (value: Flatfile.ReferenceProperty): Flatfile.Property.Reference => {
-        return {
-            ...value,
-            type: "reference",
-            _visit: function <_Result>(
-                this: Flatfile.Property.Reference,
-                visitor: Flatfile.Property._Visitor<_Result>
-            ) {
-                return Flatfile.Property._visit(this, visitor);
-            },
-        };
-    },
-
-    _unknown: (value: { type: string }): Flatfile.Property._Unknown => {
-        return {
-            ...(value as any),
-            _visit: function <_Result>(this: Flatfile.Property._Unknown, visitor: Flatfile.Property._Visitor<_Result>) {
-                return Flatfile.Property._visit(this, visitor);
-            },
-        };
-    },
-
-    _visit: <_Result>(value: Flatfile.Property, visitor: Flatfile.Property._Visitor<_Result>): _Result => {
-        switch (value.type) {
-            case "string":
-                return visitor.string(value);
-            case "number":
-                return visitor.number(value);
-            case "boolean":
-                return visitor.boolean(value);
-            case "date":
-                return visitor.date(value);
-            case "enum":
-                return visitor.enum(value);
-            case "reference":
-                return visitor.reference(value);
-            default:
-                return visitor._other(value as any);
-        }
-    },
-} as const;

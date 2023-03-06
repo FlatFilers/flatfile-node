@@ -13,7 +13,7 @@ import { Config } from "../resources/config/client/Client";
 export declare namespace Spaces {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        token?: core.Supplier<core.BearerToken | undefined>;
+        token: core.Supplier<core.BearerToken>;
     }
 }
 
@@ -60,19 +60,14 @@ export class Spaces {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.spaces.ListSpacesResponse.parseOrThrow(
-                _response.body as serializers.spaces.ListSpacesResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.spaces.ListSpacesResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(
-                            _response.error.body as serializers.BadRequestError.Raw
-                        )
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -110,10 +105,7 @@ export class Spaces {
             body: await serializers.spaces.SpaceConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.spaces.SpaceResponse.parseOrThrow(
-                _response.body as serializers.spaces.SpaceResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.spaces.SpaceResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -153,10 +145,7 @@ export class Spaces {
             },
         });
         if (_response.ok) {
-            return await serializers.spaces.SpaceResponse.parseOrThrow(
-                _response.body as serializers.spaces.SpaceResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.spaces.SpaceResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -196,9 +185,7 @@ export class Spaces {
             },
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body as serializers.Success.Raw, {
-                allowUnknownKeys: true,
-            });
+            return await serializers.Success.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -242,10 +229,7 @@ export class Spaces {
             body: await serializers.spaces.SpaceConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.spaces.SpaceResponse.parseOrThrow(
-                _response.body as serializers.spaces.SpaceResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.spaces.SpaceResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
@@ -285,10 +269,7 @@ export class Spaces {
             },
         });
         if (_response.ok) {
-            return await serializers.spaces.EventToken.parseOrThrow(
-                _response.body as serializers.spaces.EventToken.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.spaces.EventToken.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {

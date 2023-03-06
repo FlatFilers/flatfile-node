@@ -31,457 +31,102 @@ export type Event =
     | Flatfile.Event.SheetValidated
     | Flatfile.Event.ActionTriggered
     | Flatfile.Event.FileDeleted
-    | Flatfile.Event.ClientInitialized
-    | Flatfile.Event._Unknown;
+    | Flatfile.Event.ClientInitialized;
 
 export declare namespace Event {
-    interface SpaceAdded extends Flatfile.SpaceAddedEvent, _Utils {
+    interface SpaceAdded extends Flatfile.SpaceAddedEvent {
         type: "space:added";
     }
 
-    interface SpaceRemoved extends Flatfile.SpaceRemovedEvent, _Utils {
+    interface SpaceRemoved extends Flatfile.SpaceRemovedEvent {
         type: "space:removed";
     }
 
-    interface WorkbookAdded extends Flatfile.WorkbookAddedEvent, _Utils {
+    interface WorkbookAdded extends Flatfile.WorkbookAddedEvent {
         type: "workbook:added";
     }
 
-    interface WorkbookRemoved extends Flatfile.WorkbookRemovedEvent, _Utils {
+    interface WorkbookRemoved extends Flatfile.WorkbookRemovedEvent {
         type: "workbook:removed";
     }
 
-    interface UserAdded extends Flatfile.UserAddedEvent, _Utils {
+    interface UserAdded extends Flatfile.UserAddedEvent {
         type: "user:added";
     }
 
-    interface UserRemoved extends Flatfile.UserRemovedEvent, _Utils {
+    interface UserRemoved extends Flatfile.UserRemovedEvent {
         type: "user:removed";
     }
 
-    interface UserOnline extends Flatfile.UserOnlineEvent, _Utils {
+    interface UserOnline extends Flatfile.UserOnlineEvent {
         type: "user:online";
     }
 
-    interface UserOffline extends Flatfile.UserOfflineEvent, _Utils {
+    interface UserOffline extends Flatfile.UserOfflineEvent {
         type: "user:offline";
     }
 
-    interface UploadStarted extends Flatfile.UploadStartedEvent, _Utils {
+    interface UploadStarted extends Flatfile.UploadStartedEvent {
         type: "upload:started";
     }
 
-    interface UploadFailed extends Flatfile.UploadFailedEvent, _Utils {
+    interface UploadFailed extends Flatfile.UploadFailedEvent {
         type: "upload:failed";
     }
 
-    interface UploadCompleted extends Flatfile.UploadCompletedEvent, _Utils {
+    interface UploadCompleted extends Flatfile.UploadCompletedEvent {
         type: "upload:completed";
     }
 
-    interface JobStarted extends Flatfile.JobStartedEvent, _Utils {
+    interface JobStarted extends Flatfile.JobStartedEvent {
         type: "job:started";
     }
 
-    interface JobWaiting extends Flatfile.JobWaitingEvent, _Utils {
+    interface JobWaiting extends Flatfile.JobWaitingEvent {
         type: "job:waiting";
     }
 
-    interface JobUpdated extends Flatfile.JobUpdatedEvent, _Utils {
+    interface JobUpdated extends Flatfile.JobUpdatedEvent {
         type: "job:updated";
     }
 
-    interface JobFailed extends Flatfile.JobFailedEvent, _Utils {
+    interface JobFailed extends Flatfile.JobFailedEvent {
         type: "job:failed";
     }
 
-    interface JobCompleted extends Flatfile.JobCompletedEvent, _Utils {
+    interface JobCompleted extends Flatfile.JobCompletedEvent {
         type: "job_completed";
     }
 
-    interface JobDeleted extends Flatfile.JobDeletedEvent, _Utils {
+    interface JobDeleted extends Flatfile.JobDeletedEvent {
         type: "job:deleted";
     }
 
-    interface RecordsCreated extends Flatfile.RecordsCreatedEvent, _Utils {
+    interface RecordsCreated extends Flatfile.RecordsCreatedEvent {
         type: "records:created";
     }
 
-    interface RecordsUpdated extends Flatfile.RecordsUpdatedEvent, _Utils {
+    interface RecordsUpdated extends Flatfile.RecordsUpdatedEvent {
         type: "records:updated";
     }
 
-    interface RecordsDeleted extends Flatfile.RecordsDeletedEvent, _Utils {
+    interface RecordsDeleted extends Flatfile.RecordsDeletedEvent {
         type: "records:deleted";
     }
 
-    interface SheetValidated extends Flatfile.SheetValidatedEvent, _Utils {
+    interface SheetValidated extends Flatfile.SheetValidatedEvent {
         type: "sheet:validated";
     }
 
-    interface ActionTriggered extends Flatfile.ActionTriggeredEvent, _Utils {
+    interface ActionTriggered extends Flatfile.ActionTriggeredEvent {
         type: "action:triggered";
     }
 
-    interface FileDeleted extends Flatfile.FileDeletedEvent, _Utils {
+    interface FileDeleted extends Flatfile.FileDeletedEvent {
         type: "file:deleted";
     }
 
-    interface ClientInitialized extends Flatfile.ClientInitializedEvent, _Utils {
+    interface ClientInitialized extends Flatfile.ClientInitializedEvent {
         type: "client:init";
     }
-
-    interface _Unknown extends _Utils {
-        type: void;
-    }
-
-    interface _Utils {
-        _visit: <_Result>(visitor: Flatfile.Event._Visitor<_Result>) => _Result;
-    }
-
-    interface _Visitor<_Result> {
-        spaceAdded: (value: Flatfile.SpaceAddedEvent) => _Result;
-        spaceRemoved: (value: Flatfile.SpaceRemovedEvent) => _Result;
-        workbookAdded: (value: Flatfile.WorkbookAddedEvent) => _Result;
-        workbookRemoved: (value: Flatfile.WorkbookRemovedEvent) => _Result;
-        userAdded: (value: Flatfile.UserAddedEvent) => _Result;
-        userRemoved: (value: Flatfile.UserRemovedEvent) => _Result;
-        userOnline: (value: Flatfile.UserOnlineEvent) => _Result;
-        userOffline: (value: Flatfile.UserOfflineEvent) => _Result;
-        uploadStarted: (value: Flatfile.UploadStartedEvent) => _Result;
-        uploadFailed: (value: Flatfile.UploadFailedEvent) => _Result;
-        uploadCompleted: (value: Flatfile.UploadCompletedEvent) => _Result;
-        jobStarted: (value: Flatfile.JobStartedEvent) => _Result;
-        jobWaiting: (value: Flatfile.JobWaitingEvent) => _Result;
-        jobUpdated: (value: Flatfile.JobUpdatedEvent) => _Result;
-        jobFailed: (value: Flatfile.JobFailedEvent) => _Result;
-        jobCompleted: (value: Flatfile.JobCompletedEvent) => _Result;
-        jobDeleted: (value: Flatfile.JobDeletedEvent) => _Result;
-        recordsCreated: (value: Flatfile.RecordsCreatedEvent) => _Result;
-        recordsUpdated: (value: Flatfile.RecordsUpdatedEvent) => _Result;
-        recordsDeleted: (value: Flatfile.RecordsDeletedEvent) => _Result;
-        sheetValidated: (value: Flatfile.SheetValidatedEvent) => _Result;
-        actionTriggered: (value: Flatfile.ActionTriggeredEvent) => _Result;
-        fileDeleted: (value: Flatfile.FileDeletedEvent) => _Result;
-        clientInitialized: (value: Flatfile.ClientInitializedEvent) => _Result;
-        _other: (value: { type: string }) => _Result;
-    }
 }
-
-export const Event = {
-    spaceAdded: (value: Flatfile.SpaceAddedEvent): Flatfile.Event.SpaceAdded => {
-        return {
-            ...value,
-            type: "space:added",
-            _visit: function <_Result>(this: Flatfile.Event.SpaceAdded, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    spaceRemoved: (value: Flatfile.SpaceRemovedEvent): Flatfile.Event.SpaceRemoved => {
-        return {
-            ...value,
-            type: "space:removed",
-            _visit: function <_Result>(this: Flatfile.Event.SpaceRemoved, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    workbookAdded: (value: Flatfile.WorkbookAddedEvent): Flatfile.Event.WorkbookAdded => {
-        return {
-            ...value,
-            type: "workbook:added",
-            _visit: function <_Result>(this: Flatfile.Event.WorkbookAdded, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    workbookRemoved: (value: Flatfile.WorkbookRemovedEvent): Flatfile.Event.WorkbookRemoved => {
-        return {
-            ...value,
-            type: "workbook:removed",
-            _visit: function <_Result>(
-                this: Flatfile.Event.WorkbookRemoved,
-                visitor: Flatfile.Event._Visitor<_Result>
-            ) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    userAdded: (value: Flatfile.UserAddedEvent): Flatfile.Event.UserAdded => {
-        return {
-            ...value,
-            type: "user:added",
-            _visit: function <_Result>(this: Flatfile.Event.UserAdded, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    userRemoved: (value: Flatfile.UserRemovedEvent): Flatfile.Event.UserRemoved => {
-        return {
-            ...value,
-            type: "user:removed",
-            _visit: function <_Result>(this: Flatfile.Event.UserRemoved, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    userOnline: (value: Flatfile.UserOnlineEvent): Flatfile.Event.UserOnline => {
-        return {
-            ...value,
-            type: "user:online",
-            _visit: function <_Result>(this: Flatfile.Event.UserOnline, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    userOffline: (value: Flatfile.UserOfflineEvent): Flatfile.Event.UserOffline => {
-        return {
-            ...value,
-            type: "user:offline",
-            _visit: function <_Result>(this: Flatfile.Event.UserOffline, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    uploadStarted: (value: Flatfile.UploadStartedEvent): Flatfile.Event.UploadStarted => {
-        return {
-            ...value,
-            type: "upload:started",
-            _visit: function <_Result>(this: Flatfile.Event.UploadStarted, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    uploadFailed: (value: Flatfile.UploadFailedEvent): Flatfile.Event.UploadFailed => {
-        return {
-            ...value,
-            type: "upload:failed",
-            _visit: function <_Result>(this: Flatfile.Event.UploadFailed, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    uploadCompleted: (value: Flatfile.UploadCompletedEvent): Flatfile.Event.UploadCompleted => {
-        return {
-            ...value,
-            type: "upload:completed",
-            _visit: function <_Result>(
-                this: Flatfile.Event.UploadCompleted,
-                visitor: Flatfile.Event._Visitor<_Result>
-            ) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    jobStarted: (value: Flatfile.JobStartedEvent): Flatfile.Event.JobStarted => {
-        return {
-            ...value,
-            type: "job:started",
-            _visit: function <_Result>(this: Flatfile.Event.JobStarted, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    jobWaiting: (value: Flatfile.JobWaitingEvent): Flatfile.Event.JobWaiting => {
-        return {
-            ...value,
-            type: "job:waiting",
-            _visit: function <_Result>(this: Flatfile.Event.JobWaiting, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    jobUpdated: (value: Flatfile.JobUpdatedEvent): Flatfile.Event.JobUpdated => {
-        return {
-            ...value,
-            type: "job:updated",
-            _visit: function <_Result>(this: Flatfile.Event.JobUpdated, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    jobFailed: (value: Flatfile.JobFailedEvent): Flatfile.Event.JobFailed => {
-        return {
-            ...value,
-            type: "job:failed",
-            _visit: function <_Result>(this: Flatfile.Event.JobFailed, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    jobCompleted: (value: Flatfile.JobCompletedEvent): Flatfile.Event.JobCompleted => {
-        return {
-            ...value,
-            type: "job_completed",
-            _visit: function <_Result>(this: Flatfile.Event.JobCompleted, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    jobDeleted: (value: Flatfile.JobDeletedEvent): Flatfile.Event.JobDeleted => {
-        return {
-            ...value,
-            type: "job:deleted",
-            _visit: function <_Result>(this: Flatfile.Event.JobDeleted, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    recordsCreated: (value: Flatfile.RecordsCreatedEvent): Flatfile.Event.RecordsCreated => {
-        return {
-            ...value,
-            type: "records:created",
-            _visit: function <_Result>(this: Flatfile.Event.RecordsCreated, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    recordsUpdated: (value: Flatfile.RecordsUpdatedEvent): Flatfile.Event.RecordsUpdated => {
-        return {
-            ...value,
-            type: "records:updated",
-            _visit: function <_Result>(this: Flatfile.Event.RecordsUpdated, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    recordsDeleted: (value: Flatfile.RecordsDeletedEvent): Flatfile.Event.RecordsDeleted => {
-        return {
-            ...value,
-            type: "records:deleted",
-            _visit: function <_Result>(this: Flatfile.Event.RecordsDeleted, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    sheetValidated: (value: Flatfile.SheetValidatedEvent): Flatfile.Event.SheetValidated => {
-        return {
-            ...value,
-            type: "sheet:validated",
-            _visit: function <_Result>(this: Flatfile.Event.SheetValidated, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    actionTriggered: (value: Flatfile.ActionTriggeredEvent): Flatfile.Event.ActionTriggered => {
-        return {
-            ...value,
-            type: "action:triggered",
-            _visit: function <_Result>(
-                this: Flatfile.Event.ActionTriggered,
-                visitor: Flatfile.Event._Visitor<_Result>
-            ) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    fileDeleted: (value: Flatfile.FileDeletedEvent): Flatfile.Event.FileDeleted => {
-        return {
-            ...value,
-            type: "file:deleted",
-            _visit: function <_Result>(this: Flatfile.Event.FileDeleted, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    clientInitialized: (value: Flatfile.ClientInitializedEvent): Flatfile.Event.ClientInitialized => {
-        return {
-            ...value,
-            type: "client:init",
-            _visit: function <_Result>(
-                this: Flatfile.Event.ClientInitialized,
-                visitor: Flatfile.Event._Visitor<_Result>
-            ) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    _unknown: (value: { type: string }): Flatfile.Event._Unknown => {
-        return {
-            ...(value as any),
-            _visit: function <_Result>(this: Flatfile.Event._Unknown, visitor: Flatfile.Event._Visitor<_Result>) {
-                return Flatfile.Event._visit(this, visitor);
-            },
-        };
-    },
-
-    _visit: <_Result>(value: Flatfile.Event, visitor: Flatfile.Event._Visitor<_Result>): _Result => {
-        switch (value.type) {
-            case "space:added":
-                return visitor.spaceAdded(value);
-            case "space:removed":
-                return visitor.spaceRemoved(value);
-            case "workbook:added":
-                return visitor.workbookAdded(value);
-            case "workbook:removed":
-                return visitor.workbookRemoved(value);
-            case "user:added":
-                return visitor.userAdded(value);
-            case "user:removed":
-                return visitor.userRemoved(value);
-            case "user:online":
-                return visitor.userOnline(value);
-            case "user:offline":
-                return visitor.userOffline(value);
-            case "upload:started":
-                return visitor.uploadStarted(value);
-            case "upload:failed":
-                return visitor.uploadFailed(value);
-            case "upload:completed":
-                return visitor.uploadCompleted(value);
-            case "job:started":
-                return visitor.jobStarted(value);
-            case "job:waiting":
-                return visitor.jobWaiting(value);
-            case "job:updated":
-                return visitor.jobUpdated(value);
-            case "job:failed":
-                return visitor.jobFailed(value);
-            case "job_completed":
-                return visitor.jobCompleted(value);
-            case "job:deleted":
-                return visitor.jobDeleted(value);
-            case "records:created":
-                return visitor.recordsCreated(value);
-            case "records:updated":
-                return visitor.recordsUpdated(value);
-            case "records:deleted":
-                return visitor.recordsDeleted(value);
-            case "sheet:validated":
-                return visitor.sheetValidated(value);
-            case "action:triggered":
-                return visitor.actionTriggered(value);
-            case "file:deleted":
-                return visitor.fileDeleted(value);
-            case "client:init":
-                return visitor.clientInitialized(value);
-            default:
-                return visitor._other(value as any);
-        }
-    },
-} as const;

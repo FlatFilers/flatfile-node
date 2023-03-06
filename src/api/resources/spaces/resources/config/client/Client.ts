@@ -12,7 +12,7 @@ import * as errors from "../../../../../../errors";
 export declare namespace Config {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        token?: core.Supplier<core.BearerToken | undefined>;
+        token: core.Supplier<core.BearerToken>;
     }
 }
 
@@ -41,19 +41,16 @@ export class Config {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.spaces.ListSpaceConfigsResponse.parseOrThrow(
-                _response.body as serializers.spaces.ListSpaceConfigsResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.spaces.ListSpaceConfigsResponse.parseOrThrow(_response.body, {
+                allowUnknownKeys: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(
-                            _response.error.body as serializers.BadRequestError.Raw
-                        )
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -101,19 +98,16 @@ export class Config {
             body: await serializers.spaces.SpacePatternConfig.jsonOrThrow(_body),
         });
         if (_response.ok) {
-            return await serializers.spaces.SpacePatternResponse.parseOrThrow(
-                _response.body as serializers.spaces.SpacePatternResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.spaces.SpacePatternResponse.parseOrThrow(_response.body, {
+                allowUnknownKeys: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(
-                            _response.error.body as serializers.BadRequestError.Raw
-                        )
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -152,19 +146,16 @@ export class Config {
             body: await serializers.spaces.SpacePatternConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.spaces.SpacePatternResponse.parseOrThrow(
-                _response.body as serializers.spaces.SpacePatternResponse.Raw,
-                { allowUnknownKeys: true }
-            );
+            return await serializers.spaces.SpacePatternResponse.parseOrThrow(_response.body, {
+                allowUnknownKeys: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(
-                            _response.error.body as serializers.BadRequestError.Raw
-                        )
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
                     );
                 default:
                     throw new errors.FlatfileError({

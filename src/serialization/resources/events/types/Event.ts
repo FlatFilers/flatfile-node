@@ -34,61 +34,8 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "client:init": core.serialization.lazyObject(async () => (await import("../../..")).ClientInitializedEvent),
     })
     .transform<Flatfile.Event>({
-        transform: (value) => {
-            switch (value.type) {
-                case "space:added":
-                    return Flatfile.Event.spaceAdded(value);
-                case "space:removed":
-                    return Flatfile.Event.spaceRemoved(value);
-                case "workbook:added":
-                    return Flatfile.Event.workbookAdded(value);
-                case "workbook:removed":
-                    return Flatfile.Event.workbookRemoved(value);
-                case "user:added":
-                    return Flatfile.Event.userAdded(value);
-                case "user:removed":
-                    return Flatfile.Event.userRemoved(value);
-                case "user:online":
-                    return Flatfile.Event.userOnline(value);
-                case "user:offline":
-                    return Flatfile.Event.userOffline(value);
-                case "upload:started":
-                    return Flatfile.Event.uploadStarted(value);
-                case "upload:failed":
-                    return Flatfile.Event.uploadFailed(value);
-                case "upload:completed":
-                    return Flatfile.Event.uploadCompleted(value);
-                case "job:started":
-                    return Flatfile.Event.jobStarted(value);
-                case "job:waiting":
-                    return Flatfile.Event.jobWaiting(value);
-                case "job:updated":
-                    return Flatfile.Event.jobUpdated(value);
-                case "job:failed":
-                    return Flatfile.Event.jobFailed(value);
-                case "job_completed":
-                    return Flatfile.Event.jobCompleted(value);
-                case "job:deleted":
-                    return Flatfile.Event.jobDeleted(value);
-                case "records:created":
-                    return Flatfile.Event.recordsCreated(value);
-                case "records:updated":
-                    return Flatfile.Event.recordsUpdated(value);
-                case "records:deleted":
-                    return Flatfile.Event.recordsDeleted(value);
-                case "sheet:validated":
-                    return Flatfile.Event.sheetValidated(value);
-                case "action:triggered":
-                    return Flatfile.Event.actionTriggered(value);
-                case "file:deleted":
-                    return Flatfile.Event.fileDeleted(value);
-                case "client:init":
-                    return Flatfile.Event.clientInitialized(value);
-                default:
-                    return Flatfile.Event._unknown(value);
-            }
-        },
-        untransform: ({ _visit, ...value }) => value as any,
+        transform: (value) => value,
+        untransform: (value) => value,
     });
 
 export declare namespace Event {
