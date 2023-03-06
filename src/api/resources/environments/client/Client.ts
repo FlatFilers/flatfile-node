@@ -59,7 +59,7 @@ export class Environments {
     /**
      * Create a new environment
      */
-    public async create(request: Flatfile.EnvironmentConfig): Promise<Flatfile.Environment> {
+    public async create(request: Flatfile.EnvironmentConfig): Promise<Flatfile.EnvironmentResponse> {
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/environments"),
             method: "POST",
@@ -69,7 +69,7 @@ export class Environments {
             body: await serializers.EnvironmentConfig.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.Environment.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.EnvironmentResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {

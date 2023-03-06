@@ -1,6 +1,6 @@
 {
     "name": "@flatfile/api-beta",
-    "version": "0.2.1",
+    "version": "0.2.4",
     "private": false,
     "repository": "https://github.com/FlatFilers/flatfile-node",
     "files": [
