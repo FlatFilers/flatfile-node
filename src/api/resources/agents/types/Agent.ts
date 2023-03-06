@@ -9,12 +9,14 @@ import { Flatfile } from "@flatfile/api-beta";
  *
  * @example
  *     {
+ *         id: "123",
  *         topics: [Flatfile.EventTopic.UploadStarted],
  *         compiler: Flatfile.Compiler.Js,
  *         source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
  *     }
  */
 export interface Agent {
+    id: Flatfile.AgentId;
     /** The topics the agent should listen for */
     topics?: Flatfile.EventTopic[];
     /** The compiler of the agent */

@@ -8,6 +8,7 @@ import { Flatfile } from "@flatfile/api-beta";
  * @example
  *     {
  *         data: [{
+ *                 id: "123",
  *                 topics: [Flatfile.EventTopic.UploadStarted],
  *                 compiler: Flatfile.Compiler.Js,
  *                 source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
