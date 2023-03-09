@@ -12,10 +12,3 @@ export const Request: core.serialization.Schema<serializers.guests.create.Reques
 export declare namespace Request {
     type Raw = serializers.GuestConfig.Raw[];
 }
-
-export const Response: core.serialization.Schema<serializers.guests.create.Response.Raw, Flatfile.Guest[]> =
-    core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Guest));
-
-export declare namespace Response {
-    type Raw = serializers.Guest.Raw[];
-}

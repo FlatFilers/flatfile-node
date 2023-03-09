@@ -67,7 +67,7 @@ export class Guests {
     /**
      * Guests are only there to upload, edit, and download files and perform their tasks in a specific Space.
      */
-    public async create(request: Flatfile.GuestConfig[]): Promise<Flatfile.Guest[]> {
+    public async create(request: Flatfile.GuestConfig[]): Promise<Flatfile.CreateGuestResponse> {
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "guests"),
             method: "POST",
@@ -77,7 +77,7 @@ export class Guests {
             body: await serializers.guests.create.Request.jsonOrThrow(request),
         });
         if (_response.ok) {
-            return await serializers.guests.create.Response.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.CreateGuestResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
         }
 
         if (_response.error.reason === "status-code") {
