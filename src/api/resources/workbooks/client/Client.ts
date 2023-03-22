@@ -23,22 +23,31 @@ export class Workbooks {
      * Returns all workbooks matching a filter for an account or space
      */
     public async list(request: Flatfile.ListWorkbooksRequest = {}): Promise<Flatfile.ListWorkbooksResponse> {
-        const { spaceId } = request;
+        const { spaceId, includeCounts } = request;
         const _queryParams = new URLSearchParams();
         if (spaceId != null) {
             _queryParams.append("spaceId", spaceId);
+        }
+
+        if (includeCounts != null) {
+            _queryParams.append("includeCounts", includeCounts.toString());
         }
 
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/workbooks"),
             method: "GET",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.ListWorkbooksResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.ListWorkbooksResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -71,12 +80,17 @@ export class Workbooks {
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/workbooks"),
             method: "POST",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
-            body: await serializers.WorkbookConfig.jsonOrThrow(request),
+            contentType: "application/json",
+            body: await serializers.WorkbookConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
         });
         if (_response.ok) {
-            return await serializers.WorkbookResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.WorkbookResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -112,11 +126,16 @@ export class Workbooks {
             ),
             method: "GET",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
         });
         if (_response.ok) {
-            return await serializers.WorkbookResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.WorkbookResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -152,11 +171,16 @@ export class Workbooks {
             ),
             method: "DELETE",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.Success.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -179,5 +203,14 @@ export class Workbooks {
                     message: _response.error.errorMessage,
                 });
         }
+    }
+
+    private async _getAuthorizationHeader() {
+        const bearer = await core.Supplier.get(this.options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

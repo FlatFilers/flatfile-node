@@ -6,5 +6,6 @@ import { Flatfile } from "@flatfile/api-beta";
 
 export interface UpdateFileRequest {
     workbookId: Flatfile.WorkbookId;
+    /** Status of the file */
     status: Flatfile.ModelFileStatusEnum;
 }

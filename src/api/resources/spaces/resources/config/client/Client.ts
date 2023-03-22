@@ -33,16 +33,19 @@ export class Config {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/spaces/configs"),
+            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/space-configs"),
             method: "GET",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
             queryParameters: _queryParams,
         });
         if (_response.ok) {
             return await serializers.spaces.ListSpaceConfigsResponse.parseOrThrow(_response.body, {
-                allowUnknownKeys: true,
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
             });
         }
 
@@ -50,7 +53,11 @@ export class Config {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -76,11 +83,11 @@ export class Config {
     }
 
     /**
-     * Replaces an existing Space Config and optionally migrates all spaces using the config
+     * Updates an existing Space Config and optionally migrates all spaces using the config
      * @throws {Flatfile.BadRequestError}
      */
     public async replace(
-        request: Flatfile.spaces.ReplaceSpaceConfigRequest
+        request: Flatfile.spaces.UpdateSpaceConfigRequest
     ): Promise<Flatfile.spaces.SpacePatternResponse> {
         const { migrate, body: _body } = request;
         const _queryParams = new URLSearchParams();
@@ -89,17 +96,20 @@ export class Config {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/spaces/configs"),
+            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/space-configs"),
             method: "PUT",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
             queryParameters: _queryParams,
-            body: await serializers.spaces.SpacePatternConfig.jsonOrThrow(_body),
+            body: await serializers.spaces.SpacePatternConfig.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
         });
         if (_response.ok) {
             return await serializers.spaces.SpacePatternResponse.parseOrThrow(_response.body, {
-                allowUnknownKeys: true,
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
             });
         }
 
@@ -107,7 +117,11 @@ export class Config {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -138,16 +152,19 @@ export class Config {
      */
     public async create(request: Flatfile.spaces.SpacePatternConfig): Promise<Flatfile.spaces.SpacePatternResponse> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/spaces/configs"),
+            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/space-configs"),
             method: "POST",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
-            body: await serializers.spaces.SpacePatternConfig.jsonOrThrow(request),
+            contentType: "application/json",
+            body: await serializers.spaces.SpacePatternConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
         });
         if (_response.ok) {
             return await serializers.spaces.SpacePatternResponse.parseOrThrow(_response.body, {
-                allowUnknownKeys: true,
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
             });
         }
 
@@ -155,7 +172,11 @@ export class Config {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -178,5 +199,14 @@ export class Config {
                     message: _response.error.errorMessage,
                 });
         }
+    }
+
+    private async _getAuthorizationHeader() {
+        const bearer = await core.Supplier.get(this.options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

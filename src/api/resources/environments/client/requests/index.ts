@@ -1,1 +1,1 @@
-export { GetAgentLogsRequest } from "./GetAgentLogsRequest";
+export { GetAllAgentLogsForEnvironmentRequest } from "./GetAllAgentLogsForEnvironmentRequest";

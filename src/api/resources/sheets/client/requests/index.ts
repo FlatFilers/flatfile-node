@@ -1,7 +1,4 @@
-export { GetRecordsRequest } from "./GetRecordsRequest";
-export { UpdateRecordsRequest } from "./UpdateRecordsRequest";
+export { ListSheetsRequest } from "./ListSheetsRequest";
+export { SheetRequest } from "./SheetRequest";
 export { GetRecordsCsvRequest } from "./GetRecordsCsvRequest";
-export { GetFieldsRequest } from "./GetFieldsRequest";
-export { GetFieldRequest } from "./GetFieldRequest";
-export { FindRecordsRequest } from "./FindRecordsRequest";
-export { FindAndReplaceRecordRequest } from "./FindAndReplaceRecordRequest";
+export { GetRecordCountsRequest } from "./GetRecordCountsRequest";

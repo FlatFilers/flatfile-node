@@ -8,7 +8,7 @@ import { Flatfile } from "@flatfile/api-beta";
  * The configuration for a delete job
  */
 export interface DeleteJobConfig {
-    filter: Flatfile.Filter;
+    filter?: Flatfile.Filter;
     filterField?: Flatfile.FilterField;
     searchValue?: Flatfile.SearchValue;
     searchField?: Flatfile.SearchField;

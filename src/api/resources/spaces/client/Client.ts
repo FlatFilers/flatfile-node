@@ -55,19 +55,28 @@ export class Spaces {
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/spaces"),
             method: "GET",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.spaces.ListSpacesResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.spaces.ListSpacesResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -100,12 +109,17 @@ export class Spaces {
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/spaces"),
             method: "POST",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
-            body: await serializers.spaces.SpaceConfig.jsonOrThrow(request),
+            contentType: "application/json",
+            body: await serializers.spaces.SpaceConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
         });
         if (_response.ok) {
-            return await serializers.spaces.SpaceResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.spaces.SpaceResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -141,11 +155,16 @@ export class Spaces {
             ),
             method: "GET",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
         });
         if (_response.ok) {
-            return await serializers.spaces.SpaceResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.spaces.SpaceResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -181,11 +200,16 @@ export class Spaces {
             ),
             method: "DELETE",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.Success.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -224,12 +248,17 @@ export class Spaces {
             ),
             method: "PATCH",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
-            body: await serializers.spaces.SpaceConfig.jsonOrThrow(request),
+            contentType: "application/json",
+            body: await serializers.spaces.SpaceConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
         });
         if (_response.ok) {
-            return await serializers.spaces.SpaceResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.spaces.SpaceResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -265,11 +294,16 @@ export class Spaces {
             ),
             method: "GET",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
         });
         if (_response.ok) {
-            return await serializers.spaces.EventToken.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.spaces.EventToken.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -298,5 +332,14 @@ export class Spaces {
 
     public get config(): Config {
         return (this._config ??= new Config(this.options));
+    }
+
+    private async _getAuthorizationHeader() {
+        const bearer = await core.Supplier.get(this.options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

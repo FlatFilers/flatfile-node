@@ -5,8 +5,8 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import { Flatfile } from "@flatfile/api-beta";
-import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
+import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
 
 export declare namespace Events {
@@ -22,12 +22,10 @@ export class Events {
     /**
      * Event topics that the Flatfile Platform emits.
      */
-    public async list(
-        environmentId: Flatfile.EnvironmentId,
-        request: Flatfile.ListEventsRequest = {}
-    ): Promise<Flatfile.ListAllEventsResponse> {
-        const { spaceId, domain, topic, since, pageSize, pageNumber, includeAcknowledged } = request;
+    public async list(request: Flatfile.ListEventsRequest): Promise<Flatfile.ListAllEventsResponse> {
+        const { environmentId, spaceId, domain, topic, since, pageSize, pageNumber, includeAcknowledged } = request;
         const _queryParams = new URLSearchParams();
+        _queryParams.append("environmentId", environmentId);
         if (spaceId != null) {
             _queryParams.append("spaceId", spaceId);
         }
@@ -57,18 +55,20 @@ export class Events {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/environments/${await serializers.EnvironmentId.jsonOrThrow(environmentId)}/events`
-            ),
+            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/events"),
             method: "GET",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.ListAllEventsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.ListAllEventsResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -97,34 +97,41 @@ export class Events {
      * @throws {Flatfile.BadRequestError}
      * @throws {Flatfile.NotFoundError}
      */
-    public async create(
-        environmentId: Flatfile.EnvironmentId,
-        request: Flatfile.Event
-    ): Promise<Flatfile.EventResponse> {
+    public async create(request: Flatfile.Event): Promise<Flatfile.EventResponse> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/environments/${await serializers.EnvironmentId.jsonOrThrow(environmentId)}/events`
-            ),
+            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/events"),
             method: "POST",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
-            body: await serializers.Event.jsonOrThrow(request),
+            contentType: "application/json",
+            body: await serializers.Event.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
         });
         if (_response.ok) {
-            return await serializers.EventResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.EventResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.NotFoundError.parseOrThrow(_response.error.body)
+                        await serializers.NotFoundError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -149,24 +156,24 @@ export class Events {
         }
     }
 
-    public async get(
-        environmentId: Flatfile.EnvironmentId,
-        eventId: Flatfile.EventId
-    ): Promise<Flatfile.EventResponse> {
+    public async get(eventId: Flatfile.EventId): Promise<Flatfile.EventResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/environments/${await serializers.EnvironmentId.jsonOrThrow(
-                    environmentId
-                )}/events/${await serializers.EventId.jsonOrThrow(eventId)}`
+                `/events/${await serializers.EventId.jsonOrThrow(eventId)}`
             ),
             method: "GET",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
         });
         if (_response.ok) {
-            return await serializers.EventResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.EventResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -191,21 +198,24 @@ export class Events {
         }
     }
 
-    public async ack(environmentId: Flatfile.EnvironmentId, eventId: Flatfile.EventId): Promise<Flatfile.Success> {
+    public async ack(eventId: Flatfile.EventId): Promise<Flatfile.Success> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/environments/${await serializers.EnvironmentId.jsonOrThrow(
-                    environmentId
-                )}/events/${await serializers.EventId.jsonOrThrow(eventId)}/ack`
+                `/events/${await serializers.EventId.jsonOrThrow(eventId)}/ack`
             ),
             method: "POST",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.Success.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -228,5 +238,14 @@ export class Events {
                     message: _response.error.errorMessage,
                 });
         }
+    }
+
+    private async _getAuthorizationHeader() {
+        const bearer = await core.Supplier.get(this.options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

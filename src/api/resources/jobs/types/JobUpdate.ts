@@ -8,8 +8,7 @@ import { Flatfile } from "@flatfile/api-beta";
  * A single unit of work that a pipeline will execute
  */
 export interface JobUpdate {
-    /** Can either be a `DeleteJobConfig`, a `FileJobConfig` or a `PipelineJobConfig`. */
-    config?: unknown;
+    config: Flatfile.JobUpdateConfig;
     /** the status of the job */
     status?: Flatfile.JobStatus;
     /** the progress of the job */

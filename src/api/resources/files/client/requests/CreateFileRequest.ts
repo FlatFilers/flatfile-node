@@ -7,5 +7,6 @@ import { Flatfile } from "@flatfile/api-beta";
 export interface CreateFileRequest {
     spaceId: Flatfile.SpaceId;
     environmentId: Flatfile.EnvironmentId;
+    /** A binary payload containing the file contents */
     file: string;
 }

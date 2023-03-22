@@ -10,6 +10,7 @@ export const Sheet: core.serialization.ObjectSchema<serializers.Sheet.Raw, Flatf
     id: core.serialization.lazy(async () => (await import("../../..")).SheetId),
     name: core.serialization.string(),
     config: core.serialization.lazyObject(async () => (await import("../../..")).SheetConfig).optional(),
+    countRecords: core.serialization.lazyObject(async () => (await import("../../..")).RecordCounts).optional(),
 });
 
 export declare namespace Sheet {
@@ -17,5 +18,6 @@ export declare namespace Sheet {
         id: serializers.SheetId.Raw;
         name: string;
         config?: serializers.SheetConfig.Raw | null;
+        countRecords?: serializers.RecordCounts.Raw | null;
     }
 }

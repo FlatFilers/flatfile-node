@@ -1,2 +1,2 @@
 export { ListSpaceConfigsRequest } from "./ListSpaceConfigsRequest";
-export { ReplaceSpaceConfigRequest } from "./ReplaceSpaceConfigRequest";
+export { UpdateSpaceConfigRequest } from "./UpdateSpaceConfigRequest";

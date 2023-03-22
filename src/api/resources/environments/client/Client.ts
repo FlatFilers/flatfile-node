@@ -27,11 +27,16 @@ export class Environments {
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/environments"),
             method: "GET",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
         });
         if (_response.ok) {
-            return await serializers.ListEnvironmentsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.ListEnvironmentsResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -64,12 +69,17 @@ export class Environments {
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/environments"),
             method: "POST",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
-            body: await serializers.EnvironmentConfig.jsonOrThrow(request),
+            contentType: "application/json",
+            body: await serializers.EnvironmentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
         });
         if (_response.ok) {
-            return await serializers.EnvironmentResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.EnvironmentResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -105,11 +115,16 @@ export class Environments {
             ),
             method: "GET",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
         });
         if (_response.ok) {
-            return await serializers.Environment.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.Environment.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -145,12 +160,17 @@ export class Environments {
             ),
             method: "PATCH",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
-            body: await serializers.EnvironmentConfig.jsonOrThrow(request),
+            contentType: "application/json",
+            body: await serializers.EnvironmentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
         });
         if (_response.ok) {
-            return await serializers.Environment.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.Environment.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -177,7 +197,7 @@ export class Environments {
 
     public async getAgentLogs(
         environmentId: string,
-        request: Flatfile.GetAgentLogsRequest = {}
+        request: Flatfile.GetAllAgentLogsForEnvironmentRequest = {}
     ): Promise<Flatfile.GetAgentLogsResponse> {
         const { pageSize, pageNumber } = request;
         const _queryParams = new URLSearchParams();
@@ -196,12 +216,17 @@ export class Environments {
             ),
             method: "GET",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.GetAgentLogsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.GetAgentLogsResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -224,5 +249,14 @@ export class Environments {
                     message: _response.error.errorMessage,
                 });
         }
+    }
+
+    private async _getAuthorizationHeader() {
+        const bearer = await core.Supplier.get(this.options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

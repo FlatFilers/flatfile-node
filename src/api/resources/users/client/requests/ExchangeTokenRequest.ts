@@ -3,7 +3,10 @@
  */
 
 export interface ExchangeTokenRequest {
+    /** The token to use for the request */
     token?: string;
+    /** The invited guest's email, required if no token */
     email?: string;
+    /** The spaceId, required if no token */
     spaceId?: string;
 }

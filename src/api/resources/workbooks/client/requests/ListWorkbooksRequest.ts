@@ -6,4 +6,8 @@ import { Flatfile } from "@flatfile/api-beta";
 
 export interface ListWorkbooksRequest {
     spaceId?: Flatfile.SpaceId;
+    /**
+     * Include counts for the workbook
+     */
+    includeCounts?: boolean;
 }

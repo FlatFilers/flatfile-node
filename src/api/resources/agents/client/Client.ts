@@ -5,8 +5,8 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import { Flatfile } from "@flatfile/api-beta";
-import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
+import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
 
 export declare namespace Agents {
@@ -19,19 +19,25 @@ export declare namespace Agents {
 export class Agents {
     constructor(private readonly options: Agents.Options) {}
 
-    public async list(environmentId: Flatfile.EnvironmentId): Promise<Flatfile.ListAgentsResponse> {
+    public async list(request: Flatfile.ListAgentsRequest): Promise<Flatfile.ListAgentsResponse> {
+        const { environmentId } = request;
+        const _queryParams = new URLSearchParams();
+        _queryParams.append("environmentId", environmentId);
         const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/environments/${await serializers.EnvironmentId.jsonOrThrow(environmentId)}/agents`
-            ),
+            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/agents"),
             method: "GET",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
+            queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.ListAgentsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.ListAgentsResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -59,30 +65,37 @@ export class Agents {
     /**
      * @throws {Flatfile.BadRequestError}
      */
-    public async create(
-        environmentId: Flatfile.EnvironmentId,
-        request: Flatfile.AgentConfig
-    ): Promise<Flatfile.AgentResponse> {
+    public async create(request: Flatfile.CreateAgentsRequest): Promise<Flatfile.AgentResponse> {
+        const { environmentId, body: _body } = request;
+        const _queryParams = new URLSearchParams();
+        _queryParams.append("environmentId", environmentId);
         const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/environments/${await serializers.EnvironmentId.jsonOrThrow(environmentId)}/agents`
-            ),
+            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/agents"),
             method: "POST",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
-            body: await serializers.AgentConfig.jsonOrThrow(request),
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            body: await serializers.AgentConfig.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
         });
         if (_response.ok) {
-            return await serializers.AgentResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.AgentResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -111,35 +124,47 @@ export class Agents {
      * @throws {Flatfile.BadRequestError}
      * @throws {Flatfile.NotFoundError}
      */
-    public async get(
-        environmentId: Flatfile.EnvironmentId,
-        agentId: Flatfile.AgentId
-    ): Promise<Flatfile.AgentResponse> {
+    public async get(agentId: Flatfile.AgentId, request: Flatfile.GetAgentRequest): Promise<Flatfile.AgentResponse> {
+        const { environmentId } = request;
+        const _queryParams = new URLSearchParams();
+        _queryParams.append("environmentId", environmentId);
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/environments/${await serializers.EnvironmentId.jsonOrThrow(
-                    environmentId
-                )}/agents/${await serializers.AgentId.jsonOrThrow(agentId)}`
+                `/agents/${await serializers.AgentId.jsonOrThrow(agentId)}`
             ),
             method: "GET",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
+            queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.AgentResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.AgentResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.NotFoundError.parseOrThrow(_response.error.body)
+                        await serializers.NotFoundError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -169,34 +194,49 @@ export class Agents {
      * @throws {Flatfile.NotFoundError}
      */
     public async getAgentLogs(
-        environmentId: Flatfile.EnvironmentId,
-        agentId: Flatfile.AgentId
+        agentId: Flatfile.AgentId,
+        request: Flatfile.GetAgentLogsRequest
     ): Promise<Flatfile.GetAgentLogsResponse> {
+        const { environmentId } = request;
+        const _queryParams = new URLSearchParams();
+        _queryParams.append("environmentId", environmentId);
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/environments/${await serializers.EnvironmentId.jsonOrThrow(
-                    environmentId
-                )}/agents/${await serializers.AgentId.jsonOrThrow(agentId)}/logs`
+                `/agents/${await serializers.AgentId.jsonOrThrow(agentId)}/logs`
             ),
             method: "GET",
             headers: {
-                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+                Authorization: await this._getAuthorizationHeader(),
             },
+            contentType: "application/json",
+            queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.GetAgentLogsResponse.parseOrThrow(_response.body, { allowUnknownKeys: true });
+            return await serializers.GetAgentLogsResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(_response.error.body)
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.NotFoundError.parseOrThrow(_response.error.body)
+                        await serializers.NotFoundError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
                     );
                 default:
                     throw new errors.FlatfileError({
@@ -219,5 +259,14 @@ export class Agents {
                     message: _response.error.errorMessage,
                 });
         }
+    }
+
+    private async _getAuthorizationHeader() {
+        const bearer = await core.Supplier.get(this.options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

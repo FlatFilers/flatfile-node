@@ -12,4 +12,5 @@ export interface GuestConfig {
     email: string;
     name: string;
     spaces: Flatfile.GuestSpace[];
+    workbooks?: Flatfile.GuestWorkbook[];
 }

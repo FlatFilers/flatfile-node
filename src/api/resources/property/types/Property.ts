@@ -6,41 +6,48 @@ import { Flatfile } from "@flatfile/api-beta";
 
 /**
  * @example
- *     Flatfile.Property.string({
+ *     {
+ *         type: "string",
  *         key: "code",
  *         label: "Product Code",
  *         description: "Unique identifier defining an individual product.",
- *         constraints: [Flatfile.Constraint.unique({
+ *         constraints: [{
+ *                 type: "unique",
  *                 config: {
  *                     caseSensitive: false
  *                 }
- *             })],
+ *             }],
  *         config: {
  *             size: Flatfile.StringConfigOptions.Tiny
  *         }
- *     })
+ *     }
  *
  * @example
- *     Flatfile.Property.number({
+ *     {
+ *         type: "number",
  *         key: "price",
  *         config: {
  *             decimalPlaces: 2
  *         }
- *     })
+ *     }
  *
  * @example
- *     Flatfile.Property.boolean({
+ *     {
+ *         type: "boolean",
  *         key: "editable",
  *         config: {
  *             allowIndeterminate: true
  *         }
- *     })
+ *     }
  *
  * @example
- *     Flatfile.Property.date({})
+ *     {
+ *         type: "date"
+ *     }
  *
  * @example
- *     Flatfile.Property.enum({
+ *     {
+ *         type: "enum",
  *         key: "category",
  *         label: "Product Category",
  *         isArray: false,
@@ -63,17 +70,18 @@ import { Flatfile } from "@flatfile/api-beta";
  *                     }
  *                 }]
  *         }
- *     })
+ *     }
  *
  * @example
- *     Flatfile.Property.reference({
+ *     {
+ *         type: "reference",
  *         key: "user reference",
  *         config: {
  *             ref: "/sheet/users/3",
  *             relationship: Flatfile.ReferencePropertyRelationship.HasMany,
  *             key: "id"
  *         }
- *     })
+ *     }
  */
 export type Property =
     | Flatfile.Property.String
