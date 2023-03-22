@@ -348,7 +348,6 @@ export class Records {
      */
     public async findAndReplace(
         sheetId: Flatfile.SheetId,
-        sheetId: Flatfile.SheetId,
         request: Flatfile.FindAndReplaceRecordRequest
     ): Promise<Flatfile.RecordsResponse> {
         const { fieldKey, searchValue, pageSize, pageNumber, ..._body } = request;
@@ -366,9 +365,7 @@ export class Records {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/${await serializers.SheetId.jsonOrThrow(
-                    sheetId
-                )}/replace`
+                `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/replace`
             ),
             method: "PUT",
             headers: {
