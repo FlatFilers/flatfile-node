@@ -6,16 +6,19 @@ import urlJoin from "url-join";
 import * as environments from "./environments";
 import * as core from "./core";
 import * as errors from "./errors";
+import { Spaces } from "./api/resources/spaces/client/Client";
 import { Agents } from "./api/resources/agents/client/Client";
+import { Cells } from "./api/resources/cells/client/Client";
 import { Documents } from "./api/resources/documents/client/Client";
 import { Environments } from "./api/resources/environments/client/Client";
 import { Events } from "./api/resources/events/client/Client";
 import { Files } from "./api/resources/files/client/Client";
 import { Guests } from "./api/resources/guests/client/Client";
 import { Jobs } from "./api/resources/jobs/client/Client";
+import { Records } from "./api/resources/records/client/Client";
 import { Sheets } from "./api/resources/sheets/client/Client";
-import { Spaces } from "./api/resources/spaces/client/Client";
 import { Users } from "./api/resources/users/client/Client";
+import { Versions } from "./api/resources/versions/client/Client";
 import { Workbooks } from "./api/resources/workbooks/client/Client";
 
 export declare namespace FlatfileClient {
@@ -58,10 +61,22 @@ export class FlatfileClient {
         };
     }
 
+    private _spaces: Spaces | undefined;
+
+    public get spaces(): Spaces {
+        return (this._spaces ??= new Spaces(this.options));
+    }
+
     private _agents: Agents | undefined;
 
     public get agents(): Agents {
         return (this._agents ??= new Agents(this.options));
+    }
+
+    private _cells: Cells | undefined;
+
+    public get cells(): Cells {
+        return (this._cells ??= new Cells(this.options));
     }
 
     private _documents: Documents | undefined;
@@ -100,22 +115,28 @@ export class FlatfileClient {
         return (this._jobs ??= new Jobs(this.options));
     }
 
+    private _records: Records | undefined;
+
+    public get records(): Records {
+        return (this._records ??= new Records(this.options));
+    }
+
     private _sheets: Sheets | undefined;
 
     public get sheets(): Sheets {
         return (this._sheets ??= new Sheets(this.options));
     }
 
-    private _spaces: Spaces | undefined;
-
-    public get spaces(): Spaces {
-        return (this._spaces ??= new Spaces(this.options));
-    }
-
     private _users: Users | undefined;
 
     public get users(): Users {
         return (this._users ??= new Users(this.options));
+    }
+
+    private _versions: Versions | undefined;
+
+    public get versions(): Versions {
+        return (this._versions ??= new Versions(this.options));
     }
 
     private _workbooks: Workbooks | undefined;
