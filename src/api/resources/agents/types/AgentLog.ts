@@ -11,7 +11,8 @@ import { Flatfile } from "@flatfile/api-beta";
  *     {
  *         eventId: "us_evt_9cuesESa7W9cuesE",
  *         success: true,
- *         createdAt: "2022-09-18T00:19:57.007Z",
+ *         createdAt: new Date("2022-09-18T00:19:57.007Z"),
+ *         completedAt: new Date("2022-09-18T00:20:04.007Z"),
  *         log: "SUCCESS"
  *     }
  */
@@ -19,7 +20,8 @@ export interface AgentLog {
     eventId: Flatfile.EventId;
     /** Whether the agent execution was successful */
     success: boolean;
-    createdAt: string;
+    createdAt: Date;
+    completedAt: Date;
     /** The log of the agent execution */
     log?: string;
 }

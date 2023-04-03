@@ -26,7 +26,8 @@ export class Cells {
         sheetId: Flatfile.SheetId,
         request: Flatfile.GetFieldValuesRequest
     ): Promise<Flatfile.CellsResponse> {
-        const { fieldKey, sortField, sortDirection, filter, filterField, pageSize, pageNumber, distinct } = request;
+        const { fieldKey, sortField, sortDirection, filter, filterField, pageSize, pageNumber, distinct, searchValue } =
+            request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("fieldKey", fieldKey);
         if (sortField != null) {
@@ -55,6 +56,10 @@ export class Cells {
 
         if (distinct != null) {
             _queryParams.append("distinct", distinct.toString());
+        }
+
+        if (searchValue != null) {
+            _queryParams.append("searchValue", searchValue);
         }
 
         const _response = await core.fetcher({

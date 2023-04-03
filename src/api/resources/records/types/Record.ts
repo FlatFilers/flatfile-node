@@ -9,7 +9,7 @@ import { Flatfile } from "@flatfile/api-beta";
  */
 export interface Record {
     id: Flatfile.RecordId;
-    workbookId: Flatfile.WorkbookId;
-    sheetId: Flatfile.SheetId;
     values: Flatfile.RecordData;
+    valid?: boolean;
+    messages?: Flatfile.ValidationMessage[];
 }

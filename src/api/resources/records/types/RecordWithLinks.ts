@@ -10,4 +10,6 @@ import { Flatfile } from "@flatfile/api-beta";
 export interface RecordWithLinks {
     id: Flatfile.RecordId;
     values: Flatfile.RecordDataWithLinks;
+    valid?: boolean;
+    messages?: Flatfile.ValidationMessage[];
 }

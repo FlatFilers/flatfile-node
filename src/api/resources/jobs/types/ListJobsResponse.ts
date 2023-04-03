@@ -5,5 +5,6 @@
 import { Flatfile } from "@flatfile/api-beta";
 
 export interface ListJobsResponse {
+    pagination?: Flatfile.Pagination;
     data: Flatfile.Job[];
 }

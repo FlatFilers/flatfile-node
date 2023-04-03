@@ -12,17 +12,17 @@ export const EnvironmentConfig: core.serialization.ObjectSchema<
 > = core.serialization.object({
     name: core.serialization.string(),
     isProd: core.serialization.boolean(),
-    newSpacesInherit: core.serialization.boolean().optional(),
     guestAuthentication: core.serialization
         .list(core.serialization.lazy(async () => (await import("../../..")).GuestAuthentication))
         .optional(),
+    features: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
 });
 
 export declare namespace EnvironmentConfig {
     interface Raw {
         name: string;
         isProd: boolean;
-        newSpacesInherit?: boolean | null;
         guestAuthentication?: serializers.GuestAuthentication.Raw[] | null;
+        features?: Record<string, unknown> | null;
     }
 }

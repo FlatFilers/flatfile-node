@@ -12,11 +12,17 @@ export const RecordWithLinks: core.serialization.ObjectSchema<
 > = core.serialization.object({
     id: core.serialization.lazy(async () => (await import("../../..")).RecordId),
     values: core.serialization.lazy(async () => (await import("../../..")).RecordDataWithLinks),
+    valid: core.serialization.boolean().optional(),
+    messages: core.serialization
+        .list(core.serialization.lazyObject(async () => (await import("../../..")).ValidationMessage))
+        .optional(),
 });
 
 export declare namespace RecordWithLinks {
     interface Raw {
         id: serializers.RecordId.Raw;
         values: serializers.RecordDataWithLinks.Raw;
+        valid?: boolean | null;
+        messages?: serializers.ValidationMessage.Raw[] | null;
     }
 }

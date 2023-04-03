@@ -9,16 +9,18 @@ import * as core from "../../../../core";
 export const Record: core.serialization.ObjectSchema<serializers.Record.Raw, Flatfile.Record> =
     core.serialization.object({
         id: core.serialization.lazy(async () => (await import("../../..")).RecordId),
-        workbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId),
-        sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId),
         values: core.serialization.lazy(async () => (await import("../../..")).RecordData),
+        valid: core.serialization.boolean().optional(),
+        messages: core.serialization
+            .list(core.serialization.lazyObject(async () => (await import("../../..")).ValidationMessage))
+            .optional(),
     });
 
 export declare namespace Record {
     interface Raw {
         id: serializers.RecordId.Raw;
-        workbookId: serializers.WorkbookId.Raw;
-        sheetId: serializers.SheetId.Raw;
         values: serializers.RecordData.Raw;
+        valid?: boolean | null;
+        messages?: serializers.ValidationMessage.Raw[] | null;
     }
 }

@@ -15,7 +15,8 @@ import { Flatfile } from "@flatfile/api-beta";
  *         data: [{
  *                 eventId: "us_evt_9cuesESa7W9cuesE",
  *                 success: true,
- *                 createdAt: "2022-09-18T00:19:57.007Z",
+ *                 createdAt: new Date("2022-09-18T00:19:57.007Z"),
+ *                 completedAt: new Date("2022-09-18T00:20:04.007Z"),
  *                 log: "SUCCESS"
  *             }]
  *     }

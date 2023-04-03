@@ -8,7 +8,7 @@ export interface FindAndReplaceRecordRequest {
      */
     fieldKey: string;
     /**
-     * The value to search for
+     * A value to find for a given field in a sheet. Wrap the value in "" for exact match
      */
     searchValue: string;
     /**

@@ -28,20 +28,27 @@ export class Records {
     ): Promise<Flatfile.RecordsResponse> {
         const {
             versionId,
+            sinceVersionId,
             sortField,
             sortDirection,
             filter,
             filterField,
             searchValue,
             searchField,
-            includeLinks,
             pageSize,
             pageNumber,
             includeCounts,
+            includeLinks,
+            includeLMessages,
+            ids,
         } = request;
         const _queryParams = new URLSearchParams();
         if (versionId != null) {
             _queryParams.append("versionId", versionId);
+        }
+
+        if (sinceVersionId != null) {
+            _queryParams.append("sinceVersionId", sinceVersionId);
         }
 
         if (sortField != null) {
@@ -68,10 +75,6 @@ export class Records {
             _queryParams.append("searchField", searchField);
         }
 
-        if (includeLinks != null) {
-            _queryParams.append("includeLinks", includeLinks.toString());
-        }
-
         if (pageSize != null) {
             _queryParams.append("pageSize", pageSize.toString());
         }
@@ -82,6 +85,24 @@ export class Records {
 
         if (includeCounts != null) {
             _queryParams.append("includeCounts", includeCounts.toString());
+        }
+
+        if (includeLinks != null) {
+            _queryParams.append("includeLinks", includeLinks.toString());
+        }
+
+        if (includeLMessages != null) {
+            _queryParams.append("includeLMessages", includeLMessages.toString());
+        }
+
+        if (ids != null) {
+            if (Array.isArray(ids)) {
+                for (const _item of ids) {
+                    _queryParams.append("ids", _item);
+                }
+            } else {
+                _queryParams.append("ids", ids);
+            }
         }
 
         const _response = await core.fetcher({
@@ -132,7 +153,7 @@ export class Records {
     public async update(
         sheetId: Flatfile.SheetId,
         request: Flatfile.UpdateRecordsRequest
-    ): Promise<Flatfile.RecordsResponse> {
+    ): Promise<Flatfile.VersionResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
@@ -146,7 +167,7 @@ export class Records {
             body: await serializers.UpdateRecordsRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
         });
         if (_response.ok) {
-            return await serializers.RecordsResponse.parseOrThrow(_response.body, {
+            return await serializers.VersionResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

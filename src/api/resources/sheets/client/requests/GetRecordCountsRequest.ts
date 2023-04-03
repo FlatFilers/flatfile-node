@@ -6,6 +6,7 @@ import { Flatfile } from "@flatfile/api-beta";
 
 export interface GetRecordCountsRequest {
     versionId?: string;
+    sinceVersionId?: Flatfile.VersionId;
     /**
      * Options to filter records
      */

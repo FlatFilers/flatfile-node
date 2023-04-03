@@ -4,4 +4,12 @@
 
 export interface ListFilesRequest {
     spaceId?: string;
+    /**
+     * Number of jobs to return in a page (default 20)
+     */
+    pageSize?: number;
+    /**
+     * Based on pageSize, which page of jobs to return
+     */
+    pageNumber?: number;
 }

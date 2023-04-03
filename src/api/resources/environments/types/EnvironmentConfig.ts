@@ -11,7 +11,6 @@ import { Flatfile } from "@flatfile/api-beta";
  *     {
  *         name: "dev",
  *         isProd: false,
- *         newSpacesInherit: false,
  *         guestAuthentication: [Flatfile.GuestAuthentication.MagicLink]
  *     }
  */
@@ -20,7 +19,6 @@ export interface EnvironmentConfig {
     name: string;
     /** Whether or not the environment is a production environment */
     isProd: boolean;
-    /** Whether or not new spaces have the option to copy files and guests from existing spaces, defaults to false */
-    newSpacesInherit?: boolean;
     guestAuthentication?: Flatfile.GuestAuthentication[];
+    features?: Record<string, unknown>;
 }

@@ -10,7 +10,8 @@ export const AgentLog: core.serialization.ObjectSchema<serializers.AgentLog.Raw,
     core.serialization.object({
         eventId: core.serialization.lazy(async () => (await import("../../..")).EventId),
         success: core.serialization.boolean(),
-        createdAt: core.serialization.string(),
+        createdAt: core.serialization.date(),
+        completedAt: core.serialization.date(),
         log: core.serialization.string().optional(),
     });
 
@@ -19,6 +20,7 @@ export declare namespace AgentLog {
         eventId: serializers.EventId.Raw;
         success: boolean;
         createdAt: string;
+        completedAt: string;
         log?: string | null;
     }
 }

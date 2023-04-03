@@ -166,10 +166,15 @@ export class Sheets {
         sheetId: Flatfile.SheetId,
         request: Flatfile.GetRecordsCsvRequest = {}
     ): Promise<string> {
-        const { versionId, sortField, sortDirection, filter, filterField, searchValue, searchField } = request;
+        const { versionId, sinceVersionId, sortField, sortDirection, filter, filterField, searchValue, searchField } =
+            request;
         const _queryParams = new URLSearchParams();
         if (versionId != null) {
             _queryParams.append("versionId", versionId);
+        }
+
+        if (sinceVersionId != null) {
+            _queryParams.append("sinceVersionId", sinceVersionId);
         }
 
         if (sortField != null) {
@@ -245,10 +250,14 @@ export class Sheets {
         sheetId: Flatfile.SheetId,
         request: Flatfile.GetRecordCountsRequest = {}
     ): Promise<Flatfile.RecordCountsResponse> {
-        const { versionId, filter, filterField, searchValue, searchField } = request;
+        const { versionId, sinceVersionId, filter, filterField, searchValue, searchField } = request;
         const _queryParams = new URLSearchParams();
         if (versionId != null) {
             _queryParams.append("versionId", versionId);
+        }
+
+        if (sinceVersionId != null) {
+            _queryParams.append("sinceVersionId", sinceVersionId);
         }
 
         if (filter != null) {

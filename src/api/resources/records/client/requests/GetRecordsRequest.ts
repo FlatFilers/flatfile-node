@@ -6,6 +6,7 @@ import { Flatfile } from "@flatfile/api-beta";
 
 export interface GetRecordsRequest {
     versionId?: string;
+    sinceVersionId?: Flatfile.VersionId;
     sortField?: Flatfile.SortField;
     sortDirection?: Flatfile.SortDirection;
     filter?: Flatfile.Filter;
@@ -15,10 +16,6 @@ export interface GetRecordsRequest {
     filterField?: Flatfile.FilterField;
     searchValue?: Flatfile.SearchValue;
     searchField?: Flatfile.SearchField;
-    /**
-     * If true, linked records will be included in the results. Defaults to false.
-     */
-    includeLinks?: boolean;
     /**
      * Number of records to return in a page (default 1000 if pageNumber included)
      */
@@ -31,4 +28,16 @@ export interface GetRecordsRequest {
      * Include counts for the total records, valid records and records with errors
      */
     includeCounts?: boolean;
+    /**
+     * If true, linked records will be included in the results. Defaults to false.
+     */
+    includeLinks?: boolean;
+    /**
+     * Include error messages, defaults to false.
+     */
+    includeLMessages?: boolean;
+    /**
+     * A list of record ids to get
+     */
+    ids?: Flatfile.RecordId | Flatfile.RecordId[];
 }

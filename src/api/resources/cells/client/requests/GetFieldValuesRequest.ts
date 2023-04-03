@@ -32,4 +32,8 @@ export interface GetFieldValuesRequest {
      * When true, excludes duplicate values
      */
     distinct?: boolean;
+    /**
+     * A value to find for a given field in a sheet. Wrap the value in "" for exact match
+     */
+    searchValue?: string;
 }

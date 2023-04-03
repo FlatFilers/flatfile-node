@@ -20,7 +20,7 @@ export class Jobs {
     constructor(private readonly options: Jobs.Options) {}
 
     public async list(request: Flatfile.ListJobsRequest = {}): Promise<Flatfile.ListJobsResponse> {
-        const { environmentId, spaceId, workbookId, fileId } = request;
+        const { environmentId, spaceId, workbookId, fileId, pageSize, pageNumber, sortDirection } = request;
         const _queryParams = new URLSearchParams();
         if (environmentId != null) {
             _queryParams.append("environmentId", environmentId);
@@ -36,6 +36,18 @@ export class Jobs {
 
         if (fileId != null) {
             _queryParams.append("fileId", fileId);
+        }
+
+        if (pageSize != null) {
+            _queryParams.append("pageSize", pageSize.toString());
+        }
+
+        if (pageNumber != null) {
+            _queryParams.append("pageNumber", pageNumber.toString());
+        }
+
+        if (sortDirection != null) {
+            _queryParams.append("sortDirection", sortDirection);
         }
 
         const _response = await core.fetcher({
