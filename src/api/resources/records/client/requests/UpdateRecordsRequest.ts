@@ -7,5 +7,5 @@ import { Flatfile } from "@flatfile/api-beta";
 export interface UpdateRecordsRequest {
     id: Flatfile.RecordId;
     versionId?: Flatfile.VersionId;
-    values: Flatfile.RecordData;
+    values: Flatfile.RecordData[];
 }

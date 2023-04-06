@@ -12,13 +12,13 @@ export const UpdateRecordsRequest: core.serialization.Schema<
 > = core.serialization.object({
     id: core.serialization.lazy(async () => (await import("../../../..")).RecordId),
     versionId: core.serialization.lazy(async () => (await import("../../../..")).VersionId).optional(),
-    values: core.serialization.lazy(async () => (await import("../../../..")).RecordData),
+    values: core.serialization.list(core.serialization.lazy(async () => (await import("../../../..")).RecordData)),
 });
 
 export declare namespace UpdateRecordsRequest {
     interface Raw {
         id: serializers.RecordId.Raw;
         versionId?: serializers.VersionId.Raw | null;
-        values: serializers.RecordData.Raw;
+        values: serializers.RecordData.Raw[];
     }
 }
