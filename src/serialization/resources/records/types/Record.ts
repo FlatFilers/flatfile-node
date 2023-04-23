@@ -14,7 +14,6 @@ export const Record: core.serialization.ObjectSchema<serializers.Record.Raw, Fla
         messages: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).ValidationMessage))
             .optional(),
-        metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
     });
 
 export declare namespace Record {
