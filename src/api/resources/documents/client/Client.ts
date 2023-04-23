@@ -17,7 +17,7 @@ export declare namespace Documents {
 }
 
 export class Documents {
-    constructor(private readonly options: Documents.Options) {}
+    constructor(protected readonly options: Documents.Options) {}
 
     /**
      * Returns all documents for a space
@@ -369,7 +369,7 @@ export class Documents {
         }
     }
 
-    private async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader() {
         const bearer = await core.Supplier.get(this.options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

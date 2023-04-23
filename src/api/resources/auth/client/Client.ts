@@ -5,6 +5,7 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import { Flatfile } from "@flatfile/api-beta";
+import URLSearchParams from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
@@ -17,7 +18,7 @@ export declare namespace Auth {
 }
 
 export class Auth {
-    constructor(private readonly options: Auth.Options) {}
+    constructor(protected readonly options: Auth.Options) {}
 
     /**
      * @throws {Flatfile.BadRequestError}
@@ -85,7 +86,7 @@ export class Auth {
         }
     }
 
-    private async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader() {
         const bearer = await core.Supplier.get(this.options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

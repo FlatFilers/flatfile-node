@@ -17,7 +17,7 @@ export declare namespace Versions {
 }
 
 export class Versions {
-    constructor(private readonly options: Versions.Options) {}
+    constructor(protected readonly options: Versions.Options) {}
 
     /**
      * Creates a new version id that can be used to group record updates
@@ -62,7 +62,7 @@ export class Versions {
         }
     }
 
-    private async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader() {
         const bearer = await core.Supplier.get(this.options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

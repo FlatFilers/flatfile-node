@@ -5,6 +5,7 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import { Flatfile } from "@flatfile/api-beta";
+import URLSearchParams from "@ungap/url-search-params";
 import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
@@ -17,7 +18,7 @@ export declare namespace Records {
 }
 
 export class Records {
-    constructor(private readonly options: Records.Options) {}
+    constructor(protected readonly options: Records.Options) {}
 
     /**
      * Returns records from a sheet in a workbook
@@ -426,7 +427,7 @@ export class Records {
         }
     }
 
-    private async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader() {
         const bearer = await core.Supplier.get(this.options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

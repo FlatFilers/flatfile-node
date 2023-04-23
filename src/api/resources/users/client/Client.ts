@@ -5,6 +5,7 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import { Flatfile } from "@flatfile/api-beta";
+import URLSearchParams from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
@@ -17,7 +18,7 @@ export declare namespace Users {
 }
 
 export class Users {
-    constructor(private readonly options: Users.Options) {}
+    constructor(protected readonly options: Users.Options) {}
 
     /**
      * Gets a list of users
@@ -307,7 +308,7 @@ export class Users {
         }
     }
 
-    private async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader() {
         const bearer = await core.Supplier.get(this.options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

@@ -5,6 +5,7 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import { Flatfile } from "@flatfile/api-beta";
+import URLSearchParams from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
@@ -17,7 +18,7 @@ export declare namespace Jobs {
 }
 
 export class Jobs {
-    constructor(private readonly options: Jobs.Options) {}
+    constructor(protected readonly options: Jobs.Options) {}
 
     public async list(request: Flatfile.ListJobsRequest = {}): Promise<Flatfile.ListJobsResponse> {
         const { environmentId, spaceId, workbookId, fileId, pageSize, pageNumber, sortDirection } = request;
@@ -444,7 +445,7 @@ export class Jobs {
         }
     }
 
-    private async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader() {
         const bearer = await core.Supplier.get(this.options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

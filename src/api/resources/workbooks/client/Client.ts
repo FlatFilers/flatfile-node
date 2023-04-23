@@ -5,6 +5,7 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import { Flatfile } from "@flatfile/api-beta";
+import URLSearchParams from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
@@ -17,7 +18,7 @@ export declare namespace Workbooks {
 }
 
 export class Workbooks {
-    constructor(private readonly options: Workbooks.Options) {}
+    constructor(protected readonly options: Workbooks.Options) {}
 
     /**
      * Returns all workbooks matching a filter for an account or space
@@ -275,7 +276,7 @@ export class Workbooks {
         }
     }
 
-    private async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader() {
         const bearer = await core.Supplier.get(this.options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;
