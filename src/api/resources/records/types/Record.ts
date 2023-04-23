@@ -12,5 +12,5 @@ export interface Record {
     values: Flatfile.RecordData;
     valid?: boolean;
     messages?: Flatfile.ValidationMessage[];
-    metadata?: Record<string, unknown>;
+    // metadata?: Record<string, unknown>;
 }
