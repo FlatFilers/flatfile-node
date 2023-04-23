@@ -8,7 +8,7 @@ import { Flatfile } from "@flatfile/api-beta";
  * Properties used to create a new Space
  */
 export interface SpaceConfig {
-    spaceConfigId: Flatfile.SpaceConfigId;
+    spaceConfigId?: Flatfile.SpaceConfigId;
     environmentId: Flatfile.EnvironmentId;
     primaryWorkbookId?: Flatfile.WorkbookId;
     /** The name of the space */
@@ -18,4 +18,5 @@ export interface SpaceConfig {
     /** Metadata for the space */
     metadata?: unknown;
     actions?: Flatfile.Action[];
+    guestAuthentication?: Flatfile.GuestAuthenticationEnum[];
 }

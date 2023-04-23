@@ -55,7 +55,7 @@ export class Events {
         }
 
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/events"),
+            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "events"),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -99,7 +99,7 @@ export class Events {
      */
     public async create(request: Flatfile.Event): Promise<Flatfile.EventResponse> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/events"),
+            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "events"),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -160,7 +160,7 @@ export class Events {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/events/${await serializers.EventId.jsonOrThrow(eventId)}`
+                `events/${await serializers.EventId.jsonOrThrow(eventId)}`
             ),
             method: "GET",
             headers: {
@@ -202,7 +202,7 @@ export class Events {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/events/${await serializers.EventId.jsonOrThrow(eventId)}/ack`
+                `events/${await serializers.EventId.jsonOrThrow(eventId)}/ack`
             ),
             method: "POST",
             headers: {
@@ -223,6 +223,69 @@ export class Events {
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
             });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Get a token which can be used to subscribe to events for this space
+     * @throws {Flatfile.BadRequestError}
+     * @throws {Flatfile.NotFoundError}
+     */
+    public async getEventToken(): Promise<Flatfile.spaces.EventToken> {
+        const _response = await core.fetcher({
+            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "subscription"),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+            },
+            contentType: "application/json",
+        });
+        if (_response.ok) {
+            return await serializers.spaces.EventToken.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.NotFoundError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {

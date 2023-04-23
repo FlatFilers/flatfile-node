@@ -11,6 +11,7 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "space:added": core.serialization.lazyObject(async () => (await import("../../..")).SpaceAddedEvent),
         "space:removed": core.serialization.lazyObject(async () => (await import("../../..")).SpaceRemovedEvent),
         "workbook:added": core.serialization.lazyObject(async () => (await import("../../..")).WorkbookAddedEvent),
+        "workbook:updated": core.serialization.lazyObject(async () => (await import("../../..")).WorkbookUpdatedEvent),
         "workbook:removed": core.serialization.lazyObject(async () => (await import("../../..")).WorkbookRemovedEvent),
         "user:added": core.serialization.lazyObject(async () => (await import("../../..")).UserAddedEvent),
         "user:removed": core.serialization.lazyObject(async () => (await import("../../..")).UserRemovedEvent),
@@ -43,6 +44,7 @@ export declare namespace Event {
         | Event.SpaceAdded
         | Event.SpaceRemoved
         | Event.WorkbookAdded
+        | Event.WorkbookUpdated
         | Event.WorkbookRemoved
         | Event.UserAdded
         | Event.UserRemoved
@@ -75,6 +77,10 @@ export declare namespace Event {
 
     interface WorkbookAdded extends serializers.WorkbookAddedEvent.Raw {
         type: "workbook:added";
+    }
+
+    interface WorkbookUpdated extends serializers.WorkbookUpdatedEvent.Raw {
+        type: "workbook:updated";
     }
 
     interface WorkbookRemoved extends serializers.WorkbookRemovedEvent.Raw {

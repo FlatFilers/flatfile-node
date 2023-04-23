@@ -14,7 +14,7 @@ export const BaseEvent: core.serialization.ObjectSchema<serializers.BaseEvent.Ra
         attributes: core.serialization.lazyObject(async () => (await import("../../..")).EventAttributes).optional(),
         callbackUrl: core.serialization.string().optional(),
         dataUrl: core.serialization.string().optional(),
-        createdAt: core.serialization.string().optional(),
+        createdAt: core.serialization.date(),
         acknowledgedAt: core.serialization.string().optional(),
         acknowledgedBy: core.serialization.string().optional(),
         target: core.serialization.string().optional(),
@@ -28,7 +28,7 @@ export declare namespace BaseEvent {
         attributes?: serializers.EventAttributes.Raw | null;
         callbackUrl?: string | null;
         dataUrl?: string | null;
-        createdAt?: string | null;
+        createdAt: string;
         acknowledgedAt?: string | null;
         acknowledgedBy?: string | null;
         target?: string | null;

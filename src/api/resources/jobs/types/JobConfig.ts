@@ -10,16 +10,16 @@ import { Flatfile } from "@flatfile/api-beta";
 export interface JobConfig {
     /** The type of job */
     type: Flatfile.JobType;
-    /** the type of operation to perform on the data */
-    operation?: Flatfile.Operation;
-    source: Flatfile.FileOrWorkbookId;
-    destination?: Flatfile.WorkbookId;
-    /** Can either be a `DeleteJobConfig`, a `FileJobConfig` or a `PipelineJobConfig`. */
-    config?: unknown;
+    /** the type of operation to perform on the data. For example, "export". */
+    operation?: string;
+    source: Flatfile.JobSource;
+    destination?: Flatfile.JobDestination;
+    config: Flatfile.JobUpdateConfig;
     /** the type of trigger to use for this job */
     trigger?: Flatfile.Trigger;
     /** the status of the job */
     status?: Flatfile.JobStatus;
     /** the progress of the job */
     progress?: number;
+    fileId?: Flatfile.FileId;
 }

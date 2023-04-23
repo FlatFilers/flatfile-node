@@ -22,7 +22,17 @@ export class Environments {
     /**
      * Get all environments
      */
-    public async list(): Promise<Flatfile.ListEnvironmentsResponse> {
+    public async list(request: Flatfile.ListEnvironmentsRequest = {}): Promise<Flatfile.ListEnvironmentsResponse> {
+        const { pageSize, pageNumber } = request;
+        const _queryParams = new URLSearchParams();
+        if (pageSize != null) {
+            _queryParams.append("pageSize", pageSize.toString());
+        }
+
+        if (pageNumber != null) {
+            _queryParams.append("pageNumber", pageNumber.toString());
+        }
+
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/environments"),
             method: "GET",
@@ -30,6 +40,7 @@ export class Environments {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            queryParameters: _queryParams,
         });
         if (_response.ok) {
             return await serializers.ListEnvironmentsResponse.parseOrThrow(_response.body, {
@@ -195,34 +206,26 @@ export class Environments {
         }
     }
 
-    public async getAgentLogs(
-        environmentId: string,
-        request: Flatfile.GetAllAgentLogsForEnvironmentRequest = {}
-    ): Promise<Flatfile.GetAgentLogsResponse> {
-        const { pageSize, pageNumber } = request;
-        const _queryParams = new URLSearchParams();
-        if (pageSize != null) {
-            _queryParams.append("pageSize", pageSize.toString());
-        }
-
-        if (pageNumber != null) {
-            _queryParams.append("pageNumber", pageNumber.toString());
-        }
-
+    /**
+     * Deletes a single environment
+     * @throws {Flatfile.BadRequestError}
+     * @throws {Flatfile.NotFoundError}
+     */
+    public async delete(environmentId: string, request: Flatfile.EnvironmentConfig): Promise<Flatfile.Success> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/environments/${environmentId}/logs`
+                `/environments/${environmentId}`
             ),
-            method: "GET",
+            method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
-            queryParameters: _queryParams,
+            body: await serializers.EnvironmentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
         });
         if (_response.ok) {
-            return await serializers.GetAgentLogsResponse.parseOrThrow(_response.body, {
+            return await serializers.Success.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -230,10 +233,29 @@ export class Environments {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.FlatfileError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.NotFoundError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {

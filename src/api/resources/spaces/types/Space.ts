@@ -18,6 +18,9 @@ export interface Space extends Flatfile.spaces.SpaceConfig {
     createdByUserName?: string;
     /** Date when space was created */
     createdAt: Date;
+    /** Date when space was updated */
+    updatedAt: Date;
     /** Guest link to the space */
     guestLink?: string;
+    accessToken?: string;
 }

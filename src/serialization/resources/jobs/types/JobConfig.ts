@@ -9,24 +9,26 @@ import * as core from "../../../../core";
 export const JobConfig: core.serialization.ObjectSchema<serializers.JobConfig.Raw, Flatfile.JobConfig> =
     core.serialization.object({
         type: core.serialization.lazy(async () => (await import("../../..")).JobType),
-        operation: core.serialization.lazy(async () => (await import("../../..")).Operation).optional(),
-        source: core.serialization.lazy(async () => (await import("../../..")).FileOrWorkbookId),
-        destination: core.serialization.lazy(async () => (await import("../../..")).WorkbookId).optional(),
-        config: core.serialization.unknown(),
+        operation: core.serialization.string().optional(),
+        source: core.serialization.lazy(async () => (await import("../../..")).JobSource),
+        destination: core.serialization.lazy(async () => (await import("../../..")).JobDestination).optional(),
+        config: core.serialization.lazy(async () => (await import("../../..")).JobUpdateConfig),
         trigger: core.serialization.lazy(async () => (await import("../../..")).Trigger).optional(),
         status: core.serialization.lazy(async () => (await import("../../..")).JobStatus).optional(),
         progress: core.serialization.number().optional(),
+        fileId: core.serialization.lazy(async () => (await import("../../..")).FileId).optional(),
     });
 
 export declare namespace JobConfig {
     interface Raw {
         type: serializers.JobType.Raw;
-        operation?: serializers.Operation.Raw | null;
-        source: serializers.FileOrWorkbookId.Raw;
-        destination?: serializers.WorkbookId.Raw | null;
-        config?: unknown;
+        operation?: string | null;
+        source: serializers.JobSource.Raw;
+        destination?: serializers.JobDestination.Raw | null;
+        config: serializers.JobUpdateConfig.Raw;
         trigger?: serializers.Trigger.Raw | null;
         status?: serializers.JobStatus.Raw | null;
         progress?: number | null;
+        fileId?: serializers.FileId.Raw | null;
     }
 }

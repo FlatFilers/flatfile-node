@@ -16,6 +16,7 @@ export const RecordWithLinks: core.serialization.ObjectSchema<
     messages: core.serialization
         .list(core.serialization.lazyObject(async () => (await import("../../..")).ValidationMessage))
         .optional(),
+    metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
 });
 
 export declare namespace RecordWithLinks {
@@ -24,5 +25,6 @@ export declare namespace RecordWithLinks {
         values: serializers.RecordDataWithLinks.Raw;
         valid?: boolean | null;
         messages?: serializers.ValidationMessage.Raw[] | null;
+        metadata?: Record<string, unknown> | null;
     }
 }

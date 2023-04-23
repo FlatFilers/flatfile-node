@@ -11,8 +11,13 @@ export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateCon
         core.serialization.lazyObject(async () => (await import("../../..")).DeleteJobConfig),
         core.serialization.lazyObject(async () => (await import("../../..")).FileJobConfig),
         core.serialization.lazyObject(async () => (await import("../../..")).PipelineJobConfig),
+        core.serialization.lazyObject(async () => (await import("../../..")).ExportJobConfig),
     ]);
 
 export declare namespace JobUpdateConfig {
-    type Raw = serializers.DeleteJobConfig.Raw | serializers.FileJobConfig.Raw | serializers.PipelineJobConfig.Raw;
+    type Raw =
+        | serializers.DeleteJobConfig.Raw
+        | serializers.FileJobConfig.Raw
+        | serializers.PipelineJobConfig.Raw
+        | serializers.ExportJobConfig.Raw;
 }

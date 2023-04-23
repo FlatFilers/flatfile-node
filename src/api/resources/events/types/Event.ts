@@ -11,6 +11,7 @@ export type Event =
     | Flatfile.Event.SpaceAdded
     | Flatfile.Event.SpaceRemoved
     | Flatfile.Event.WorkbookAdded
+    | Flatfile.Event.WorkbookUpdated
     | Flatfile.Event.WorkbookRemoved
     | Flatfile.Event.UserAdded
     | Flatfile.Event.UserRemoved
@@ -44,6 +45,10 @@ export declare namespace Event {
 
     interface WorkbookAdded extends Flatfile.WorkbookAddedEvent {
         type: "workbook:added";
+    }
+
+    interface WorkbookUpdated extends Flatfile.WorkbookUpdatedEvent {
+        type: "workbook:updated";
     }
 
     interface WorkbookRemoved extends Flatfile.WorkbookRemovedEvent {

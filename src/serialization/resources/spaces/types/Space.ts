@@ -15,7 +15,9 @@ export const Space: core.serialization.ObjectSchema<serializers.spaces.Space.Raw
             createdByUserId: core.serialization.lazy(async () => (await import("../../..")).UserId).optional(),
             createdByUserName: core.serialization.string().optional(),
             createdAt: core.serialization.date(),
+            updatedAt: core.serialization.date(),
             guestLink: core.serialization.string().optional(),
+            accessToken: core.serialization.string().optional(),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).spaces.SpaceConfig));
 
@@ -27,6 +29,8 @@ export declare namespace Space {
         createdByUserId?: serializers.UserId.Raw | null;
         createdByUserName?: string | null;
         createdAt: string;
+        updatedAt: string;
         guestLink?: string | null;
+        accessToken?: string | null;
     }
 }

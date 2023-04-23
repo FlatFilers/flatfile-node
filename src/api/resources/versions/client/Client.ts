@@ -22,7 +22,7 @@ export class Versions {
     /**
      * Creates a new version id that can be used to group record updates
      */
-    public async createId(): Promise<Flatfile.VersionResponse> {
+    public async createId(request: Flatfile.VersionsPostRequestBody = {}): Promise<Flatfile.VersionResponse> {
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/versions"),
             method: "POST",
@@ -30,6 +30,7 @@ export class Versions {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            body: await serializers.VersionsPostRequestBody.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
         });
         if (_response.ok) {
             return await serializers.VersionResponse.parseOrThrow(_response.body, {

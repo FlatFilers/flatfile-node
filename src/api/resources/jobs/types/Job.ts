@@ -9,4 +9,12 @@ import { Flatfile } from "@flatfile/api-beta";
  */
 export interface Job extends Flatfile.JobConfig {
     id: Flatfile.JobId;
+    /** Date the item was created */
+    createdAt: Date;
+    /** Date the item was last updated */
+    updatedAt: Date;
+    /** the time that the job started at */
+    startedAt?: Date;
+    /** the time that the job finished at */
+    finishedAt?: Date;
 }

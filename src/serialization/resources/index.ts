@@ -1,6 +1,8 @@
 export * as spaces from "./spaces";
 export * as agents from "./agents";
 export * from "./agents/types";
+export * as auth from "./auth";
+export * from "./auth/types";
 export * as cells from "./cells";
 export * from "./cells/types";
 export * as commons from "./commons";
@@ -32,4 +34,5 @@ export * from "./workbooks/types";
 export * from "./files/client/requests";
 export * from "./records/client/requests";
 export * from "./users/client/requests";
+export * from "./versions/client/requests";
 export * from "./commons/errors";

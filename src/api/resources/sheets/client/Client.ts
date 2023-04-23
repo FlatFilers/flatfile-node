@@ -68,10 +68,7 @@ export class Sheets {
     /**
      * Returns a sheet in a workbook
      */
-    public async get(sheetId: Flatfile.SheetId, request: Flatfile.SheetRequest): Promise<Flatfile.SheetResponse> {
-        const { workbookId } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("workbookId", workbookId);
+    public async get(sheetId: Flatfile.SheetId): Promise<Flatfile.SheetResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
@@ -82,7 +79,6 @@ export class Sheets {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
-            queryParameters: _queryParams,
         });
         if (_response.ok) {
             return await serializers.SheetResponse.parseOrThrow(_response.body, {
@@ -115,9 +111,77 @@ export class Sheets {
     }
 
     /**
-     * Trigger data hooks and validation to run on a sheet
+     * Deletes a specific sheet from a workbook
+     * @throws {Flatfile.BadRequestError}
+     * @throws {Flatfile.NotFoundError}
      */
-    public async validate(sheetId: Flatfile.SheetId): Promise<Flatfile.SheetVersionResponse> {
+    public async delete(sheetId: Flatfile.SheetId): Promise<Flatfile.Success> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}`
+            ),
+            method: "DELETE",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+            },
+            contentType: "application/json",
+        });
+        if (_response.ok) {
+            return await serializers.Success.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.NotFoundError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Trigger data hooks and validation to run on a sheet
+     * @throws {Flatfile.BadRequestError}
+     * @throws {Flatfile.NotFoundError}
+     */
+    public async validate(sheetId: Flatfile.SheetId): Promise<Flatfile.Success> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
@@ -130,7 +194,7 @@ export class Sheets {
             contentType: "application/json",
         });
         if (_response.ok) {
-            return await serializers.SheetVersionResponse.parseOrThrow(_response.body, {
+            return await serializers.Success.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -138,10 +202,29 @@ export class Sheets {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.FlatfileError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.NotFoundError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -166,8 +249,17 @@ export class Sheets {
         sheetId: Flatfile.SheetId,
         request: Flatfile.GetRecordsCsvRequest = {}
     ): Promise<string> {
-        const { versionId, sinceVersionId, sortField, sortDirection, filter, filterField, searchValue, searchField } =
-            request;
+        const {
+            versionId,
+            sinceVersionId,
+            sortField,
+            sortDirection,
+            filter,
+            filterField,
+            searchValue,
+            searchField,
+            ids,
+        } = request;
         const _queryParams = new URLSearchParams();
         if (versionId != null) {
             _queryParams.append("versionId", versionId);
@@ -199,6 +291,16 @@ export class Sheets {
 
         if (searchField != null) {
             _queryParams.append("searchField", searchField);
+        }
+
+        if (ids != null) {
+            if (Array.isArray(ids)) {
+                for (const _item of ids) {
+                    _queryParams.append("ids", _item);
+                }
+            } else {
+                _queryParams.append("ids", ids);
+            }
         }
 
         const _response = await core.fetcher({

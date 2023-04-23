@@ -6,4 +6,5 @@ import { Flatfile } from "@flatfile/api-beta";
 
 export interface ListEnvironmentsResponse {
     data: Flatfile.Environment[];
+    pagination?: Flatfile.Pagination;
 }

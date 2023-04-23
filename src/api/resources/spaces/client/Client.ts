@@ -8,7 +8,6 @@ import { Flatfile } from "@flatfile/api-beta";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
-import { Config } from "../resources/config/client/Client";
 
 export declare namespace Spaces {
     interface Options {
@@ -281,57 +280,6 @@ export class Spaces {
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    /**
-     * Get a token which can be used to subscribe to events for this space
-     */
-    public async getEventToken(spaceId: Flatfile.SpaceId): Promise<Flatfile.spaces.EventToken> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
-                `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}/subscription`
-            ),
-            method: "GET",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-            },
-            contentType: "application/json",
-        });
-        if (_response.ok) {
-            return await serializers.spaces.EventToken.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.FlatfileError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.FlatfileError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.FlatfileTimeoutError();
-            case "unknown":
-                throw new errors.FlatfileError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    private _config: Config | undefined;
-
-    public get config(): Config {
-        return (this._config ??= new Config(this.options));
     }
 
     private async _getAuthorizationHeader() {

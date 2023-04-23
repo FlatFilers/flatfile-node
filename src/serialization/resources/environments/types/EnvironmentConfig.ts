@@ -13,7 +13,7 @@ export const EnvironmentConfig: core.serialization.ObjectSchema<
     name: core.serialization.string(),
     isProd: core.serialization.boolean(),
     guestAuthentication: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../..")).GuestAuthentication))
+        .list(core.serialization.lazy(async () => (await import("../../..")).GuestAuthenticationEnum))
         .optional(),
     features: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
 });
@@ -22,7 +22,7 @@ export declare namespace EnvironmentConfig {
     interface Raw {
         name: string;
         isProd: boolean;
-        guestAuthentication?: serializers.GuestAuthentication.Raw[] | null;
+        guestAuthentication?: serializers.GuestAuthenticationEnum.Raw[] | null;
         features?: Record<string, unknown> | null;
     }
 }

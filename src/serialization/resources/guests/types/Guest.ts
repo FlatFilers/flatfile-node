@@ -9,11 +9,15 @@ import * as core from "../../../../core";
 export const Guest: core.serialization.ObjectSchema<serializers.Guest.Raw, Flatfile.Guest> = core.serialization
     .object({
         id: core.serialization.lazy(async () => (await import("../../..")).GuestId),
+        createdAt: core.serialization.date(),
+        updatedAt: core.serialization.date(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).GuestConfig));
 
 export declare namespace Guest {
     interface Raw extends serializers.GuestConfig.Raw {
         id: serializers.GuestId.Raw;
+        createdAt: string;
+        updatedAt: string;
     }
 }

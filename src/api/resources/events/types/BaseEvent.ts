@@ -17,7 +17,7 @@ export interface BaseEvent {
     /** The url to retrieve the data associated with the event */
     dataUrl?: string;
     /** Date the event was created */
-    createdAt?: string;
+    createdAt: Date;
     /** Date the event was acknowledged */
     acknowledgedAt?: string;
     /** The actor (user or system) who acknowledged the event */

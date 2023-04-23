@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 
 export const Sheet: core.serialization.ObjectSchema<serializers.Sheet.Raw, Flatfile.Sheet> = core.serialization.object({
     id: core.serialization.lazy(async () => (await import("../../..")).SheetId),
+    workbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId).optional(),
     name: core.serialization.string(),
     config: core.serialization.lazyObject(async () => (await import("../../..")).SheetConfig).optional(),
     countRecords: core.serialization.lazyObject(async () => (await import("../../..")).RecordCounts).optional(),
@@ -16,6 +17,7 @@ export const Sheet: core.serialization.ObjectSchema<serializers.Sheet.Raw, Flatf
 export declare namespace Sheet {
     interface Raw {
         id: serializers.SheetId.Raw;
+        workbookId?: serializers.WorkbookId.Raw | null;
         name: string;
         config?: serializers.SheetConfig.Raw | null;
         countRecords?: serializers.RecordCounts.Raw | null;

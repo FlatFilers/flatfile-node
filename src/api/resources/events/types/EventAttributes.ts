@@ -8,6 +8,8 @@ import { Flatfile } from "@flatfile/api-beta";
  * The attributes of the event
  */
 export interface EventAttributes {
+    /** Date the related entity was last updated */
+    targetUpdatedAt?: Date;
     /** The progress of the event within a collection of iterable events */
     progress?: Flatfile.Progress;
 }

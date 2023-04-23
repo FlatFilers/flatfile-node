@@ -29,4 +29,5 @@ export interface File {
     createdAt: string;
     /** Date the file was last updated */
     updatedAt: string;
+    sheetId?: Flatfile.SheetId;
 }

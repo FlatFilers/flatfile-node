@@ -5,7 +5,7 @@
 import { Flatfile } from "@flatfile/api-beta";
 
 /**
- * A single unit of work that a pipeline will execute
+ * A single unit of work that will be executed
  */
 export interface JobUpdate {
     config: Flatfile.JobUpdateConfig;

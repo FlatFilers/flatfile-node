@@ -17,6 +17,11 @@ export interface GetRecordsRequest {
     searchValue?: Flatfile.SearchValue;
     searchField?: Flatfile.SearchField;
     /**
+     * A list of record ids to fetch. If filter "all" is also specified,  then this is a list of record ids to exclude from the results.
+     *
+     */
+    ids?: Flatfile.RecordId | Flatfile.RecordId[];
+    /**
      * Number of records to return in a page (default 1000 if pageNumber included)
      */
     pageSize?: number;
@@ -36,8 +41,4 @@ export interface GetRecordsRequest {
      * Include error messages, defaults to false.
      */
     includeLMessages?: boolean;
-    /**
-     * A list of record ids to get
-     */
-    ids?: Flatfile.RecordId | Flatfile.RecordId[];
 }

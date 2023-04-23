@@ -10,11 +10,13 @@ export const EventAttributes: core.serialization.ObjectSchema<
     serializers.EventAttributes.Raw,
     Flatfile.EventAttributes
 > = core.serialization.object({
+    targetUpdatedAt: core.serialization.date().optional(),
     progress: core.serialization.lazyObject(async () => (await import("../../..")).Progress).optional(),
 });
 
 export declare namespace EventAttributes {
     interface Raw {
+        targetUpdatedAt?: string | null;
         progress?: serializers.Progress.Raw | null;
     }
 }

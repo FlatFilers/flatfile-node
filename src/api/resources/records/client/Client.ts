@@ -35,12 +35,12 @@ export class Records {
             filterField,
             searchValue,
             searchField,
+            ids,
             pageSize,
             pageNumber,
             includeCounts,
             includeLinks,
             includeLMessages,
-            ids,
         } = request;
         const _queryParams = new URLSearchParams();
         if (versionId != null) {
@@ -75,6 +75,16 @@ export class Records {
             _queryParams.append("searchField", searchField);
         }
 
+        if (ids != null) {
+            if (Array.isArray(ids)) {
+                for (const _item of ids) {
+                    _queryParams.append("ids", _item);
+                }
+            } else {
+                _queryParams.append("ids", ids);
+            }
+        }
+
         if (pageSize != null) {
             _queryParams.append("pageSize", pageSize.toString());
         }
@@ -93,16 +103,6 @@ export class Records {
 
         if (includeLMessages != null) {
             _queryParams.append("includeLMessages", includeLMessages.toString());
-        }
-
-        if (ids != null) {
-            if (Array.isArray(ids)) {
-                for (const _item of ids) {
-                    _queryParams.append("ids", _item);
-                }
-            } else {
-                _queryParams.append("ids", ids);
-            }
         }
 
         const _response = await core.fetcher({

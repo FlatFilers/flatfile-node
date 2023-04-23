@@ -20,7 +20,7 @@ export class Files {
     constructor(private readonly options: Files.Options) {}
 
     public async list(request: Flatfile.ListFilesRequest = {}): Promise<Flatfile.ListFilesResponse> {
-        const { spaceId, pageSize, pageNumber } = request;
+        const { spaceId, pageSize, pageNumber, query } = request;
         const _queryParams = new URLSearchParams();
         if (spaceId != null) {
             _queryParams.append("spaceId", spaceId);
@@ -32,6 +32,10 @@ export class Files {
 
         if (pageNumber != null) {
             _queryParams.append("pageNumber", pageNumber.toString());
+        }
+
+        if (query != null) {
+            _queryParams.append("query", query);
         }
 
         const _response = await core.fetcher({

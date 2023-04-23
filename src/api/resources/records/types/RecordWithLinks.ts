@@ -12,4 +12,5 @@ export interface RecordWithLinks {
     values: Flatfile.RecordDataWithLinks;
     valid?: boolean;
     messages?: Flatfile.ValidationMessage[];
+    metadata?: Record<string, unknown>;
 }

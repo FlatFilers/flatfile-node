@@ -16,5 +16,7 @@ export interface Workbook {
     config: Flatfile.WorkbookConfig;
     labels?: string[];
     /** Date the workbook was last updated */
-    updatedAt?: Date;
+    updatedAt: Date;
+    /** Date the workbook was created */
+    createdAt: Date;
 }

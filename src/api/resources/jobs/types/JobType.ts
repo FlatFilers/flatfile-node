@@ -5,9 +5,10 @@
 /**
  * The type of job
  */
-export type JobType = "file" | "workbook";
+export type JobType = "file" | "workbook" | "sheet";
 
 export const JobType = {
     File: "file",
     Workbook: "workbook",
+    Sheet: "sheet",
 } as const;

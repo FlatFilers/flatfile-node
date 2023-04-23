@@ -19,4 +19,9 @@ export interface GetRecordsCsvRequest {
     filterField?: Flatfile.FilterField;
     searchValue?: Flatfile.SearchValue;
     searchField?: Flatfile.SearchField;
+    /**
+     * A list of record ids to download. If filter "all" is also specified,  then this is a list of record ids to exclude from the download.
+     *
+     */
+    ids?: Flatfile.RecordId | Flatfile.RecordId[];
 }

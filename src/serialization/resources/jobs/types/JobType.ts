@@ -9,8 +9,9 @@ import * as core from "../../../../core";
 export const JobType: core.serialization.Schema<serializers.JobType.Raw, Flatfile.JobType> = core.serialization.enum_([
     "file",
     "workbook",
+    "sheet",
 ]);
 
 export declare namespace JobType {
-    type Raw = "file" | "workbook";
+    type Raw = "file" | "workbook" | "sheet";
 }

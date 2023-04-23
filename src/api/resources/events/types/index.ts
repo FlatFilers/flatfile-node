@@ -5,6 +5,7 @@ export * from "./SpaceAddedEvent";
 export * from "./SpaceRemovedEvent";
 export * from "./WorkbookAddedEvent";
 export * from "./WorkbookRemovedEvent";
+export * from "./WorkbookUpdatedEvent";
 export * from "./UserAddedEvent";
 export * from "./UserRemovedEvent";
 export * from "./UserOnlineEvent";

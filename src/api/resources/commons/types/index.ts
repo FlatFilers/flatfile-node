@@ -13,7 +13,6 @@ export * from "./JobId";
 export * from "./UserId";
 export * from "./SpaceConfigId";
 export * from "./RecordId";
-export * from "./FieldId";
 export * from "./Pagination";
 export * from "./Action";
 export * from "./SortDirection";

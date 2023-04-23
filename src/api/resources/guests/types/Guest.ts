@@ -6,4 +6,8 @@ import { Flatfile } from "@flatfile/api-beta";
 
 export interface Guest extends Flatfile.GuestConfig {
     id: Flatfile.GuestId;
+    /** Date the guest object was created */
+    createdAt: Date;
+    /** Date the guest object was last updated */
+    updatedAt: Date;
 }

@@ -11,7 +11,7 @@ import { Flatfile } from "@flatfile/api-beta";
  *     {
  *         name: "dev",
  *         isProd: false,
- *         guestAuthentication: [Flatfile.GuestAuthentication.MagicLink]
+ *         guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink]
  *     }
  */
 export interface EnvironmentConfig {
@@ -19,6 +19,6 @@ export interface EnvironmentConfig {
     name: string;
     /** Whether or not the environment is a production environment */
     isProd: boolean;
-    guestAuthentication?: Flatfile.GuestAuthentication[];
+    guestAuthentication?: Flatfile.GuestAuthenticationEnum[];
     features?: Record<string, unknown>;
 }

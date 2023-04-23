@@ -11,10 +11,12 @@ export const ListEnvironmentsResponse: core.serialization.ObjectSchema<
     Flatfile.ListEnvironmentsResponse
 > = core.serialization.object({
     data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Environment)),
+    pagination: core.serialization.lazyObject(async () => (await import("../../..")).Pagination).optional(),
 });
 
 export declare namespace ListEnvironmentsResponse {
     interface Raw {
         data: serializers.Environment.Raw[];
+        pagination?: serializers.Pagination.Raw | null;
     }
 }

@@ -9,11 +9,19 @@ import * as core from "../../../../core";
 export const Job: core.serialization.ObjectSchema<serializers.Job.Raw, Flatfile.Job> = core.serialization
     .object({
         id: core.serialization.lazy(async () => (await import("../../..")).JobId),
+        createdAt: core.serialization.date(),
+        updatedAt: core.serialization.date(),
+        startedAt: core.serialization.date().optional(),
+        finishedAt: core.serialization.date().optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).JobConfig));
 
 export declare namespace Job {
     interface Raw extends serializers.JobConfig.Raw {
         id: serializers.JobId.Raw;
+        createdAt: string;
+        updatedAt: string;
+        startedAt?: string | null;
+        finishedAt?: string | null;
     }
 }

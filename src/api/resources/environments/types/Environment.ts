@@ -9,7 +9,7 @@ import { Flatfile } from "@flatfile/api-beta";
  *     {
  *         name: "dev",
  *         isProd: false,
- *         guestAuthentication: [Flatfile.GuestAuthentication.MagicLink],
+ *         guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink],
  *         id: "us_env_hVXkXs0b",
  *         accountId: "us_acc_uj6s91wc"
  *     }

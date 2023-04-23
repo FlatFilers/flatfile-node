@@ -19,6 +19,7 @@ export const File: core.serialization.ObjectSchema<serializers.File.Raw, Flatfil
     workbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId),
     createdAt: core.serialization.string(),
     updatedAt: core.serialization.string(),
+    sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId).optional(),
 });
 
 export declare namespace File {
@@ -35,5 +36,6 @@ export declare namespace File {
         workbookId: serializers.WorkbookId.Raw;
         createdAt: string;
         updatedAt: string;
+        sheetId?: serializers.SheetId.Raw | null;
     }
 }

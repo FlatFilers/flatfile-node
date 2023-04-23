@@ -4,4 +4,8 @@
 
 import { Flatfile } from "@flatfile/api-beta";
 
-export type JobUpdateConfig = Flatfile.DeleteJobConfig | Flatfile.FileJobConfig | Flatfile.PipelineJobConfig;
+export type JobUpdateConfig =
+    | Flatfile.DeleteJobConfig
+    | Flatfile.FileJobConfig
+    | Flatfile.PipelineJobConfig
+    | Flatfile.ExportJobConfig;
