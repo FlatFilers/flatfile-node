@@ -21,7 +21,7 @@ export interface Space extends Flatfile.spaces.SpaceConfig {
     /** Date when space was updated */
     updatedAt: Date;
     /** Date when space was archived */
-    archivedAt: Date;
+    archivedAt?: Date;
     /** Guest link to the space */
     guestLink?: string;
     accessToken?: string;

@@ -156,10 +156,7 @@ export class Records {
     /**
      * Updates existing records in a workbook sheet
      */
-    public async update(
-        sheetId: Flatfile.SheetId,
-        request: Flatfile.UpdateRecordsRequest
-    ): Promise<Flatfile.VersionResponse> {
+    public async update(sheetId: Flatfile.SheetId, request: Flatfile.Records): Promise<Flatfile.VersionResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
@@ -170,7 +167,7 @@ export class Records {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
-            body: await serializers.UpdateRecordsRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.Records.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
         });
         if (_response.ok) {
             return await serializers.VersionResponse.parseOrThrow(_response.body, {

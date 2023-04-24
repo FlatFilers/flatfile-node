@@ -16,7 +16,7 @@ export const Space: core.serialization.ObjectSchema<serializers.spaces.Space.Raw
             createdByUserName: core.serialization.string().optional(),
             createdAt: core.serialization.date(),
             updatedAt: core.serialization.date(),
-            archivedAt: core.serialization.date(),
+            archivedAt: core.serialization.date().optional(),
             guestLink: core.serialization.string().optional(),
             accessToken: core.serialization.string().optional(),
         })
@@ -31,7 +31,7 @@ export declare namespace Space {
         createdByUserName?: string | null;
         createdAt: string;
         updatedAt: string;
-        archivedAt: string;
+        archivedAt?: string | null;
         guestLink?: string | null;
         accessToken?: string | null;
     }
