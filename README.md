@@ -1,6 +1,6 @@
 # Flatfile Node API Library
 
-[![npm shield](https://img.shields.io/npm/v/@flatfile/api-beta)](https://www.npmjs.com/package/@flatfile/api-beta)
+[![npm shield](https://img.shields.io/npm/v/@flatfile/api)](https://www.npmjs.com/package/@flatfile/api-beta)
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 
 The Flatfile Node.js library provides convenient access to the Flatfile API from JavaScript/TypeScript.
@@ -12,9 +12,9 @@ API reference documentation is available [here](https://flatfile.stoplight.io/do
 ## Installation
 
 ```
-npm install --save @flatfile/api-beta
+npm install --save @flatfile/api
 # or
-yarn add @flatfile/api-beta
+yarn add @flatfile/api
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ yarn add @flatfile/api-beta
 [![Try it out](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/flatfile-typescript-sdk-7xtsm5?file=app.ts&view=editor)
 
 ```typescript
-import { Flatfile, FlatfileClient } from '@flatfile/api-beta';
+import { Flatfile, FlatfileClient } from '@flatfile/api';
 
 const flatfile = new FlatfileClient({
   clientId: 'YOUR_CLIENT_ID',
