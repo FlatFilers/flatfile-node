@@ -15,6 +15,7 @@ export interface ListSpacesRequest {
      */
     pageNumber?: number;
     search?: string;
+    archived?: boolean;
     sortField?: Flatfile.spaces.GetSpacesSortField;
     sortDirection?: Flatfile.SortDirection;
 }

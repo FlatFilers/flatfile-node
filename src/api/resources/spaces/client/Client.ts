@@ -25,7 +25,7 @@ export class Spaces {
      * @throws {Flatfile.BadRequestError}
      */
     public async list(request: Flatfile.spaces.ListSpacesRequest = {}): Promise<Flatfile.spaces.ListSpacesResponse> {
-        const { environmentId, pageSize, pageNumber, search, sortField, sortDirection } = request;
+        const { environmentId, pageSize, pageNumber, search, archived, sortField, sortDirection } = request;
         const _queryParams = new URLSearchParams();
         if (environmentId != null) {
             _queryParams.append("environmentId", environmentId);
@@ -41,6 +41,10 @@ export class Spaces {
 
         if (search != null) {
             _queryParams.append("search", search);
+        }
+
+        if (archived != null) {
+            _queryParams.append("archived", archived.toString());
         }
 
         if (sortField != null) {
