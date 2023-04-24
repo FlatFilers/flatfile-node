@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@flatfile/api-beta";
+import { Flatfile } from "@flatfile/api";
 import * as core from "../../../../core";
 
 export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, Flatfile.EventTopic> =

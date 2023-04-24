@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@flatfile/api-beta";
+import { Flatfile } from "@flatfile/api";
 import * as core from "../../../../core";
 
 export const ApiKey: core.serialization.ObjectSchema<serializers.ApiKey.Raw, Flatfile.ApiKey> =

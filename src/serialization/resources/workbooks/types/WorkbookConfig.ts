@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@flatfile/api-beta";
+import { Flatfile } from "@flatfile/api";
 import * as core from "../../../../core";
 
 export const WorkbookConfig: core.serialization.ObjectSchema<serializers.WorkbookConfig.Raw, Flatfile.WorkbookConfig> =

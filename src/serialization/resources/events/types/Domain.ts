@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@flatfile/api-beta";
+import { Flatfile } from "@flatfile/api";
 import * as core from "../../../../core";
 
 export const Domain: core.serialization.Schema<serializers.Domain.Raw, Flatfile.Domain> = core.serialization.enum_([

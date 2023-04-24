@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@flatfile/api-beta";
+import { Flatfile } from "@flatfile/api";
 import * as core from "../../../../core";
 
 export const Agent: core.serialization.ObjectSchema<serializers.Agent.Raw, Flatfile.Agent> = core.serialization

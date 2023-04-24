@@ -3,7 +3,7 @@
  */
 
 import * as errors from "../../../../errors";
-import { Flatfile } from "@flatfile/api-beta";
+import { Flatfile } from "@flatfile/api";
 
 export class NotFoundError extends errors.FlatfileError {
     constructor(body: Flatfile.Error_[]) {

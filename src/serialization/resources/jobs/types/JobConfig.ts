@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@flatfile/api-beta";
+import { Flatfile } from "@flatfile/api";
 import * as core from "../../../../core";
 
 export const JobConfig: core.serialization.ObjectSchema<serializers.JobConfig.Raw, Flatfile.JobConfig> =

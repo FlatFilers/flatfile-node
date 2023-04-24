@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@flatfile/api-beta";
+import { Flatfile } from "@flatfile/api";
 import * as core from "../../../../core";
 
 export const Driver: core.serialization.Schema<serializers.Driver.Raw, Flatfile.Driver> = core.serialization.enum_([
