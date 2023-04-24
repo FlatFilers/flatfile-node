@@ -6,7 +6,7 @@ import * as serializers from "../../..";
 import { Flatfile } from "@flatfile/api-beta";
 import * as core from "../../../../core";
 
-export const Record: core.serialization.ObjectSchema<serializers.Record.Raw, Flatfile.Record> =
+export const Record_: core.serialization.ObjectSchema<serializers.Record_.Raw, Flatfile.Record_> =
     core.serialization.object({
         id: core.serialization.lazy(async () => (await import("../../..")).RecordId),
         values: core.serialization.lazy(async () => (await import("../../..")).RecordData),
@@ -14,9 +14,10 @@ export const Record: core.serialization.ObjectSchema<serializers.Record.Raw, Fla
         messages: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).ValidationMessage))
             .optional(),
+        metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
     });
 
-export declare namespace Record {
+export declare namespace Record_ {
     interface Raw {
         id: serializers.RecordId.Raw;
         values: serializers.RecordData.Raw;

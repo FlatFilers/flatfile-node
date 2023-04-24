@@ -6,12 +6,13 @@ import * as serializers from "../../..";
 import { Flatfile } from "@flatfile/api-beta";
 import * as core from "../../../../core";
 
-export const Error: core.serialization.ObjectSchema<serializers.Error.Raw, Flatfile.Error> = core.serialization.object({
-    key: core.serialization.string().optional(),
-    message: core.serialization.string(),
-});
+export const Error_: core.serialization.ObjectSchema<serializers.Error_.Raw, Flatfile.Error_> =
+    core.serialization.object({
+        key: core.serialization.string().optional(),
+        message: core.serialization.string(),
+    });
 
-export declare namespace Error {
+export declare namespace Error_ {
     interface Raw {
         key?: string | null;
         message: string;

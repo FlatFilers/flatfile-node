@@ -5,5 +5,5 @@
 import { Flatfile } from "@flatfile/api-beta";
 
 export interface FileResponse {
-    data: Flatfile.File;
+    data: Flatfile.File_;
 }

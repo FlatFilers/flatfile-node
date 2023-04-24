@@ -7,10 +7,10 @@ import { Flatfile } from "@flatfile/api-beta";
 /**
  * A single row of data in a Sheet
  */
-export interface Record {
+export interface Record_ {
     id: Flatfile.RecordId;
     values: Flatfile.RecordData;
     valid?: boolean;
     messages?: Flatfile.ValidationMessage[];
-    // metadata?: Record<string, unknown>;
+    metadata?: Record<string, unknown>;
 }

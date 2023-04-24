@@ -11,12 +11,12 @@ export const ListFilesResponse: core.serialization.ObjectSchema<
     Flatfile.ListFilesResponse
 > = core.serialization.object({
     pagination: core.serialization.lazyObject(async () => (await import("../../..")).Pagination).optional(),
-    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).File)),
+    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).File_)),
 });
 
 export declare namespace ListFilesResponse {
     interface Raw {
         pagination?: serializers.Pagination.Raw | null;
-        data: serializers.File.Raw[];
+        data: serializers.File_.Raw[];
     }
 }

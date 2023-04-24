@@ -7,9 +7,9 @@ import { Flatfile } from "@flatfile/api-beta";
 import * as core from "../../../../core";
 
 export const Records: core.serialization.Schema<serializers.Records.Raw, Flatfile.Records> = core.serialization.list(
-    core.serialization.lazyObject(async () => (await import("../../..")).Record)
+    core.serialization.lazyObject(async () => (await import("../../..")).Record_)
 );
 
 export declare namespace Records {
-    type Raw = serializers.Record.Raw[];
+    type Raw = serializers.Record_.Raw[];
 }

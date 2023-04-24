@@ -41,4 +41,8 @@ export interface GetRecordsRequest {
      * Include error messages, defaults to false.
      */
     includeLMessages?: boolean;
+    /**
+     * if "for" is provided, the query parameters will be pulled from the event payload
+     */
+    for?: Flatfile.EventId;
 }

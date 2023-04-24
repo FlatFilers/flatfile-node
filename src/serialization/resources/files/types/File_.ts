@@ -6,7 +6,7 @@ import * as serializers from "../../..";
 import { Flatfile } from "@flatfile/api-beta";
 import * as core from "../../../../core";
 
-export const File: core.serialization.ObjectSchema<serializers.File.Raw, Flatfile.File> = core.serialization.object({
+export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, Flatfile.File_> = core.serialization.object({
     id: core.serialization.lazy(async () => (await import("../../..")).FileId),
     name: core.serialization.string(),
     ext: core.serialization.string(),
@@ -22,7 +22,7 @@ export const File: core.serialization.ObjectSchema<serializers.File.Raw, Flatfil
     sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId).optional(),
 });
 
-export declare namespace File {
+export declare namespace File_ {
     interface Raw {
         id: serializers.FileId.Raw;
         name: string;

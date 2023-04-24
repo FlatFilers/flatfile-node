@@ -7,4 +7,4 @@ import { Flatfile } from "@flatfile/api-beta";
 /**
  * List of Record objects
  */
-export type Records = Flatfile.Record[];
+export type Records = Flatfile.Record_[];

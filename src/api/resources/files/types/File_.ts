@@ -7,7 +7,7 @@ import { Flatfile } from "@flatfile/api-beta";
 /**
  * Any uploaded file of any type
  */
-export interface File {
+export interface File_ {
     id: Flatfile.FileId;
     /** Original filename */
     name: string;

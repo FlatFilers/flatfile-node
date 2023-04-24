@@ -17,7 +17,7 @@ export * from "./Pagination";
 export * from "./Action";
 export * from "./SortDirection";
 export * from "./Success";
-export * from "./Error";
+export * from "./Error_";
 export * from "./Filter";
 export * from "./FilterField";
 export * from "./SearchField";

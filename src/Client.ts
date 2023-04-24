@@ -6,6 +6,7 @@ import * as environments from "./environments";
 import * as core from "./core";
 import { Spaces } from "./api/resources/spaces/client/Client";
 import { Agents } from "./api/resources/agents/client/Client";
+import { Auth } from "./api/resources/auth/client/Client";
 import { Cells } from "./api/resources/cells/client/Client";
 import { Documents } from "./api/resources/documents/client/Client";
 import { Environments } from "./api/resources/environments/client/Client";
@@ -22,92 +23,98 @@ import { Workbooks } from "./api/resources/workbooks/client/Client";
 export declare namespace FlatfileClient {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
-        token: core.Supplier<string>;
+        token: core.Supplier<core.BearerToken>;
     }
 }
 
 export class FlatfileClient {
     constructor(protected readonly options: FlatfileClient.Options) {}
 
-    private _spaces: Spaces | undefined;
+    protected _spaces: Spaces | undefined;
 
     public get spaces(): Spaces {
         return (this._spaces ??= new Spaces(this.options));
     }
 
-    private _agents: Agents | undefined;
+    protected _agents: Agents | undefined;
 
     public get agents(): Agents {
         return (this._agents ??= new Agents(this.options));
     }
 
-    private _cells: Cells | undefined;
+    protected _auth: Auth | undefined;
+
+    public get auth(): Auth {
+        return (this._auth ??= new Auth(this.options));
+    }
+
+    protected _cells: Cells | undefined;
 
     public get cells(): Cells {
         return (this._cells ??= new Cells(this.options));
     }
 
-    private _documents: Documents | undefined;
+    protected _documents: Documents | undefined;
 
     public get documents(): Documents {
         return (this._documents ??= new Documents(this.options));
     }
 
-    private _environments: Environments | undefined;
+    protected _environments: Environments | undefined;
 
     public get environments(): Environments {
         return (this._environments ??= new Environments(this.options));
     }
 
-    private _events: Events | undefined;
+    protected _events: Events | undefined;
 
     public get events(): Events {
         return (this._events ??= new Events(this.options));
     }
 
-    private _files: Files | undefined;
+    protected _files: Files | undefined;
 
     public get files(): Files {
         return (this._files ??= new Files(this.options));
     }
 
-    private _guests: Guests | undefined;
+    protected _guests: Guests | undefined;
 
     public get guests(): Guests {
         return (this._guests ??= new Guests(this.options));
     }
 
-    private _jobs: Jobs | undefined;
+    protected _jobs: Jobs | undefined;
 
     public get jobs(): Jobs {
         return (this._jobs ??= new Jobs(this.options));
     }
 
-    private _records: Records | undefined;
+    protected _records: Records | undefined;
 
     public get records(): Records {
         return (this._records ??= new Records(this.options));
     }
 
-    private _sheets: Sheets | undefined;
+    protected _sheets: Sheets | undefined;
 
     public get sheets(): Sheets {
         return (this._sheets ??= new Sheets(this.options));
     }
 
-    private _users: Users | undefined;
+    protected _users: Users | undefined;
 
     public get users(): Users {
         return (this._users ??= new Users(this.options));
     }
 
-    private _versions: Versions | undefined;
+    protected _versions: Versions | undefined;
 
     public get versions(): Versions {
         return (this._versions ??= new Versions(this.options));
     }
 
-    private _workbooks: Workbooks | undefined;
+    protected _workbooks: Workbooks | undefined;
 
     public get workbooks(): Workbooks {
         return (this._workbooks ??= new Workbooks(this.options));

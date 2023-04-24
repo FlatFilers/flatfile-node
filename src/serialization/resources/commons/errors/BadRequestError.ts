@@ -6,9 +6,9 @@ import * as serializers from "../../..";
 import { Flatfile } from "@flatfile/api-beta";
 import * as core from "../../../../core";
 
-export const BadRequestError: core.serialization.Schema<serializers.BadRequestError.Raw, Flatfile.Error[]> =
-    core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Error));
+export const BadRequestError: core.serialization.Schema<serializers.BadRequestError.Raw, Flatfile.Error_[]> =
+    core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Error_));
 
 export declare namespace BadRequestError {
-    type Raw = serializers.Error.Raw[];
+    type Raw = serializers.Error_.Raw[];
 }

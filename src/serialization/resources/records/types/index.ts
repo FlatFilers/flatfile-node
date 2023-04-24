@@ -6,7 +6,7 @@ export * from "./RecordWithLinks";
 export * from "./RecordDataWithLinks";
 export * from "./CellValueWithLinks";
 export * from "./Records";
-export * from "./Record";
+export * from "./Record_";
 export * from "./RecordData";
 export * from "./CellValue";
 export * from "./CellValueUnion";

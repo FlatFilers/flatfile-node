@@ -6,5 +6,5 @@ import { Flatfile } from "@flatfile/api-beta";
 
 export interface ListFilesResponse {
     pagination?: Flatfile.Pagination;
-    data: Flatfile.File[];
+    data: Flatfile.File_[];
 }
