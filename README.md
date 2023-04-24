@@ -25,8 +25,7 @@ yarn add @flatfile/api
 import { Flatfile, FlatfileClient } from '@flatfile/api';
 
 const flatfile = new FlatfileClient({
-  clientId: 'YOUR_CLIENT_ID',
-  clientSecret: 'YOUR_CLIENT_SECRET',
+  token: 'YOUR_API_KEY',
 });
 
 const environment = await flatfile.environments.create({
