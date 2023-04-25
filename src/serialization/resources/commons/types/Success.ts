@@ -8,11 +8,11 @@ import * as core from "../../../../core";
 
 export const Success: core.serialization.ObjectSchema<serializers.Success.Raw, Flatfile.Success> =
     core.serialization.object({
-        success: core.serialization.boolean(),
+        data: core.serialization.lazyObject(async () => (await import("../../..")).SuccessData),
     });
 
 export declare namespace Success {
     interface Raw {
-        success: boolean;
+        data: serializers.SuccessData.Raw;
     }
 }
