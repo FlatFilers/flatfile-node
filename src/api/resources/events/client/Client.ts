@@ -246,7 +246,10 @@ export class Events {
      * @throws {Flatfile.BadRequestError}
      * @throws {Flatfile.NotFoundError}
      */
-    public async getEventToken(): Promise<Flatfile.spaces.EventToken> {
+    public async getEventToken(request: Flatfile.GetEventTokenRequest): Promise<Flatfile.spaces.EventToken> {
+        const { spaceId } = request;
+        const _queryParams = new URLSearchParams();
+        _queryParams.append("spaceId", spaceId);
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "subscription"),
             method: "GET",
@@ -254,6 +257,7 @@ export class Events {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            queryParameters: _queryParams,
         });
         if (_response.ok) {
             return await serializers.spaces.EventToken.parseOrThrow(_response.body, {
