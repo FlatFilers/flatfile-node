@@ -246,7 +246,7 @@ export class Events {
      * @throws {Flatfile.BadRequestError}
      * @throws {Flatfile.NotFoundError}
      */
-    public async getEventToken(request: Flatfile.GetEventTokenRequest): Promise<Flatfile.spaces.EventToken> {
+    public async getEventToken(request: Flatfile.GetEventTokenRequest): Promise<Flatfile.spaces.EventTokenResponse> {
         const { spaceId } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("spaceId", spaceId);
@@ -260,7 +260,7 @@ export class Events {
             queryParameters: _queryParams,
         });
         if (_response.ok) {
-            return await serializers.spaces.EventToken.parseOrThrow(_response.body, {
+            return await serializers.spaces.EventTokenResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

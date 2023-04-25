@@ -23,4 +23,5 @@ export interface BaseEvent {
     /** The actor (user or system) who acknowledged the event */
     acknowledgedBy?: string;
     target?: string;
+    origin?: Flatfile.Origin;
 }

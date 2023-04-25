@@ -39,3 +39,4 @@ export * from "./ActionName";
 export * from "./Progress";
 export * from "./EventAttributes";
 export * from "./SheetSlug";
+export * from "./Origin";
