@@ -15,7 +15,6 @@ export const Workbook: core.serialization.ObjectSchema<serializers.Workbook.Raw,
         sheets: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).Sheet))
             .optional(),
-        config: core.serialization.lazyObject(async () => (await import("../../..")).WorkbookConfig),
         labels: core.serialization.list(core.serialization.string()).optional(),
         updatedAt: core.serialization.date(),
         createdAt: core.serialization.date(),
@@ -28,7 +27,6 @@ export declare namespace Workbook {
         spaceId: serializers.SpaceId.Raw;
         environmentId?: serializers.EnvironmentId.Raw | null;
         sheets?: serializers.Sheet.Raw[] | null;
-        config: serializers.WorkbookConfig.Raw;
         labels?: string[] | null;
         updatedAt: string;
         createdAt: string;

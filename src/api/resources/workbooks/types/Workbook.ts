@@ -13,7 +13,6 @@ export interface Workbook {
     spaceId: Flatfile.SpaceId;
     environmentId?: Flatfile.EnvironmentId;
     sheets?: Flatfile.Sheet[];
-    config: Flatfile.WorkbookConfig;
     labels?: string[];
     /** Date the workbook was last updated */
     updatedAt: Date;
