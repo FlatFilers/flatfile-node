@@ -14,7 +14,7 @@ export declare namespace FlatfileClient {
 export class FlatfileClient extends FernClient {
     private token: string | undefined;
 
-    constructor(options: FlatfileClient.Options) {
+    constructor(options: FlatfileClient.Options = {}) {
         super({
             environment: options.environment,
             token:
