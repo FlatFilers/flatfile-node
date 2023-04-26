@@ -21,7 +21,7 @@ export class FlatfileClient extends FernClient {
                 options.token != null
                     ? options.token
                     : () => {
-                          const token = process.env.FLATFILE_API_KEY || process.env.FLATFILE_BEARER_TOKEN;
+                          const token = process?.env?.FLATFILE_API_KEY || process?.env?.FLATFILE_BEARER_TOKEN;
                           if (token == undefined) {
                               throw new Error("FLATFILE_API_KEY and FLATFILE_BEARER_TOKEN were both undefined");
                           }
