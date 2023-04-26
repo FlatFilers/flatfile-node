@@ -9,7 +9,7 @@ import { Flatfile } from "@flatfile/api";
  */
 export interface Sheet {
     id: Flatfile.SheetId;
-    workbookId?: Flatfile.WorkbookId;
+    workbookId: Flatfile.WorkbookId;
     name: string;
     config?: Flatfile.SheetConfig;
     countRecords?: Flatfile.RecordCounts;
