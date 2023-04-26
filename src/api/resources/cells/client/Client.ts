@@ -27,8 +27,18 @@ export class Cells {
         sheetId: Flatfile.SheetId,
         request: Flatfile.GetFieldValuesRequest
     ): Promise<Flatfile.CellsResponse> {
-        const { fieldKey, sortField, sortDirection, filter, filterField, pageSize, pageNumber, distinct, searchValue } =
-            request;
+        const {
+            fieldKey,
+            sortField,
+            sortDirection,
+            filter,
+            filterField,
+            pageSize,
+            pageNumber,
+            distinct,
+            includeCounts,
+            searchValue,
+        } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("fieldKey", fieldKey);
         if (sortField != null) {
@@ -57,6 +67,10 @@ export class Cells {
 
         if (distinct != null) {
             _queryParams.append("distinct", distinct.toString());
+        }
+
+        if (includeCounts != null) {
+            _queryParams.append("includeCounts", includeCounts.toString());
         }
 
         if (searchValue != null) {

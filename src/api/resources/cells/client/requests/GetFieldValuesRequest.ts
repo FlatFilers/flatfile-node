@@ -33,6 +33,10 @@ export interface GetFieldValuesRequest {
      */
     distinct?: boolean;
     /**
+     * When both distinct and includeCounts are true, the count of distinct field values will be returned
+     */
+    includeCounts?: boolean;
+    /**
      * A value to find for a given field in a sheet. Wrap the value in "" for exact match
      */
     searchValue?: string;
