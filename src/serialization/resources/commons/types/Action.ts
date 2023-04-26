@@ -12,6 +12,7 @@ export const Action: core.serialization.ObjectSchema<serializers.Action.Raw, Fla
         label: core.serialization.string(),
         type: core.serialization.string().optional(),
         description: core.serialization.string().optional(),
+        primary: core.serialization.boolean().optional(),
     });
 
 export declare namespace Action {
@@ -20,5 +21,6 @@ export declare namespace Action {
         label: string;
         type?: string | null;
         description?: string | null;
+        primary?: boolean | null;
     }
 }

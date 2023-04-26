@@ -7,4 +7,5 @@ export interface Action {
     label: string;
     type?: string;
     description?: string;
+    primary?: boolean;
 }
