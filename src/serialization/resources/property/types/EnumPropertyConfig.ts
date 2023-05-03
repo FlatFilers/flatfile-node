@@ -10,7 +10,7 @@ export const EnumPropertyConfig: core.serialization.ObjectSchema<
     serializers.EnumPropertyConfig.Raw,
     Flatfile.EnumPropertyConfig
 > = core.serialization.object({
-    allowCustom: core.serialization.property("allow_custom", core.serialization.boolean()),
+    allowCustom: core.serialization.property("allow_custom", core.serialization.boolean().optional()),
     options: core.serialization.list(
         core.serialization.lazyObject(async () => (await import("../../..")).EnumPropertyOption)
     ),
@@ -18,7 +18,7 @@ export const EnumPropertyConfig: core.serialization.ObjectSchema<
 
 export declare namespace EnumPropertyConfig {
     interface Raw {
-        allow_custom: boolean;
+        allow_custom?: boolean | null;
         options: serializers.EnumPropertyOption.Raw[];
     }
 }

@@ -14,6 +14,7 @@ export interface Workbook {
     environmentId?: Flatfile.EnvironmentId;
     sheets?: Flatfile.Sheet[];
     labels?: string[];
+    actions?: Flatfile.Action[];
     /** Date the workbook was last updated */
     updatedAt: Date;
     /** Date the workbook was created */

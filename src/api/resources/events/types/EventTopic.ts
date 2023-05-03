@@ -6,55 +6,59 @@
  * The topic of the event
  *
  * @example
- *     Flatfile.EventTopic.UploadStarted
+ *     Flatfile.EventTopic.FileCreated
  */
 export type EventTopic =
-    | "space:added"
-    | "space:removed"
-    | "workbook:added"
-    | "workbook:removed"
-    | "user:added"
-    | "user:removed"
-    | "user:online"
-    | "user:offline"
-    | "upload:started"
-    | "upload:failed"
-    | "upload:completed"
-    | "job:started"
-    | "job:waiting"
+    | "agent:created"
+    | "agent:updated"
+    | "agent:deleted"
+    | "space:created"
+    | "space:deleted"
+    | "workbook:created"
+    | "workbook:updated"
+    | "workbook:deleted"
+    | "sheet:created"
+    | "sheet:updated"
+    | "sheet:deleted"
+    | "record:created"
+    | "record:updated"
+    | "record:deleted"
+    | "file:created"
+    | "file:updated"
+    | "file:deleted"
+    | "job:created"
     | "job:updated"
-    | "job:failed"
-    | "job:completed"
     | "job:deleted"
-    | "records:created"
-    | "records:updated"
-    | "records:deleted"
-    | "sheet:validated"
-    | "action:triggered"
-    | "file:deleted";
+    | "job:completed"
+    | "job:failed"
+    | "commit:created"
+    | "commit:updated"
+    | "layer:created";
 
 export const EventTopic = {
-    SpaceAdded: "space:added",
-    SpaceRemoved: "space:removed",
-    WorkbookAdded: "workbook:added",
-    WorkbookRemoved: "workbook:removed",
-    UserAdded: "user:added",
-    UserRemoved: "user:removed",
-    UserOnline: "user:online",
-    UserOffline: "user:offline",
-    UploadStarted: "upload:started",
-    UploadFailed: "upload:failed",
-    UploadCompleted: "upload:completed",
-    JobStarted: "job:started",
-    JobWaiting: "job:waiting",
-    JobUpdated: "job:updated",
-    JobFailed: "job:failed",
-    JobCompleted: "job:completed",
-    JobDeleted: "job:deleted",
-    RecordsCreated: "records:created",
-    RecordsUpdated: "records:updated",
-    RecordsDeleted: "records:deleted",
-    SheetValidated: "sheet:validated",
-    ActionTriggered: "action:triggered",
+    AgentCreated: "agent:created",
+    AgentUpdated: "agent:updated",
+    AgentDeleted: "agent:deleted",
+    SpaceCreated: "space:created",
+    SpaceDeleted: "space:deleted",
+    WorkbookCreated: "workbook:created",
+    WorkbookUpdated: "workbook:updated",
+    WorkbookDeleted: "workbook:deleted",
+    SheetCreated: "sheet:created",
+    SheetUpdated: "sheet:updated",
+    SheetDeleted: "sheet:deleted",
+    RecordCreated: "record:created",
+    RecordUpdated: "record:updated",
+    RecordDeleted: "record:deleted",
+    FileCreated: "file:created",
+    FileUpdated: "file:updated",
     FileDeleted: "file:deleted",
+    JobCreated: "job:created",
+    JobUpdated: "job:updated",
+    JobDeleted: "job:deleted",
+    JobCompleted: "job:completed",
+    JobFailed: "job:failed",
+    CommitCreated: "commit:created",
+    CommitUpdated: "commit:updated",
+    LayerCreated: "layer:created",
 } as const;

@@ -13,6 +13,7 @@ export * from "./Trigger";
 export * from "./PipelineJobConfig";
 export * from "./JobType";
 export * from "./JobStatus";
+export * from "./JobMode";
 export * from "./JobPlan";
 export * from "./JobExecutionPlanConfig";
 export * from "./JobExecutionPlan";

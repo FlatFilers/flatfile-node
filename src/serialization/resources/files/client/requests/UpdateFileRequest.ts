@@ -10,13 +10,15 @@ export const UpdateFileRequest: core.serialization.Schema<
     serializers.UpdateFileRequest.Raw,
     Flatfile.UpdateFileRequest
 > = core.serialization.object({
-    workbookId: core.serialization.lazy(async () => (await import("../../../..")).WorkbookId),
-    status: core.serialization.lazy(async () => (await import("../../../..")).ModelFileStatusEnum),
+    workbookId: core.serialization.lazy(async () => (await import("../../../..")).WorkbookId).optional(),
+    mode: core.serialization.lazy(async () => (await import("../../../..")).Mode).optional(),
+    status: core.serialization.lazy(async () => (await import("../../../..")).ModelFileStatusEnum).optional(),
 });
 
 export declare namespace UpdateFileRequest {
     interface Raw {
-        workbookId: serializers.WorkbookId.Raw;
-        status: serializers.ModelFileStatusEnum.Raw;
+        workbookId?: serializers.WorkbookId.Raw | null;
+        mode?: serializers.Mode.Raw | null;
+        status?: serializers.ModelFileStatusEnum.Raw | null;
     }
 }

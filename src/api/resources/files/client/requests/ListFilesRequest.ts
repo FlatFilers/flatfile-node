@@ -15,7 +15,7 @@ export interface ListFilesRequest {
      */
     pageNumber?: number;
     /**
-     * The type of file to fetch, defaults to "import"
+     * The storage mode of file to fetch, defaults to "import"
      */
-    query?: Flatfile.FileType;
+    mode?: Flatfile.Mode;
 }

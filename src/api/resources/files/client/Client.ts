@@ -21,7 +21,7 @@ export class Files {
     constructor(protected readonly options: Files.Options) {}
 
     public async list(request: Flatfile.ListFilesRequest = {}): Promise<Flatfile.ListFilesResponse> {
-        const { spaceId, pageSize, pageNumber, query } = request;
+        const { spaceId, pageSize, pageNumber, mode } = request;
         const _queryParams = new URLSearchParams();
         if (spaceId != null) {
             _queryParams.append("spaceId", spaceId);
@@ -35,8 +35,8 @@ export class Files {
             _queryParams.append("pageNumber", pageNumber.toString());
         }
 
-        if (query != null) {
-            _queryParams.append("query", query);
+        if (mode != null) {
+            _queryParams.append("mode", mode);
         }
 
         const _response = await core.fetcher({
@@ -199,7 +199,7 @@ export class Files {
     /**
      * Update a file, to change the workbook id for example
      */
-    public async update(fileId: string, request: Flatfile.UpdateFileRequest): Promise<Flatfile.FileResponse> {
+    public async update(fileId: string, request: Flatfile.UpdateFileRequest = {}): Promise<Flatfile.FileResponse> {
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, `/files/${fileId}`),
             method: "PATCH",

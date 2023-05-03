@@ -7,6 +7,8 @@ import { Flatfile } from "@flatfile/api";
 export interface CreateFileRequest {
     spaceId: Flatfile.SpaceId;
     environmentId: Flatfile.EnvironmentId;
+    /** The storage mode of file to insert, defaults to "import" */
+    mode?: Flatfile.Mode;
     /** A binary payload containing the file contents */
     file: string;
 }

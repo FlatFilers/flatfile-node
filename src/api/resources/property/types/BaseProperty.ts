@@ -10,4 +10,5 @@ export interface BaseProperty {
     label?: string;
     description?: string;
     constraints?: Flatfile.Constraint[];
+    readonly?: boolean;
 }

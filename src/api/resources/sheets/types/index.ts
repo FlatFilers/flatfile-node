@@ -4,3 +4,4 @@ export * from "./Sheet";
 export * from "./SheetConfig";
 export * from "./RecordCountsResponse";
 export * from "./RecordCountsResponseData";
+export * from "./SheetAccess";

@@ -13,4 +13,5 @@ export interface Sheet {
     name: string;
     config?: Flatfile.SheetConfig;
     countRecords?: Flatfile.RecordCounts;
+    access?: Flatfile.SheetAccess[];
 }

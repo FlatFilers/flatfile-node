@@ -9,7 +9,7 @@ import { Flatfile } from "@flatfile/api";
  *     {
  *         data: [{
  *                 id: "123",
- *                 topics: [Flatfile.EventTopic.UploadStarted],
+ *                 topics: [Flatfile.EventTopic.FileCreated],
  *                 compiler: Flatfile.Compiler.Js,
  *                 source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
  *             }]

@@ -22,4 +22,6 @@ export interface JobConfig {
     /** the progress of the job */
     progress?: number;
     fileId?: Flatfile.FileId;
+    /** the mode of the job */
+    mode?: Flatfile.JobMode;
 }

@@ -6,9 +6,11 @@ import * as serializers from "../../..";
 import { Flatfile } from "@flatfile/api";
 import * as core from "../../../../core";
 
-export const FileType: core.serialization.Schema<serializers.FileType.Raw, Flatfile.FileType> =
-    core.serialization.enum_(["import", "export"]);
+export const Mode: core.serialization.Schema<serializers.Mode.Raw, Flatfile.Mode> = core.serialization.enum_([
+    "import",
+    "export",
+]);
 
-export declare namespace FileType {
+export declare namespace Mode {
     type Raw = "import" | "export";
 }

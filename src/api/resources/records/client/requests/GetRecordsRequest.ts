@@ -6,6 +6,7 @@ import { Flatfile } from "@flatfile/api";
 
 export interface GetRecordsRequest {
     versionId?: string;
+    untilVersionId?: Flatfile.VersionId;
     sinceVersionId?: Flatfile.VersionId;
     sortField?: Flatfile.SortField;
     sortDirection?: Flatfile.SortDirection;

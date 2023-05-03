@@ -8,54 +8,58 @@ import * as core from "../../../../core";
 
 export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, Flatfile.EventTopic> =
     core.serialization.enum_([
-        "space:added",
-        "space:removed",
-        "workbook:added",
-        "workbook:removed",
-        "user:added",
-        "user:removed",
-        "user:online",
-        "user:offline",
-        "upload:started",
-        "upload:failed",
-        "upload:completed",
-        "job:started",
-        "job:waiting",
-        "job:updated",
-        "job:failed",
-        "job:completed",
-        "job:deleted",
-        "records:created",
-        "records:updated",
-        "records:deleted",
-        "sheet:validated",
-        "action:triggered",
+        "agent:created",
+        "agent:updated",
+        "agent:deleted",
+        "space:created",
+        "space:deleted",
+        "workbook:created",
+        "workbook:updated",
+        "workbook:deleted",
+        "sheet:created",
+        "sheet:updated",
+        "sheet:deleted",
+        "record:created",
+        "record:updated",
+        "record:deleted",
+        "file:created",
+        "file:updated",
         "file:deleted",
+        "job:created",
+        "job:updated",
+        "job:deleted",
+        "job:completed",
+        "job:failed",
+        "commit:created",
+        "commit:updated",
+        "layer:created",
     ]);
 
 export declare namespace EventTopic {
     type Raw =
-        | "space:added"
-        | "space:removed"
-        | "workbook:added"
-        | "workbook:removed"
-        | "user:added"
-        | "user:removed"
-        | "user:online"
-        | "user:offline"
-        | "upload:started"
-        | "upload:failed"
-        | "upload:completed"
-        | "job:started"
-        | "job:waiting"
+        | "agent:created"
+        | "agent:updated"
+        | "agent:deleted"
+        | "space:created"
+        | "space:deleted"
+        | "workbook:created"
+        | "workbook:updated"
+        | "workbook:deleted"
+        | "sheet:created"
+        | "sheet:updated"
+        | "sheet:deleted"
+        | "record:created"
+        | "record:updated"
+        | "record:deleted"
+        | "file:created"
+        | "file:updated"
+        | "file:deleted"
+        | "job:created"
         | "job:updated"
-        | "job:failed"
-        | "job:completed"
         | "job:deleted"
-        | "records:created"
-        | "records:updated"
-        | "records:deleted"
-        | "sheet:validated"
-        | "action:triggered"
-        | "file:deleted";
+        | "job:completed"
+        | "job:failed"
+        | "commit:created"
+        | "commit:updated"
+        | "layer:created";
 }

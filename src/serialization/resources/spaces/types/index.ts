@@ -5,3 +5,4 @@ export * from "./SpaceConfig";
 export * from "./EventTokenResponse";
 export * from "./EventToken";
 export * from "./GetSpacesSortField";
+export * from "./SpaceAccess";

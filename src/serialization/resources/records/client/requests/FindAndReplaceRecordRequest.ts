@@ -8,7 +8,7 @@ import * as core from "../../../../../core";
 
 export const FindAndReplaceRecordRequest: core.serialization.Schema<
     serializers.FindAndReplaceRecordRequest.Raw,
-    Omit<Flatfile.FindAndReplaceRecordRequest, "fieldKey" | "searchValue" | "pageSize" | "pageNumber">
+    Omit<Flatfile.FindAndReplaceRecordRequest, "fieldKey" | "searchValue" | "filter" | "pageSize" | "pageNumber">
 > = core.serialization.object({
     replace: core.serialization.unknown(),
 });

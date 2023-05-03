@@ -29,6 +29,7 @@ export class Records {
     ): Promise<Flatfile.RecordsResponse> {
         const {
             versionId,
+            untilVersionId,
             sinceVersionId,
             sortField,
             sortDirection,
@@ -47,6 +48,10 @@ export class Records {
         const _queryParams = new URLSearchParams();
         if (versionId != null) {
             _queryParams.append("versionId", versionId);
+        }
+
+        if (untilVersionId != null) {
+            _queryParams.append("untilVersionId", untilVersionId);
         }
 
         if (sinceVersionId != null) {
@@ -374,10 +379,14 @@ export class Records {
         sheetId: Flatfile.SheetId,
         request: Flatfile.FindAndReplaceRecordRequest
     ): Promise<Flatfile.RecordsResponse> {
-        const { fieldKey, searchValue, pageSize, pageNumber, ..._body } = request;
+        const { fieldKey, searchValue, filter, pageSize, pageNumber, ..._body } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("fieldKey", fieldKey);
         _queryParams.append("searchValue", searchValue);
+        if (filter != null) {
+            _queryParams.append("filter", filter);
+        }
+
         if (pageSize != null) {
             _queryParams.append("pageSize", pageSize.toString());
         }

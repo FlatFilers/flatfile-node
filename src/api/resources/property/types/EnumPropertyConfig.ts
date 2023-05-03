@@ -6,6 +6,6 @@ import { Flatfile } from "@flatfile/api";
 
 export interface EnumPropertyConfig {
     /** Permit the user to create new options for this specific field. */
-    allowCustom: boolean;
+    allowCustom?: boolean;
     options: Flatfile.EnumPropertyOption[];
 }

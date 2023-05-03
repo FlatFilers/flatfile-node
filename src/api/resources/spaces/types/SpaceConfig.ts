@@ -19,4 +19,6 @@ export interface SpaceConfig {
     metadata?: unknown;
     actions?: Flatfile.Action[];
     guestAuthentication?: Flatfile.GuestAuthenticationEnum[];
+    access?: Flatfile.spaces.SpaceAccess[];
+    autoConfigure?: boolean;
 }

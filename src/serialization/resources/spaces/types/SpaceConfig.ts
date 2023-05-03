@@ -22,6 +22,10 @@ export const SpaceConfig: core.serialization.ObjectSchema<
     guestAuthentication: core.serialization
         .list(core.serialization.lazy(async () => (await import("../../..")).GuestAuthenticationEnum))
         .optional(),
+    access: core.serialization
+        .list(core.serialization.lazy(async () => (await import("../../..")).spaces.SpaceAccess))
+        .optional(),
+    autoConfigure: core.serialization.boolean().optional(),
 });
 
 export declare namespace SpaceConfig {
@@ -34,5 +38,7 @@ export declare namespace SpaceConfig {
         metadata?: unknown;
         actions?: serializers.Action.Raw[] | null;
         guestAuthentication?: serializers.GuestAuthenticationEnum.Raw[] | null;
+        access?: serializers.spaces.SpaceAccess.Raw[] | null;
+        autoConfigure?: boolean | null;
     }
 }

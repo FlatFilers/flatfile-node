@@ -12,6 +12,7 @@ export const CreateFileRequest: core.serialization.Schema<
 > = core.serialization.object({
     spaceId: core.serialization.lazy(async () => (await import("../../../..")).SpaceId),
     environmentId: core.serialization.lazy(async () => (await import("../../../..")).EnvironmentId),
+    mode: core.serialization.lazy(async () => (await import("../../../..")).Mode).optional(),
     file: core.serialization.string(),
 });
 
@@ -19,6 +20,7 @@ export declare namespace CreateFileRequest {
     interface Raw {
         spaceId: serializers.SpaceId.Raw;
         environmentId: serializers.EnvironmentId.Raw;
+        mode?: serializers.Mode.Raw | null;
         file: string;
     }
 }
