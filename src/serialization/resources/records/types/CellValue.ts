@@ -12,13 +12,13 @@ export const CellValue: core.serialization.ObjectSchema<serializers.CellValue.Ra
         messages: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).ValidationMessage))
             .optional(),
-        value: core.serialization.lazy(async () => (await import("../../..")).CellValueUnion),
+        value: core.serialization.lazy(async () => (await import("../../..")).CellValueUnion).optional(),
     });
 
 export declare namespace CellValue {
     interface Raw {
         valid?: boolean | null;
         messages?: serializers.ValidationMessage.Raw[] | null;
-        value: serializers.CellValueUnion.Raw;
+        value?: serializers.CellValueUnion.Raw | null;
     }
 }

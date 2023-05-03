@@ -8,7 +8,7 @@ import { Flatfile } from "@flatfile/api";
  * A single unit of work that will be executed
  */
 export interface JobUpdate {
-    config: Flatfile.JobUpdateConfig;
+    config?: Flatfile.JobUpdateConfig;
     /** the status of the job */
     status?: Flatfile.JobStatus;
     /** the progress of the job */

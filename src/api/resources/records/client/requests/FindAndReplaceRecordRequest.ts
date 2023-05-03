@@ -5,23 +5,22 @@
 import { Flatfile } from "@flatfile/api";
 
 export interface FindAndReplaceRecordRequest {
-    /**
-     * A unique key used to identify a field in a sheet
-     */
-    fieldKey: string;
-    /**
-     * A value to find for a given field in a sheet. Wrap the value in "" for exact match
-     */
-    searchValue: string;
     filter?: Flatfile.Filter;
     /**
-     * Number of records to return in a page (default 1000 if pageNumber included)
+     * Name of field by which to filter records
      */
-    pageSize?: number;
+    filterField?: Flatfile.FilterField;
+    searchValue?: Flatfile.SearchValue;
+    searchField?: Flatfile.SearchField;
     /**
-     * Based on pageSize, which page of records to return
+     * A list of record ids to search within. If filter "all" is also specified,  then this is a list of record ids to exclude from the search.
+     *
      */
-    pageNumber?: number;
+    ids?: Flatfile.RecordId | Flatfile.RecordId[];
+    /** A value to find for a given field in a sheet. Wrap the value in "" for exact match */
+    find?: Flatfile.CellValueUnion;
     /** The value to replace found values with */
-    replace?: unknown;
+    replace?: Flatfile.CellValueUnion;
+    /** The value to replace found values with */
+    fieldKey: string;
 }

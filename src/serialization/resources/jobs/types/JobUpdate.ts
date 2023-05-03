@@ -8,14 +8,14 @@ import * as core from "../../../../core";
 
 export const JobUpdate: core.serialization.ObjectSchema<serializers.JobUpdate.Raw, Flatfile.JobUpdate> =
     core.serialization.object({
-        config: core.serialization.lazy(async () => (await import("../../..")).JobUpdateConfig),
+        config: core.serialization.lazy(async () => (await import("../../..")).JobUpdateConfig).optional(),
         status: core.serialization.lazy(async () => (await import("../../..")).JobStatus).optional(),
         progress: core.serialization.number().optional(),
     });
 
 export declare namespace JobUpdate {
     interface Raw {
-        config: serializers.JobUpdateConfig.Raw;
+        config?: serializers.JobUpdateConfig.Raw | null;
         status?: serializers.JobStatus.Raw | null;
         progress?: number | null;
     }

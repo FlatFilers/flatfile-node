@@ -12,7 +12,7 @@ export const JobConfig: core.serialization.ObjectSchema<serializers.JobConfig.Ra
         operation: core.serialization.string().optional(),
         source: core.serialization.lazy(async () => (await import("../../..")).JobSource),
         destination: core.serialization.lazy(async () => (await import("../../..")).JobDestination).optional(),
-        config: core.serialization.lazy(async () => (await import("../../..")).JobUpdateConfig),
+        config: core.serialization.lazy(async () => (await import("../../..")).JobUpdateConfig).optional(),
         trigger: core.serialization.lazy(async () => (await import("../../..")).Trigger).optional(),
         status: core.serialization.lazy(async () => (await import("../../..")).JobStatus).optional(),
         progress: core.serialization.number().optional(),
@@ -26,7 +26,7 @@ export declare namespace JobConfig {
         operation?: string | null;
         source: serializers.JobSource.Raw;
         destination?: serializers.JobDestination.Raw | null;
-        config: serializers.JobUpdateConfig.Raw;
+        config?: serializers.JobUpdateConfig.Raw | null;
         trigger?: serializers.Trigger.Raw | null;
         status?: serializers.JobStatus.Raw | null;
         progress?: number | null;

@@ -375,9 +375,9 @@ export class Records {
     /**
      * Searches for the given searchValue in a field and replaces all instances of that value with replaceValue
      */
-    public async findAndReplace(
+    public async findAndReplaceDeprecated(
         sheetId: Flatfile.SheetId,
-        request: Flatfile.FindAndReplaceRecordRequest
+        request: Flatfile.FindAndReplaceRecordRequestDeprecated
     ): Promise<Flatfile.RecordsResponse> {
         const { fieldKey, searchValue, filter, pageSize, pageNumber, ..._body } = request;
         const _queryParams = new URLSearchParams();
@@ -406,10 +406,90 @@ export class Records {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            body: await serializers.FindAndReplaceRecordRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.FindAndReplaceRecordRequestDeprecated.jsonOrThrow(_body, {
+                unrecognizedObjectKeys: "strip",
+            }),
         });
         if (_response.ok) {
             return await serializers.RecordsResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Searches for all values that match the 'find' value (globally or for a specific field via 'fieldKey') and replaces them with the 'replace' value. Wrap 'find' value in double quotes for exact match (""). Returns a versionId for the updated records
+     */
+    public async findAndReplace(
+        sheetId: Flatfile.SheetId,
+        request: Flatfile.FindAndReplaceRecordRequest
+    ): Promise<Flatfile.VersionResponse> {
+        const { filter, filterField, searchValue, searchField, ids, ..._body } = request;
+        const _queryParams = new URLSearchParams();
+        if (filter != null) {
+            _queryParams.append("filter", filter);
+        }
+
+        if (filterField != null) {
+            _queryParams.append("filterField", filterField);
+        }
+
+        if (searchValue != null) {
+            _queryParams.append("searchValue", searchValue);
+        }
+
+        if (searchField != null) {
+            _queryParams.append("searchField", searchField);
+        }
+
+        if (ids != null) {
+            if (Array.isArray(ids)) {
+                for (const _item of ids) {
+                    _queryParams.append("ids", _item);
+                }
+            } else {
+                _queryParams.append("ids", ids);
+            }
+        }
+
+        const _response = await core.fetcher({
+            url: urlJoin(
+                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/find-replace`
+            ),
+            method: "PUT",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            body: await serializers.FindAndReplaceRecordRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
+        });
+        if (_response.ok) {
+            return await serializers.VersionResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

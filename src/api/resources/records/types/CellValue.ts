@@ -7,5 +7,5 @@ import { Flatfile } from "@flatfile/api";
 export interface CellValue {
     valid?: boolean;
     messages?: Flatfile.ValidationMessage[];
-    value: Flatfile.CellValueUnion;
+    value?: Flatfile.CellValueUnion;
 }

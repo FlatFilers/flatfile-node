@@ -14,7 +14,7 @@ export interface JobConfig {
     operation?: string;
     source: Flatfile.JobSource;
     destination?: Flatfile.JobDestination;
-    config: Flatfile.JobUpdateConfig;
+    config?: Flatfile.JobUpdateConfig;
     /** the type of trigger to use for this job */
     trigger?: Flatfile.Trigger;
     /** the status of the job */

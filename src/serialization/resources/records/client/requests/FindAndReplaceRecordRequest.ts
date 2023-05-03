@@ -8,13 +8,17 @@ import * as core from "../../../../../core";
 
 export const FindAndReplaceRecordRequest: core.serialization.Schema<
     serializers.FindAndReplaceRecordRequest.Raw,
-    Omit<Flatfile.FindAndReplaceRecordRequest, "fieldKey" | "searchValue" | "filter" | "pageSize" | "pageNumber">
+    Omit<Flatfile.FindAndReplaceRecordRequest, "filter" | "filterField" | "searchValue" | "searchField" | "ids">
 > = core.serialization.object({
-    replace: core.serialization.unknown(),
+    find: core.serialization.lazy(async () => (await import("../../../..")).CellValueUnion).optional(),
+    replace: core.serialization.lazy(async () => (await import("../../../..")).CellValueUnion).optional(),
+    fieldKey: core.serialization.string(),
 });
 
 export declare namespace FindAndReplaceRecordRequest {
     interface Raw {
-        replace?: unknown;
+        find?: serializers.CellValueUnion.Raw | null;
+        replace?: serializers.CellValueUnion.Raw | null;
+        fieldKey: string;
     }
 }
