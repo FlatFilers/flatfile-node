@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../..";
 import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
@@ -35,6 +35,7 @@ export class Documents {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.ListDocumentsResponse.parseOrThrow(_response.body, {
@@ -105,6 +106,7 @@ export class Documents {
             },
             contentType: "application/json",
             body: await serializers.DocumentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.DocumentResponse.parseOrThrow(_response.body, {
@@ -173,6 +175,7 @@ export class Documents {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.DocumentResponse.parseOrThrow(_response.body, {
@@ -246,6 +249,7 @@ export class Documents {
             },
             contentType: "application/json",
             body: await serializers.DocumentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.DocumentResponse.parseOrThrow(_response.body, {
@@ -319,6 +323,7 @@ export class Documents {
             },
             contentType: "application/json",
             body: await serializers.EnvironmentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {

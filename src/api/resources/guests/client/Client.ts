@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../..";
 import URLSearchParams from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
@@ -39,6 +39,7 @@ export class Guests {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.ListGuestsResponse.parseOrThrow(_response.body, {
@@ -82,6 +83,7 @@ export class Guests {
             },
             contentType: "application/json",
             body: await serializers.guests.create.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.CreateGuestResponse.parseOrThrow(_response.body, {
@@ -127,6 +129,7 @@ export class Guests {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.Guest.parseOrThrow(_response.body, {
@@ -172,6 +175,7 @@ export class Guests {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -218,6 +222,7 @@ export class Guests {
             },
             contentType: "application/json",
             body: await serializers.GuestConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.Guest.parseOrThrow(_response.body, {
@@ -261,6 +266,7 @@ export class Guests {
             },
             contentType: "application/json",
             body: await serializers.guests.invite.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {

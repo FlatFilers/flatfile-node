@@ -3,7 +3,7 @@
  */
 
 import * as errors from "../../../../errors";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../..";
 
 export class BadRequestError extends errors.FlatfileError {
     constructor(body: Flatfile.Error_[]) {

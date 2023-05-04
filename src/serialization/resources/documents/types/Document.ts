@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const Document: core.serialization.ObjectSchema<serializers.Document.Raw, Flatfile.Document> = core.serialization

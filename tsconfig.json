@@ -11,12 +11,7 @@
         "noUnusedParameters": true,
         "outDir": "dist",
         "rootDir": "src",
-        "baseUrl": "src",
-        "paths": {
-            "@flatfile/api": [
-                "."
-            ]
-        }
+        "baseUrl": "src"
     },
     "include": [
         "src"

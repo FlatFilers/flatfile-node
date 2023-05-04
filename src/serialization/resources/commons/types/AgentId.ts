@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const AgentId: core.serialization.Schema<serializers.AgentId.Raw, Flatfile.AgentId> =

@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const Filter: core.serialization.Schema<serializers.Filter.Raw, Flatfile.Filter> = core.serialization.enum_([

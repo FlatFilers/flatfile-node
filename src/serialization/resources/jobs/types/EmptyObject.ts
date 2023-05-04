@@ -6,9 +6,9 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
-export const ActionName: core.serialization.Schema<serializers.ActionName.Raw, Flatfile.ActionName> =
-    core.serialization.string();
+export const EmptyObject: core.serialization.ObjectSchema<serializers.EmptyObject.Raw, Flatfile.EmptyObject> =
+    core.serialization.object({});
 
-export declare namespace ActionName {
-    type Raw = string;
+export declare namespace EmptyObject {
+    interface Raw {}
 }

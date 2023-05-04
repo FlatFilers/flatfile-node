@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const Request: core.serialization.Schema<serializers.records.insert.Request.Raw, Flatfile.RecordData[]> =

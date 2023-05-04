@@ -26,3 +26,4 @@ export * from "./Certainty";
 export * from "./CategoryMapping";
 export * from "./ExportJobConfig";
 export * from "./ExportOptions";
+export * from "./EmptyObject";

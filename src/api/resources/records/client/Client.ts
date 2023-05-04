@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../..";
 import URLSearchParams from "@ungap/url-search-params";
 import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
@@ -127,6 +127,7 @@ export class Records {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.RecordsResponse.parseOrThrow(_response.body, {
@@ -173,6 +174,7 @@ export class Records {
             },
             contentType: "application/json",
             body: await serializers.Records.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.VersionResponse.parseOrThrow(_response.body, {
@@ -219,6 +221,7 @@ export class Records {
             },
             contentType: "application/json",
             body: await serializers.records.insert.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.RecordsResponse.parseOrThrow(_response.body, {
@@ -280,6 +283,7 @@ export class Records {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -341,6 +345,7 @@ export class Records {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.RecordsResponse.parseOrThrow(_response.body, {
@@ -409,6 +414,7 @@ export class Records {
             body: await serializers.FindAndReplaceRecordRequestDeprecated.jsonOrThrow(_body, {
                 unrecognizedObjectKeys: "strip",
             }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.RecordsResponse.parseOrThrow(_response.body, {
@@ -487,6 +493,7 @@ export class Records {
             contentType: "application/json",
             queryParameters: _queryParams,
             body: await serializers.FindAndReplaceRecordRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.VersionResponse.parseOrThrow(_response.body, {

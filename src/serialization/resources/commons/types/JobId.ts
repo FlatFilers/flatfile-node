@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const JobId: core.serialization.Schema<serializers.JobId.Raw, Flatfile.JobId> = core.serialization.string();

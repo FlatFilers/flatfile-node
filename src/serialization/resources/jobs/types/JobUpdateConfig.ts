@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateConfig.Raw, Flatfile.JobUpdateConfig> =
@@ -12,6 +12,7 @@ export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateCon
         core.serialization.lazyObject(async () => (await import("../../..")).FileJobConfig),
         core.serialization.lazyObject(async () => (await import("../../..")).PipelineJobConfig),
         core.serialization.lazyObject(async () => (await import("../../..")).ExportJobConfig),
+        core.serialization.lazyObject(async () => (await import("../../..")).EmptyObject),
     ]);
 
 export declare namespace JobUpdateConfig {
@@ -19,5 +20,6 @@ export declare namespace JobUpdateConfig {
         | serializers.DeleteJobConfig.Raw
         | serializers.FileJobConfig.Raw
         | serializers.PipelineJobConfig.Raw
-        | serializers.ExportJobConfig.Raw;
+        | serializers.ExportJobConfig.Raw
+        | serializers.EmptyObject.Raw;
 }

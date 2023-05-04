@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../..";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const Invite: core.serialization.ObjectSchema<serializers.Invite.Raw, Flatfile.Invite> =

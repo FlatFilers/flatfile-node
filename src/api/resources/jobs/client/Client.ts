@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../..";
 import URLSearchParams from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
@@ -59,6 +59,7 @@ export class Jobs {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.ListJobsResponse.parseOrThrow(_response.body, {
@@ -99,6 +100,7 @@ export class Jobs {
             },
             contentType: "application/json",
             body: await serializers.JobConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.JobResponse.parseOrThrow(_response.body, {
@@ -141,6 +143,7 @@ export class Jobs {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.JobResponse.parseOrThrow(_response.body, {
@@ -184,6 +187,7 @@ export class Jobs {
             },
             contentType: "application/json",
             body: await serializers.JobUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.JobResponse.parseOrThrow(_response.body, {
@@ -226,6 +230,7 @@ export class Jobs {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -271,6 +276,7 @@ export class Jobs {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -316,6 +322,7 @@ export class Jobs {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.JobPlan.parseOrThrow(_response.body, {
@@ -365,6 +372,7 @@ export class Jobs {
             },
             contentType: "application/json",
             body: await serializers.JobExecutionPlanConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.JobPlan.parseOrThrow(_response.body, {
@@ -414,6 +422,7 @@ export class Jobs {
             },
             contentType: "application/json",
             body: await serializers.JobExecutionPlanConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.JobPlan.parseOrThrow(_response.body, {

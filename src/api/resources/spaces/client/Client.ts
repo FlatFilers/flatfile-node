@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../..";
 import URLSearchParams from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
@@ -63,6 +63,7 @@ export class Spaces {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.spaces.ListSpacesResponse.parseOrThrow(_response.body, {
@@ -117,6 +118,7 @@ export class Spaces {
             },
             contentType: "application/json",
             body: await serializers.spaces.SpaceConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.spaces.SpaceResponse.parseOrThrow(_response.body, {
@@ -162,6 +164,7 @@ export class Spaces {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.spaces.SpaceResponse.parseOrThrow(_response.body, {
@@ -207,6 +210,7 @@ export class Spaces {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -256,6 +260,7 @@ export class Spaces {
             },
             contentType: "application/json",
             body: await serializers.spaces.SpaceConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.spaces.SpaceResponse.parseOrThrow(_response.body, {
@@ -303,6 +308,7 @@ export class Spaces {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {

@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../..";
 import URLSearchParams from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
@@ -38,6 +38,7 @@ export class Users {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.ListUsersResponse.parseOrThrow(_response.body, {
@@ -81,6 +82,7 @@ export class Users {
             },
             contentType: "application/json",
             body: await serializers.UserConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.UserResponse.parseOrThrow(_response.body, {
@@ -126,6 +128,7 @@ export class Users {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.UserResponse.parseOrThrow(_response.body, {
@@ -186,6 +189,7 @@ export class Users {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.ListApiTokensResponse.parseOrThrow(_response.body, {
@@ -235,6 +239,7 @@ export class Users {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return;
@@ -277,6 +282,7 @@ export class Users {
             },
             contentType: "application/json",
             body: await serializers.ExchangeTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.ExchangeTokenResponse.parseOrThrow(_response.body, {

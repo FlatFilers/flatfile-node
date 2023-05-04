@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../..";
 import URLSearchParams from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
@@ -32,6 +32,7 @@ export class Agents {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.ListAgentsResponse.parseOrThrow(_response.body, {
@@ -79,6 +80,7 @@ export class Agents {
             contentType: "application/json",
             queryParameters: _queryParams,
             body: await serializers.AgentConfig.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.AgentResponse.parseOrThrow(_response.body, {
@@ -140,6 +142,7 @@ export class Agents {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.AgentResponse.parseOrThrow(_response.body, {
@@ -212,6 +215,7 @@ export class Agents {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.GetAgentLogsResponse.parseOrThrow(_response.body, {
@@ -291,6 +295,7 @@ export class Agents {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.GetAgentLogsResponse.parseOrThrow(_response.body, {
@@ -362,6 +367,7 @@ export class Agents {
             contentType: "application/json",
             queryParameters: _queryParams,
             body: await serializers.AgentConfig.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {

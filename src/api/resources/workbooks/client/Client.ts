@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import { Flatfile } from "@flatfile/api";
+import * as Flatfile from "../../..";
 import URLSearchParams from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
@@ -42,6 +42,7 @@ export class Workbooks {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.ListWorkbooksResponse.parseOrThrow(_response.body, {
@@ -85,6 +86,7 @@ export class Workbooks {
             },
             contentType: "application/json",
             body: await serializers.WorkbookConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.WorkbookResponse.parseOrThrow(_response.body, {
@@ -130,6 +132,7 @@ export class Workbooks {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.WorkbookResponse.parseOrThrow(_response.body, {
@@ -175,6 +178,7 @@ export class Workbooks {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -226,6 +230,7 @@ export class Workbooks {
             },
             contentType: "application/json",
             body: await serializers.WorkbookConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
         });
         if (_response.ok) {
             return await serializers.WorkbookResponse.parseOrThrow(_response.body, {
