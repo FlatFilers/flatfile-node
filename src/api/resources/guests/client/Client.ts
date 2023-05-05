@@ -14,6 +14,7 @@ export declare namespace Guests {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token: core.Supplier<core.BearerToken>;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -31,7 +32,7 @@ export class Guests {
             _queryParams.append("email", email);
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "guests"),
             method: "GET",
             headers: {
@@ -75,7 +76,7 @@ export class Guests {
      * Guests are only there to upload, edit, and download files and perform their tasks in a specific Space.
      */
     public async create(request: Flatfile.GuestConfig[]): Promise<Flatfile.CreateGuestResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "guests"),
             method: "POST",
             headers: {
@@ -119,7 +120,7 @@ export class Guests {
      * Returns a single guest
      */
     public async get(guestId: Flatfile.GuestId): Promise<Flatfile.Guest> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `guests/${await serializers.GuestId.jsonOrThrow(guestId)}`
@@ -165,7 +166,7 @@ export class Guests {
      * Deletes a single guest
      */
     public async delete(guestId: Flatfile.GuestId): Promise<Flatfile.Success> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `guests/${await serializers.GuestId.jsonOrThrow(guestId)}`
@@ -211,7 +212,7 @@ export class Guests {
      * Updates a single guest, for example to change name or email
      */
     public async update(guestId: Flatfile.GuestId, request: Flatfile.GuestConfig): Promise<Flatfile.Guest> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `guests/${await serializers.GuestId.jsonOrThrow(guestId)}`
@@ -258,7 +259,7 @@ export class Guests {
      * Guests can be created as a named guest on the Space or there’s a global link that will let anonymous guests into the space.
      */
     public async invite(request: Flatfile.Invite[]): Promise<Flatfile.Success> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "invitations"),
             method: "POST",
             headers: {

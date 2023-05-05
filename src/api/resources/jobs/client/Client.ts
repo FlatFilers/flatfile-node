@@ -14,6 +14,7 @@ export declare namespace Jobs {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token: core.Supplier<core.BearerToken>;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -51,7 +52,7 @@ export class Jobs {
             _queryParams.append("sortDirection", sortDirection);
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/jobs"),
             method: "GET",
             headers: {
@@ -92,7 +93,7 @@ export class Jobs {
     }
 
     public async create(request: Flatfile.JobConfig): Promise<Flatfile.JobResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/jobs"),
             method: "POST",
             headers: {
@@ -133,7 +134,7 @@ export class Jobs {
     }
 
     public async get(jobId: Flatfile.JobId): Promise<Flatfile.JobResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}`
@@ -176,7 +177,7 @@ export class Jobs {
     }
 
     public async update(jobId: Flatfile.JobId, request: Flatfile.JobUpdate): Promise<Flatfile.JobResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}`
@@ -220,7 +221,7 @@ export class Jobs {
     }
 
     public async delete(jobId: Flatfile.JobId): Promise<Flatfile.Success> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}`
@@ -266,7 +267,7 @@ export class Jobs {
      * Execute a job and return the job
      */
     public async execute(jobId: string): Promise<Flatfile.Success> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${jobId}/execute`
@@ -312,7 +313,7 @@ export class Jobs {
      * Returns a single job's execution plan
      */
     public async getExecutionPlan(jobId: Flatfile.JobId): Promise<Flatfile.JobPlan> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/plan`
@@ -361,7 +362,7 @@ export class Jobs {
         jobId: Flatfile.JobId,
         request: Flatfile.JobExecutionPlanConfig
     ): Promise<Flatfile.JobPlan> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/plan`
@@ -411,7 +412,7 @@ export class Jobs {
         jobId: string,
         request: Flatfile.JobExecutionPlanConfig
     ): Promise<Flatfile.JobPlan> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${jobId}/plan`

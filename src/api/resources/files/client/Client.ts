@@ -14,6 +14,7 @@ export declare namespace Files {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token: core.Supplier<core.BearerToken>;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -39,7 +40,7 @@ export class Files {
             _queryParams.append("mode", mode);
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/files"),
             method: "GET",
             headers: {
@@ -80,7 +81,7 @@ export class Files {
     }
 
     public async upload(request: Flatfile.CreateFileRequest): Promise<Flatfile.FileResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/files"),
             method: "PATCH",
             headers: {
@@ -121,7 +122,7 @@ export class Files {
     }
 
     public async get(fileId: string): Promise<Flatfile.FileResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, `/files/${fileId}`),
             method: "GET",
             headers: {
@@ -161,7 +162,7 @@ export class Files {
     }
 
     public async delete(fileId: string): Promise<Flatfile.Success> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, `/files/${fileId}`),
             method: "DELETE",
             headers: {
@@ -204,7 +205,7 @@ export class Files {
      * Update a file, to change the workbook id for example
      */
     public async update(fileId: string, request: Flatfile.UpdateFileRequest = {}): Promise<Flatfile.FileResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, `/files/${fileId}`),
             method: "PATCH",
             headers: {
@@ -245,7 +246,7 @@ export class Files {
     }
 
     public async download(fileId: Flatfile.FileId): Promise<string> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/files/${await serializers.FileId.jsonOrThrow(fileId)}/download`

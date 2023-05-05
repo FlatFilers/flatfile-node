@@ -14,6 +14,7 @@ export declare namespace Users {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token: core.Supplier<core.BearerToken>;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -30,7 +31,7 @@ export class Users {
             _queryParams.append("email", email);
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "users"),
             method: "GET",
             headers: {
@@ -74,7 +75,7 @@ export class Users {
      * A user is a privileged user that logs in with a username and password.
      */
     public async create(request: Flatfile.UserConfig): Promise<Flatfile.UserResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "users"),
             method: "POST",
             headers: {
@@ -118,7 +119,7 @@ export class Users {
      * Gets a user
      */
     public async get(userId: Flatfile.UserId): Promise<Flatfile.UserResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `users/${await serializers.UserId.jsonOrThrow(userId)}`
@@ -178,7 +179,7 @@ export class Users {
             _queryParams.append("pageNumber", pageNumber.toString());
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `users/${await serializers.UserId.jsonOrThrow(userId)}/api-token`
@@ -228,7 +229,7 @@ export class Users {
         const { tenantId } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("tenantId", tenantId);
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `users/${await serializers.UserId.jsonOrThrow(userId)}/api-token`
@@ -271,7 +272,7 @@ export class Users {
      * Exchange an invitation for an access token
      */
     public async exchangeToken(request: Flatfile.ExchangeTokenRequest = {}): Promise<Flatfile.ExchangeTokenResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 "invitations/exchange"

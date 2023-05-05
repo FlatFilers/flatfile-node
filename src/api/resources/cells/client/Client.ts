@@ -14,6 +14,7 @@ export declare namespace Cells {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token: core.Supplier<core.BearerToken>;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -77,7 +78,7 @@ export class Cells {
             _queryParams.append("searchValue", searchValue);
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/cells`

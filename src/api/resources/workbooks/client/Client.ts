@@ -14,6 +14,7 @@ export declare namespace Workbooks {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token: core.Supplier<core.BearerToken>;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -34,7 +35,7 @@ export class Workbooks {
             _queryParams.append("includeCounts", includeCounts.toString());
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/workbooks"),
             method: "GET",
             headers: {
@@ -78,7 +79,7 @@ export class Workbooks {
      * Creates a workbook and adds it to a space
      */
     public async create(request: Flatfile.WorkbookConfig): Promise<Flatfile.WorkbookResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/workbooks"),
             method: "POST",
             headers: {
@@ -122,7 +123,7 @@ export class Workbooks {
      * Returns a single workbook
      */
     public async get(workbookId: Flatfile.WorkbookId): Promise<Flatfile.WorkbookResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/workbooks/${await serializers.WorkbookId.jsonOrThrow(workbookId)}`
@@ -168,7 +169,7 @@ export class Workbooks {
      * Delete a workbook
      */
     public async delete(workbookId: Flatfile.WorkbookId): Promise<Flatfile.Success> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/workbooks/${await serializers.WorkbookId.jsonOrThrow(workbookId)}`
@@ -219,7 +220,7 @@ export class Workbooks {
         workbookId: Flatfile.WorkbookId,
         request: Flatfile.WorkbookConfig
     ): Promise<Flatfile.WorkbookResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/workbooks/${await serializers.WorkbookId.jsonOrThrow(workbookId)}`

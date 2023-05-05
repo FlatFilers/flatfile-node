@@ -14,6 +14,7 @@ export declare namespace Environments {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token: core.Supplier<core.BearerToken>;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -34,7 +35,7 @@ export class Environments {
             _queryParams.append("pageNumber", pageNumber.toString());
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/environments"),
             method: "GET",
             headers: {
@@ -78,7 +79,7 @@ export class Environments {
      * Create a new environment
      */
     public async create(request: Flatfile.EnvironmentConfig): Promise<Flatfile.EnvironmentResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/environments"),
             method: "POST",
             headers: {
@@ -122,7 +123,7 @@ export class Environments {
      * Returns a single environment
      */
     public async get(environmentId: string): Promise<Flatfile.Environment> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/environments/${environmentId}`
@@ -168,7 +169,7 @@ export class Environments {
      * Updates a single environment, to change the name for example
      */
     public async update(environmentId: string, request: Flatfile.EnvironmentConfig): Promise<Flatfile.Environment> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/environments/${environmentId}`
@@ -217,7 +218,7 @@ export class Environments {
      * @throws {Flatfile.NotFoundError}
      */
     public async delete(environmentId: string, request: Flatfile.EnvironmentConfig): Promise<Flatfile.Success> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/environments/${environmentId}`

@@ -13,6 +13,7 @@ export declare namespace Versions {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token: core.Supplier<core.BearerToken>;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -23,7 +24,7 @@ export class Versions {
      * Creates a new version id that can be used to group record updates
      */
     public async createId(request: Flatfile.VersionsPostRequestBody = {}): Promise<Flatfile.VersionResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/versions"),
             method: "POST",
             headers: {

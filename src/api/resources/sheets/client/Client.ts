@@ -14,6 +14,7 @@ export declare namespace Sheets {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token: core.Supplier<core.BearerToken>;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -27,7 +28,7 @@ export class Sheets {
         const { workbookId } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("workbookId", workbookId);
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/sheets"),
             method: "GET",
             headers: {
@@ -71,7 +72,7 @@ export class Sheets {
      * Returns a sheet in a workbook
      */
     public async get(sheetId: Flatfile.SheetId): Promise<Flatfile.SheetResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}`
@@ -119,7 +120,7 @@ export class Sheets {
      * @throws {Flatfile.NotFoundError}
      */
     public async delete(sheetId: Flatfile.SheetId): Promise<Flatfile.Success> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}`
@@ -186,7 +187,7 @@ export class Sheets {
      * @throws {Flatfile.NotFoundError}
      */
     public async validate(sheetId: Flatfile.SheetId): Promise<Flatfile.Success> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/validate`
@@ -308,7 +309,7 @@ export class Sheets {
             }
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/download`
@@ -384,7 +385,7 @@ export class Sheets {
             _queryParams.append("searchField", searchField);
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/counts`

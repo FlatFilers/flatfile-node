@@ -13,6 +13,7 @@ export declare namespace Documents {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token: core.Supplier<core.BearerToken>;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -25,7 +26,7 @@ export class Documents {
      * @throws {Flatfile.NotFoundError}
      */
     public async list(spaceId: Flatfile.SpaceId): Promise<Flatfile.ListDocumentsResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}/documents`
@@ -95,7 +96,7 @@ export class Documents {
         spaceId: Flatfile.SpaceId,
         request: Flatfile.DocumentConfig
     ): Promise<Flatfile.DocumentResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}/documents`
@@ -163,7 +164,7 @@ export class Documents {
      * @throws {Flatfile.NotFoundError}
      */
     public async get(spaceId: Flatfile.SpaceId, documentId: Flatfile.DocumentId): Promise<Flatfile.DocumentResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(
@@ -236,7 +237,7 @@ export class Documents {
         documentId: Flatfile.DocumentId,
         request: Flatfile.DocumentConfig
     ): Promise<Flatfile.DocumentResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(
@@ -310,7 +311,7 @@ export class Documents {
         documentId: Flatfile.DocumentId,
         request: Flatfile.EnvironmentConfig
     ): Promise<Flatfile.Success> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(

@@ -14,6 +14,7 @@ export declare namespace Events {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token: core.Supplier<core.BearerToken>;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -55,7 +56,7 @@ export class Events {
             _queryParams.append("includeAcknowledged", includeAcknowledged.toString());
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "events"),
             method: "GET",
             headers: {
@@ -100,7 +101,7 @@ export class Events {
      * @throws {Flatfile.NotFoundError}
      */
     public async create(request: Flatfile.Event): Promise<Flatfile.EventResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "events"),
             method: "POST",
             headers: {
@@ -160,7 +161,7 @@ export class Events {
     }
 
     public async get(eventId: Flatfile.EventId): Promise<Flatfile.EventResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `events/${await serializers.EventId.jsonOrThrow(eventId)}`
@@ -203,7 +204,7 @@ export class Events {
     }
 
     public async ack(eventId: Flatfile.EventId): Promise<Flatfile.Success> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `events/${await serializers.EventId.jsonOrThrow(eventId)}/ack`
@@ -254,7 +255,7 @@ export class Events {
         const { spaceId } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("spaceId", spaceId);
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "subscription"),
             method: "GET",
             headers: {

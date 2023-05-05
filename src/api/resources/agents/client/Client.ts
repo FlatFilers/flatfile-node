@@ -14,6 +14,7 @@ export declare namespace Agents {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token: core.Supplier<core.BearerToken>;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -24,7 +25,7 @@ export class Agents {
         const { environmentId } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("environmentId", environmentId);
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/agents"),
             method: "GET",
             headers: {
@@ -71,7 +72,7 @@ export class Agents {
         const { environmentId, body: _body } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("environmentId", environmentId);
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/agents"),
             method: "POST",
             headers: {
@@ -131,7 +132,7 @@ export class Agents {
         const { environmentId } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("environmentId", environmentId);
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/agents/${await serializers.AgentId.jsonOrThrow(agentId)}`
@@ -204,7 +205,7 @@ export class Agents {
         const { environmentId } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("environmentId", environmentId);
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/agents/${await serializers.AgentId.jsonOrThrow(agentId)}/logs`
@@ -284,7 +285,7 @@ export class Agents {
             _queryParams.append("pageNumber", pageNumber.toString());
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 "/agents/agents/logs"
@@ -355,7 +356,7 @@ export class Agents {
         const { environmentId, body: _body } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("environmentId", environmentId);
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/agents/${await serializers.AgentId.jsonOrThrow(agentId)}`

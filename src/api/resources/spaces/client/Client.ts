@@ -14,6 +14,7 @@ export declare namespace Spaces {
     interface Options {
         environment?: environments.FlatfileEnvironment | string;
         token: core.Supplier<core.BearerToken>;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -55,7 +56,7 @@ export class Spaces {
             _queryParams.append("sortDirection", sortDirection);
         }
 
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/spaces"),
             method: "GET",
             headers: {
@@ -110,7 +111,7 @@ export class Spaces {
      * Creates a new space based on an existing Space Config
      */
     public async create(request: Flatfile.spaces.SpaceConfig): Promise<Flatfile.spaces.SpaceResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/spaces"),
             method: "POST",
             headers: {
@@ -154,7 +155,7 @@ export class Spaces {
      * Returns a single space
      */
     public async get(spaceId: Flatfile.SpaceId): Promise<Flatfile.spaces.SpaceResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}`
@@ -200,7 +201,7 @@ export class Spaces {
      * Delete a space
      */
     public async delete(spaceId: Flatfile.SpaceId): Promise<Flatfile.Success> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}`
@@ -249,7 +250,7 @@ export class Spaces {
         spaceId: Flatfile.SpaceId,
         request: Flatfile.spaces.SpaceConfig
     ): Promise<Flatfile.spaces.SpaceResponse> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}`
@@ -298,7 +299,7 @@ export class Spaces {
      * @throws {Flatfile.NotFoundError}
      */
     public async archiveSpace(spaceId: Flatfile.SpaceId): Promise<Flatfile.Success> {
-        const _response = await core.fetcher({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}/archive`
