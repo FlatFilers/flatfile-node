@@ -9,6 +9,7 @@ import URLSearchParams from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
+import axios from "axios";
 
 export declare namespace Files {
     interface Options {
@@ -245,47 +246,28 @@ export class Files {
         }
     }
 
-    public async download(fileId: Flatfile.FileId): Promise<string> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async download(fileId: Flatfile.FileId): Promise<ArrayBuffer> {
+        const authHeader = await this._getAuthorizationHeader();
+
+        const response = await axios({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
                 `/files/${await serializers.FileId.jsonOrThrow(fileId)}/download`
             ),
             method: "GET",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-            },
-            contentType: "application/json",
-            timeoutMs: 60000,
+            headers: authHeader != null ? { Authorization: authHeader } : undefined,
+            validateStatus: () => true,
+            responseType: "arraybuffer",
+            timeout: 60_000,
         });
-        if (_response.ok) {
-            return await serializers.files.download.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-            });
-        }
 
-        if (_response.error.reason === "status-code") {
+        if (response.status >= 300) {
             throw new errors.FlatfileError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
+                statusCode: response.status,
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.FlatfileError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.FlatfileTimeoutError();
-            case "unknown":
-                throw new errors.FlatfileError({
-                    message: _response.error.errorMessage,
-                });
-        }
+        return response.data;
     }
 
     protected async _getAuthorizationHeader() {
