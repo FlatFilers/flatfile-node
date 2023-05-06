@@ -135,6 +135,7 @@ export class Records {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -182,6 +183,7 @@ export class Records {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -229,6 +231,7 @@ export class Records {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -291,6 +294,7 @@ export class Records {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -353,6 +357,7 @@ export class Records {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -422,6 +427,7 @@ export class Records {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -501,6 +507,7 @@ export class Records {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 

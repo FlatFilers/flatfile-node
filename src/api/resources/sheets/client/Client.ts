@@ -43,6 +43,7 @@ export class Sheets {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -89,6 +90,7 @@ export class Sheets {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -137,6 +139,7 @@ export class Sheets {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -148,6 +151,7 @@ export class Sheets {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 case 404:
@@ -156,6 +160,7 @@ export class Sheets {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 default:
@@ -204,6 +209,7 @@ export class Sheets {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -215,6 +221,7 @@ export class Sheets {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 case 404:
@@ -223,6 +230,7 @@ export class Sheets {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 default:
@@ -327,6 +335,7 @@ export class Sheets {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -403,6 +412,7 @@ export class Sheets {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 

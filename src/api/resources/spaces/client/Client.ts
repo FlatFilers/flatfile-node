@@ -71,6 +71,7 @@ export class Spaces {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -82,6 +83,7 @@ export class Spaces {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 default:
@@ -126,6 +128,7 @@ export class Spaces {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -172,6 +175,7 @@ export class Spaces {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -218,6 +222,7 @@ export class Spaces {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -268,6 +273,7 @@ export class Spaces {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -316,6 +322,7 @@ export class Spaces {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -327,6 +334,7 @@ export class Spaces {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 case 404:
@@ -335,6 +343,7 @@ export class Spaces {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 default:

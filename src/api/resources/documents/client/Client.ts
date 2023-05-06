@@ -43,6 +43,7 @@ export class Documents {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -54,6 +55,7 @@ export class Documents {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 case 404:
@@ -62,6 +64,7 @@ export class Documents {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 default:
@@ -114,6 +117,7 @@ export class Documents {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -125,6 +129,7 @@ export class Documents {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 case 404:
@@ -133,6 +138,7 @@ export class Documents {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 default:
@@ -183,6 +189,7 @@ export class Documents {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -194,6 +201,7 @@ export class Documents {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 case 404:
@@ -202,6 +210,7 @@ export class Documents {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 default:
@@ -257,6 +266,7 @@ export class Documents {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -268,6 +278,7 @@ export class Documents {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 case 404:
@@ -276,6 +287,7 @@ export class Documents {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 default:
@@ -331,6 +343,7 @@ export class Documents {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
+                skipValidation: true,
             });
         }
 
@@ -342,6 +355,7 @@ export class Documents {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 case 404:
@@ -350,6 +364,7 @@ export class Documents {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
                         })
                     );
                 default:
