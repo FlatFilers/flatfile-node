@@ -15,10 +15,10 @@ export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, Flatf
     status: core.serialization.lazy(async () => (await import("../../..")).ModelFileStatusEnum),
     size: core.serialization.number(),
     bytesReceived: core.serialization.number(),
-    spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId),
-    workbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId),
     createdAt: core.serialization.string(),
     updatedAt: core.serialization.string(),
+    spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId),
+    workbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId).optional(),
     sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId).optional(),
 });
 
@@ -32,10 +32,10 @@ export declare namespace File_ {
         status: serializers.ModelFileStatusEnum.Raw;
         size: number;
         bytesReceived: number;
-        spaceId: serializers.SpaceId.Raw;
-        workbookId: serializers.WorkbookId.Raw;
         createdAt: string;
         updatedAt: string;
+        spaceId: serializers.SpaceId.Raw;
+        workbookId?: serializers.WorkbookId.Raw | null;
         sheetId?: serializers.SheetId.Raw | null;
     }
 }

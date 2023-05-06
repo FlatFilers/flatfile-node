@@ -23,11 +23,11 @@ export interface File_ {
     size: number;
     /** Number of bytes that have been uploaded so far (useful for progress tracking) */
     bytesReceived: number;
-    spaceId: Flatfile.SpaceId;
-    workbookId: Flatfile.WorkbookId;
     /** Date the file was created */
     createdAt: string;
     /** Date the file was last updated */
     updatedAt: string;
+    spaceId: Flatfile.SpaceId;
+    workbookId?: Flatfile.WorkbookId;
     sheetId?: Flatfile.SheetId;
 }
