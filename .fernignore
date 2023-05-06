@@ -4,4 +4,3 @@ README.md
 
 src/wrapper
 src/index.ts
-src/api/resources/files/client/Client.ts

@@ -1,8 +1,7 @@
 import { FlatfileClient as FernClient } from "../Client";
-import * as environments from "../environments";
 import * as core from "../core";
-import * as errors from "../errors";
-import urlJoin from "url-join";
+import * as environments from "../environments";
+import { Files } from "./Files";
 
 export declare namespace FlatfileClient {
     interface Options {
@@ -12,8 +11,6 @@ export declare namespace FlatfileClient {
 }
 
 export class FlatfileClient extends FernClient {
-    private token: string | undefined;
-
     constructor(options: FlatfileClient.Options = {}) {
         super({
             environment: options.environment,
@@ -28,5 +25,11 @@ export class FlatfileClient extends FernClient {
                           return token;
                       },
         });
+    }
+
+    protected __files: Files | undefined;
+
+    public get files(): Files {
+        return (this.__files ??= new Files(this.options));
     }
 }
