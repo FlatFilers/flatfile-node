@@ -464,6 +464,197 @@ export class Jobs {
         }
     }
 
+    /**
+     * Acknowledge a job and return the job
+     */
+    public async acknowledgeJob(jobId: Flatfile.JobId, request: Flatfile.JobAckDetails): Promise<Flatfile.Job> {
+        const _response = await (this.options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/ack`
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+            },
+            contentType: "application/json",
+            body: await serializers.JobAckDetails.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
+        });
+        if (_response.ok) {
+            return await serializers.Job.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Acknowledge a job outcome and return the job
+     */
+    public async acknowledgeJobOutcome(jobId: Flatfile.JobId): Promise<Flatfile.Job> {
+        const _response = await (this.options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/ack-outcome`
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+            },
+            contentType: "application/json",
+            timeoutMs: 60000,
+        });
+        if (_response.ok) {
+            return await serializers.Job.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Complete a job and return the job
+     */
+    public async completeJob(jobId: Flatfile.JobId, request: Flatfile.JobOutcome): Promise<Flatfile.Job> {
+        const _response = await (this.options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/complete`
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+            },
+            contentType: "application/json",
+            body: await serializers.JobOutcome.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
+        });
+        if (_response.ok) {
+            return await serializers.Job.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Fail a job and return the job
+     */
+    public async failJob(jobId: Flatfile.JobId, request: Flatfile.JobOutcome): Promise<Flatfile.Job> {
+        const _response = await (this.options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/fail`
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+            },
+            contentType: "application/json",
+            body: await serializers.JobOutcome.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: 60000,
+        });
+        if (_response.ok) {
+            return await serializers.Job.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
     protected async _getAuthorizationHeader() {
         const bearer = await core.Supplier.get(this.options.token);
         if (bearer != null) {

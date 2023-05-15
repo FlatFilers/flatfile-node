@@ -13,4 +13,6 @@ export interface JobUpdate {
     status?: Flatfile.JobStatus;
     /** the progress of the job */
     progress?: number;
+    /** the time that the job's outcome has been acknowledged by a user */
+    outcomeAcknowledgedAt?: Date;
 }

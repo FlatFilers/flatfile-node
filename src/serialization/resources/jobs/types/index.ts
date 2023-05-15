@@ -16,6 +16,8 @@ export * from "./JobStatus";
 export * from "./JobMode";
 export * from "./JobPlan";
 export * from "./JobExecutionPlanConfig";
+export * from "./JobAckDetails";
+export * from "./JobOutcome";
 export * from "./JobExecutionPlan";
 export * from "./Edge";
 export * from "./SourceField";

@@ -24,4 +24,12 @@ export interface JobConfig {
     fileId?: Flatfile.FileId;
     /** the mode of the job */
     mode?: Flatfile.JobMode;
+    /** Input parameters for this job type. */
+    input?: Record<string, unknown>;
+    /** Outcome summary of job. */
+    outcome?: Record<string, unknown>;
+    /** Current status of job in text */
+    info?: string;
+    /** Indicates if Flatfile is managing the control flow of this job or if it is being manually tracked. */
+    managed: boolean;
 }

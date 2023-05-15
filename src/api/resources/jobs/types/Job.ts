@@ -17,4 +17,6 @@ export interface Job extends Flatfile.JobConfig {
     startedAt?: Date;
     /** the time that the job finished at */
     finishedAt?: Date;
+    /** the time that the job's outcome has been acknowledged by a user */
+    outcomeAcknowledgedAt?: Date;
 }

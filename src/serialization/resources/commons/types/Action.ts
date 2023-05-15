@@ -8,19 +8,25 @@ import * as core from "../../../../core";
 
 export const Action: core.serialization.ObjectSchema<serializers.Action.Raw, Flatfile.Action> =
     core.serialization.object({
-        slug: core.serialization.string(),
+        slug: core.serialization.string().optional(),
+        operation: core.serialization.string().optional(),
+        mode: core.serialization.lazy(async () => (await import("../../..")).ActionMode).optional(),
         label: core.serialization.string(),
         type: core.serialization.string().optional(),
         description: core.serialization.string().optional(),
         primary: core.serialization.boolean().optional(),
+        confirm: core.serialization.boolean().optional(),
     });
 
 export declare namespace Action {
     interface Raw {
-        slug: string;
+        slug?: string | null;
+        operation?: string | null;
+        mode?: serializers.ActionMode.Raw | null;
         label: string;
         type?: string | null;
         description?: string | null;
         primary?: boolean | null;
+        confirm?: boolean | null;
     }
 }

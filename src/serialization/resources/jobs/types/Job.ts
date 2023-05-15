@@ -13,6 +13,7 @@ export const Job: core.serialization.ObjectSchema<serializers.Job.Raw, Flatfile.
         updatedAt: core.serialization.date(),
         startedAt: core.serialization.date().optional(),
         finishedAt: core.serialization.date().optional(),
+        outcomeAcknowledgedAt: core.serialization.date().optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).JobConfig));
 
@@ -23,5 +24,6 @@ export declare namespace Job {
         updatedAt: string;
         startedAt?: string | null;
         finishedAt?: string | null;
+        outcomeAcknowledgedAt?: string | null;
     }
 }
