@@ -46,4 +46,8 @@ export interface GetRecordsRequest {
      * if "for" is provided, the query parameters will be pulled from the event payload
      */
     for?: Flatfile.EventId;
+    /**
+     * An FFQL query used to filter the result set
+     */
+    q?: string;
 }

@@ -30,6 +30,9 @@ export type EventTopic =
     | "job:updated"
     | "job:deleted"
     | "job:completed"
+    | "job:ready"
+    | "job:scheduled"
+    | "job:outcome_acknowledged"
     | "job:failed"
     | "commit:created"
     | "commit:updated"
@@ -57,6 +60,9 @@ export const EventTopic = {
     JobUpdated: "job:updated",
     JobDeleted: "job:deleted",
     JobCompleted: "job:completed",
+    JobReady: "job:ready",
+    JobScheduled: "job:scheduled",
+    JobOutcomeAcknowledged: "job:outcome_acknowledged",
     JobFailed: "job:failed",
     CommitCreated: "commit:created",
     CommitUpdated: "commit:updated",

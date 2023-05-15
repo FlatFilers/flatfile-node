@@ -29,6 +29,9 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "job:updated",
         "job:deleted",
         "job:completed",
+        "job:ready",
+        "job:scheduled",
+        "job:outcome_acknowledged",
         "job:failed",
         "commit:created",
         "commit:updated",
@@ -58,6 +61,9 @@ export declare namespace EventTopic {
         | "job:updated"
         | "job:deleted"
         | "job:completed"
+        | "job:ready"
+        | "job:scheduled"
+        | "job:outcome_acknowledged"
         | "job:failed"
         | "commit:created"
         | "commit:updated"

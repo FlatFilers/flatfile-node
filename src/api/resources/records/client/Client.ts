@@ -45,6 +45,7 @@ export class Records {
             includeLinks,
             includeLMessages,
             for: for_,
+            q,
         } = request;
         const _queryParams = new URLSearchParams();
         if (versionId != null) {
@@ -115,6 +116,10 @@ export class Records {
 
         if (for_ != null) {
             _queryParams.append("for", for_);
+        }
+
+        if (q != null) {
+            _queryParams.append("q", q);
         }
 
         const _response = await (this.options.fetcher ?? core.fetcher)({

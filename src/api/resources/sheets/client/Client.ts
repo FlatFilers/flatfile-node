@@ -368,7 +368,7 @@ export class Sheets {
         sheetId: Flatfile.SheetId,
         request: Flatfile.GetRecordCountsRequest = {}
     ): Promise<Flatfile.RecordCountsResponse> {
-        const { versionId, sinceVersionId, filter, filterField, searchValue, searchField } = request;
+        const { versionId, sinceVersionId, filter, filterField, searchValue, searchField, q } = request;
         const _queryParams = new URLSearchParams();
         if (versionId != null) {
             _queryParams.append("versionId", versionId);
@@ -392,6 +392,10 @@ export class Sheets {
 
         if (searchField != null) {
             _queryParams.append("searchField", searchField);
+        }
+
+        if (q != null) {
+            _queryParams.append("q", q);
         }
 
         const _response = await (this.options.fetcher ?? core.fetcher)({

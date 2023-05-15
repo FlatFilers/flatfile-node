@@ -14,4 +14,8 @@ export interface GetRecordCountsRequest {
     filterField?: Flatfile.FilterField;
     searchValue?: Flatfile.SearchValue;
     searchField?: Flatfile.SearchField;
+    /**
+     * An FFQL query used to filter the result set to be counted
+     */
+    q?: string;
 }
