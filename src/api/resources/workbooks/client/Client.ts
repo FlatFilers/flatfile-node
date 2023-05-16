@@ -79,7 +79,7 @@ export class Workbooks {
     /**
      * Creates a workbook and adds it to a space
      */
-    public async create(request: Flatfile.WorkbookConfig): Promise<Flatfile.WorkbookResponse> {
+    public async create(request: Flatfile.CreateWorkbookConfig): Promise<Flatfile.WorkbookResponse> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/workbooks"),
             method: "POST",
@@ -87,7 +87,7 @@ export class Workbooks {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
-            body: await serializers.WorkbookConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.CreateWorkbookConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: 60000,
         });
         if (_response.ok) {
@@ -222,7 +222,7 @@ export class Workbooks {
      */
     public async update(
         workbookId: Flatfile.WorkbookId,
-        request: Flatfile.WorkbookConfig
+        request: Flatfile.UpdateWorkbookConfig
     ): Promise<Flatfile.WorkbookResponse> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
@@ -234,7 +234,7 @@ export class Workbooks {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
-            body: await serializers.WorkbookConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.UpdateWorkbookConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: 60000,
         });
         if (_response.ok) {

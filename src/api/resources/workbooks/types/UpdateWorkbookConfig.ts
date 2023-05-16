@@ -7,11 +7,11 @@ import * as Flatfile from "../../..";
 /**
  * Properties used to create a new Workbook
  */
-export interface WorkbookConfig {
-    name: string;
+export interface UpdateWorkbookConfig {
+    name?: string;
     labels?: string[];
-    spaceId: Flatfile.SpaceId;
-    environmentId: Flatfile.EnvironmentId;
+    spaceId?: Flatfile.SpaceId;
+    environmentId?: Flatfile.EnvironmentId;
     /** Sheets must be <= 50 */
     sheets?: Flatfile.SheetConfig[];
     actions?: Flatfile.Action[];
