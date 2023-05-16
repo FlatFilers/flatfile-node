@@ -467,7 +467,7 @@ export class Jobs {
     /**
      * Acknowledge a job and return the job
      */
-    public async acknowledgeJob(jobId: Flatfile.JobId, request: Flatfile.JobAckDetails): Promise<Flatfile.Job> {
+    public async ack(jobId: Flatfile.JobId, request?: Flatfile.JobAckDetails): Promise<Flatfile.Job> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
@@ -478,7 +478,7 @@ export class Jobs {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
-            body: await serializers.JobAckDetails.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.jobs.ack.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: 60000,
         });
         if (_response.ok) {
@@ -515,7 +515,7 @@ export class Jobs {
     /**
      * Acknowledge a job outcome and return the job
      */
-    public async acknowledgeJobOutcome(jobId: Flatfile.JobId): Promise<Flatfile.Job> {
+    public async ackOutcome(jobId: Flatfile.JobId): Promise<Flatfile.Job> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
@@ -562,7 +562,7 @@ export class Jobs {
     /**
      * Complete a job and return the job
      */
-    public async completeJob(jobId: Flatfile.JobId, request: Flatfile.JobOutcome): Promise<Flatfile.Job> {
+    public async complete(jobId: Flatfile.JobId, request?: Flatfile.JobOutcome): Promise<Flatfile.Job> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
@@ -573,7 +573,7 @@ export class Jobs {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
-            body: await serializers.JobOutcome.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.jobs.complete.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: 60000,
         });
         if (_response.ok) {
@@ -610,7 +610,7 @@ export class Jobs {
     /**
      * Fail a job and return the job
      */
-    public async failJob(jobId: Flatfile.JobId, request: Flatfile.JobOutcome): Promise<Flatfile.Job> {
+    public async fail(jobId: Flatfile.JobId, request?: Flatfile.JobOutcome): Promise<Flatfile.Job> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 this.options.environment ?? environments.FlatfileEnvironment.Production,
@@ -621,7 +621,7 @@ export class Jobs {
                 Authorization: await this._getAuthorizationHeader(),
             },
             contentType: "application/json",
-            body: await serializers.JobOutcome.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.jobs.fail.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: 60000,
         });
         if (_response.ok) {
