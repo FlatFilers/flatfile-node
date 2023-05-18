@@ -21,7 +21,7 @@ export class FlatfileClient extends FernClient {
                     throw new Error("FLATFILE_API_URL and AGENT_INTERNAL_URL were both undefined");
                 }
                 return urlJoin(url, 'v1');
-            }),
+            })(),
             token: options.token ?? (() => {
                 const token = process?.env?.FLATFILE_API_KEY || process?.env?.FLATFILE_BEARER_TOKEN;
                 if (token == undefined) {
