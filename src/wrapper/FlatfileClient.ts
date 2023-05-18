@@ -1,12 +1,19 @@
 import { FlatfileClient as FernClient } from "../Client";
 import * as environments from "../environments";
 import * as core from "../core";
-import * as errors from "../errors";
 import urlJoin from "url-join";
+import { CrossEnvConfig } from "@flatfile/cross-env-config";
+
+CrossEnvConfig.alias("FLATFILE_API_URL", "AGENT_INTERNAL_URL");
+CrossEnvConfig.alias("FLATFILE_BEARER_TOKEN", "FLATFILE_API_KEY");
 
 export declare namespace FlatfileClient {
     interface Options {
-        environment?: environments.FlatfileEnvironment | string;
+        /**
+         * @deprecated use apiUrl instead
+         */
+        environment?: core.Supplier<environments.FlatfileEnvironment | string>;
+        apiUrl?: environments.FlatfileEnvironment | string;
         token?: core.Supplier<string>;
     }
 }
@@ -16,17 +23,24 @@ export class FlatfileClient extends FernClient {
 
     constructor(options: FlatfileClient.Options = {}) {
         super({
-            environment: options.environment,
-            token:
-                options.token != null
-                    ? options.token
-                    : () => {
-                          const token = process?.env?.FLATFILE_API_KEY || process?.env?.FLATFILE_BEARER_TOKEN;
-                          if (token == undefined) {
-                              throw new Error("FLATFILE_API_KEY and FLATFILE_BEARER_TOKEN were both undefined");
-                          }
-                          return token;
-                      },
+            environment: (options.environment || options.apiUrl) ?? environmentSupplier,
+            token: options.token ?? tokenSupplier
         });
     }
 }
+
+const environmentSupplier = () => {
+    const url = CrossEnvConfig.get("FLATFILE_API_URL");
+    if (!url) {
+        return environments.FlatfileEnvironment.Production;
+    }
+    return urlJoin(url, "v1");
+};
+
+const tokenSupplier = () => {
+    const token = CrossEnvConfig.get("FLATFILE_BEARER_TOKEN");
+    if (token == undefined) {
+        throw new Error("FLATFILE_BEARER_TOKEN is not undefined");
+    }
+    return token;
+};
