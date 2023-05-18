@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 
 export declare namespace Agents {
     interface Options {
-        environment?: environments.FlatfileEnvironment | string;
+        environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
@@ -26,14 +26,17 @@ export class Agents {
         const _queryParams = new URLSearchParams();
         _queryParams.append("environmentId", environmentId);
         const _response = await (this.options.fetcher ?? core.fetcher)({
-            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/agents"),
+            url: urlJoin(
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                "/agents"
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -79,14 +82,17 @@ export class Agents {
         const _queryParams = new URLSearchParams();
         _queryParams.append("environmentId", environmentId);
         const _response = await (this.options.fetcher ?? core.fetcher)({
-            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/agents"),
+            url: urlJoin(
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                "/agents"
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -148,7 +154,7 @@ export class Agents {
         _queryParams.append("environmentId", environmentId);
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/agents/${await serializers.AgentId.jsonOrThrow(agentId)}`
             ),
             method: "GET",
@@ -157,7 +163,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -231,7 +237,7 @@ export class Agents {
         _queryParams.append("environmentId", environmentId);
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/agents/${await serializers.AgentId.jsonOrThrow(agentId)}/logs`
             ),
             method: "GET",
@@ -240,7 +246,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -321,7 +327,7 @@ export class Agents {
 
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "/agents/agents/logs"
             ),
             method: "GET",
@@ -330,7 +336,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -402,7 +408,7 @@ export class Agents {
         _queryParams.append("environmentId", environmentId);
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/agents/${await serializers.AgentId.jsonOrThrow(agentId)}`
             ),
             method: "DELETE",
@@ -411,7 +417,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

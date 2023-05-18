@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 
 export declare namespace Events {
     interface Options {
-        environment?: environments.FlatfileEnvironment | string;
+        environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
@@ -57,14 +57,17 @@ export class Events {
         }
 
         const _response = await (this.options.fetcher ?? core.fetcher)({
-            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "events"),
+            url: urlJoin(
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                "events"
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -108,14 +111,17 @@ export class Events {
      */
     public async create(request: Flatfile.Event): Promise<Flatfile.EventResponse> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
-            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "events"),
+            url: urlJoin(
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                "events"
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             body: await serializers.Event.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -179,7 +185,7 @@ export class Events {
     public async get(eventId: Flatfile.EventId): Promise<Flatfile.EventResponse> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `events/${await serializers.EventId.jsonOrThrow(eventId)}`
             ),
             method: "GET",
@@ -188,7 +194,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -228,7 +234,7 @@ export class Events {
     public async ack(eventId: Flatfile.EventId): Promise<Flatfile.Success> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `events/${await serializers.EventId.jsonOrThrow(eventId)}/ack`
             ),
             method: "POST",
@@ -237,7 +243,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -284,14 +290,17 @@ export class Events {
         const _queryParams = new URLSearchParams();
         _queryParams.append("spaceId", spaceId);
         const _response = await (this.options.fetcher ?? core.fetcher)({
-            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "subscription"),
+            url: urlJoin(
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                "subscription"
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

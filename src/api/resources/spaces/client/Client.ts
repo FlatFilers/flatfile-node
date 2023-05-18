@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 
 export declare namespace Spaces {
     interface Options {
-        environment?: environments.FlatfileEnvironment | string;
+        environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
@@ -57,14 +57,17 @@ export class Spaces {
         }
 
         const _response = await (this.options.fetcher ?? core.fetcher)({
-            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/spaces"),
+            url: urlJoin(
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                "/spaces"
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -120,14 +123,17 @@ export class Spaces {
      */
     public async create(request: Flatfile.spaces.SpaceConfig): Promise<Flatfile.spaces.SpaceResponse> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
-            url: urlJoin(this.options.environment ?? environments.FlatfileEnvironment.Production, "/spaces"),
+            url: urlJoin(
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                "/spaces"
+            ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             body: await serializers.spaces.SpaceConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -171,7 +177,7 @@ export class Spaces {
     public async get(spaceId: Flatfile.SpaceId): Promise<Flatfile.spaces.SpaceResponse> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}`
             ),
             method: "GET",
@@ -180,7 +186,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -223,7 +229,7 @@ export class Spaces {
     public async delete(spaceId: Flatfile.SpaceId): Promise<Flatfile.Success> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}`
             ),
             method: "DELETE",
@@ -232,7 +238,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -278,7 +284,7 @@ export class Spaces {
     ): Promise<Flatfile.spaces.SpaceResponse> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}`
             ),
             method: "PATCH",
@@ -287,7 +293,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             body: await serializers.spaces.SpaceConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -333,7 +339,7 @@ export class Spaces {
     public async archiveSpace(spaceId: Flatfile.SpaceId): Promise<Flatfile.Success> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}/archive`
             ),
             method: "POST",
@@ -342,7 +348,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             timeoutMs: 60000,

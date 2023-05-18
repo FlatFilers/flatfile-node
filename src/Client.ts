@@ -22,7 +22,7 @@ import { Workbooks } from "./api/resources/workbooks/client/Client";
 
 export declare namespace FlatfileClient {
     interface Options {
-        environment?: environments.FlatfileEnvironment | string;
+        environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }

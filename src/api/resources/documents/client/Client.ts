@@ -11,7 +11,7 @@ import * as errors from "../../../../errors";
 
 export declare namespace Documents {
     interface Options {
-        environment?: environments.FlatfileEnvironment | string;
+        environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
     }
@@ -28,7 +28,7 @@ export class Documents {
     public async list(spaceId: Flatfile.SpaceId): Promise<Flatfile.ListDocumentsResponse> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}/documents`
             ),
             method: "GET",
@@ -37,7 +37,7 @@ export class Documents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -108,7 +108,7 @@ export class Documents {
     ): Promise<Flatfile.DocumentResponse> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(spaceId)}/documents`
             ),
             method: "POST",
@@ -117,7 +117,7 @@ export class Documents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             body: await serializers.DocumentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -186,7 +186,7 @@ export class Documents {
     public async get(spaceId: Flatfile.SpaceId, documentId: Flatfile.DocumentId): Promise<Flatfile.DocumentResponse> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(
                     spaceId
                 )}/documents/${await serializers.DocumentId.jsonOrThrow(documentId)}`
@@ -197,7 +197,7 @@ export class Documents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -269,7 +269,7 @@ export class Documents {
     ): Promise<Flatfile.DocumentResponse> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(
                     spaceId
                 )}/documents/${await serializers.DocumentId.jsonOrThrow(documentId)}`
@@ -280,7 +280,7 @@ export class Documents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             body: await serializers.DocumentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -353,7 +353,7 @@ export class Documents {
     ): Promise<Flatfile.Success> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                this.options.environment ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/spaces/${await serializers.SpaceId.jsonOrThrow(
                     spaceId
                 )}/documents/${await serializers.DocumentId.jsonOrThrow(documentId)}`
@@ -364,7 +364,7 @@ export class Documents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.2",
+                "X-Fern-SDK-Version": "1.4.3",
             },
             contentType: "application/json",
             body: await serializers.EnvironmentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
