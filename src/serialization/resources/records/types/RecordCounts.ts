@@ -8,17 +8,17 @@ import * as core from "../../../../core";
 
 export const RecordCounts: core.serialization.ObjectSchema<serializers.RecordCounts.Raw, Flatfile.RecordCounts> =
     core.serialization.object({
-        total: core.serialization.number().optional(),
-        valid: core.serialization.number().optional(),
-        error: core.serialization.number().optional(),
-        filtered: core.serialization.number().optional(),
+        total: core.serialization.number(),
+        valid: core.serialization.number(),
+        error: core.serialization.number(),
+        errorsByField: core.serialization.record(core.serialization.string(), core.serialization.number()).optional(),
     });
 
 export declare namespace RecordCounts {
     interface Raw {
-        total?: number | null;
-        valid?: number | null;
-        error?: number | null;
-        filtered?: number | null;
+        total: number;
+        valid: number;
+        error: number;
+        errorsByField?: Record<string, number> | null;
     }
 }

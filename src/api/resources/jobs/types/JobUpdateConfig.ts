@@ -9,4 +9,6 @@ export type JobUpdateConfig =
     | Flatfile.FileJobConfig
     | Flatfile.PipelineJobConfig
     | Flatfile.ExportJobConfig
+    | Flatfile.MutateJobConfig
+    | Flatfile.AiAssistJobConfig
     | Flatfile.EmptyObject;

@@ -5,7 +5,7 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import URLSearchParams from "@ungap/url-search-params";
+import { default as URLSearchParams } from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
@@ -33,6 +33,10 @@ export class Sheets {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -44,6 +48,7 @@ export class Sheets {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -81,6 +86,10 @@ export class Sheets {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -91,6 +100,7 @@ export class Sheets {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -118,8 +128,8 @@ export class Sheets {
 
     /**
      * Deletes a specific sheet from a workbook
-     * @throws {Flatfile.BadRequestError}
-     * @throws {Flatfile.NotFoundError}
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      */
     public async delete(sheetId: Flatfile.SheetId): Promise<Flatfile.Success> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
@@ -130,6 +140,10 @@ export class Sheets {
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -140,6 +154,7 @@ export class Sheets {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -152,6 +167,7 @@ export class Sheets {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 case 404:
@@ -161,6 +177,7 @@ export class Sheets {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 default:
@@ -188,8 +205,8 @@ export class Sheets {
 
     /**
      * Trigger data hooks and validation to run on a sheet
-     * @throws {Flatfile.BadRequestError}
-     * @throws {Flatfile.NotFoundError}
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      */
     public async validate(sheetId: Flatfile.SheetId): Promise<Flatfile.Success> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
@@ -200,6 +217,10 @@ export class Sheets {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -210,6 +231,7 @@ export class Sheets {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -222,6 +244,7 @@ export class Sheets {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 case 404:
@@ -231,6 +254,7 @@ export class Sheets {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 default:
@@ -325,6 +349,10 @@ export class Sheets {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -336,6 +364,7 @@ export class Sheets {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -368,7 +397,7 @@ export class Sheets {
         sheetId: Flatfile.SheetId,
         request: Flatfile.GetRecordCountsRequest = {}
     ): Promise<Flatfile.RecordCountsResponse> {
-        const { versionId, sinceVersionId, filter, filterField, searchValue, searchField, q } = request;
+        const { versionId, sinceVersionId, filter, filterField, searchValue, searchField, byField, q } = request;
         const _queryParams = new URLSearchParams();
         if (versionId != null) {
             _queryParams.append("versionId", versionId);
@@ -394,6 +423,10 @@ export class Sheets {
             _queryParams.append("searchField", searchField);
         }
 
+        if (byField != null) {
+            _queryParams.append("byField", byField.toString());
+        }
+
         if (q != null) {
             _queryParams.append("q", q);
         }
@@ -406,6 +439,10 @@ export class Sheets {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -417,6 +454,7 @@ export class Sheets {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -443,11 +481,6 @@ export class Sheets {
     }
 
     protected async _getAuthorizationHeader() {
-        const bearer = await core.Supplier.get(this.options.token);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
+        return `Bearer ${await core.Supplier.get(this.options.token)}`;
     }
 }

@@ -8,6 +8,8 @@ export * from "./JobSource";
 export * from "./JobDestination";
 export * from "./DeleteJobConfig";
 export * from "./FileJobConfig";
+export * from "./MutateJobConfig";
+export * from "./AiAssistJobConfig";
 export * from "./Driver";
 export * from "./Trigger";
 export * from "./PipelineJobConfig";

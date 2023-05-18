@@ -3,8 +3,8 @@
  */
 
 export interface RecordCounts {
-    total?: number;
-    valid?: number;
-    error?: number;
-    filtered?: number;
+    total: number;
+    valid: number;
+    error: number;
+    errorsByField?: Record<string, number>;
 }

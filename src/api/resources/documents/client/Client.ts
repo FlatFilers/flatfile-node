@@ -22,8 +22,8 @@ export class Documents {
 
     /**
      * Returns all documents for a space
-     * @throws {Flatfile.BadRequestError}
-     * @throws {Flatfile.NotFoundError}
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      */
     public async list(spaceId: Flatfile.SpaceId): Promise<Flatfile.ListDocumentsResponse> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
@@ -34,6 +34,10 @@ export class Documents {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -44,6 +48,7 @@ export class Documents {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -56,6 +61,7 @@ export class Documents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 case 404:
@@ -65,6 +71,7 @@ export class Documents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 default:
@@ -92,8 +99,8 @@ export class Documents {
 
     /**
      * Add a new document to the space
-     * @throws {Flatfile.BadRequestError}
-     * @throws {Flatfile.NotFoundError}
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      */
     public async create(
         spaceId: Flatfile.SpaceId,
@@ -107,6 +114,10 @@ export class Documents {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             body: await serializers.DocumentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -118,6 +129,7 @@ export class Documents {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -130,6 +142,7 @@ export class Documents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 case 404:
@@ -139,6 +152,7 @@ export class Documents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 default:
@@ -166,8 +180,8 @@ export class Documents {
 
     /**
      * Returns a single document
-     * @throws {Flatfile.BadRequestError}
-     * @throws {Flatfile.NotFoundError}
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      */
     public async get(spaceId: Flatfile.SpaceId, documentId: Flatfile.DocumentId): Promise<Flatfile.DocumentResponse> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
@@ -180,6 +194,10 @@ export class Documents {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -190,6 +208,7 @@ export class Documents {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -202,6 +221,7 @@ export class Documents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 case 404:
@@ -211,6 +231,7 @@ export class Documents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 default:
@@ -238,8 +259,8 @@ export class Documents {
 
     /**
      * updates a single document, for only the body and title
-     * @throws {Flatfile.BadRequestError}
-     * @throws {Flatfile.NotFoundError}
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      */
     public async update(
         spaceId: Flatfile.SpaceId,
@@ -256,6 +277,10 @@ export class Documents {
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             body: await serializers.DocumentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -267,6 +292,7 @@ export class Documents {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -279,6 +305,7 @@ export class Documents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 case 404:
@@ -288,6 +315,7 @@ export class Documents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 default:
@@ -315,8 +343,8 @@ export class Documents {
 
     /**
      * Deletes a single document
-     * @throws {Flatfile.BadRequestError}
-     * @throws {Flatfile.NotFoundError}
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      */
     public async delete(
         spaceId: Flatfile.SpaceId,
@@ -333,6 +361,10 @@ export class Documents {
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             body: await serializers.EnvironmentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -344,6 +376,7 @@ export class Documents {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -356,6 +389,7 @@ export class Documents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 case 404:
@@ -365,6 +399,7 @@ export class Documents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 default:
@@ -391,11 +426,6 @@ export class Documents {
     }
 
     protected async _getAuthorizationHeader() {
-        const bearer = await core.Supplier.get(this.options.token);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
+        return `Bearer ${await core.Supplier.get(this.options.token)}`;
     }
 }

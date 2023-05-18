@@ -5,7 +5,7 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import URLSearchParams from "@ungap/url-search-params";
+import { default as URLSearchParams } from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
@@ -57,6 +57,10 @@ export class Jobs {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -68,6 +72,7 @@ export class Jobs {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -99,6 +104,10 @@ export class Jobs {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             body: await serializers.JobConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -110,6 +119,7 @@ export class Jobs {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -144,6 +154,10 @@ export class Jobs {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -154,6 +168,7 @@ export class Jobs {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -188,6 +203,10 @@ export class Jobs {
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             body: await serializers.JobUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -199,6 +218,7 @@ export class Jobs {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -233,6 +253,10 @@ export class Jobs {
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -243,6 +267,7 @@ export class Jobs {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -280,6 +305,10 @@ export class Jobs {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -290,6 +319,7 @@ export class Jobs {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -327,6 +357,10 @@ export class Jobs {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -337,6 +371,7 @@ export class Jobs {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -377,6 +412,10 @@ export class Jobs {
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             body: await serializers.JobExecutionPlanConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -388,6 +427,7 @@ export class Jobs {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -428,6 +468,10 @@ export class Jobs {
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             body: await serializers.JobExecutionPlanConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -439,6 +483,7 @@ export class Jobs {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -476,6 +521,10 @@ export class Jobs {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             body: await serializers.jobs.ack.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -487,6 +536,7 @@ export class Jobs {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -524,6 +574,10 @@ export class Jobs {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -534,6 +588,7 @@ export class Jobs {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -571,6 +626,10 @@ export class Jobs {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             body: await serializers.jobs.complete.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -582,6 +641,7 @@ export class Jobs {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -619,6 +679,10 @@ export class Jobs {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             body: await serializers.jobs.fail.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -630,6 +694,7 @@ export class Jobs {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -656,11 +721,6 @@ export class Jobs {
     }
 
     protected async _getAuthorizationHeader() {
-        const bearer = await core.Supplier.get(this.options.token);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
+        return `Bearer ${await core.Supplier.get(this.options.token)}`;
     }
 }

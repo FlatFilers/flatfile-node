@@ -5,7 +5,7 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import URLSearchParams from "@ungap/url-search-params";
+import { default as URLSearchParams } from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
@@ -40,6 +40,10 @@ export class Environments {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -51,6 +55,7 @@ export class Environments {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -85,6 +90,10 @@ export class Environments {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             body: await serializers.EnvironmentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -96,6 +105,7 @@ export class Environments {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -133,6 +143,10 @@ export class Environments {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -143,6 +157,7 @@ export class Environments {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -180,6 +195,10 @@ export class Environments {
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             body: await serializers.EnvironmentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -191,6 +210,7 @@ export class Environments {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -218,8 +238,8 @@ export class Environments {
 
     /**
      * Deletes a single environment
-     * @throws {Flatfile.BadRequestError}
-     * @throws {Flatfile.NotFoundError}
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      */
     public async delete(environmentId: string, request: Flatfile.EnvironmentConfig): Promise<Flatfile.Success> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
@@ -230,6 +250,10 @@ export class Environments {
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             body: await serializers.EnvironmentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -241,6 +265,7 @@ export class Environments {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -253,6 +278,7 @@ export class Environments {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 case 404:
@@ -262,6 +288,7 @@ export class Environments {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 default:
@@ -288,11 +315,6 @@ export class Environments {
     }
 
     protected async _getAuthorizationHeader() {
-        const bearer = await core.Supplier.get(this.options.token);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
+        return `Bearer ${await core.Supplier.get(this.options.token)}`;
     }
 }

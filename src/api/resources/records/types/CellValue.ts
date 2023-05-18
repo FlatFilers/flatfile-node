@@ -8,4 +8,5 @@ export interface CellValue {
     valid?: boolean;
     messages?: Flatfile.ValidationMessage[];
     value?: Flatfile.CellValueUnion;
+    updatedAt?: Date;
 }

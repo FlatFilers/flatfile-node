@@ -12,6 +12,8 @@ export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateCon
         core.serialization.lazyObject(async () => (await import("../../..")).FileJobConfig),
         core.serialization.lazyObject(async () => (await import("../../..")).PipelineJobConfig),
         core.serialization.lazyObject(async () => (await import("../../..")).ExportJobConfig),
+        core.serialization.lazyObject(async () => (await import("../../..")).MutateJobConfig),
+        core.serialization.lazyObject(async () => (await import("../../..")).AiAssistJobConfig),
         core.serialization.lazyObject(async () => (await import("../../..")).EmptyObject),
     ]);
 
@@ -21,5 +23,7 @@ export declare namespace JobUpdateConfig {
         | serializers.FileJobConfig.Raw
         | serializers.PipelineJobConfig.Raw
         | serializers.ExportJobConfig.Raw
+        | serializers.MutateJobConfig.Raw
+        | serializers.AiAssistJobConfig.Raw
         | serializers.EmptyObject.Raw;
 }

@@ -5,7 +5,7 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import URLSearchParams from "@ungap/url-search-params";
+import { default as URLSearchParams } from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
@@ -30,6 +30,10 @@ export class Agents {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -41,6 +45,7 @@ export class Agents {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -67,7 +72,7 @@ export class Agents {
     }
 
     /**
-     * @throws {Flatfile.BadRequestError}
+     * @throws {@link Flatfile.BadRequestError}
      */
     public async create(request: Flatfile.CreateAgentsRequest): Promise<Flatfile.AgentResponse> {
         const { environmentId, body: _body } = request;
@@ -78,6 +83,10 @@ export class Agents {
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -90,6 +99,7 @@ export class Agents {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -102,6 +112,7 @@ export class Agents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 default:
@@ -128,8 +139,8 @@ export class Agents {
     }
 
     /**
-     * @throws {Flatfile.BadRequestError}
-     * @throws {Flatfile.NotFoundError}
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      */
     public async get(agentId: Flatfile.AgentId, request: Flatfile.GetAgentRequest): Promise<Flatfile.AgentResponse> {
         const { environmentId } = request;
@@ -143,6 +154,10 @@ export class Agents {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -154,6 +169,7 @@ export class Agents {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -166,6 +182,7 @@ export class Agents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 case 404:
@@ -175,6 +192,7 @@ export class Agents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 default:
@@ -201,8 +219,8 @@ export class Agents {
     }
 
     /**
-     * @throws {Flatfile.BadRequestError}
-     * @throws {Flatfile.NotFoundError}
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      */
     public async getAgentLogs(
         agentId: Flatfile.AgentId,
@@ -219,6 +237,10 @@ export class Agents {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -230,6 +252,7 @@ export class Agents {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -242,6 +265,7 @@ export class Agents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 case 404:
@@ -251,6 +275,7 @@ export class Agents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 default:
@@ -277,8 +302,8 @@ export class Agents {
     }
 
     /**
-     * @throws {Flatfile.BadRequestError}
-     * @throws {Flatfile.NotFoundError}
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      */
     public async getEnvironmentAgentLogs(
         request: Flatfile.GetEnvironmentAgentLogsRequest
@@ -302,6 +327,10 @@ export class Agents {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -313,6 +342,7 @@ export class Agents {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -325,6 +355,7 @@ export class Agents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 case 404:
@@ -334,6 +365,7 @@ export class Agents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 default:
@@ -361,8 +393,8 @@ export class Agents {
 
     /**
      * Deletes a single agent
-     * @throws {Flatfile.BadRequestError}
-     * @throws {Flatfile.NotFoundError}
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      */
     public async delete(agentId: Flatfile.AgentId, request: Flatfile.DeleteAgentRequest): Promise<Flatfile.Success> {
         const { environmentId, body: _body } = request;
@@ -376,6 +408,10 @@ export class Agents {
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -388,6 +424,7 @@ export class Agents {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -400,6 +437,7 @@ export class Agents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 case 404:
@@ -409,6 +447,7 @@ export class Agents {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 default:
@@ -435,11 +474,6 @@ export class Agents {
     }
 
     protected async _getAuthorizationHeader() {
-        const bearer = await core.Supplier.get(this.options.token);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
+        return `Bearer ${await core.Supplier.get(this.options.token)}`;
     }
 }

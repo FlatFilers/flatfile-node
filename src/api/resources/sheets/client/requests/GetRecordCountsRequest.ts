@@ -15,6 +15,10 @@ export interface GetRecordCountsRequest {
     searchValue?: Flatfile.SearchValue;
     searchField?: Flatfile.SearchField;
     /**
+     * If true, the error counts for each field will also be returned
+     */
+    byField?: boolean;
+    /**
      * An FFQL query used to filter the result set to be counted
      */
     q?: string;

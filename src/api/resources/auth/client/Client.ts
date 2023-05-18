@@ -5,7 +5,7 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import URLSearchParams from "@ungap/url-search-params";
+import { default as URLSearchParams } from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
@@ -22,8 +22,8 @@ export class Auth {
     constructor(protected readonly options: Auth.Options) {}
 
     /**
-     * @throws {Flatfile.BadRequestError}
-     * @throws {Flatfile.NotFoundError}
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      */
     public async getApiKeys(request: Flatfile.GetApiKeysRequest): Promise<Flatfile.ApiKeysResponse> {
         const { environmentId } = request;
@@ -34,6 +34,10 @@ export class Auth {
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.1",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -45,6 +49,7 @@ export class Auth {
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 skipValidation: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 
@@ -57,6 +62,7 @@ export class Auth {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 case 404:
@@ -66,6 +72,7 @@ export class Auth {
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
                         })
                     );
                 default:
@@ -92,11 +99,6 @@ export class Auth {
     }
 
     protected async _getAuthorizationHeader() {
-        const bearer = await core.Supplier.get(this.options.token);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
+        return `Bearer ${await core.Supplier.get(this.options.token)}`;
     }
 }
