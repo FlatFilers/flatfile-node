@@ -2,6 +2,10 @@ import { FlatfileClient as FernClient } from "../Client";
 import * as environments from "../environments";
 import * as core from "../core";
 import urlJoin from "url-join";
+import { CrossEnvConfig } from "@flatfile/cross-env-config";
+
+CrossEnvConfig.alias("FLATFILE_API_URL", "AGENT_INTERNAL_URL");
+CrossEnvConfig.alias("FLATFILE_BEARER_TOKEN", "FLATFILE_API_KEY");
 
 export declare namespace FlatfileClient {
     interface Options {
@@ -16,19 +20,19 @@ export class FlatfileClient extends FernClient {
     constructor(options: FlatfileClient.Options = {}) {
         super({
             environment: options.environment ?? (() => {
-                const url = process?.env?.FLATFILE_API_URL || process?.env?.AGENT_INTERNAL_URL;
+                const url = CrossEnvConfig.get("FLATFILE_API_URL");
                 if (url == undefined) {
-                    throw new Error("FLATFILE_API_URL and AGENT_INTERNAL_URL were both undefined");
+                    throw new Error("FLATFILE_API_URL is not defined");
                 }
-                return urlJoin(url, 'v1');
+                return urlJoin(url, "v1");
             })(),
             token: options.token ?? (() => {
-                const token = process?.env?.FLATFILE_API_KEY || process?.env?.FLATFILE_BEARER_TOKEN;
+                const token = CrossEnvConfig.get("FLATFILE_BEARER_TOKEN");
                 if (token == undefined) {
-                    throw new Error("FLATFILE_API_KEY and FLATFILE_BEARER_TOKEN were both undefined");
+                    throw new Error("FLATFILE_BEARER_TOKEN is not undefined");
                 }
                 return token;
-            }),
+            })
         });
     }
 }
