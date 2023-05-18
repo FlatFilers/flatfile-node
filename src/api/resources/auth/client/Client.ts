@@ -37,7 +37,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.1",
+                "X-Fern-SDK-Version": "1.4.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@flatfile/cross-env-config@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@flatfile/cross-env-config/-/cross-env-config-0.0.2.tgz#bcc8692a0156cf251ef5a395094eba25a445ea85"
+  integrity sha512-Z6XATwfgCVImHMhVXZZfk78W2qzdq5oAdYkeiZrbLkQl1776LGZCLMboLZhW+T0GBIErgWL0EU/SMnw8rZM4Gg==
+
 "@types/node@17.0.33":
   version "17.0.33"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.33.tgz#3c1879b276dc63e73030bb91165e62a4509cd506"
