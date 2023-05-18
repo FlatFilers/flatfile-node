@@ -15,6 +15,7 @@ export const BaseEvent: core.serialization.ObjectSchema<serializers.BaseEvent.Ra
         callbackUrl: core.serialization.string().optional(),
         dataUrl: core.serialization.string().optional(),
         createdAt: core.serialization.date(),
+        deletedAt: core.serialization.date().optional(),
         acknowledgedAt: core.serialization.string().optional(),
         acknowledgedBy: core.serialization.string().optional(),
         target: core.serialization.string().optional(),
@@ -30,6 +31,7 @@ export declare namespace BaseEvent {
         callbackUrl?: string | null;
         dataUrl?: string | null;
         createdAt: string;
+        deletedAt?: string | null;
         acknowledgedAt?: string | null;
         acknowledgedBy?: string | null;
         target?: string | null;

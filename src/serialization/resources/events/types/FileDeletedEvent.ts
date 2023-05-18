@@ -10,9 +10,13 @@ export const FileDeletedEvent: core.serialization.ObjectSchema<
     serializers.FileDeletedEvent.Raw,
     Flatfile.FileDeletedEvent
 > = core.serialization
-    .object({})
+    .object({
+        payload: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
+    })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseEvent));
 
 export declare namespace FileDeletedEvent {
-    interface Raw extends serializers.BaseEvent.Raw {}
+    interface Raw extends serializers.BaseEvent.Raw {
+        payload: Record<string, unknown>;
+    }
 }

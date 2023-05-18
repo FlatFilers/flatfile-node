@@ -4,4 +4,6 @@
 
 import * as Flatfile from "../../..";
 
-export interface UploadFailedEvent extends Flatfile.BaseEvent {}
+export interface UploadFailedEvent extends Flatfile.BaseEvent {
+    payload: Record<string, unknown>;
+}

@@ -4,4 +4,6 @@
 
 import * as Flatfile from "../../..";
 
-export interface WorkbookAddedEvent extends Flatfile.BaseEvent {}
+export interface WorkbookAddedEvent extends Flatfile.BaseEvent {
+    payload: Record<string, unknown>;
+}

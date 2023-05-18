@@ -10,9 +10,13 @@ export const UploadFailedEvent: core.serialization.ObjectSchema<
     serializers.UploadFailedEvent.Raw,
     Flatfile.UploadFailedEvent
 > = core.serialization
-    .object({})
+    .object({
+        payload: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
+    })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseEvent));
 
 export declare namespace UploadFailedEvent {
-    interface Raw extends serializers.BaseEvent.Raw {}
+    interface Raw extends serializers.BaseEvent.Raw {
+        payload: Record<string, unknown>;
+    }
 }

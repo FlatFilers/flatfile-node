@@ -10,9 +10,13 @@ export const ClientInitializedEvent: core.serialization.ObjectSchema<
     serializers.ClientInitializedEvent.Raw,
     Flatfile.ClientInitializedEvent
 > = core.serialization
-    .object({})
+    .object({
+        payload: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
+    })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseEvent));
 
 export declare namespace ClientInitializedEvent {
-    interface Raw extends serializers.BaseEvent.Raw {}
+    interface Raw extends serializers.BaseEvent.Raw {
+        payload: Record<string, unknown>;
+    }
 }

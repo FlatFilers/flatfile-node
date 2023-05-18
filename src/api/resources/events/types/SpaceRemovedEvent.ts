@@ -4,4 +4,6 @@
 
 import * as Flatfile from "../../..";
 
-export interface SpaceRemovedEvent extends Flatfile.BaseEvent {}
+export interface SpaceRemovedEvent extends Flatfile.BaseEvent {
+    payload: Record<string, unknown>;
+}

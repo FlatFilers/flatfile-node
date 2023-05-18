@@ -4,4 +4,6 @@
 
 import * as Flatfile from "../../..";
 
-export interface FileDeletedEvent extends Flatfile.BaseEvent {}
+export interface FileDeletedEvent extends Flatfile.BaseEvent {
+    payload: Record<string, unknown>;
+}

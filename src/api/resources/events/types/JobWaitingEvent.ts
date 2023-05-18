@@ -4,4 +4,6 @@
 
 import * as Flatfile from "../../..";
 
-export interface JobWaitingEvent extends Flatfile.BaseEvent {}
+export interface JobWaitingEvent extends Flatfile.BaseEvent {
+    payload: Record<string, unknown>;
+}

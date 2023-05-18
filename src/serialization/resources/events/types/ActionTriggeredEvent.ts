@@ -10,9 +10,13 @@ export const ActionTriggeredEvent: core.serialization.ObjectSchema<
     serializers.ActionTriggeredEvent.Raw,
     Flatfile.ActionTriggeredEvent
 > = core.serialization
-    .object({})
+    .object({
+        payload: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
+    })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseEvent));
 
 export declare namespace ActionTriggeredEvent {
-    interface Raw extends serializers.BaseEvent.Raw {}
+    interface Raw extends serializers.BaseEvent.Raw {
+        payload: Record<string, unknown>;
+    }
 }

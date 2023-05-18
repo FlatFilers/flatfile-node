@@ -4,4 +4,6 @@
 
 import * as Flatfile from "../../..";
 
-export interface UserOnlineEvent extends Flatfile.BaseEvent {}
+export interface UserOnlineEvent extends Flatfile.BaseEvent {
+    payload: Record<string, unknown>;
+}
