@@ -9,7 +9,11 @@ CrossEnvConfig.alias("FLATFILE_BEARER_TOKEN", "FLATFILE_API_KEY");
 
 export declare namespace FlatfileClient {
     interface Options {
+        /**
+         * @deprecated use baseUrl instead
+         */
         environment?: environments.FlatfileEnvironment | string;
+        apiUrl?: environments.FlatfileEnvironment | string;
         token?: core.Supplier<string>;
     }
 }
@@ -19,10 +23,10 @@ export class FlatfileClient extends FernClient {
 
     constructor(options: FlatfileClient.Options = {}) {
         super({
-            environment: options.environment ?? (() => {
+            environment: (options.environment || options.apiUrl) ?? (() => {
                 const url = CrossEnvConfig.get("FLATFILE_API_URL");
                 if (url == undefined) {
-                    throw new Error("FLATFILE_API_URL is not defined");
+                    return undefined;
                 }
                 return urlJoin(url, "v1");
             })(),
