@@ -6,7 +6,7 @@ import urlJoin from "url-join";
 
 export declare namespace FlatfileClient {
     interface Options {
-        environment?: environments.FlatfileEnvironment | string;
+        baseUrl?: environments.FlatfileEnvironment | string;
         token?: core.Supplier<string>;
     }
 }
@@ -16,7 +16,7 @@ export class FlatfileClient extends FernClient {
 
     constructor(options: FlatfileClient.Options = {}) {
         super({
-            environment: options.environment,
+            environment: options.baseUrl,
             token:
                 options.token != null
                     ? options.token
