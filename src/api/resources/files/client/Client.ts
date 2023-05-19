@@ -9,6 +9,7 @@ import { default as URLSearchParams } from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
+import * as stream from "stream";
 
 export declare namespace Files {
     interface Options {
@@ -51,7 +52,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.5",
+                "X-Fern-SDK-Version": "1.4.6",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -101,7 +102,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.5",
+                "X-Fern-SDK-Version": "1.4.6",
             },
             contentType: "application/json",
             body: await serializers.CreateFileRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -151,7 +152,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.5",
+                "X-Fern-SDK-Version": "1.4.6",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -200,7 +201,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.5",
+                "X-Fern-SDK-Version": "1.4.6",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -252,7 +253,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.5",
+                "X-Fern-SDK-Version": "1.4.6",
             },
             contentType: "application/json",
             body: await serializers.UpdateFileRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -288,6 +289,29 @@ export class Files {
                     message: _response.error.errorMessage,
                 });
         }
+    }
+
+    public async download(fileId: Flatfile.FileId): Promise<stream.Readable> {
+        return await (this.options.streamingFetcher ?? core.streamingFetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `/files/${await serializers.FileId.jsonOrThrow(fileId)}/download`
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.4.6",
+            },
+            timeoutMs: 60000,
+            onError: (error) => {
+                throw new errors.FlatfileError({
+                    message: (error as any)?.message,
+                });
+            },
+        });
     }
 
     protected async _getAuthorizationHeader() {
