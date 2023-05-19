@@ -15,6 +15,7 @@ export declare namespace Sheets {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token: core.Supplier<core.BearerToken>;
         fetcher?: core.FetchFunction;
+        streamingFetcher?: core.StreamingFetchFunction;
     }
 }
 
@@ -39,7 +40,7 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.6",
+                "X-Fern-SDK-Version": "1.4.7",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -92,7 +93,7 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.6",
+                "X-Fern-SDK-Version": "1.4.7",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -146,7 +147,7 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.6",
+                "X-Fern-SDK-Version": "1.4.7",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -223,7 +224,7 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.6",
+                "X-Fern-SDK-Version": "1.4.7",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -355,7 +356,7 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.6",
+                "X-Fern-SDK-Version": "1.4.7",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -445,7 +446,7 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.4.6",
+                "X-Fern-SDK-Version": "1.4.7",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
