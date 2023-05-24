@@ -7,7 +7,7 @@ import * as Flatfile from "../../..";
 export interface MutateJobConfig {
     sheetId: Flatfile.SheetId;
     /** A JavaScript function that will be run on each record in the sheet, it should return a mutated record. */
-    mutateFunction: string;
+    mutateRecord: string;
     /** If the mutation was generated through some sort of id-ed process, this links this job and that process. */
     mutationId?: string;
 }

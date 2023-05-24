@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const JobConfig: core.serialization.ObjectSchema<serializers.JobConfig.Raw, Flatfile.JobConfig> =
     core.serialization.object({
         type: core.serialization.lazy(async () => (await import("../../..")).JobType),
-        operation: core.serialization.string().optional(),
+        operation: core.serialization.string(),
         source: core.serialization.lazy(async () => (await import("../../..")).JobSource),
         destination: core.serialization.lazy(async () => (await import("../../..")).JobDestination).optional(),
         config: core.serialization.lazy(async () => (await import("../../..")).JobUpdateConfig).optional(),
@@ -27,7 +27,7 @@ export const JobConfig: core.serialization.ObjectSchema<serializers.JobConfig.Ra
 export declare namespace JobConfig {
     interface Raw {
         type: serializers.JobType.Raw;
-        operation?: string | null;
+        operation: string;
         source: serializers.JobSource.Raw;
         destination?: serializers.JobDestination.Raw | null;
         config?: serializers.JobUpdateConfig.Raw | null;

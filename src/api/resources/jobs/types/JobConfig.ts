@@ -11,7 +11,7 @@ export interface JobConfig {
     /** The type of job */
     type: Flatfile.JobType;
     /** the type of operation to perform on the data. For example, "export". */
-    operation?: string;
+    operation: string;
     source: Flatfile.JobSource;
     destination?: Flatfile.JobDestination;
     config?: Flatfile.JobUpdateConfig;

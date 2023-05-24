@@ -11,14 +11,14 @@ export const MutateJobConfig: core.serialization.ObjectSchema<
     Flatfile.MutateJobConfig
 > = core.serialization.object({
     sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId),
-    mutateFunction: core.serialization.string(),
+    mutateRecord: core.serialization.string(),
     mutationId: core.serialization.string().optional(),
 });
 
 export declare namespace MutateJobConfig {
     interface Raw {
         sheetId: serializers.SheetId.Raw;
-        mutateFunction: string;
+        mutateRecord: string;
         mutationId?: string | null;
     }
 }
