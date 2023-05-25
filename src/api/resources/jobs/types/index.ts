@@ -28,6 +28,7 @@ export * from "./EnumDetails";
 export * from "./Metadata";
 export * from "./Certainty";
 export * from "./CategoryMapping";
+export * from "./FindAndReplaceJobConfig";
 export * from "./ExportJobConfig";
 export * from "./ExportOptions";
 export * from "./EmptyObject";
