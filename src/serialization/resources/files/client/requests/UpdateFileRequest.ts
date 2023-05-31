@@ -11,6 +11,7 @@ export const UpdateFileRequest: core.serialization.Schema<
     Flatfile.UpdateFileRequest
 > = core.serialization.object({
     workbookId: core.serialization.lazy(async () => (await import("../../../..")).WorkbookId).optional(),
+    name: core.serialization.string().optional(),
     mode: core.serialization.lazy(async () => (await import("../../../..")).Mode).optional(),
     status: core.serialization.lazy(async () => (await import("../../../..")).ModelFileStatusEnum).optional(),
 });
@@ -18,6 +19,7 @@ export const UpdateFileRequest: core.serialization.Schema<
 export declare namespace UpdateFileRequest {
     interface Raw {
         workbookId?: serializers.WorkbookId.Raw | null;
+        name?: string | null;
         mode?: serializers.Mode.Raw | null;
         status?: serializers.ModelFileStatusEnum.Raw | null;
     }

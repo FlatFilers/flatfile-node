@@ -8,5 +8,9 @@ export interface GetEventTokenRequest {
     /**
      * The space id
      */
-    spaceId: Flatfile.SpaceId;
+    spaceId?: Flatfile.SpaceId;
+    /**
+     * The scope of the event stream (space or environment id)
+     */
+    scope?: string;
 }

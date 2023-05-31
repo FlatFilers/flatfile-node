@@ -12,6 +12,7 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "agent:updated",
         "agent:deleted",
         "space:created",
+        "space:updated",
         "space:deleted",
         "workbook:created",
         "workbook:updated",
@@ -44,6 +45,7 @@ export declare namespace EventTopic {
         | "agent:updated"
         | "agent:deleted"
         | "space:created"
+        | "space:updated"
         | "space:deleted"
         | "workbook:created"
         | "workbook:updated"

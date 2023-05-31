@@ -6,6 +6,8 @@ import * as Flatfile from "../../../..";
 
 export interface UpdateFileRequest {
     workbookId?: Flatfile.WorkbookId;
+    /** The name of the file */
+    name?: string;
     /** The storage mode of file to update */
     mode?: Flatfile.Mode;
     /** Status of the file */

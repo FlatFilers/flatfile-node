@@ -30,4 +30,5 @@ export interface File_ {
     spaceId: Flatfile.SpaceId;
     workbookId?: Flatfile.WorkbookId;
     sheetId?: Flatfile.SheetId;
+    actions?: Flatfile.Action[];
 }

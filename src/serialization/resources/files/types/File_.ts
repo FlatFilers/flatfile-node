@@ -20,6 +20,9 @@ export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, Flatf
     spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId),
     workbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId).optional(),
     sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId).optional(),
+    actions: core.serialization
+        .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
+        .optional(),
 });
 
 export declare namespace File_ {
@@ -37,5 +40,6 @@ export declare namespace File_ {
         spaceId: serializers.SpaceId.Raw;
         workbookId?: serializers.WorkbookId.Raw | null;
         sheetId?: serializers.SheetId.Raw | null;
+        actions?: serializers.Action.Raw[] | null;
     }
 }

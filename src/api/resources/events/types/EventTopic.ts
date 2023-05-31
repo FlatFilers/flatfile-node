@@ -13,6 +13,7 @@ export type EventTopic =
     | "agent:updated"
     | "agent:deleted"
     | "space:created"
+    | "space:updated"
     | "space:deleted"
     | "workbook:created"
     | "workbook:updated"
@@ -43,6 +44,7 @@ export const EventTopic = {
     AgentUpdated: "agent:updated",
     AgentDeleted: "agent:deleted",
     SpaceCreated: "space:created",
+    SpaceUpdated: "space:updated",
     SpaceDeleted: "space:deleted",
     WorkbookCreated: "workbook:created",
     WorkbookUpdated: "workbook:updated",

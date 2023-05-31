@@ -68,7 +68,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.1",
+                "X-Fern-SDK-Version": "1.5.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -122,7 +122,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.1",
+                "X-Fern-SDK-Version": "1.5.2",
             },
             contentType: "application/json",
             body: await serializers.Event.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -195,7 +195,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.1",
+                "X-Fern-SDK-Version": "1.5.2",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -244,7 +244,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.1",
+                "X-Fern-SDK-Version": "1.5.2",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -286,10 +286,19 @@ export class Events {
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      */
-    public async getEventToken(request: Flatfile.GetEventTokenRequest): Promise<Flatfile.spaces.EventTokenResponse> {
-        const { spaceId } = request;
+    public async getEventToken(
+        request: Flatfile.GetEventTokenRequest = {}
+    ): Promise<Flatfile.spaces.EventTokenResponse> {
+        const { spaceId, scope } = request;
         const _queryParams = new URLSearchParams();
-        _queryParams.append("spaceId", spaceId);
+        if (spaceId != null) {
+            _queryParams.append("spaceId", spaceId);
+        }
+
+        if (scope != null) {
+            _queryParams.append("scope", scope);
+        }
+
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -301,7 +310,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.1",
+                "X-Fern-SDK-Version": "1.5.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
