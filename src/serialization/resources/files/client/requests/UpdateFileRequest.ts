@@ -14,6 +14,9 @@ export const UpdateFileRequest: core.serialization.Schema<
     name: core.serialization.string().optional(),
     mode: core.serialization.lazy(async () => (await import("../../../..")).Mode).optional(),
     status: core.serialization.lazy(async () => (await import("../../../..")).ModelFileStatusEnum).optional(),
+    actions: core.serialization
+        .list(core.serialization.lazyObject(async () => (await import("../../../..")).Action))
+        .optional(),
 });
 
 export declare namespace UpdateFileRequest {
@@ -22,5 +25,6 @@ export declare namespace UpdateFileRequest {
         name?: string | null;
         mode?: serializers.Mode.Raw | null;
         status?: serializers.ModelFileStatusEnum.Raw | null;
+        actions?: serializers.Action.Raw[] | null;
     }
 }
