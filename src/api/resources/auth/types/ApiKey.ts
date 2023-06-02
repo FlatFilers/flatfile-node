@@ -13,7 +13,7 @@ export interface ApiKey {
     type: Flatfile.ApiKeyType;
     environmentId?: Flatfile.EnvironmentId;
     accountId?: Flatfile.AccountId;
-    operations?: Flatfile.ApiKeyOperation[];
+    operations: Flatfile.ApiKeyOperation[];
     createdAt: Date;
     updatedAt?: Date;
     expireAt: Date;
