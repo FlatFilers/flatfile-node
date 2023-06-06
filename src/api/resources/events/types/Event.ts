@@ -100,7 +100,7 @@ export declare namespace Event {
     }
 
     interface JobCompleted extends Flatfile.JobCompletedEvent {
-        type: "job_completed";
+        type: "job:completed";
     }
 
     interface JobDeleted extends Flatfile.JobDeletedEvent {

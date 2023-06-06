@@ -25,4 +25,7 @@ export interface Space extends Flatfile.spaces.SpaceConfig {
     /** Guest link to the space */
     guestLink?: string;
     accessToken?: string;
+    isCollaborative: boolean;
+    size?: Flatfile.spaces.SpaceSize;
+    upgradedAt?: Date;
 }

@@ -7,7 +7,6 @@ import * as core from "./core";
 import { Spaces } from "./api/resources/spaces/client/Client";
 import { Agents } from "./api/resources/agents/client/Client";
 import { Auth } from "./api/resources/auth/client/Client";
-import { Billing } from "./api/resources/billing/client/Client";
 import { Cells } from "./api/resources/cells/client/Client";
 import { Documents } from "./api/resources/documents/client/Client";
 import { Environments } from "./api/resources/environments/client/Client";
@@ -49,12 +48,6 @@ export class FlatfileClient {
 
     public get auth(): Auth {
         return (this._auth ??= new Auth(this.options));
-    }
-
-    protected _billing: Billing | undefined;
-
-    public get billing(): Billing {
-        return (this._billing ??= new Billing(this.options));
     }
 
     protected _cells: Cells | undefined;

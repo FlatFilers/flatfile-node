@@ -24,7 +24,7 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "job:waiting": core.serialization.lazyObject(async () => (await import("../../..")).JobWaitingEvent),
         "job:updated": core.serialization.lazyObject(async () => (await import("../../..")).JobUpdatedEvent),
         "job:failed": core.serialization.lazyObject(async () => (await import("../../..")).JobFailedEvent),
-        job_completed: core.serialization.lazyObject(async () => (await import("../../..")).JobCompletedEvent),
+        "job:completed": core.serialization.lazyObject(async () => (await import("../../..")).JobCompletedEvent),
         "job:deleted": core.serialization.lazyObject(async () => (await import("../../..")).JobDeletedEvent),
         "records:created": core.serialization.lazyObject(async () => (await import("../../..")).RecordsCreatedEvent),
         "records:updated": core.serialization.lazyObject(async () => (await import("../../..")).RecordsUpdatedEvent),
@@ -132,7 +132,7 @@ export declare namespace Event {
     }
 
     interface JobCompleted extends serializers.JobCompletedEvent.Raw {
-        type: "job_completed";
+        type: "job:completed";
     }
 
     interface JobDeleted extends serializers.JobDeletedEvent.Raw {

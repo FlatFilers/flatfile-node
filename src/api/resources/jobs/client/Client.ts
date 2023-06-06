@@ -64,7 +64,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -114,7 +114,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             body: await serializers.JobConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -164,7 +164,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -213,7 +213,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             body: await serializers.JobUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -263,7 +263,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -315,7 +315,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -367,7 +367,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -422,7 +422,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             body: await serializers.JobExecutionPlanConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -478,7 +478,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             body: await serializers.JobExecutionPlanConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -531,7 +531,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             body:
@@ -587,7 +587,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -639,7 +639,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             body:
@@ -695,12 +695,68 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             body:
                 request != null
                     ? await serializers.jobs.fail.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })
+                    : undefined,
+            timeoutMs: 60000,
+        });
+        if (_response.ok) {
+            return await serializers.Job.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Cancel a job and return the job
+     */
+    public async cancel(jobId: Flatfile.JobId, request?: Flatfile.JobCancelDetails): Promise<Flatfile.Job> {
+        const _response = await (this.options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/cancel`
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.5.6",
+            },
+            contentType: "application/json",
+            body:
+                request != null
+                    ? await serializers.jobs.cancel.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })
                     : undefined,
             timeoutMs: 60000,
         });

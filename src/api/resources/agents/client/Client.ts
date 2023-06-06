@@ -37,7 +37,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -93,7 +93,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -164,7 +164,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -247,7 +247,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -337,7 +337,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -403,10 +403,7 @@ export class Agents {
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      */
-    public async delete(agentId: Flatfile.AgentId, request: Flatfile.DeleteAgentRequest): Promise<Flatfile.Success> {
-        const { environmentId, body: _body } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("environmentId", environmentId);
+    public async delete(agentId: Flatfile.AgentId): Promise<Flatfile.Success> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -418,11 +415,9 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.5",
+                "X-Fern-SDK-Version": "1.5.6",
             },
             contentType: "application/json",
-            queryParameters: _queryParams,
-            body: await serializers.AgentConfig.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: 60000,
         });
         if (_response.ok) {
