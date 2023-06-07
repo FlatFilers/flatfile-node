@@ -25,9 +25,9 @@ export interface JobConfig {
     /** the mode of the job */
     mode?: Flatfile.JobMode;
     /** Input parameters for this job type. */
-    input?: Record<string, unknown>;
+    input?: Record<string, any>;
     /** Outcome summary of job. */
-    outcome?: Record<string, unknown>;
+    outcome?: Record<string, any>;
     /** Current status of job in text */
     info?: string;
     /** Indicates if Flatfile is managing the control flow of this job or if it is being manually tracked. */

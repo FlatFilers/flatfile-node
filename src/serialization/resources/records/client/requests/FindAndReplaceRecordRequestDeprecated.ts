@@ -13,11 +13,11 @@ export const FindAndReplaceRecordRequestDeprecated: core.serialization.Schema<
         "fieldKey" | "searchValue" | "filter" | "pageSize" | "pageNumber"
     >
 > = core.serialization.object({
-    replace: core.serialization.unknown(),
+    replace: core.serialization.any(),
 });
 
 export declare namespace FindAndReplaceRecordRequestDeprecated {
     interface Raw {
-        replace?: unknown;
+        replace?: any;
     }
 }

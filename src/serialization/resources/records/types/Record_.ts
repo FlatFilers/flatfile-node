@@ -14,7 +14,7 @@ export const Record_: core.serialization.ObjectSchema<serializers.Record_.Raw, F
         messages: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).ValidationMessage))
             .optional(),
-        metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
+        metadata: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
     });
 
 export declare namespace Record_ {
@@ -23,6 +23,6 @@ export declare namespace Record_ {
         values: serializers.RecordData.Raw;
         valid?: boolean | null;
         messages?: serializers.ValidationMessage.Raw[] | null;
-        metadata?: Record<string, unknown> | null;
+        metadata?: Record<string, any> | null;
     }
 }

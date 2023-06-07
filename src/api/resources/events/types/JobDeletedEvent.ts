@@ -5,5 +5,5 @@
 import * as Flatfile from "../../..";
 
 export interface JobDeletedEvent extends Flatfile.BaseEvent {
-    payload: Record<string, unknown>;
+    payload: Record<string, any>;
 }

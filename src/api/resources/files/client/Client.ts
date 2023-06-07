@@ -9,6 +9,8 @@ import { default as URLSearchParams } from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
+import * as fs from "fs";
+import { default as FormData } from "form-data";
 import * as stream from "stream";
 
 export declare namespace Files {
@@ -53,7 +55,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.6",
+                "X-Fern-SDK-Version": "1.5.7",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -91,7 +93,18 @@ export class Files {
         }
     }
 
-    public async upload(request: Flatfile.CreateFileRequest): Promise<Flatfile.FileResponse> {
+    public async upload(
+        file: File | fs.ReadStream,
+        request: Flatfile.CreateFileRequest
+    ): Promise<Flatfile.FileResponse> {
+        const _request = new FormData();
+        _request.append("spaceId", request.spaceId);
+        _request.append("environmentId", request.environmentId);
+        if (request.mode != null) {
+            _request.append("mode", request.mode);
+        }
+
+        _request.append("file", file);
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -103,10 +116,11 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.6",
+                "X-Fern-SDK-Version": "1.5.7",
+                "Content-Length": (await core.getFormDataContentLength(_request)).toString(),
             },
-            contentType: "application/json",
-            body: await serializers.CreateFileRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
+            body: _request,
             timeoutMs: 60000,
         });
         if (_response.ok) {
@@ -153,7 +167,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.6",
+                "X-Fern-SDK-Version": "1.5.7",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -202,7 +216,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.6",
+                "X-Fern-SDK-Version": "1.5.7",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -254,7 +268,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.6",
+                "X-Fern-SDK-Version": "1.5.7",
             },
             contentType: "application/json",
             body: await serializers.UpdateFileRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -304,7 +318,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.6",
+                "X-Fern-SDK-Version": "1.5.7",
             },
             timeoutMs: 60000,
             onError: (error) => {

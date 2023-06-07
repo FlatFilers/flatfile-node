@@ -10,7 +10,7 @@ export const ApiToken: core.serialization.ObjectSchema<serializers.ApiToken.Raw,
     core.serialization.object({
         clientId: core.serialization.string(),
         description: core.serialization.string(),
-        metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
+        metadata: core.serialization.record(core.serialization.string(), core.serialization.any()),
         createdAt: core.serialization.date(),
         secret: core.serialization.string().optional(),
     });
@@ -19,7 +19,7 @@ export declare namespace ApiToken {
     interface Raw {
         clientId: string;
         description: string;
-        metadata: Record<string, unknown>;
+        metadata: Record<string, any>;
         createdAt: string;
         secret?: string | null;
     }

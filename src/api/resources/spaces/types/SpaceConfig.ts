@@ -16,7 +16,7 @@ export interface SpaceConfig {
     /** The display order */
     displayOrder?: number;
     /** Metadata for the space */
-    metadata?: unknown;
+    metadata?: any;
     actions?: Flatfile.Action[];
     guestAuthentication?: Flatfile.GuestAuthenticationEnum[];
     access?: Flatfile.spaces.SpaceAccess[];

@@ -15,7 +15,7 @@ export const EnvironmentConfig: core.serialization.ObjectSchema<
     guestAuthentication: core.serialization
         .list(core.serialization.lazy(async () => (await import("../../..")).GuestAuthenticationEnum))
         .optional(),
-    features: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
+    features: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
 });
 
 export declare namespace EnvironmentConfig {
@@ -23,6 +23,6 @@ export declare namespace EnvironmentConfig {
         name: string;
         isProd: boolean;
         guestAuthentication?: serializers.GuestAuthenticationEnum.Raw[] | null;
-        features?: Record<string, unknown> | null;
+        features?: Record<string, any> | null;
     }
 }

@@ -11,12 +11,12 @@ export const UserOfflineEvent: core.serialization.ObjectSchema<
     Flatfile.UserOfflineEvent
 > = core.serialization
     .object({
-        payload: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
+        payload: core.serialization.record(core.serialization.string(), core.serialization.any()),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseEvent));
 
 export declare namespace UserOfflineEvent {
     interface Raw extends serializers.BaseEvent.Raw {
-        payload: Record<string, unknown>;
+        payload: Record<string, any>;
     }
 }

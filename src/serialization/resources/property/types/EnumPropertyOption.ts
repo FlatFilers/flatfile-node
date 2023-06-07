@@ -13,8 +13,8 @@ export const EnumPropertyOption: core.serialization.ObjectSchema<
     label: core.serialization.string().optional(),
     color: core.serialization.string().optional(),
     icon: core.serialization.string().optional(),
-    meta: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
-    value: core.serialization.unknown(),
+    meta: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
+    value: core.serialization.any(),
 });
 
 export declare namespace EnumPropertyOption {
@@ -22,7 +22,7 @@ export declare namespace EnumPropertyOption {
         label?: string | null;
         color?: string | null;
         icon?: string | null;
-        meta?: Record<string, unknown> | null;
-        value?: unknown;
+        meta?: Record<string, any> | null;
+        value?: any;
     }
 }

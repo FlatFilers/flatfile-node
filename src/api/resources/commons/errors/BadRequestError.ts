@@ -8,7 +8,6 @@ import * as Flatfile from "../../..";
 export class BadRequestError extends errors.FlatfileError {
     constructor(body: Flatfile.Error_[]) {
         super({
-            message: "BadRequestError",
             statusCode: 400,
             body: body,
         });

@@ -6,6 +6,6 @@
  * Outcome summary of a job
  */
 export interface JobOutcome {
-    outcome?: Record<string, unknown>;
+    outcome?: Record<string, any>;
     info?: string;
 }

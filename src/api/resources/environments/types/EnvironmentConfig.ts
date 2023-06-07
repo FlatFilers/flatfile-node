@@ -20,5 +20,5 @@ export interface EnvironmentConfig {
     /** Whether or not the environment is a production environment */
     isProd: boolean;
     guestAuthentication?: Flatfile.GuestAuthenticationEnum[];
-    features?: Record<string, unknown>;
+    features?: Record<string, any>;
 }

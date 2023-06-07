@@ -8,13 +8,13 @@ import * as core from "../../../../core";
 
 export const JobOutcome: core.serialization.ObjectSchema<serializers.JobOutcome.Raw, Flatfile.JobOutcome> =
     core.serialization.object({
-        outcome: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
+        outcome: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
         info: core.serialization.string().optional(),
     });
 
 export declare namespace JobOutcome {
     interface Raw {
-        outcome?: Record<string, unknown> | null;
+        outcome?: Record<string, any> | null;
         info?: string | null;
     }
 }

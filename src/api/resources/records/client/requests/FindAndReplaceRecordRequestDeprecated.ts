@@ -23,5 +23,5 @@ export interface FindAndReplaceRecordRequestDeprecated {
      */
     pageNumber?: number;
     /** The value to replace found values with */
-    replace?: unknown;
+    replace?: any;
 }

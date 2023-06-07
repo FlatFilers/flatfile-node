@@ -15,7 +15,7 @@ export const BaseProperty: core.serialization.ObjectSchema<serializers.BasePrope
             .list(core.serialization.lazy(async () => (await import("../../..")).Constraint))
             .optional(),
         readonly: core.serialization.boolean().optional(),
-        metadata: core.serialization.unknown().optional(),
+        metadata: core.serialization.any().optional(),
     });
 
 export declare namespace BaseProperty {
@@ -25,6 +25,6 @@ export declare namespace BaseProperty {
         description?: string | null;
         constraints?: serializers.Constraint.Raw[] | null;
         readonly?: boolean | null;
-        metadata?: unknown | null;
+        metadata?: any | null;
     }
 }

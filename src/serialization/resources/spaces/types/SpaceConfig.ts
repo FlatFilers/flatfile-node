@@ -15,7 +15,7 @@ export const SpaceConfig: core.serialization.ObjectSchema<
     primaryWorkbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId).optional(),
     name: core.serialization.string().optional(),
     displayOrder: core.serialization.number().optional(),
-    metadata: core.serialization.unknown(),
+    metadata: core.serialization.any(),
     actions: core.serialization
         .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
         .optional(),
@@ -35,7 +35,7 @@ export declare namespace SpaceConfig {
         primaryWorkbookId?: serializers.WorkbookId.Raw | null;
         name?: string | null;
         displayOrder?: number | null;
-        metadata?: unknown;
+        metadata?: any;
         actions?: serializers.Action.Raw[] | null;
         guestAuthentication?: serializers.GuestAuthenticationEnum.Raw[] | null;
         access?: serializers.spaces.SpaceAccess.Raw[] | null;
