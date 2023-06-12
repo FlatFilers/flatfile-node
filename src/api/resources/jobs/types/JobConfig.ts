@@ -26,6 +26,8 @@ export interface JobConfig {
     mode?: Flatfile.JobMode;
     /** Input parameters for this job type. */
     input?: Record<string, any>;
+    /** Subject parameters for this job type. */
+    subject?: Flatfile.JobSubject;
     /** Outcome summary of job. */
     outcome?: Record<string, any>;
     /** Current status of job in text */

@@ -18,6 +18,7 @@ export interface Context {
     versionId?: Flatfile.VersionId;
     jobId?: Flatfile.JobId;
     fileId?: Flatfile.FileId;
+    documentId?: Flatfile.DocumentId;
     precedingEventId?: Flatfile.EventId;
     /** Can be a UserId, GuestId, or AgentId */
     actorId?: string;

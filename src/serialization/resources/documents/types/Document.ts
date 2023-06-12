@@ -10,6 +10,7 @@ export const Document: core.serialization.ObjectSchema<serializers.Document.Raw,
     .object({
         id: core.serialization.lazy(async () => (await import("../../..")).DocumentId),
         spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId).optional(),
+        environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).DocumentConfig));
 
@@ -17,5 +18,6 @@ export declare namespace Document {
     interface Raw extends serializers.DocumentConfig.Raw {
         id: serializers.DocumentId.Raw;
         spaceId?: serializers.SpaceId.Raw | null;
+        environmentId?: serializers.EnvironmentId.Raw | null;
     }
 }

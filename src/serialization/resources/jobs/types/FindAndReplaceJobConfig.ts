@@ -14,6 +14,7 @@ export const FindAndReplaceJobConfig: core.serialization.ObjectSchema<
     filterField: core.serialization.lazy(async () => (await import("../../..")).FilterField).optional(),
     searchValue: core.serialization.lazy(async () => (await import("../../..")).SearchValue).optional(),
     searchField: core.serialization.lazy(async () => (await import("../../..")).SearchField).optional(),
+    q: core.serialization.string().optional(),
     ids: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).RecordId)).optional(),
     find: core.serialization.lazy(async () => (await import("../../..")).CellValueUnion).optional(),
     replace: core.serialization.lazy(async () => (await import("../../..")).CellValueUnion).optional(),
@@ -26,6 +27,7 @@ export declare namespace FindAndReplaceJobConfig {
         filterField?: serializers.FilterField.Raw | null;
         searchValue?: serializers.SearchValue.Raw | null;
         searchField?: serializers.SearchField.Raw | null;
+        q?: string | null;
         ids?: serializers.RecordId.Raw[] | null;
         find?: serializers.CellValueUnion.Raw | null;
         replace?: serializers.CellValueUnion.Raw | null;

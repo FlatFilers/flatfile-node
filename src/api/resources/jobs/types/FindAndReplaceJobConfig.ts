@@ -9,6 +9,7 @@ export interface FindAndReplaceJobConfig {
     filterField?: Flatfile.FilterField;
     searchValue?: Flatfile.SearchValue;
     searchField?: Flatfile.SearchField;
+    q?: string;
     /**
      * 'A list of record ids to search within. If filter "all" is also specified, then this is a list of record ids to exclude from the search.'
      *

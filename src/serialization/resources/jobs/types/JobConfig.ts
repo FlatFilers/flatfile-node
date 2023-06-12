@@ -19,6 +19,7 @@ export const JobConfig: core.serialization.ObjectSchema<serializers.JobConfig.Ra
         fileId: core.serialization.lazy(async () => (await import("../../..")).FileId).optional(),
         mode: core.serialization.lazy(async () => (await import("../../..")).JobMode).optional(),
         input: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
+        subject: core.serialization.lazy(async () => (await import("../../..")).JobSubject).optional(),
         outcome: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
         info: core.serialization.string().optional(),
         managed: core.serialization.boolean(),
@@ -37,6 +38,7 @@ export declare namespace JobConfig {
         fileId?: serializers.FileId.Raw | null;
         mode?: serializers.JobMode.Raw | null;
         input?: Record<string, any> | null;
+        subject?: serializers.JobSubject.Raw | null;
         outcome?: Record<string, any> | null;
         info?: string | null;
         managed: boolean;

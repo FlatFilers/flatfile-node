@@ -12,6 +12,7 @@ export interface DeleteJobConfig {
     filterField?: Flatfile.FilterField;
     searchValue?: Flatfile.SearchValue;
     searchField?: Flatfile.SearchField;
+    q?: string;
     sheet: Flatfile.SheetId;
     exceptions?: Flatfile.RecordId[];
 }

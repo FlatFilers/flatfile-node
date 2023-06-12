@@ -15,6 +15,7 @@ export const ExportOptions: core.serialization.ObjectSchema<serializers.ExportOp
         filterField: core.serialization.lazy(async () => (await import("../../..")).FilterField).optional(),
         searchValue: core.serialization.lazy(async () => (await import("../../..")).SearchValue).optional(),
         searchField: core.serialization.lazy(async () => (await import("../../..")).SearchField).optional(),
+        q: core.serialization.string().optional(),
         ids: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).RecordId)),
     });
 
@@ -27,6 +28,7 @@ export declare namespace ExportOptions {
         filterField?: serializers.FilterField.Raw | null;
         searchValue?: serializers.SearchValue.Raw | null;
         searchField?: serializers.SearchField.Raw | null;
+        q?: string | null;
         ids: serializers.RecordId.Raw[];
     }
 }

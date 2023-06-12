@@ -10,4 +10,5 @@ import * as Flatfile from "../../..";
 export interface Document extends Flatfile.DocumentConfig {
     id: Flatfile.DocumentId;
     spaceId?: Flatfile.SpaceId;
+    environmentId?: Flatfile.EnvironmentId;
 }
