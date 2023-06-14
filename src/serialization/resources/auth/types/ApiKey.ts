@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const ApiKey: core.serialization.ObjectSchema<serializers.ApiKey.Raw, Flatfile.ApiKey> =
     core.serialization.object({
         id: core.serialization.string(),
-        rawKey: core.serialization.string(),
+        rawKey: core.serialization.string().optional(),
         type: core.serialization.lazy(async () => (await import("../../..")).ApiKeyType),
         environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
         accountId: core.serialization.lazy(async () => (await import("../../..")).AccountId).optional(),
@@ -18,21 +18,21 @@ export const ApiKey: core.serialization.ObjectSchema<serializers.ApiKey.Raw, Fla
         ),
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date().optional(),
-        expireAt: core.serialization.date(),
+        deletedAt: core.serialization.date().optional(),
         secret: core.serialization.string().optional(),
     });
 
 export declare namespace ApiKey {
     interface Raw {
         id: string;
-        rawKey: string;
+        rawKey?: string | null;
         type: serializers.ApiKeyType.Raw;
         environmentId?: serializers.EnvironmentId.Raw | null;
         accountId?: serializers.AccountId.Raw | null;
         operations: serializers.ApiKeyOperation.Raw[];
         createdAt: string;
         updatedAt?: string | null;
-        expireAt: string;
+        deletedAt?: string | null;
         secret?: string | null;
     }
 }

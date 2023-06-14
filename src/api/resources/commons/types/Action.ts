@@ -11,6 +11,8 @@ export interface Action {
     label: string;
     type?: string;
     description?: string;
+    schedule?: Flatfile.ActionSchedule;
     primary?: boolean;
     confirm?: boolean;
+    icon?: string;
 }

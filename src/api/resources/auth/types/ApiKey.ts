@@ -9,13 +9,13 @@ import * as Flatfile from "../../..";
  */
 export interface ApiKey {
     id: string;
-    rawKey: string;
+    rawKey?: string;
     type: Flatfile.ApiKeyType;
     environmentId?: Flatfile.EnvironmentId;
     accountId?: Flatfile.AccountId;
     operations: Flatfile.ApiKeyOperation[];
     createdAt: Date;
     updatedAt?: Date;
-    expireAt: Date;
+    deletedAt?: Date;
     secret?: string;
 }
