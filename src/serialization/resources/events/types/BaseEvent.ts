@@ -20,6 +20,7 @@ export const BaseEvent: core.serialization.ObjectSchema<serializers.BaseEvent.Ra
         acknowledgedBy: core.serialization.string().optional(),
         target: core.serialization.string().optional(),
         origin: core.serialization.lazyObject(async () => (await import("../../..")).Origin).optional(),
+        namespaces: core.serialization.list(core.serialization.string()).optional(),
     });
 
 export declare namespace BaseEvent {
@@ -36,5 +37,6 @@ export declare namespace BaseEvent {
         acknowledgedBy?: string | null;
         target?: string | null;
         origin?: serializers.Origin.Raw | null;
+        namespaces?: string[] | null;
     }
 }

@@ -18,7 +18,7 @@ export interface GetRecordsRequest {
     searchValue?: Flatfile.SearchValue;
     searchField?: Flatfile.SearchField;
     /**
-     * A list of record ids to fetch. If filter "all" is also specified,  then this is a list of record ids to exclude from the results.
+     * The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records
      *
      */
     ids?: Flatfile.RecordId | Flatfile.RecordId[];

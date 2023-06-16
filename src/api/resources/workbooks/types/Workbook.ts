@@ -15,6 +15,7 @@ export interface Workbook {
     sheets?: Flatfile.Sheet[];
     labels?: string[];
     actions?: Flatfile.Action[];
+    namespace?: string;
     /** Date the workbook was last updated */
     updatedAt: Date;
     /** Date the workbook was created */

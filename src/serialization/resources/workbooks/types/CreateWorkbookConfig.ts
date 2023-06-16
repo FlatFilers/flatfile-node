@@ -14,6 +14,7 @@ export const CreateWorkbookConfig: core.serialization.ObjectSchema<
     labels: core.serialization.list(core.serialization.string()).optional(),
     spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId).optional(),
     environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
+    namespace: core.serialization.string().optional(),
     sheets: core.serialization
         .list(core.serialization.lazyObject(async () => (await import("../../..")).SheetConfig))
         .optional(),
@@ -28,6 +29,7 @@ export declare namespace CreateWorkbookConfig {
         labels?: string[] | null;
         spaceId?: serializers.SpaceId.Raw | null;
         environmentId?: serializers.EnvironmentId.Raw | null;
+        namespace?: string | null;
         sheets?: serializers.SheetConfig.Raw[] | null;
         actions?: serializers.Action.Raw[] | null;
     }

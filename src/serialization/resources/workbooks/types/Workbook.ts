@@ -19,6 +19,7 @@ export const Workbook: core.serialization.ObjectSchema<serializers.Workbook.Raw,
         actions: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
             .optional(),
+        namespace: core.serialization.string().optional(),
         updatedAt: core.serialization.date(),
         createdAt: core.serialization.date(),
     });
@@ -32,6 +33,7 @@ export declare namespace Workbook {
         sheets?: serializers.Sheet.Raw[] | null;
         labels?: string[] | null;
         actions?: serializers.Action.Raw[] | null;
+        namespace?: string | null;
         updatedAt: string;
         createdAt: string;
     }

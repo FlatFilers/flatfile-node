@@ -26,4 +26,5 @@ export interface BaseEvent {
     acknowledgedBy?: string;
     target?: string;
     origin?: Flatfile.Origin;
+    namespaces?: string[];
 }

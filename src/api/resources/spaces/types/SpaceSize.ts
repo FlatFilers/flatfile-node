@@ -9,6 +9,6 @@ export interface SpaceSize {
     name: string;
     id: string;
     numUsers: number;
-    pdv: string;
+    pdv: number;
     numFiles: number;
 }

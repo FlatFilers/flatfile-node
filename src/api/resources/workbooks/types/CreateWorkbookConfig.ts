@@ -12,7 +12,7 @@ export interface CreateWorkbookConfig {
     labels?: string[];
     spaceId?: Flatfile.SpaceId;
     environmentId?: Flatfile.EnvironmentId;
-    /** Sheets must be <= 50 */
+    namespace?: string;
     sheets?: Flatfile.SheetConfig[];
     actions?: Flatfile.Action[];
 }
