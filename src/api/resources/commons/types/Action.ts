@@ -9,7 +9,6 @@ export interface Action {
     operation?: string;
     mode?: Flatfile.ActionMode;
     label: string;
-    type?: string;
     description?: string;
     schedule?: Flatfile.ActionSchedule;
     primary?: boolean;

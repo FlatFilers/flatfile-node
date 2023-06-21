@@ -16,7 +16,7 @@ export const BaseEvent: core.serialization.ObjectSchema<serializers.BaseEvent.Ra
         dataUrl: core.serialization.string().optional(),
         createdAt: core.serialization.date(),
         deletedAt: core.serialization.date().optional(),
-        acknowledgedAt: core.serialization.string().optional(),
+        acknowledgedAt: core.serialization.date().optional(),
         acknowledgedBy: core.serialization.string().optional(),
         target: core.serialization.string().optional(),
         origin: core.serialization.lazyObject(async () => (await import("../../..")).Origin).optional(),

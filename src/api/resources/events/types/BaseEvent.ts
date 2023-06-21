@@ -21,7 +21,7 @@ export interface BaseEvent {
     /** Date the event was deleted */
     deletedAt?: Date;
     /** Date the event was acknowledged */
-    acknowledgedAt?: string;
+    acknowledgedAt?: Date;
     /** The actor (user or system) who acknowledged the event */
     acknowledgedBy?: string;
     target?: string;
