@@ -10,17 +10,17 @@ export const SpaceSize: core.serialization.ObjectSchema<serializers.spaces.Space
     core.serialization.object({
         name: core.serialization.string(),
         id: core.serialization.string(),
-        numUsers: core.serialization.property("num_users", core.serialization.number()),
+        numUsers: core.serialization.number(),
         pdv: core.serialization.number(),
-        numFiles: core.serialization.property("num_files", core.serialization.number()),
+        numFiles: core.serialization.number(),
     });
 
 export declare namespace SpaceSize {
     interface Raw {
         name: string;
         id: string;
-        num_users: number;
+        numUsers: number;
         pdv: number;
-        num_files: number;
+        numFiles: number;
     }
 }

@@ -22,7 +22,7 @@ export const JobConfig: core.serialization.ObjectSchema<serializers.JobConfig.Ra
         subject: core.serialization.lazy(async () => (await import("../../..")).JobSubject).optional(),
         outcome: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
         info: core.serialization.string().optional(),
-        managed: core.serialization.boolean(),
+        managed: core.serialization.boolean().optional(),
     });
 
 export declare namespace JobConfig {
@@ -41,6 +41,6 @@ export declare namespace JobConfig {
         subject?: serializers.JobSubject.Raw | null;
         outcome?: Record<string, any> | null;
         info?: string | null;
-        managed: boolean;
+        managed?: boolean | null;
     }
 }

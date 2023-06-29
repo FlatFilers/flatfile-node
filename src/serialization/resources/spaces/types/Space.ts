@@ -18,15 +18,17 @@ export const Space: core.serialization.ObjectSchema<serializers.spaces.Space.Raw
             updatedAt: core.serialization.date(),
             archivedAt: core.serialization.date().optional(),
             guestLink: core.serialization.string().optional(),
+            name: core.serialization.string(),
+            displayOrder: core.serialization.number(),
             accessToken: core.serialization.string().optional(),
             isCollaborative: core.serialization.boolean(),
             size: core.serialization.lazyObject(async () => (await import("../../..")).spaces.SpaceSize).optional(),
             upgradedAt: core.serialization.date().optional(),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).spaces.SpaceConfig));
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).spaces.InternalSpaceConfigBase));
 
 export declare namespace Space {
-    interface Raw extends serializers.spaces.SpaceConfig.Raw {
+    interface Raw extends serializers.spaces.InternalSpaceConfigBase.Raw {
         id: serializers.SpaceId.Raw;
         workbookCount?: number | null;
         filesCount?: number | null;
@@ -36,6 +38,8 @@ export declare namespace Space {
         updatedAt: string;
         archivedAt?: string | null;
         guestLink?: string | null;
+        name: string;
+        displayOrder: number;
         accessToken?: string | null;
         isCollaborative: boolean;
         size?: serializers.spaces.SpaceSize.Raw | null;

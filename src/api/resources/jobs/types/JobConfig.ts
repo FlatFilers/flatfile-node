@@ -33,5 +33,5 @@ export interface JobConfig {
     /** Current status of job in text */
     info?: string;
     /** Indicates if Flatfile is managing the control flow of this job or if it is being manually tracked. */
-    managed: boolean;
+    managed?: boolean;
 }

@@ -9,36 +9,16 @@ import * as core from "../../../../core";
 export const SpaceConfig: core.serialization.ObjectSchema<
     serializers.spaces.SpaceConfig.Raw,
     Flatfile.spaces.SpaceConfig
-> = core.serialization.object({
-    spaceConfigId: core.serialization.lazy(async () => (await import("../../..")).SpaceConfigId).optional(),
-    environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId),
-    primaryWorkbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId).optional(),
-    name: core.serialization.string().optional(),
-    displayOrder: core.serialization.number().optional(),
-    metadata: core.serialization.any(),
-    actions: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
-        .optional(),
-    guestAuthentication: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../..")).GuestAuthenticationEnum))
-        .optional(),
-    access: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../..")).spaces.SpaceAccess))
-        .optional(),
-    autoConfigure: core.serialization.boolean().optional(),
-});
+> = core.serialization
+    .object({
+        name: core.serialization.string().optional(),
+        displayOrder: core.serialization.number().optional(),
+    })
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).spaces.InternalSpaceConfigBase));
 
 export declare namespace SpaceConfig {
-    interface Raw {
-        spaceConfigId?: serializers.SpaceConfigId.Raw | null;
-        environmentId: serializers.EnvironmentId.Raw;
-        primaryWorkbookId?: serializers.WorkbookId.Raw | null;
+    interface Raw extends serializers.spaces.InternalSpaceConfigBase.Raw {
         name?: string | null;
         displayOrder?: number | null;
-        metadata?: any;
-        actions?: serializers.Action.Raw[] | null;
-        guestAuthentication?: serializers.GuestAuthenticationEnum.Raw[] | null;
-        access?: serializers.spaces.SpaceAccess.Raw[] | null;
-        autoConfigure?: boolean | null;
     }
 }
