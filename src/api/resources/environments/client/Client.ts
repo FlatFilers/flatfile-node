@@ -47,7 +47,7 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -100,7 +100,7 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             body: await serializers.EnvironmentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -140,8 +140,10 @@ export class Environments {
 
     /**
      * Returns a single environment
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      */
-    public async get(environmentId: string): Promise<Flatfile.Environment> {
+    public async get(environmentId: string): Promise<Flatfile.EnvironmentResponse> {
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -153,13 +155,13 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             timeoutMs: 60000,
         });
         if (_response.ok) {
-            return await serializers.Environment.parseOrThrow(_response.body, {
+            return await serializers.EnvironmentResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -169,10 +171,33 @@ export class Environments {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.FlatfileError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -205,7 +230,7 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             body: await serializers.EnvironmentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -260,7 +285,7 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -279,7 +304,7 @@ export class Environments {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -289,7 +314,7 @@ export class Environments {
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.NotFoundError.parseOrThrow(_response.error.body, {
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

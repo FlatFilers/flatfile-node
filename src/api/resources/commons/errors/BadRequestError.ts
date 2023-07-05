@@ -6,7 +6,7 @@ import * as errors from "../../../../errors";
 import * as Flatfile from "../../..";
 
 export class BadRequestError extends errors.FlatfileError {
-    constructor(body: Flatfile.Error_[]) {
+    constructor(body: Flatfile.Errors) {
         super({
             statusCode: 400,
             body: body,

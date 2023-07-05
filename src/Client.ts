@@ -15,6 +15,7 @@ import { Files } from "./api/resources/files/client/Client";
 import { Guests } from "./api/resources/guests/client/Client";
 import { Jobs } from "./api/resources/jobs/client/Client";
 import { Records } from "./api/resources/records/client/Client";
+import { Secrets } from "./api/resources/secrets/client/Client";
 import { Sheets } from "./api/resources/sheets/client/Client";
 import { Users } from "./api/resources/users/client/Client";
 import { Versions } from "./api/resources/versions/client/Client";
@@ -96,6 +97,12 @@ export class FlatfileClient {
 
     public get records(): Records {
         return (this._records ??= new Records(this.options));
+    }
+
+    protected _secrets: Secrets | undefined;
+
+    public get secrets(): Secrets {
+        return (this._secrets ??= new Secrets(this.options));
     }
 
     protected _sheets: Sheets | undefined;

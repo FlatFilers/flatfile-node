@@ -6,7 +6,7 @@ import * as errors from "../../../../errors";
 import * as Flatfile from "../../..";
 
 export class NotFoundError extends errors.FlatfileError {
-    constructor(body: Flatfile.Error_[]) {
+    constructor(body: Flatfile.Errors) {
         super({
             statusCode: 404,
             body: body,

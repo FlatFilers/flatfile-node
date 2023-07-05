@@ -27,7 +27,8 @@ export class Spaces {
      * @throws {@link Flatfile.BadRequestError}
      */
     public async list(request: Flatfile.spaces.ListSpacesRequest = {}): Promise<Flatfile.spaces.ListSpacesResponse> {
-        const { environmentId, pageSize, pageNumber, search, archived, sortField, sortDirection } = request;
+        const { environmentId, pageSize, pageNumber, search, archived, sortField, sortDirection, isCollaborative } =
+            request;
         const _queryParams = new URLSearchParams();
         if (environmentId != null) {
             _queryParams.append("environmentId", environmentId);
@@ -57,6 +58,10 @@ export class Spaces {
             _queryParams.append("sortDirection", sortDirection);
         }
 
+        if (isCollaborative != null) {
+            _queryParams.append("isCollaborative", isCollaborative.toString());
+        }
+
         const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -68,7 +73,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -88,7 +93,7 @@ export class Spaces {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -134,7 +139,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             body: await serializers.spaces.SpaceConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -187,7 +192,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -239,7 +244,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -294,7 +299,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             body: await serializers.spaces.SpaceConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -349,7 +354,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             timeoutMs: 60000,
@@ -368,7 +373,7 @@ export class Spaces {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.BadRequestError.parseOrThrow(_response.error.body, {
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -378,7 +383,7 @@ export class Spaces {
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.NotFoundError.parseOrThrow(_response.error.body, {
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

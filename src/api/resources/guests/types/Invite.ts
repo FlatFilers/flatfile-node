@@ -7,6 +7,8 @@ import * as Flatfile from "../../..";
 export interface Invite {
     guestId: Flatfile.GuestId;
     spaceId: Flatfile.SpaceId;
+    /** The name of the person or company sending the invitation */
+    fromName?: string;
     /** Message to send with the invite */
-    message: string;
+    message?: string;
 }

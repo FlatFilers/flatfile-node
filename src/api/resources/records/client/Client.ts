@@ -134,7 +134,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -187,7 +187,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             body: await serializers.Records.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -240,7 +240,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             body: await serializers.records.insert.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -308,7 +308,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -316,74 +316,6 @@ export class Records {
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.FlatfileError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.FlatfileError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.FlatfileTimeoutError();
-            case "unknown":
-                throw new errors.FlatfileError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
-     * Searches for the given value in a field and returns the records that match the search criteria
-     */
-    public async find(
-        sheetId: Flatfile.SheetId,
-        request: Flatfile.FindRecordsRequest
-    ): Promise<Flatfile.RecordsResponse> {
-        const { fieldKey, searchValue, pageSize, pageNumber } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("fieldKey", fieldKey);
-        _queryParams.append("searchValue", searchValue);
-        if (pageSize != null) {
-            _queryParams.append("pageSize", pageSize.toString());
-        }
-
-        if (pageNumber != null) {
-            _queryParams.append("pageNumber", pageNumber.toString());
-        }
-
-        const _response = await (this.options.fetcher ?? core.fetcher)({
-            url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/find`
-            ),
-            method: "GET",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
-            },
-            contentType: "application/json",
-            queryParameters: _queryParams,
-            timeoutMs: 60000,
-        });
-        if (_response.ok) {
-            return await serializers.RecordsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -448,7 +380,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -535,7 +467,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.12",
+                "X-Fern-SDK-Version": "1.5.13",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

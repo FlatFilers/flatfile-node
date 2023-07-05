@@ -10,13 +10,15 @@ export const Invite: core.serialization.ObjectSchema<serializers.Invite.Raw, Fla
     core.serialization.object({
         guestId: core.serialization.lazy(async () => (await import("../../..")).GuestId),
         spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId),
-        message: core.serialization.string(),
+        fromName: core.serialization.string().optional(),
+        message: core.serialization.string().optional(),
     });
 
 export declare namespace Invite {
     interface Raw {
         guestId: serializers.GuestId.Raw;
         spaceId: serializers.SpaceId.Raw;
-        message: string;
+        fromName?: string | null;
+        message?: string | null;
     }
 }
