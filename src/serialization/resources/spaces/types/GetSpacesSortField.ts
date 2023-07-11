@@ -9,8 +9,15 @@ import * as core from "../../../../core";
 export const GetSpacesSortField: core.serialization.Schema<
     serializers.spaces.GetSpacesSortField.Raw,
     Flatfile.spaces.GetSpacesSortField
-> = core.serialization.enum_(["name", "workbooksCount", "filesCount", "environmentId", "createdByUserName"]);
+> = core.serialization.enum_([
+    "name",
+    "workbooksCount",
+    "filesCount",
+    "environmentId",
+    "createdByUserName",
+    "createdAt",
+]);
 
 export declare namespace GetSpacesSortField {
-    type Raw = "name" | "workbooksCount" | "filesCount" | "environmentId" | "createdByUserName";
+    type Raw = "name" | "workbooksCount" | "filesCount" | "environmentId" | "createdByUserName" | "createdAt";
 }

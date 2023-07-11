@@ -20,12 +20,19 @@ export declare namespace Files {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Files {
-    constructor(protected readonly options: Files.Options) {}
+    constructor(protected readonly _options: Files.Options) {}
 
-    public async list(request: Flatfile.ListFilesRequest = {}): Promise<Flatfile.ListFilesResponse> {
+    public async list(
+        request: Flatfile.ListFilesRequest = {},
+        requestOptions?: Files.RequestOptions
+    ): Promise<Flatfile.ListFilesResponse> {
         const { spaceId, pageSize, pageNumber, mode } = request;
         const _queryParams = new URLSearchParams();
         if (spaceId != null) {
@@ -44,9 +51,9 @@ export class Files {
             _queryParams.append("mode", mode);
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "/files"
             ),
             method: "GET",
@@ -55,11 +62,11 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.ListFilesResponse.parseOrThrow(_response.body, {
@@ -95,7 +102,8 @@ export class Files {
 
     public async upload(
         file: File | fs.ReadStream,
-        request: Flatfile.CreateFileRequest
+        request: Flatfile.CreateFileRequest,
+        requestOptions?: Files.RequestOptions
     ): Promise<Flatfile.FileResponse> {
         const _request = new FormData();
         _request.append("spaceId", request.spaceId);
@@ -105,9 +113,9 @@ export class Files {
         }
 
         _request.append("file", file);
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "/files"
             ),
             method: "POST",
@@ -116,12 +124,12 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
                 "Content-Length": (await core.getFormDataContentLength(_request)).toString(),
             },
             contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
             body: _request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.FileResponse.parseOrThrow(_response.body, {
@@ -155,10 +163,10 @@ export class Files {
         }
     }
 
-    public async get(fileId: string): Promise<Flatfile.FileResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async get(fileId: string, requestOptions?: Files.RequestOptions): Promise<Flatfile.FileResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/files/${fileId}`
             ),
             method: "GET",
@@ -167,10 +175,10 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.FileResponse.parseOrThrow(_response.body, {
@@ -204,10 +212,10 @@ export class Files {
         }
     }
 
-    public async delete(fileId: string): Promise<Flatfile.Success> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async delete(fileId: string, requestOptions?: Files.RequestOptions): Promise<Flatfile.Success> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/files/${fileId}`
             ),
             method: "DELETE",
@@ -216,10 +224,10 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -256,10 +264,14 @@ export class Files {
     /**
      * Update a file, to change the workbook id for example
      */
-    public async update(fileId: string, request: Flatfile.UpdateFileRequest = {}): Promise<Flatfile.FileResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async update(
+        fileId: string,
+        request: Flatfile.UpdateFileRequest = {},
+        requestOptions?: Files.RequestOptions
+    ): Promise<Flatfile.FileResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/files/${fileId}`
             ),
             method: "PATCH",
@@ -268,11 +280,11 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body: await serializers.UpdateFileRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.FileResponse.parseOrThrow(_response.body, {
@@ -306,10 +318,10 @@ export class Files {
         }
     }
 
-    public async download(fileId: Flatfile.FileId): Promise<stream.Readable> {
-        return await (this.options.streamingFetcher ?? core.streamingFetcher)({
+    public async download(fileId: Flatfile.FileId, requestOptions?: Files.RequestOptions): Promise<stream.Readable> {
+        const _response = await (this._options.streamingFetcher ?? core.streamingFetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/files/${await serializers.FileId.jsonOrThrow(fileId)}/download`
             ),
             method: "GET",
@@ -318,18 +330,19 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             onError: (error) => {
                 throw new errors.FlatfileError({
                     message: (error as any)?.message,
                 });
             },
         });
+        return _response.data;
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this.options.token)}`;
+        return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }

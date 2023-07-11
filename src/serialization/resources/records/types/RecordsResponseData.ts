@@ -15,10 +15,10 @@ export const RecordsResponseData: core.serialization.ObjectSchema<
         counts: core.serialization.lazyObject(async () => (await import("../../..")).RecordCounts).optional(),
         versionId: core.serialization.lazy(async () => (await import("../../..")).VersionId).optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).Success));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).SuccessData));
 
 export declare namespace RecordsResponseData {
-    interface Raw extends serializers.Success.Raw {
+    interface Raw extends serializers.SuccessData.Raw {
         records?: serializers.RecordsWithLinks.Raw | null;
         counts?: serializers.RecordCounts.Raw | null;
         versionId?: serializers.VersionId.Raw | null;

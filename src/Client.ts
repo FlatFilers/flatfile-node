@@ -28,104 +28,108 @@ export declare namespace FlatfileClient {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class FlatfileClient {
-    constructor(protected readonly options: FlatfileClient.Options) {}
+    constructor(protected readonly _options: FlatfileClient.Options) {}
 
     protected _spaces: Spaces | undefined;
 
     public get spaces(): Spaces {
-        return (this._spaces ??= new Spaces(this.options));
+        return (this._spaces ??= new Spaces(this._options));
     }
 
     protected _agents: Agents | undefined;
 
     public get agents(): Agents {
-        return (this._agents ??= new Agents(this.options));
+        return (this._agents ??= new Agents(this._options));
     }
 
     protected _auth: Auth | undefined;
 
     public get auth(): Auth {
-        return (this._auth ??= new Auth(this.options));
+        return (this._auth ??= new Auth(this._options));
     }
 
     protected _cells: Cells | undefined;
 
     public get cells(): Cells {
-        return (this._cells ??= new Cells(this.options));
+        return (this._cells ??= new Cells(this._options));
     }
 
     protected _documents: Documents | undefined;
 
     public get documents(): Documents {
-        return (this._documents ??= new Documents(this.options));
+        return (this._documents ??= new Documents(this._options));
     }
 
     protected _environments: Environments | undefined;
 
     public get environments(): Environments {
-        return (this._environments ??= new Environments(this.options));
+        return (this._environments ??= new Environments(this._options));
     }
 
     protected _events: Events | undefined;
 
     public get events(): Events {
-        return (this._events ??= new Events(this.options));
+        return (this._events ??= new Events(this._options));
     }
 
     protected _files: Files | undefined;
 
     public get files(): Files {
-        return (this._files ??= new Files(this.options));
+        return (this._files ??= new Files(this._options));
     }
 
     protected _guests: Guests | undefined;
 
     public get guests(): Guests {
-        return (this._guests ??= new Guests(this.options));
+        return (this._guests ??= new Guests(this._options));
     }
 
     protected _jobs: Jobs | undefined;
 
     public get jobs(): Jobs {
-        return (this._jobs ??= new Jobs(this.options));
+        return (this._jobs ??= new Jobs(this._options));
     }
 
     protected _records: Records | undefined;
 
     public get records(): Records {
-        return (this._records ??= new Records(this.options));
+        return (this._records ??= new Records(this._options));
     }
 
     protected _secrets: Secrets | undefined;
 
     public get secrets(): Secrets {
-        return (this._secrets ??= new Secrets(this.options));
+        return (this._secrets ??= new Secrets(this._options));
     }
 
     protected _sheets: Sheets | undefined;
 
     public get sheets(): Sheets {
-        return (this._sheets ??= new Sheets(this.options));
+        return (this._sheets ??= new Sheets(this._options));
     }
 
     protected _users: Users | undefined;
 
     public get users(): Users {
-        return (this._users ??= new Users(this.options));
+        return (this._users ??= new Users(this._options));
     }
 
     protected _versions: Versions | undefined;
 
     public get versions(): Versions {
-        return (this._versions ??= new Versions(this.options));
+        return (this._versions ??= new Versions(this._options));
     }
 
     protected _workbooks: Workbooks | undefined;
 
     public get workbooks(): Workbooks {
-        return (this._workbooks ??= new Workbooks(this.options));
+        return (this._workbooks ??= new Workbooks(this._options));
     }
 }

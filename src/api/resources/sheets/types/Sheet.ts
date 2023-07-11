@@ -11,7 +11,7 @@ export interface Sheet {
     id: Flatfile.SheetId;
     workbookId: Flatfile.WorkbookId;
     name: string;
-    config?: Flatfile.SheetConfig;
+    config: Flatfile.SheetConfig;
     countRecords?: Flatfile.RecordCounts;
     namespace?: string;
 }

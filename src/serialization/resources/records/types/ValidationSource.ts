@@ -13,8 +13,15 @@ export const ValidationSource: core.serialization.Schema<serializers.ValidationS
         "custom-logic",
         "unlinked",
         "invalid-option",
+        "is-artifact",
     ]);
 
 export declare namespace ValidationSource {
-    type Raw = "required-constraint" | "unique-constraint" | "custom-logic" | "unlinked" | "invalid-option";
+    type Raw =
+        | "required-constraint"
+        | "unique-constraint"
+        | "custom-logic"
+        | "unlinked"
+        | "invalid-option"
+        | "is-artifact";
 }

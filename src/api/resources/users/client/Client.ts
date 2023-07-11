@@ -17,24 +17,31 @@ export declare namespace Users {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Users {
-    constructor(protected readonly options: Users.Options) {}
+    constructor(protected readonly _options: Users.Options) {}
 
     /**
      * Gets a list of users
      */
-    public async list(request: Flatfile.ListUsersRequest = {}): Promise<Flatfile.ListUsersResponse> {
+    public async list(
+        request: Flatfile.ListUsersRequest = {},
+        requestOptions?: Users.RequestOptions
+    ): Promise<Flatfile.ListUsersResponse> {
         const { email } = request;
         const _queryParams = new URLSearchParams();
         if (email != null) {
             _queryParams.append("email", email);
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "users"
             ),
             method: "GET",
@@ -43,11 +50,11 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.ListUsersResponse.parseOrThrow(_response.body, {
@@ -84,10 +91,13 @@ export class Users {
     /**
      * A user is a privileged user that logs in with a username and password.
      */
-    public async create(request: Flatfile.UserConfig): Promise<Flatfile.UserResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async create(
+        request: Flatfile.UserConfig,
+        requestOptions?: Users.RequestOptions
+    ): Promise<Flatfile.UserResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "users"
             ),
             method: "POST",
@@ -96,11 +106,11 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body: await serializers.UserConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.UserResponse.parseOrThrow(_response.body, {
@@ -137,10 +147,10 @@ export class Users {
     /**
      * Gets a user
      */
-    public async get(userId: Flatfile.UserId): Promise<Flatfile.UserResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async get(userId: Flatfile.UserId, requestOptions?: Users.RequestOptions): Promise<Flatfile.UserResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `users/${await serializers.UserId.jsonOrThrow(userId)}`
             ),
             method: "GET",
@@ -149,10 +159,10 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.UserResponse.parseOrThrow(_response.body, {
@@ -191,7 +201,8 @@ export class Users {
      */
     public async listApiTokens(
         userId: Flatfile.UserId,
-        request: Flatfile.ListApiTokensRequest
+        request: Flatfile.ListApiTokensRequest,
+        requestOptions?: Users.RequestOptions
     ): Promise<Flatfile.ListApiTokensResponse> {
         const { tenantId, pageSize, pageNumber } = request;
         const _queryParams = new URLSearchParams();
@@ -204,9 +215,9 @@ export class Users {
             _queryParams.append("pageNumber", pageNumber.toString());
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `users/${await serializers.UserId.jsonOrThrow(userId)}/api-token`
             ),
             method: "GET",
@@ -215,11 +226,11 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.ListApiTokensResponse.parseOrThrow(_response.body, {
@@ -256,13 +267,17 @@ export class Users {
     /**
      * Creates an api token for authenticating against Flatfile APIs.
      */
-    public async createApiToken(userId: Flatfile.UserId, request: Flatfile.CreateApiTokenRequest): Promise<void> {
+    public async createApiToken(
+        userId: Flatfile.UserId,
+        request: Flatfile.CreateApiTokenRequest,
+        requestOptions?: Users.RequestOptions
+    ): Promise<void> {
         const { tenantId } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("tenantId", tenantId);
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `users/${await serializers.UserId.jsonOrThrow(userId)}/api-token`
             ),
             method: "POST",
@@ -271,11 +286,11 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -306,10 +321,13 @@ export class Users {
     /**
      * Exchange an invitation for an access token
      */
-    public async exchangeToken(request: Flatfile.ExchangeTokenRequest = {}): Promise<Flatfile.ExchangeTokenResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async exchangeToken(
+        request: Flatfile.ExchangeTokenRequest = {},
+        requestOptions?: Users.RequestOptions
+    ): Promise<Flatfile.ExchangeTokenResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "invitations/exchange"
             ),
             method: "POST",
@@ -318,11 +336,11 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body: await serializers.ExchangeTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.ExchangeTokenResponse.parseOrThrow(_response.body, {
@@ -357,6 +375,6 @@ export class Users {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this.options.token)}`;
+        return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }

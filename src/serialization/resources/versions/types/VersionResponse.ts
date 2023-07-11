@@ -10,11 +10,11 @@ export const VersionResponse: core.serialization.ObjectSchema<
     serializers.VersionResponse.Raw,
     Flatfile.VersionResponse
 > = core.serialization.object({
-    versionId: core.serialization.lazy(async () => (await import("../../..")).VersionId),
+    data: core.serialization.lazyObject(async () => (await import("../../..")).Version),
 });
 
 export declare namespace VersionResponse {
     interface Raw {
-        versionId: serializers.VersionId.Raw;
+        data: serializers.Version.Raw;
     }
 }

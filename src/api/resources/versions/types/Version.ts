@@ -4,6 +4,6 @@
 
 import * as Flatfile from "../../..";
 
-export interface VersionResponse {
-    data: Flatfile.Version;
+export interface Version {
+    versionId: Flatfile.VersionId;
 }

@@ -14,4 +14,5 @@ export interface InternalSpaceConfigBase {
     guestAuthentication?: Flatfile.GuestAuthenticationEnum[];
     access?: Flatfile.spaces.SpaceAccess[];
     autoConfigure?: boolean;
+    namespace?: string;
 }

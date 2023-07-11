@@ -10,7 +10,7 @@ export const Space: core.serialization.ObjectSchema<serializers.spaces.Space.Raw
     core.serialization
         .object({
             id: core.serialization.lazy(async () => (await import("../../..")).SpaceId),
-            workbookCount: core.serialization.number().optional(),
+            workbooksCount: core.serialization.number().optional(),
             filesCount: core.serialization.number().optional(),
             createdByUserId: core.serialization.lazy(async () => (await import("../../..")).UserId).optional(),
             createdByUserName: core.serialization.string().optional(),
@@ -19,9 +19,9 @@ export const Space: core.serialization.ObjectSchema<serializers.spaces.Space.Raw
             archivedAt: core.serialization.date().optional(),
             guestLink: core.serialization.string().optional(),
             name: core.serialization.string(),
-            displayOrder: core.serialization.number(),
+            displayOrder: core.serialization.number().optional(),
             accessToken: core.serialization.string().optional(),
-            isCollaborative: core.serialization.boolean(),
+            isCollaborative: core.serialization.boolean().optional(),
             size: core.serialization.lazyObject(async () => (await import("../../..")).spaces.SpaceSize).optional(),
             upgradedAt: core.serialization.date().optional(),
         })
@@ -30,7 +30,7 @@ export const Space: core.serialization.ObjectSchema<serializers.spaces.Space.Raw
 export declare namespace Space {
     interface Raw extends serializers.spaces.InternalSpaceConfigBase.Raw {
         id: serializers.SpaceId.Raw;
-        workbookCount?: number | null;
+        workbooksCount?: number | null;
         filesCount?: number | null;
         createdByUserId?: serializers.UserId.Raw | null;
         createdByUserName?: string | null;
@@ -39,9 +39,9 @@ export declare namespace Space {
         archivedAt?: string | null;
         guestLink?: string | null;
         name: string;
-        displayOrder: number;
+        displayOrder?: number | null;
         accessToken?: string | null;
-        isCollaborative: boolean;
+        isCollaborative?: boolean | null;
         size?: serializers.spaces.SpaceSize.Raw | null;
         upgradedAt?: string | null;
     }

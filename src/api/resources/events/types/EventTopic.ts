@@ -24,9 +24,6 @@ export type EventTopic =
     | "sheet:created"
     | "sheet:updated"
     | "sheet:deleted"
-    | "record:created"
-    | "record:updated"
-    | "record:deleted"
     | "file:created"
     | "file:updated"
     | "file:deleted"
@@ -58,9 +55,6 @@ export const EventTopic = {
     SheetCreated: "sheet:created",
     SheetUpdated: "sheet:updated",
     SheetDeleted: "sheet:deleted",
-    RecordCreated: "record:created",
-    RecordUpdated: "record:updated",
-    RecordDeleted: "record:deleted",
     FileCreated: "file:created",
     FileUpdated: "file:updated",
     FileDeleted: "file:deleted",

@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 
 export const Record_: core.serialization.ObjectSchema<serializers.Record_.Raw, Flatfile.Record_> =
     core.serialization.object({
+        versionId: core.serialization.lazy(async () => (await import("../../..")).VersionId).optional(),
         id: core.serialization.lazy(async () => (await import("../../..")).RecordId),
         values: core.serialization.lazy(async () => (await import("../../..")).RecordData),
         valid: core.serialization.boolean().optional(),
@@ -19,6 +20,7 @@ export const Record_: core.serialization.ObjectSchema<serializers.Record_.Raw, F
 
 export declare namespace Record_ {
     interface Raw {
+        versionId?: serializers.VersionId.Raw | null;
         id: serializers.RecordId.Raw;
         values: serializers.RecordData.Raw;
         valid?: boolean | null;

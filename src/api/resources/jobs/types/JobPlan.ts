@@ -8,6 +8,6 @@ import * as Flatfile from "../../..";
  * The job/plan tuple that contains the full plan and the jobs status
  */
 export interface JobPlan {
-    job?: Flatfile.Job;
-    plan?: Flatfile.JobExecutionPlan;
+    job: Flatfile.Job;
+    plan: Flatfile.JobExecutionPlan;
 }

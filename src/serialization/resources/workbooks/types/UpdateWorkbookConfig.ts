@@ -10,7 +10,7 @@ export const UpdateWorkbookConfig: core.serialization.ObjectSchema<
     serializers.UpdateWorkbookConfig.Raw,
     Flatfile.UpdateWorkbookConfig
 > = core.serialization.object({
-    name: core.serialization.string().optional(),
+    name: core.serialization.string(),
     labels: core.serialization.list(core.serialization.string()).optional(),
     spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId).optional(),
     environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
@@ -25,7 +25,7 @@ export const UpdateWorkbookConfig: core.serialization.ObjectSchema<
 
 export declare namespace UpdateWorkbookConfig {
     interface Raw {
-        name?: string | null;
+        name: string;
         labels?: string[] | null;
         spaceId?: serializers.SpaceId.Raw | null;
         environmentId?: serializers.EnvironmentId.Raw | null;

@@ -17,17 +17,22 @@ export declare namespace Cells {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Cells {
-    constructor(protected readonly options: Cells.Options) {}
+    constructor(protected readonly _options: Cells.Options) {}
 
     /**
      * Returns record cell values grouped by all fields in the sheet
      */
     public async getValues(
         sheetId: Flatfile.SheetId,
-        request: Flatfile.GetFieldValuesRequest
+        request: Flatfile.GetFieldValuesRequest,
+        requestOptions?: Cells.RequestOptions
     ): Promise<Flatfile.CellsResponse> {
         const {
             fieldKey,
@@ -79,9 +84,9 @@ export class Cells {
             _queryParams.append("searchValue", searchValue);
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/cells`
             ),
             method: "GET",
@@ -90,11 +95,11 @@ export class Cells {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.CellsResponse.parseOrThrow(_response.body, {
@@ -129,6 +134,6 @@ export class Cells {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this.options.token)}`;
+        return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }

@@ -8,7 +8,7 @@ import * as Flatfile from "../../..";
  * Properties used to create a new Workbook
  */
 export interface UpdateWorkbookConfig {
-    name?: string;
+    name: string;
     labels?: string[];
     spaceId?: Flatfile.SpaceId;
     environmentId?: Flatfile.EnvironmentId;

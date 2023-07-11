@@ -17,21 +17,28 @@ export declare namespace Sheets {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Sheets {
-    constructor(protected readonly options: Sheets.Options) {}
+    constructor(protected readonly _options: Sheets.Options) {}
 
     /**
      * Returns sheets in a workbook
      */
-    public async list(request: Flatfile.ListSheetsRequest): Promise<Flatfile.ListSheetsResponse> {
+    public async list(
+        request: Flatfile.ListSheetsRequest,
+        requestOptions?: Sheets.RequestOptions
+    ): Promise<Flatfile.ListSheetsResponse> {
         const { workbookId } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("workbookId", workbookId);
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "/sheets"
             ),
             method: "GET",
@@ -40,11 +47,11 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.ListSheetsResponse.parseOrThrow(_response.body, {
@@ -81,10 +88,13 @@ export class Sheets {
     /**
      * Returns a sheet in a workbook
      */
-    public async get(sheetId: Flatfile.SheetId): Promise<Flatfile.SheetResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async get(
+        sheetId: Flatfile.SheetId,
+        requestOptions?: Sheets.RequestOptions
+    ): Promise<Flatfile.SheetResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}`
             ),
             method: "GET",
@@ -93,10 +103,10 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.SheetResponse.parseOrThrow(_response.body, {
@@ -135,10 +145,10 @@ export class Sheets {
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      */
-    public async delete(sheetId: Flatfile.SheetId): Promise<Flatfile.Success> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async delete(sheetId: Flatfile.SheetId, requestOptions?: Sheets.RequestOptions): Promise<Flatfile.Success> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}`
             ),
             method: "DELETE",
@@ -147,10 +157,10 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -212,10 +222,13 @@ export class Sheets {
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      */
-    public async validate(sheetId: Flatfile.SheetId): Promise<Flatfile.Success> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async validate(
+        sheetId: Flatfile.SheetId,
+        requestOptions?: Sheets.RequestOptions
+    ): Promise<Flatfile.Success> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/validate`
             ),
             method: "POST",
@@ -224,10 +237,10 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -289,7 +302,8 @@ export class Sheets {
      */
     public async getRecordsAsCsv(
         sheetId: Flatfile.SheetId,
-        request: Flatfile.GetRecordsCsvRequest = {}
+        request: Flatfile.GetRecordsCsvRequest = {},
+        requestOptions?: Sheets.RequestOptions
     ): Promise<string> {
         const {
             versionId,
@@ -345,9 +359,9 @@ export class Sheets {
             }
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/download`
             ),
             method: "GET",
@@ -356,11 +370,11 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.sheets.getRecordsAsCsv.Response.parseOrThrow(_response.body, {
@@ -399,7 +413,8 @@ export class Sheets {
      */
     public async getRecordCounts(
         sheetId: Flatfile.SheetId,
-        request: Flatfile.GetRecordCountsRequest = {}
+        request: Flatfile.GetRecordCountsRequest = {},
+        requestOptions?: Sheets.RequestOptions
     ): Promise<Flatfile.RecordCountsResponse> {
         const { versionId, sinceVersionId, filter, filterField, searchValue, searchField, byField, q } = request;
         const _queryParams = new URLSearchParams();
@@ -435,9 +450,9 @@ export class Sheets {
             _queryParams.append("q", q);
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/counts`
             ),
             method: "GET",
@@ -446,11 +461,11 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.RecordCountsResponse.parseOrThrow(_response.body, {
@@ -485,6 +500,6 @@ export class Sheets {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this.options.token)}`;
+        return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }

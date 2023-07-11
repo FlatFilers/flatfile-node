@@ -4,7 +4,11 @@
 
 import * as Flatfile from "../../..";
 
-export interface JobExecutionPlanConfig extends Flatfile.JobExecutionPlan {
-    fileId: Flatfile.FileId;
-    jobId: Flatfile.JobId;
+/**
+ * The execution plan for a job, for example, for a map job, the execution plan is the mapping of the source sheet to the destination sheet.
+ */
+export interface JobExecutionPlanConfig {
+    fieldMapping?: Flatfile.Edge[];
+    unmappedSourceFields?: Flatfile.SourceField[];
+    unmappedDestinationFields?: Flatfile.DestinationField[];
 }

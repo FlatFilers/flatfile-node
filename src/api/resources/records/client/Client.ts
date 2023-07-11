@@ -17,17 +17,22 @@ export declare namespace Records {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Records {
-    constructor(protected readonly options: Records.Options) {}
+    constructor(protected readonly _options: Records.Options) {}
 
     /**
      * Returns records from a sheet in a workbook
      */
     public async get(
         sheetId: Flatfile.SheetId,
-        request: Flatfile.GetRecordsRequest = {}
+        request: Flatfile.GetRecordsRequest = {},
+        requestOptions?: Records.RequestOptions
     ): Promise<Flatfile.RecordsResponse> {
         const {
             versionId,
@@ -123,9 +128,9 @@ export class Records {
             _queryParams.append("q", q);
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/records`
             ),
             method: "GET",
@@ -134,11 +139,11 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.RecordsResponse.parseOrThrow(_response.body, {
@@ -175,10 +180,14 @@ export class Records {
     /**
      * Updates existing records in a workbook sheet
      */
-    public async update(sheetId: Flatfile.SheetId, request: Flatfile.Records): Promise<Flatfile.VersionResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async update(
+        sheetId: Flatfile.SheetId,
+        request: Flatfile.Records,
+        requestOptions?: Records.RequestOptions
+    ): Promise<Flatfile.VersionResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/records`
             ),
             method: "PUT",
@@ -187,11 +196,11 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body: await serializers.Records.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.VersionResponse.parseOrThrow(_response.body, {
@@ -228,10 +237,14 @@ export class Records {
     /**
      * Adds records to a workbook sheet
      */
-    public async insert(sheetId: Flatfile.SheetId, request: Flatfile.RecordData[]): Promise<Flatfile.RecordsResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async insert(
+        sheetId: Flatfile.SheetId,
+        request: Flatfile.RecordData[],
+        requestOptions?: Records.RequestOptions
+    ): Promise<Flatfile.RecordsResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/records`
             ),
             method: "POST",
@@ -240,11 +253,11 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body: await serializers.records.insert.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.RecordsResponse.parseOrThrow(_response.body, {
@@ -283,7 +296,8 @@ export class Records {
      */
     public async delete(
         sheetId: Flatfile.SheetId,
-        request: Flatfile.DeleteRecordsRequest = {}
+        request: Flatfile.DeleteRecordsRequest = {},
+        requestOptions?: Records.RequestOptions
     ): Promise<Flatfile.Success> {
         const { ids } = request;
         const _queryParams = new URLSearchParams();
@@ -297,9 +311,9 @@ export class Records {
             }
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/records`
             ),
             method: "DELETE",
@@ -308,11 +322,11 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -351,7 +365,8 @@ export class Records {
      */
     public async findAndReplaceDeprecated(
         sheetId: Flatfile.SheetId,
-        request: Flatfile.FindAndReplaceRecordRequestDeprecated
+        request: Flatfile.FindAndReplaceRecordRequestDeprecated,
+        requestOptions?: Records.RequestOptions
     ): Promise<Flatfile.RecordsResponse> {
         const { fieldKey, searchValue, filter, pageSize, pageNumber, ..._body } = request;
         const _queryParams = new URLSearchParams();
@@ -369,9 +384,9 @@ export class Records {
             _queryParams.append("pageNumber", pageNumber.toString());
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/replace`
             ),
             method: "PUT",
@@ -380,14 +395,14 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             body: await serializers.FindAndReplaceRecordRequestDeprecated.jsonOrThrow(_body, {
                 unrecognizedObjectKeys: "strip",
             }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.RecordsResponse.parseOrThrow(_response.body, {
@@ -426,7 +441,8 @@ export class Records {
      */
     public async findAndReplace(
         sheetId: Flatfile.SheetId,
-        request: Flatfile.FindAndReplaceRecordRequest
+        request: Flatfile.FindAndReplaceRecordRequest,
+        requestOptions?: Records.RequestOptions
     ): Promise<Flatfile.VersionResponse> {
         const { filter, filterField, searchValue, searchField, ids, ..._body } = request;
         const _queryParams = new URLSearchParams();
@@ -456,9 +472,9 @@ export class Records {
             }
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/find-replace`
             ),
             method: "PUT",
@@ -467,12 +483,12 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             body: await serializers.FindAndReplaceRecordRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.VersionResponse.parseOrThrow(_response.body, {
@@ -507,6 +523,6 @@ export class Records {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this.options.token)}`;
+        return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }

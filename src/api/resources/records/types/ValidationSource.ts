@@ -7,7 +7,8 @@ export type ValidationSource =
     | "unique-constraint"
     | "custom-logic"
     | "unlinked"
-    | "invalid-option";
+    | "invalid-option"
+    | "is-artifact";
 
 export const ValidationSource = {
     RequiredConstraint: "required-constraint",
@@ -15,4 +16,5 @@ export const ValidationSource = {
     CustomLogic: "custom-logic",
     Unlinked: "unlinked",
     InvalidOption: "invalid-option",
+    IsArtifact: "is-artifact",
 } as const;

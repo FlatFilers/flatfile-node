@@ -3,8 +3,6 @@ export * from "./RecordsResponseData";
 export * from "./RecordCounts";
 export * from "./RecordsWithLinks";
 export * from "./RecordWithLinks";
-export * from "./RecordDataWithLinks";
-export * from "./CellValueWithLinks";
 export * from "./Records";
 export * from "./Record_";
 export * from "./RecordData";

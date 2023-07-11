@@ -13,7 +13,7 @@ export const InternalSpaceConfigBase: core.serialization.ObjectSchema<
     spaceConfigId: core.serialization.lazy(async () => (await import("../../..")).SpaceConfigId).optional(),
     environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId),
     primaryWorkbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId).optional(),
-    metadata: core.serialization.any(),
+    metadata: core.serialization.any().optional(),
     actions: core.serialization
         .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
         .optional(),
@@ -24,6 +24,7 @@ export const InternalSpaceConfigBase: core.serialization.ObjectSchema<
         .list(core.serialization.lazy(async () => (await import("../../..")).spaces.SpaceAccess))
         .optional(),
     autoConfigure: core.serialization.boolean().optional(),
+    namespace: core.serialization.string().optional(),
 });
 
 export declare namespace InternalSpaceConfigBase {
@@ -31,10 +32,11 @@ export declare namespace InternalSpaceConfigBase {
         spaceConfigId?: serializers.SpaceConfigId.Raw | null;
         environmentId: serializers.EnvironmentId.Raw;
         primaryWorkbookId?: serializers.WorkbookId.Raw | null;
-        metadata?: any;
+        metadata?: any | null;
         actions?: serializers.Action.Raw[] | null;
         guestAuthentication?: serializers.GuestAuthenticationEnum.Raw[] | null;
         access?: serializers.spaces.SpaceAccess.Raw[] | null;
         autoConfigure?: boolean | null;
+        namespace?: string | null;
     }
 }

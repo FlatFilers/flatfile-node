@@ -9,16 +9,22 @@ import * as core from "../../../../core";
 export const JobExecutionPlanConfig: core.serialization.ObjectSchema<
     serializers.JobExecutionPlanConfig.Raw,
     Flatfile.JobExecutionPlanConfig
-> = core.serialization
-    .object({
-        fileId: core.serialization.lazy(async () => (await import("../../..")).FileId),
-        jobId: core.serialization.lazy(async () => (await import("../../..")).JobId),
-    })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).JobExecutionPlan));
+> = core.serialization.object({
+    fieldMapping: core.serialization
+        .list(core.serialization.lazyObject(async () => (await import("../../..")).Edge))
+        .optional(),
+    unmappedSourceFields: core.serialization
+        .list(core.serialization.lazyObject(async () => (await import("../../..")).SourceField))
+        .optional(),
+    unmappedDestinationFields: core.serialization
+        .list(core.serialization.lazyObject(async () => (await import("../../..")).DestinationField))
+        .optional(),
+});
 
 export declare namespace JobExecutionPlanConfig {
-    interface Raw extends serializers.JobExecutionPlan.Raw {
-        fileId: serializers.FileId.Raw;
-        jobId: serializers.JobId.Raw;
+    interface Raw {
+        fieldMapping?: serializers.Edge.Raw[] | null;
+        unmappedSourceFields?: serializers.SourceField.Raw[] | null;
+        unmappedDestinationFields?: serializers.DestinationField.Raw[] | null;
     }
 }

@@ -10,7 +10,7 @@ import * as Flatfile from "../../..";
 export interface Space extends Flatfile.spaces.InternalSpaceConfigBase {
     id: Flatfile.SpaceId;
     /** Amount of workbooks in the space */
-    workbookCount?: number;
+    workbooksCount?: number;
     /** Amount of files in the space */
     filesCount?: number;
     createdByUserId?: Flatfile.UserId;
@@ -27,9 +27,9 @@ export interface Space extends Flatfile.spaces.InternalSpaceConfigBase {
     /** The name of the space */
     name: string;
     /** The display order */
-    displayOrder: number;
+    displayOrder?: number;
     accessToken?: string;
-    isCollaborative: boolean;
+    isCollaborative?: boolean;
     size?: Flatfile.spaces.SpaceSize;
     upgradedAt?: Date;
 }

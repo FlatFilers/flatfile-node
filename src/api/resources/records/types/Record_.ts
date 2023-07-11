@@ -8,6 +8,7 @@ import * as Flatfile from "../../..";
  * A single row of data in a Sheet
  */
 export interface Record_ {
+    versionId?: Flatfile.VersionId;
     id: Flatfile.RecordId;
     values: Flatfile.RecordData;
     valid?: boolean;

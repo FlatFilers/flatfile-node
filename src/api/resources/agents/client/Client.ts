@@ -17,18 +17,25 @@ export declare namespace Agents {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Agents {
-    constructor(protected readonly options: Agents.Options) {}
+    constructor(protected readonly _options: Agents.Options) {}
 
-    public async list(request: Flatfile.ListAgentsRequest): Promise<Flatfile.ListAgentsResponse> {
+    public async list(
+        request: Flatfile.ListAgentsRequest,
+        requestOptions?: Agents.RequestOptions
+    ): Promise<Flatfile.ListAgentsResponse> {
         const { environmentId } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("environmentId", environmentId);
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "/agents"
             ),
             method: "GET",
@@ -37,11 +44,11 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.ListAgentsResponse.parseOrThrow(_response.body, {
@@ -78,13 +85,16 @@ export class Agents {
     /**
      * @throws {@link Flatfile.BadRequestError}
      */
-    public async create(request: Flatfile.CreateAgentsRequest): Promise<Flatfile.AgentResponse> {
+    public async create(
+        request: Flatfile.CreateAgentsRequest,
+        requestOptions?: Agents.RequestOptions
+    ): Promise<Flatfile.AgentResponse> {
         const { environmentId, body: _body } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("environmentId", environmentId);
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "/agents"
             ),
             method: "POST",
@@ -93,12 +103,12 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             body: await serializers.AgentConfig.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.AgentResponse.parseOrThrow(_response.body, {
@@ -149,13 +159,17 @@ export class Agents {
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      */
-    public async get(agentId: Flatfile.AgentId, request: Flatfile.GetAgentRequest): Promise<Flatfile.AgentResponse> {
+    public async get(
+        agentId: Flatfile.AgentId,
+        request: Flatfile.GetAgentRequest,
+        requestOptions?: Agents.RequestOptions
+    ): Promise<Flatfile.AgentResponse> {
         const { environmentId } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("environmentId", environmentId);
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/agents/${await serializers.AgentId.jsonOrThrow(agentId)}`
             ),
             method: "GET",
@@ -164,11 +178,11 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.AgentResponse.parseOrThrow(_response.body, {
@@ -231,14 +245,15 @@ export class Agents {
      */
     public async getAgentLogs(
         agentId: Flatfile.AgentId,
-        request: Flatfile.GetAgentLogsRequest
+        request: Flatfile.GetAgentLogsRequest,
+        requestOptions?: Agents.RequestOptions
     ): Promise<Flatfile.GetAgentLogsResponse> {
         const { environmentId } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("environmentId", environmentId);
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/agents/${await serializers.AgentId.jsonOrThrow(agentId)}/logs`
             ),
             method: "GET",
@@ -247,11 +262,11 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.GetAgentLogsResponse.parseOrThrow(_response.body, {
@@ -313,7 +328,8 @@ export class Agents {
      * @throws {@link Flatfile.NotFoundError}
      */
     public async getEnvironmentAgentLogs(
-        request: Flatfile.GetEnvironmentAgentLogsRequest
+        request: Flatfile.GetEnvironmentAgentLogsRequest,
+        requestOptions?: Agents.RequestOptions
     ): Promise<Flatfile.GetAgentLogsResponse> {
         const { environmentId, pageSize, pageNumber } = request;
         const _queryParams = new URLSearchParams();
@@ -326,9 +342,9 @@ export class Agents {
             _queryParams.append("pageNumber", pageNumber.toString());
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "/agents/logs"
             ),
             method: "GET",
@@ -337,11 +353,11 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.GetAgentLogsResponse.parseOrThrow(_response.body, {
@@ -403,10 +419,10 @@ export class Agents {
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      */
-    public async delete(agentId: Flatfile.AgentId): Promise<Flatfile.Success> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async delete(agentId: Flatfile.AgentId, requestOptions?: Agents.RequestOptions): Promise<Flatfile.Success> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/agents/${await serializers.AgentId.jsonOrThrow(agentId)}`
             ),
             method: "DELETE",
@@ -415,10 +431,10 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -476,6 +492,6 @@ export class Agents {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this.options.token)}`;
+        return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }

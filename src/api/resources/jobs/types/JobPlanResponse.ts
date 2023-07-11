@@ -4,6 +4,6 @@
 
 import * as Flatfile from "../../..";
 
-export interface CellValueWithLinks extends Flatfile.CellValue {
-    links?: Flatfile.Records;
+export interface JobPlanResponse {
+    data: Flatfile.JobPlan;
 }

@@ -8,13 +8,13 @@ import * as core from "../../../../core";
 
 export const JobPlan: core.serialization.ObjectSchema<serializers.JobPlan.Raw, Flatfile.JobPlan> =
     core.serialization.object({
-        job: core.serialization.lazyObject(async () => (await import("../../..")).Job).optional(),
-        plan: core.serialization.lazyObject(async () => (await import("../../..")).JobExecutionPlan).optional(),
+        job: core.serialization.lazyObject(async () => (await import("../../..")).Job),
+        plan: core.serialization.lazyObject(async () => (await import("../../..")).JobExecutionPlan),
     });
 
 export declare namespace JobPlan {
     interface Raw {
-        job?: serializers.Job.Raw | null;
-        plan?: serializers.JobExecutionPlan.Raw | null;
+        job: serializers.Job.Raw;
+        plan: serializers.JobExecutionPlan.Raw;
     }
 }

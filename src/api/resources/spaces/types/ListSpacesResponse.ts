@@ -4,6 +4,9 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * List of Space objects
+ */
 export interface ListSpacesResponse {
     pagination?: Flatfile.Pagination;
     data: Flatfile.spaces.Space[];

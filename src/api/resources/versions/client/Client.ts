@@ -16,18 +16,25 @@ export declare namespace Versions {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Versions {
-    constructor(protected readonly options: Versions.Options) {}
+    constructor(protected readonly _options: Versions.Options) {}
 
     /**
      * Creates a new version id that can be used to group record updates
      */
-    public async createId(request: Flatfile.VersionsPostRequestBody = {}): Promise<Flatfile.VersionResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async createId(
+        request: Flatfile.VersionsPostRequestBody = {},
+        requestOptions?: Versions.RequestOptions
+    ): Promise<Flatfile.VersionResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "/versions"
             ),
             method: "POST",
@@ -36,11 +43,11 @@ export class Versions {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body: await serializers.VersionsPostRequestBody.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.VersionResponse.parseOrThrow(_response.body, {
@@ -75,6 +82,6 @@ export class Versions {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this.options.token)}`;
+        return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }

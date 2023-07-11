@@ -7,7 +7,7 @@ import * as Flatfile from "../../..";
 /**
  * A list of records with optional record counts
  */
-export interface RecordsResponseData extends Flatfile.Success {
+export interface RecordsResponseData extends Flatfile.SuccessData {
     records?: Flatfile.RecordsWithLinks;
     counts?: Flatfile.RecordCounts;
     versionId?: Flatfile.VersionId;

@@ -17,15 +17,22 @@ export declare namespace Events {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Events {
-    constructor(protected readonly options: Events.Options) {}
+    constructor(protected readonly _options: Events.Options) {}
 
     /**
      * Event topics that the Flatfile Platform emits.
      */
-    public async list(request: Flatfile.ListEventsRequest): Promise<Flatfile.ListAllEventsResponse> {
+    public async list(
+        request: Flatfile.ListEventsRequest,
+        requestOptions?: Events.RequestOptions
+    ): Promise<Flatfile.ListAllEventsResponse> {
         const { environmentId, spaceId, domain, topic, since, pageSize, pageNumber, includeAcknowledged } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("environmentId", environmentId);
@@ -57,9 +64,9 @@ export class Events {
             _queryParams.append("includeAcknowledged", includeAcknowledged.toString());
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "events"
             ),
             method: "GET",
@@ -68,11 +75,11 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.ListAllEventsResponse.parseOrThrow(_response.body, {
@@ -110,10 +117,13 @@ export class Events {
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      */
-    public async create(request: Flatfile.Event): Promise<Flatfile.EventResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async create(
+        request: Flatfile.Event,
+        requestOptions?: Events.RequestOptions
+    ): Promise<Flatfile.EventResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "events"
             ),
             method: "POST",
@@ -122,11 +132,11 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body: await serializers.Event.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.EventResponse.parseOrThrow(_response.body, {
@@ -183,10 +193,13 @@ export class Events {
         }
     }
 
-    public async get(eventId: Flatfile.EventId): Promise<Flatfile.EventResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async get(
+        eventId: Flatfile.EventId,
+        requestOptions?: Events.RequestOptions
+    ): Promise<Flatfile.EventResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `events/${await serializers.EventId.jsonOrThrow(eventId)}`
             ),
             method: "GET",
@@ -195,10 +208,10 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.EventResponse.parseOrThrow(_response.body, {
@@ -232,10 +245,10 @@ export class Events {
         }
     }
 
-    public async ack(eventId: Flatfile.EventId): Promise<Flatfile.Success> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async ack(eventId: Flatfile.EventId, requestOptions?: Events.RequestOptions): Promise<Flatfile.Success> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `events/${await serializers.EventId.jsonOrThrow(eventId)}/ack`
             ),
             method: "POST",
@@ -244,10 +257,10 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -287,7 +300,8 @@ export class Events {
      * @throws {@link Flatfile.NotFoundError}
      */
     public async getEventToken(
-        request: Flatfile.GetEventTokenRequest = {}
+        request: Flatfile.GetEventTokenRequest = {},
+        requestOptions?: Events.RequestOptions
     ): Promise<Flatfile.spaces.EventTokenResponse> {
         const { spaceId, scope } = request;
         const _queryParams = new URLSearchParams();
@@ -299,9 +313,9 @@ export class Events {
             _queryParams.append("scope", scope);
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "subscription"
             ),
             method: "GET",
@@ -310,11 +324,11 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.spaces.EventTokenResponse.parseOrThrow(_response.body, {
@@ -372,6 +386,6 @@ export class Events {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this.options.token)}`;
+        return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }

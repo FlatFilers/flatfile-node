@@ -5,7 +5,7 @@
 import * as Flatfile from "../../../..";
 
 export interface ListSpacesRequest {
-    environmentId?: string;
+    environmentId?: Flatfile.EnvironmentId;
     /**
      * Number of spaces to return in a page (default 10)
      */

@@ -34,11 +34,11 @@ function buildMessage({
     }
 
     if (statusCode != null) {
-        lines.push(statusCode.toString());
+        lines.push(`Status code: ${statusCode.toString()}`);
     }
 
     if (body != null) {
-        lines.push(JSON.stringify(body, undefined, 2));
+        lines.push(`Body: ${JSON.stringify(body, undefined, 2)}`);
     }
 
     return lines.join("\n");

@@ -17,17 +17,24 @@ export declare namespace Secrets {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Secrets {
-    constructor(protected readonly options: Secrets.Options) {}
+    constructor(protected readonly _options: Secrets.Options) {}
 
     /**
      * Fetch all secrets for a given environmentId and optionally apply space overrides
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      */
-    public async list(request: Flatfile.ListSecrets): Promise<Flatfile.SecretsResponse> {
+    public async list(
+        request: Flatfile.ListSecrets,
+        requestOptions?: Secrets.RequestOptions
+    ): Promise<Flatfile.SecretsResponse> {
         const { environmentId, spaceId } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("environmentId", environmentId);
@@ -35,9 +42,9 @@ export class Secrets {
             _queryParams.append("spaceId", spaceId);
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "/secrets"
             ),
             method: "GET",
@@ -46,11 +53,11 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.SecretsResponse.parseOrThrow(_response.body, {
@@ -112,10 +119,13 @@ export class Secrets {
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      */
-    public async upsert(request: Flatfile.WriteSecret): Promise<Flatfile.SecretsResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async upsert(
+        request: Flatfile.WriteSecret,
+        requestOptions?: Secrets.RequestOptions
+    ): Promise<Flatfile.SecretsResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "/secrets"
             ),
             method: "POST",
@@ -124,11 +134,11 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body: await serializers.WriteSecret.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.SecretsResponse.parseOrThrow(_response.body, {
@@ -190,10 +200,13 @@ export class Secrets {
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      */
-    public async delete(secretId: Flatfile.SecretId): Promise<Flatfile.SecretsResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async delete(
+        secretId: Flatfile.SecretId,
+        requestOptions?: Secrets.RequestOptions
+    ): Promise<Flatfile.SecretsResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/secrets/${await serializers.SecretId.jsonOrThrow(secretId)}`
             ),
             method: "DELETE",
@@ -202,10 +215,10 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.SecretsResponse.parseOrThrow(_response.body, {
@@ -263,6 +276,6 @@ export class Secrets {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this.options.token)}`;
+        return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }

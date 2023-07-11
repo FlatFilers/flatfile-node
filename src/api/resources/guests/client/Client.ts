@@ -17,15 +17,22 @@ export declare namespace Guests {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Guests {
-    constructor(protected readonly options: Guests.Options) {}
+    constructor(protected readonly _options: Guests.Options) {}
 
     /**
      * Returns all guests
      */
-    public async list(request: Flatfile.ListGuestsRequest): Promise<Flatfile.ListGuestsResponse> {
+    public async list(
+        request: Flatfile.ListGuestsRequest,
+        requestOptions?: Guests.RequestOptions
+    ): Promise<Flatfile.ListGuestsResponse> {
         const { spaceId, email } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("spaceId", spaceId);
@@ -33,9 +40,9 @@ export class Guests {
             _queryParams.append("email", email);
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "guests"
             ),
             method: "GET",
@@ -44,11 +51,11 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.ListGuestsResponse.parseOrThrow(_response.body, {
@@ -85,10 +92,13 @@ export class Guests {
     /**
      * Guests are only there to upload, edit, and download files and perform their tasks in a specific Space.
      */
-    public async create(request: Flatfile.GuestConfig[]): Promise<Flatfile.CreateGuestResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async create(
+        request: Flatfile.GuestConfig[],
+        requestOptions?: Guests.RequestOptions
+    ): Promise<Flatfile.CreateGuestResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "guests"
             ),
             method: "POST",
@@ -97,11 +107,11 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body: await serializers.guests.create.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.CreateGuestResponse.parseOrThrow(_response.body, {
@@ -138,10 +148,10 @@ export class Guests {
     /**
      * Returns a single guest
      */
-    public async get(guestId: Flatfile.GuestId): Promise<Flatfile.Guest> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async get(guestId: Flatfile.GuestId, requestOptions?: Guests.RequestOptions): Promise<Flatfile.Guest> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `guests/${await serializers.GuestId.jsonOrThrow(guestId)}`
             ),
             method: "GET",
@@ -150,10 +160,10 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.Guest.parseOrThrow(_response.body, {
@@ -190,10 +200,10 @@ export class Guests {
     /**
      * Deletes a single guest
      */
-    public async delete(guestId: Flatfile.GuestId): Promise<Flatfile.Success> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async delete(guestId: Flatfile.GuestId, requestOptions?: Guests.RequestOptions): Promise<Flatfile.Success> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `guests/${await serializers.GuestId.jsonOrThrow(guestId)}`
             ),
             method: "DELETE",
@@ -202,10 +212,10 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -242,10 +252,14 @@ export class Guests {
     /**
      * Updates a single guest, for example to change name or email
      */
-    public async update(guestId: Flatfile.GuestId, request: Flatfile.GuestConfig): Promise<Flatfile.Guest> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async update(
+        guestId: Flatfile.GuestId,
+        request: Flatfile.GuestConfig,
+        requestOptions?: Guests.RequestOptions
+    ): Promise<Flatfile.Guest> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `guests/${await serializers.GuestId.jsonOrThrow(guestId)}`
             ),
             method: "PATCH",
@@ -254,11 +268,11 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body: await serializers.GuestConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.Guest.parseOrThrow(_response.body, {
@@ -295,10 +309,10 @@ export class Guests {
     /**
      * Guests can be created as a named guest on the Space or there’s a global link that will let anonymous guests into the space.
      */
-    public async invite(request: Flatfile.Invite[]): Promise<Flatfile.Success> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async invite(request: Flatfile.Invite[], requestOptions?: Guests.RequestOptions): Promise<Flatfile.Success> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "invitations"
             ),
             method: "POST",
@@ -307,11 +321,11 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body: await serializers.guests.invite.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -346,6 +360,6 @@ export class Guests {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this.options.token)}`;
+        return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }

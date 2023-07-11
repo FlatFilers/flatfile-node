@@ -17,12 +17,19 @@ export declare namespace Jobs {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Jobs {
-    constructor(protected readonly options: Jobs.Options) {}
+    constructor(protected readonly _options: Jobs.Options) {}
 
-    public async list(request: Flatfile.ListJobsRequest = {}): Promise<Flatfile.ListJobsResponse> {
+    public async list(
+        request: Flatfile.ListJobsRequest = {},
+        requestOptions?: Jobs.RequestOptions
+    ): Promise<Flatfile.ListJobsResponse> {
         const { environmentId, spaceId, workbookId, fileId, pageSize, pageNumber, sortDirection } = request;
         const _queryParams = new URLSearchParams();
         if (environmentId != null) {
@@ -53,9 +60,9 @@ export class Jobs {
             _queryParams.append("sortDirection", sortDirection);
         }
 
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "/jobs"
             ),
             method: "GET",
@@ -64,11 +71,11 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.ListJobsResponse.parseOrThrow(_response.body, {
@@ -102,10 +109,13 @@ export class Jobs {
         }
     }
 
-    public async create(request: Flatfile.JobConfig): Promise<Flatfile.JobResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async create(
+        request: Flatfile.JobConfig,
+        requestOptions?: Jobs.RequestOptions
+    ): Promise<Flatfile.JobResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 "/jobs"
             ),
             method: "POST",
@@ -114,11 +124,11 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body: await serializers.JobConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.JobResponse.parseOrThrow(_response.body, {
@@ -152,10 +162,10 @@ export class Jobs {
         }
     }
 
-    public async get(jobId: Flatfile.JobId): Promise<Flatfile.JobResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async get(jobId: Flatfile.JobId, requestOptions?: Jobs.RequestOptions): Promise<Flatfile.JobResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}`
             ),
             method: "GET",
@@ -164,10 +174,10 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.JobResponse.parseOrThrow(_response.body, {
@@ -201,10 +211,14 @@ export class Jobs {
         }
     }
 
-    public async update(jobId: Flatfile.JobId, request: Flatfile.JobUpdate): Promise<Flatfile.JobResponse> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async update(
+        jobId: Flatfile.JobId,
+        request: Flatfile.JobUpdate,
+        requestOptions?: Jobs.RequestOptions
+    ): Promise<Flatfile.JobResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}`
             ),
             method: "PATCH",
@@ -213,11 +227,11 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body: await serializers.JobUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.JobResponse.parseOrThrow(_response.body, {
@@ -251,10 +265,10 @@ export class Jobs {
         }
     }
 
-    public async delete(jobId: Flatfile.JobId): Promise<Flatfile.Success> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async delete(jobId: Flatfile.JobId, requestOptions?: Jobs.RequestOptions): Promise<Flatfile.Success> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}`
             ),
             method: "DELETE",
@@ -263,10 +277,10 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -303,10 +317,10 @@ export class Jobs {
     /**
      * Execute a job and return the job
      */
-    public async execute(jobId: string): Promise<Flatfile.Success> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async execute(jobId: string, requestOptions?: Jobs.RequestOptions): Promise<Flatfile.Success> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${jobId}/execute`
             ),
             method: "POST",
@@ -315,10 +329,10 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -355,10 +369,13 @@ export class Jobs {
     /**
      * Returns a single job's execution plan
      */
-    public async getExecutionPlan(jobId: Flatfile.JobId): Promise<Flatfile.JobPlan> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async getExecutionPlan(
+        jobId: Flatfile.JobId,
+        requestOptions?: Jobs.RequestOptions
+    ): Promise<Flatfile.JobPlanResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/plan`
             ),
             method: "GET",
@@ -367,13 +384,13 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
-            return await serializers.JobPlan.parseOrThrow(_response.body, {
+            return await serializers.JobPlanResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -409,11 +426,12 @@ export class Jobs {
      */
     public async updateExecutionPlan(
         jobId: Flatfile.JobId,
-        request: Flatfile.JobExecutionPlanConfig
-    ): Promise<Flatfile.JobPlan> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        request: Flatfile.JobExecutionPlanRequest,
+        requestOptions?: Jobs.RequestOptions
+    ): Promise<Flatfile.JobPlanResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/plan`
             ),
             method: "PUT",
@@ -422,14 +440,14 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            body: await serializers.JobExecutionPlanConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            body: await serializers.JobExecutionPlanRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
-            return await serializers.JobPlan.parseOrThrow(_response.body, {
+            return await serializers.JobPlanResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -461,15 +479,16 @@ export class Jobs {
     }
 
     /**
-     * Update a one or more individual fields on a job's execution plan
+     * Update one or more individual fields on a job's execution plan
      */
     public async updateExecutionPlanFields(
         jobId: string,
-        request: Flatfile.JobExecutionPlanConfig
-    ): Promise<Flatfile.JobPlan> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+        request: Flatfile.JobExecutionPlanConfigRequest,
+        requestOptions?: Jobs.RequestOptions
+    ): Promise<Flatfile.JobPlanResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${jobId}/plan`
             ),
             method: "PATCH",
@@ -478,14 +497,16 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            body: await serializers.JobExecutionPlanConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: 60000,
+            body: await serializers.JobExecutionPlanConfigRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+            }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
-            return await serializers.JobPlan.parseOrThrow(_response.body, {
+            return await serializers.JobPlanResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -519,10 +540,14 @@ export class Jobs {
     /**
      * Acknowledge a job and return the job
      */
-    public async ack(jobId: Flatfile.JobId, request?: Flatfile.JobAckDetails): Promise<Flatfile.Job> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async ack(
+        jobId: Flatfile.JobId,
+        request?: Flatfile.JobAckDetails,
+        requestOptions?: Jobs.RequestOptions
+    ): Promise<Flatfile.JobResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/ack`
             ),
             method: "POST",
@@ -531,17 +556,17 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body:
                 request != null
                     ? await serializers.jobs.ack.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })
                     : undefined,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
-            return await serializers.Job.parseOrThrow(_response.body, {
+            return await serializers.JobResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -575,10 +600,13 @@ export class Jobs {
     /**
      * Acknowledge a job outcome and return the job
      */
-    public async ackOutcome(jobId: Flatfile.JobId): Promise<Flatfile.Job> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async ackOutcome(
+        jobId: Flatfile.JobId,
+        requestOptions?: Jobs.RequestOptions
+    ): Promise<Flatfile.JobResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/outcome/ack`
             ),
             method: "POST",
@@ -587,13 +615,13 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
-            return await serializers.Job.parseOrThrow(_response.body, {
+            return await serializers.JobResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -627,10 +655,14 @@ export class Jobs {
     /**
      * Complete a job and return the job
      */
-    public async complete(jobId: Flatfile.JobId, request?: Flatfile.JobOutcome): Promise<Flatfile.Job> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async complete(
+        jobId: Flatfile.JobId,
+        request?: Flatfile.JobOutcome,
+        requestOptions?: Jobs.RequestOptions
+    ): Promise<Flatfile.JobResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/complete`
             ),
             method: "POST",
@@ -639,17 +671,17 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body:
                 request != null
                     ? await serializers.jobs.complete.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })
                     : undefined,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
-            return await serializers.Job.parseOrThrow(_response.body, {
+            return await serializers.JobResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -683,10 +715,14 @@ export class Jobs {
     /**
      * Fail a job and return the job
      */
-    public async fail(jobId: Flatfile.JobId, request?: Flatfile.JobOutcome): Promise<Flatfile.Job> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async fail(
+        jobId: Flatfile.JobId,
+        request?: Flatfile.JobOutcome,
+        requestOptions?: Jobs.RequestOptions
+    ): Promise<Flatfile.JobResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/fail`
             ),
             method: "POST",
@@ -695,17 +731,17 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body:
                 request != null
                     ? await serializers.jobs.fail.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })
                     : undefined,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
-            return await serializers.Job.parseOrThrow(_response.body, {
+            return await serializers.JobResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -739,10 +775,14 @@ export class Jobs {
     /**
      * Cancel a job and return the job
      */
-    public async cancel(jobId: Flatfile.JobId, request?: Flatfile.JobCancelDetails): Promise<Flatfile.Job> {
-        const _response = await (this.options.fetcher ?? core.fetcher)({
+    public async cancel(
+        jobId: Flatfile.JobId,
+        request?: Flatfile.JobCancelDetails,
+        requestOptions?: Jobs.RequestOptions
+    ): Promise<Flatfile.JobResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this.options.environment)) ?? environments.FlatfileEnvironment.Production,
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/cancel`
             ),
             method: "POST",
@@ -751,17 +791,17 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.13",
+                "X-Fern-SDK-Version": "1.5.14",
             },
             contentType: "application/json",
             body:
                 request != null
                     ? await serializers.jobs.cancel.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })
                     : undefined,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
-            return await serializers.Job.parseOrThrow(_response.body, {
+            return await serializers.JobResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -793,6 +833,6 @@ export class Jobs {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this.options.token)}`;
+        return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }
