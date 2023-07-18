@@ -23,6 +23,9 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "sheet:created",
         "sheet:updated",
         "sheet:deleted",
+        "records:created",
+        "records:updated",
+        "records:deleted",
         "file:created",
         "file:updated",
         "file:deleted",
@@ -32,7 +35,7 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "job:completed",
         "job:ready",
         "job:scheduled",
-        "job:outcome_acknowledged",
+        "job:outcome-acknowledged",
         "job:failed",
         "commit:created",
         "commit:updated",
@@ -56,6 +59,9 @@ export declare namespace EventTopic {
         | "sheet:created"
         | "sheet:updated"
         | "sheet:deleted"
+        | "records:created"
+        | "records:updated"
+        | "records:deleted"
         | "file:created"
         | "file:updated"
         | "file:deleted"
@@ -65,7 +71,7 @@ export declare namespace EventTopic {
         | "job:completed"
         | "job:ready"
         | "job:scheduled"
-        | "job:outcome_acknowledged"
+        | "job:outcome-acknowledged"
         | "job:failed"
         | "commit:created"
         | "commit:updated"

@@ -7,7 +7,7 @@ export * from "./JobUpdate";
 export * from "./JobUpdateConfig";
 export * from "./JobSource";
 export * from "./JobDestination";
-export * from "./DeleteJobConfig";
+export * from "./DeleteRecordsJobConfig";
 export * from "./FileJobConfig";
 export * from "./MutateJobConfig";
 export * from "./Driver";

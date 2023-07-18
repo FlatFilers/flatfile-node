@@ -7,9 +7,9 @@ import * as Flatfile from "../../..";
 /**
  * Configurations for the guests
  */
-export interface GuestConfig {
-    environmentId: Flatfile.EnvironmentId;
-    email: string;
-    name: string;
-    spaces: Flatfile.GuestSpace[];
+export interface GuestConfigUpdate {
+    environmentId?: Flatfile.EnvironmentId;
+    email?: string;
+    name?: string;
+    spaces?: Flatfile.GuestSpace[];
 }

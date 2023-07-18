@@ -9,12 +9,16 @@ import * as core from "../../../../core";
 export const GuestSpace: core.serialization.ObjectSchema<serializers.GuestSpace.Raw, Flatfile.GuestSpace> =
     core.serialization.object({
         id: core.serialization.lazy(async () => (await import("../../..")).SpaceId),
+        workbooks: core.serialization
+            .list(core.serialization.lazyObject(async () => (await import("../../..")).GuestWorkbook))
+            .optional(),
         lastAccessed: core.serialization.date().optional(),
     });
 
 export declare namespace GuestSpace {
     interface Raw {
         id: serializers.SpaceId.Raw;
+        workbooks?: serializers.GuestWorkbook.Raw[] | null;
         lastAccessed?: string | null;
     }
 }

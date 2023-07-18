@@ -13,6 +13,7 @@ export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, Flatf
     mimetype: core.serialization.string(),
     encoding: core.serialization.string(),
     status: core.serialization.lazy(async () => (await import("../../..")).ModelFileStatusEnum),
+    mode: core.serialization.lazy(async () => (await import("../../..")).Mode).optional(),
     size: core.serialization.number(),
     bytesReceived: core.serialization.number(),
     createdAt: core.serialization.string(),
@@ -33,6 +34,7 @@ export declare namespace File_ {
         mimetype: string;
         encoding: string;
         status: serializers.ModelFileStatusEnum.Raw;
+        mode?: serializers.Mode.Raw | null;
         size: number;
         bytesReceived: number;
         createdAt: string;

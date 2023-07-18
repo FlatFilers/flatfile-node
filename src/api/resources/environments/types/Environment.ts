@@ -7,14 +7,21 @@ import * as Flatfile from "../../..";
 /**
  * @example
  *     {
+ *         id: "us_env_hVXkXs0b",
+ *         accountId: "us_acc_uj6s91wc",
  *         name: "dev",
  *         isProd: false,
  *         guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink],
- *         id: "us_env_hVXkXs0b",
- *         accountId: "us_acc_uj6s91wc"
+ *         features: {}
  *     }
  */
-export interface Environment extends Flatfile.EnvironmentConfig {
+export interface Environment {
     id: Flatfile.EnvironmentId;
-    accountId?: Flatfile.AccountId;
+    accountId: Flatfile.AccountId;
+    /** The name of the environment */
+    name: string;
+    /** Whether or not the environment is a production environment */
+    isProd: boolean;
+    guestAuthentication: Flatfile.GuestAuthenticationEnum[];
+    features: Record<string, any>;
 }

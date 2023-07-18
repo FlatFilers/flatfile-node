@@ -6,23 +6,21 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
-export const EnvironmentConfig: core.serialization.ObjectSchema<
-    serializers.EnvironmentConfig.Raw,
-    Flatfile.EnvironmentConfig
+export const EnvironmentConfigCreate: core.serialization.ObjectSchema<
+    serializers.EnvironmentConfigCreate.Raw,
+    Flatfile.EnvironmentConfigCreate
 > = core.serialization.object({
     name: core.serialization.string(),
     isProd: core.serialization.boolean(),
     guestAuthentication: core.serialization
         .list(core.serialization.lazy(async () => (await import("../../..")).GuestAuthenticationEnum))
         .optional(),
-    features: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
 });
 
-export declare namespace EnvironmentConfig {
+export declare namespace EnvironmentConfigCreate {
     interface Raw {
         name: string;
         isProd: boolean;
         guestAuthentication?: serializers.GuestAuthenticationEnum.Raw[] | null;
-        features?: Record<string, any> | null;
     }
 }

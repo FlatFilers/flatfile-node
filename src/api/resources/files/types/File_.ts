@@ -19,6 +19,8 @@ export interface File_ {
     encoding: string;
     /** Status of the file */
     status: Flatfile.ModelFileStatusEnum;
+    /** The storage mode of file */
+    mode?: Flatfile.Mode;
     /** Size of file in bytes */
     size: number;
     /** Number of bytes that have been uploaded so far (useful for progress tracking) */

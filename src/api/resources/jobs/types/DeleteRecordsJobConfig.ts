@@ -7,12 +7,14 @@ import * as Flatfile from "../../..";
 /**
  * The configuration for a delete job
  */
-export interface DeleteJobConfig {
+export interface DeleteRecordsJobConfig {
     filter?: Flatfile.Filter;
     filterField?: Flatfile.FilterField;
     searchValue?: Flatfile.SearchValue;
     searchField?: Flatfile.SearchField;
+    /** FFQL query to filter records */
     q?: string;
     sheet: Flatfile.SheetId;
+    /** List of record ids to exclude from deletion */
     exceptions?: Flatfile.RecordId[];
 }

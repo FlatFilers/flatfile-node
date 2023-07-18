@@ -24,6 +24,9 @@ export type EventTopic =
     | "sheet:created"
     | "sheet:updated"
     | "sheet:deleted"
+    | "records:created"
+    | "records:updated"
+    | "records:deleted"
     | "file:created"
     | "file:updated"
     | "file:deleted"
@@ -33,7 +36,7 @@ export type EventTopic =
     | "job:completed"
     | "job:ready"
     | "job:scheduled"
-    | "job:outcome_acknowledged"
+    | "job:outcome-acknowledged"
     | "job:failed"
     | "commit:created"
     | "commit:updated"
@@ -55,6 +58,9 @@ export const EventTopic = {
     SheetCreated: "sheet:created",
     SheetUpdated: "sheet:updated",
     SheetDeleted: "sheet:deleted",
+    RecordsCreated: "records:created",
+    RecordsUpdated: "records:updated",
+    RecordsDeleted: "records:deleted",
     FileCreated: "file:created",
     FileUpdated: "file:updated",
     FileDeleted: "file:deleted",
@@ -64,7 +70,7 @@ export const EventTopic = {
     JobCompleted: "job:completed",
     JobReady: "job:ready",
     JobScheduled: "job:scheduled",
-    JobOutcomeAcknowledged: "job:outcome_acknowledged",
+    JobOutcomeAcknowledged: "job:outcome-acknowledged",
     JobFailed: "job:failed",
     CommitCreated: "commit:created",
     CommitUpdated: "commit:updated",

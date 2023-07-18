@@ -4,7 +4,6 @@
 
 import * as Flatfile from "../../..";
 
-export interface DestinationField {
-    destinationField: Flatfile.Property;
-    preview?: string[];
+export interface CellValueWithLinks extends Flatfile.CellValue {
+    links?: Flatfile.Records;
 }

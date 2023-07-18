@@ -11,7 +11,7 @@ export interface Workbook {
     id: Flatfile.WorkbookId;
     name?: string;
     spaceId: Flatfile.SpaceId;
-    environmentId?: Flatfile.EnvironmentId;
+    environmentId: Flatfile.EnvironmentId;
     sheets?: Flatfile.Sheet[];
     labels?: string[];
     actions?: Flatfile.Action[];

@@ -7,16 +7,24 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const Environment: core.serialization.ObjectSchema<serializers.Environment.Raw, Flatfile.Environment> =
-    core.serialization
-        .object({
-            id: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId),
-            accountId: core.serialization.lazy(async () => (await import("../../..")).AccountId).optional(),
-        })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).EnvironmentConfig));
+    core.serialization.object({
+        id: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId),
+        accountId: core.serialization.lazy(async () => (await import("../../..")).AccountId),
+        name: core.serialization.string(),
+        isProd: core.serialization.boolean(),
+        guestAuthentication: core.serialization.list(
+            core.serialization.lazy(async () => (await import("../../..")).GuestAuthenticationEnum)
+        ),
+        features: core.serialization.record(core.serialization.string(), core.serialization.any()),
+    });
 
 export declare namespace Environment {
-    interface Raw extends serializers.EnvironmentConfig.Raw {
+    interface Raw {
         id: serializers.EnvironmentId.Raw;
-        accountId?: serializers.AccountId.Raw | null;
+        accountId: serializers.AccountId.Raw;
+        name: string;
+        isProd: boolean;
+        guestAuthentication: serializers.GuestAuthenticationEnum.Raw[];
+        features: Record<string, any>;
     }
 }

@@ -7,4 +7,10 @@ import * as Flatfile from "../../..";
 /**
  * A single row of data in a Sheet, including links to related rows
  */
-export interface RecordWithLinks extends Flatfile.Record_ {}
+export interface RecordWithLinks {
+    id: Flatfile.RecordId;
+    values: Flatfile.RecordDataWithLinks;
+    valid?: boolean;
+    messages?: Flatfile.ValidationMessage[];
+    metadata?: Record<string, any>;
+}

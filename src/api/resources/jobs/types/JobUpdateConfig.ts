@@ -5,7 +5,7 @@
 import * as Flatfile from "../../..";
 
 export type JobUpdateConfig =
-    | Flatfile.DeleteJobConfig
+    | Flatfile.DeleteRecordsJobConfig
     | Flatfile.FileJobConfig
     | Flatfile.PipelineJobConfig
     | Flatfile.ExportJobConfig

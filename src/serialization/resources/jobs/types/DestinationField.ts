@@ -10,14 +10,12 @@ export const DestinationField: core.serialization.ObjectSchema<
     serializers.DestinationField.Raw,
     Flatfile.DestinationField
 > = core.serialization.object({
-    enumDetails: core.serialization.lazyObject(async () => (await import("../../..")).EnumDetails).optional(),
     destinationField: core.serialization.lazy(async () => (await import("../../..")).Property),
     preview: core.serialization.list(core.serialization.string()).optional(),
 });
 
 export declare namespace DestinationField {
     interface Raw {
-        enumDetails?: serializers.EnumDetails.Raw | null;
         destinationField: serializers.Property.Raw;
         preview?: string[] | null;
     }

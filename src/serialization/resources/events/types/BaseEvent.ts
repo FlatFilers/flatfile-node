@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 
 export const BaseEvent: core.serialization.ObjectSchema<serializers.BaseEvent.Raw, Flatfile.BaseEvent> =
     core.serialization.object({
+        id: core.serialization.lazy(async () => (await import("../../..")).EventId),
         domain: core.serialization.lazy(async () => (await import("../../..")).Domain),
         topic: core.serialization.lazy(async () => (await import("../../..")).EventTopic),
         context: core.serialization.lazyObject(async () => (await import("../../..")).Context),
@@ -25,6 +26,7 @@ export const BaseEvent: core.serialization.ObjectSchema<serializers.BaseEvent.Ra
 
 export declare namespace BaseEvent {
     interface Raw {
+        id: serializers.EventId.Raw;
         domain: serializers.Domain.Raw;
         topic: serializers.EventTopic.Raw;
         context: serializers.Context.Raw;

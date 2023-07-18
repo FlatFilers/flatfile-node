@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateConfig.Raw, Flatfile.JobUpdateConfig> =
     core.serialization.undiscriminatedUnion([
-        core.serialization.lazyObject(async () => (await import("../../..")).DeleteJobConfig),
+        core.serialization.lazyObject(async () => (await import("../../..")).DeleteRecordsJobConfig),
         core.serialization.lazyObject(async () => (await import("../../..")).FileJobConfig),
         core.serialization.lazyObject(async () => (await import("../../..")).PipelineJobConfig),
         core.serialization.lazyObject(async () => (await import("../../..")).ExportJobConfig),
@@ -19,7 +19,7 @@ export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateCon
 
 export declare namespace JobUpdateConfig {
     type Raw =
-        | serializers.DeleteJobConfig.Raw
+        | serializers.DeleteRecordsJobConfig.Raw
         | serializers.FileJobConfig.Raw
         | serializers.PipelineJobConfig.Raw
         | serializers.ExportJobConfig.Raw

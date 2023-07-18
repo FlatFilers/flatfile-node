@@ -5,6 +5,7 @@
 import * as Flatfile from "../../..";
 
 export interface BaseEvent {
+    id: Flatfile.EventId;
     /** The domain of the event */
     domain: Flatfile.Domain;
     topic: Flatfile.EventTopic;

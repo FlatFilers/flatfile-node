@@ -5,7 +5,7 @@
 import * as Flatfile from "../../..";
 
 /**
- * Properties used to create a new environment
+ * Properties used to update an environment
  *
  * @example
  *     {
@@ -14,11 +14,10 @@ import * as Flatfile from "../../..";
  *         guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink]
  *     }
  */
-export interface EnvironmentConfig {
+export interface EnvironmentConfigUpdate {
     /** The name of the environment */
-    name: string;
+    name?: string;
     /** Whether or not the environment is a production environment */
-    isProd: boolean;
+    isProd?: boolean;
     guestAuthentication?: Flatfile.GuestAuthenticationEnum[];
-    features?: Record<string, any>;
 }

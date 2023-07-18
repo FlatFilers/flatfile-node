@@ -14,9 +14,6 @@ export const GuestConfig: core.serialization.ObjectSchema<serializers.GuestConfi
         spaces: core.serialization.list(
             core.serialization.lazyObject(async () => (await import("../../..")).GuestSpace)
         ),
-        workbooks: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).GuestWorkbook))
-            .optional(),
     });
 
 export declare namespace GuestConfig {
@@ -25,6 +22,5 @@ export declare namespace GuestConfig {
         email: string;
         name: string;
         spaces: serializers.GuestSpace.Raw[];
-        workbooks?: serializers.GuestWorkbook.Raw[] | null;
     }
 }

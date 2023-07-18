@@ -11,7 +11,7 @@ export const Workbook: core.serialization.ObjectSchema<serializers.Workbook.Raw,
         id: core.serialization.lazy(async () => (await import("../../..")).WorkbookId),
         name: core.serialization.string().optional(),
         spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId),
-        environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
+        environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId),
         sheets: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).Sheet))
             .optional(),
@@ -29,7 +29,7 @@ export declare namespace Workbook {
         id: serializers.WorkbookId.Raw;
         name?: string | null;
         spaceId: serializers.SpaceId.Raw;
-        environmentId?: serializers.EnvironmentId.Raw | null;
+        environmentId: serializers.EnvironmentId.Raw;
         sheets?: serializers.Sheet.Raw[] | null;
         labels?: string[] | null;
         actions?: serializers.Action.Raw[] | null;

@@ -19,6 +19,6 @@ export interface FindAndReplaceJobConfig {
     find?: Flatfile.CellValueUnion;
     /** The value to replace found values with */
     replace?: Flatfile.CellValueUnion;
-    /** The value to replace found values with */
+    /** A unique key used to identify a field in a sheet */
     fieldKey: string;
 }

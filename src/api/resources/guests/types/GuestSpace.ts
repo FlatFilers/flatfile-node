@@ -6,5 +6,6 @@ import * as Flatfile from "../../..";
 
 export interface GuestSpace {
     id: Flatfile.SpaceId;
+    workbooks?: Flatfile.GuestWorkbook[];
     lastAccessed?: Date;
 }
