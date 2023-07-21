@@ -136,7 +136,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.16",
+                "X-Fern-SDK-Version": "1.5.17",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -204,15 +204,9 @@ export class Records {
      */
     public async update(
         sheetId: Flatfile.SheetId,
-        request: Flatfile.UpdateRecordsRequest,
+        request: Flatfile.Records,
         requestOptions?: Records.RequestOptions
     ): Promise<Flatfile.VersionResponse> {
-        const { for: for_, body: _body } = request;
-        const _queryParams = new URLSearchParams();
-        if (for_ != null) {
-            _queryParams.append("for", for_);
-        }
-
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -224,11 +218,10 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.16",
+                "X-Fern-SDK-Version": "1.5.17",
             },
             contentType: "application/json",
-            queryParameters: _queryParams,
-            body: await serializers.Records.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.Records.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
@@ -307,7 +300,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.16",
+                "X-Fern-SDK-Version": "1.5.17",
             },
             contentType: "application/json",
             body: await serializers.records.insert.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -401,7 +394,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.16",
+                "X-Fern-SDK-Version": "1.5.17",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -497,7 +490,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.16",
+                "X-Fern-SDK-Version": "1.5.17",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -585,7 +578,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.16",
+                "X-Fern-SDK-Version": "1.5.17",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
