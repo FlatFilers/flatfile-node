@@ -10,9 +10,13 @@ export const CellValueUnion: core.serialization.Schema<serializers.CellValueUnio
     core.serialization.undiscriminatedUnion([
         core.serialization.string(),
         core.serialization.number(),
+        core.serialization.number(),
+        core.serialization.number(),
         core.serialization.boolean(),
+        core.serialization.string(),
+        core.serialization.date(),
     ]);
 
 export declare namespace CellValueUnion {
-    type Raw = string | number | boolean;
+    type Raw = string | number | number | number | boolean | string | string;
 }

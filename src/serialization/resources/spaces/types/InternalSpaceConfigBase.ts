@@ -11,7 +11,7 @@ export const InternalSpaceConfigBase: core.serialization.ObjectSchema<
     Flatfile.spaces.InternalSpaceConfigBase
 > = core.serialization.object({
     spaceConfigId: core.serialization.lazy(async () => (await import("../../..")).SpaceConfigId).optional(),
-    environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId),
+    environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
     primaryWorkbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId).optional(),
     metadata: core.serialization.any().optional(),
     actions: core.serialization
@@ -30,7 +30,7 @@ export const InternalSpaceConfigBase: core.serialization.ObjectSchema<
 export declare namespace InternalSpaceConfigBase {
     interface Raw {
         spaceConfigId?: serializers.SpaceConfigId.Raw | null;
-        environmentId: serializers.EnvironmentId.Raw;
+        environmentId?: serializers.EnvironmentId.Raw | null;
         primaryWorkbookId?: serializers.WorkbookId.Raw | null;
         metadata?: any | null;
         actions?: serializers.Action.Raw[] | null;

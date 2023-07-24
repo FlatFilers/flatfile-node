@@ -6,7 +6,7 @@ import * as Flatfile from "../../..";
 
 export interface InternalSpaceConfigBase {
     spaceConfigId?: Flatfile.SpaceConfigId;
-    environmentId: Flatfile.EnvironmentId;
+    environmentId?: Flatfile.EnvironmentId;
     primaryWorkbookId?: Flatfile.WorkbookId;
     /** Metadata for the space */
     metadata?: any;
