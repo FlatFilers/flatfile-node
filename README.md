@@ -22,20 +22,53 @@ yarn add @flatfile/api
 [![Try it out](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/flatfile-typescript-sdk-7xtsm5?file=app.ts&view=editor)
 
 ```typescript
-import { Flatfile, FlatfileClient } from '@flatfile/api';
+import { FlatfileClient } from '@flatfile/api';
 
-const flatfile = new FlatfileClient({
-  token: 'YOUR_API_KEY',
-});
+async function main() {
+  const flatfile = new FlatfileClient({
+    // This is usually the environment specific "Secret Key" that can be found
+    // on the Getting Started page in the Flatfile dashboard.
+    token: 'YOUR_API_KEY',
+  });
 
-const environment = await flatfile.environments.create({
-  name: 'dev',
-  isProd: false,
-  newSpacesInherit: false,
-  guestAuthentication: [Flatfile.GuestAuthentication.SharedLink],
-});
+  const workbook = await flatfile.workbooks.create({
+    name: 'SDK Example',
+    sheets: [
+      {
+        name: 'Contacts',
+        slug: 'contacts',
+        fields: [
+          {
+            key: 'firstName',
+            type: 'string',
+            label: 'First Name',
+          },
+          {
+            key: 'lastName',
+            type: 'string',
+            label: 'Last Name',
+          },
+          {
+            key: 'email',
+            type: 'string',
+            label: 'Email',
+          },
+        ],
+        actions: [
+          {
+            slug: 'submitAction',
+            label: 'Submit',
+            type: 'string',
+            description: 'Submit data to webhook.site',
+            primary: true,
+          },
+        ],
+      },
+    ],
+  });
 
-console.log('Created environment with id', environment.id);
+  console.log('Created workbook with id:', workbook.data.id);
+}
 ```
 
 ## Handling errors
@@ -64,7 +97,7 @@ Error codes are as followed:
 
 ## Handling events
 
-The flatfile platform emits different events (e.g. `user:added`, `webhook:removed`). The SDK uses [discriminated unions](https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html#discriminating-unions) that make it easy to handle specific events. 
+The flatfile platform emits different events (e.g. `user:added`, `webhook:removed`). The SDK uses [discriminated unions](https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html#discriminating-unions) that make it easy to handle specific events.
 
 ```ts
 const event = eventResponse.data;
