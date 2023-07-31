@@ -24,6 +24,9 @@ export const Space: core.serialization.ObjectSchema<serializers.spaces.Space.Raw
             isCollaborative: core.serialization.boolean().optional(),
             size: core.serialization.lazyObject(async () => (await import("../../..")).spaces.SpaceSize).optional(),
             upgradedAt: core.serialization.date().optional(),
+            guestAuthentication: core.serialization.list(
+                core.serialization.lazy(async () => (await import("../../..")).GuestAuthenticationEnum)
+            ),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).spaces.InternalSpaceConfigBase));
 
@@ -44,5 +47,6 @@ export declare namespace Space {
         isCollaborative?: boolean | null;
         size?: serializers.spaces.SpaceSize.Raw | null;
         upgradedAt?: string | null;
+        guestAuthentication: serializers.GuestAuthenticationEnum.Raw[];
     }
 }

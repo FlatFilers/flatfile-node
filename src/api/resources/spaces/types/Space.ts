@@ -32,4 +32,5 @@ export interface Space extends Flatfile.spaces.InternalSpaceConfigBase {
     isCollaborative?: boolean;
     size?: Flatfile.spaces.SpaceSize;
     upgradedAt?: Date;
+    guestAuthentication: Flatfile.GuestAuthenticationEnum[];
 }

@@ -5,5 +5,5 @@
 import * as Flatfile from "../../..";
 
 export interface RecordCountsResponseData extends Flatfile.Success {
-    counts?: Flatfile.RecordCounts;
+    counts: Flatfile.RecordCounts;
 }

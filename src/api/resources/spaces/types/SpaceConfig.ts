@@ -12,4 +12,5 @@ export interface SpaceConfig extends Flatfile.spaces.InternalSpaceConfigBase {
     name?: string;
     /** The display order */
     displayOrder?: number;
+    guestAuthentication?: Flatfile.GuestAuthenticationEnum[];
 }

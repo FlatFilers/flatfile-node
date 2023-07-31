@@ -13,6 +13,9 @@ export const SpaceConfig: core.serialization.ObjectSchema<
     .object({
         name: core.serialization.string().optional(),
         displayOrder: core.serialization.number().optional(),
+        guestAuthentication: core.serialization
+            .list(core.serialization.lazy(async () => (await import("../../..")).GuestAuthenticationEnum))
+            .optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).spaces.InternalSpaceConfigBase));
 
@@ -20,5 +23,6 @@ export declare namespace SpaceConfig {
     interface Raw extends serializers.spaces.InternalSpaceConfigBase.Raw {
         name?: string | null;
         displayOrder?: number | null;
+        guestAuthentication?: serializers.GuestAuthenticationEnum.Raw[] | null;
     }
 }

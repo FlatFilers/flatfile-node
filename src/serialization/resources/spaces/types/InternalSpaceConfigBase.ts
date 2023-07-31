@@ -17,14 +17,12 @@ export const InternalSpaceConfigBase: core.serialization.ObjectSchema<
     actions: core.serialization
         .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
         .optional(),
-    guestAuthentication: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../..")).GuestAuthenticationEnum))
-        .optional(),
     access: core.serialization
         .list(core.serialization.lazy(async () => (await import("../../..")).spaces.SpaceAccess))
         .optional(),
     autoConfigure: core.serialization.boolean().optional(),
     namespace: core.serialization.string().optional(),
+    labels: core.serialization.list(core.serialization.string()).optional(),
 });
 
 export declare namespace InternalSpaceConfigBase {
@@ -34,9 +32,9 @@ export declare namespace InternalSpaceConfigBase {
         primaryWorkbookId?: serializers.WorkbookId.Raw | null;
         metadata?: any | null;
         actions?: serializers.Action.Raw[] | null;
-        guestAuthentication?: serializers.GuestAuthenticationEnum.Raw[] | null;
         access?: serializers.spaces.SpaceAccess.Raw[] | null;
         autoConfigure?: boolean | null;
         namespace?: string | null;
+        labels?: string[] | null;
     }
 }

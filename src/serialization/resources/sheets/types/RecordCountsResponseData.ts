@@ -11,12 +11,12 @@ export const RecordCountsResponseData: core.serialization.ObjectSchema<
     Flatfile.RecordCountsResponseData
 > = core.serialization
     .object({
-        counts: core.serialization.lazyObject(async () => (await import("../../..")).RecordCounts).optional(),
+        counts: core.serialization.lazyObject(async () => (await import("../../..")).RecordCounts),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).Success));
 
 export declare namespace RecordCountsResponseData {
     interface Raw extends serializers.Success.Raw {
-        counts?: serializers.RecordCounts.Raw | null;
+        counts: serializers.RecordCounts.Raw;
     }
 }
