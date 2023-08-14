@@ -13,6 +13,12 @@ export const MutateJobConfig: core.serialization.ObjectSchema<
     sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId),
     mutateRecord: core.serialization.string(),
     mutationId: core.serialization.string().optional(),
+    filter: core.serialization.lazy(async () => (await import("../../..")).Filter).optional(),
+    filterField: core.serialization.lazy(async () => (await import("../../..")).FilterField).optional(),
+    searchValue: core.serialization.lazy(async () => (await import("../../..")).SearchValue).optional(),
+    searchField: core.serialization.lazy(async () => (await import("../../..")).SearchField).optional(),
+    q: core.serialization.string().optional(),
+    ids: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).RecordId)).optional(),
 });
 
 export declare namespace MutateJobConfig {
@@ -20,5 +26,11 @@ export declare namespace MutateJobConfig {
         sheetId: serializers.SheetId.Raw;
         mutateRecord: string;
         mutationId?: string | null;
+        filter?: serializers.Filter.Raw | null;
+        filterField?: serializers.FilterField.Raw | null;
+        searchValue?: serializers.SearchValue.Raw | null;
+        searchField?: serializers.SearchField.Raw | null;
+        q?: string | null;
+        ids?: serializers.RecordId.Raw[] | null;
     }
 }

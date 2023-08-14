@@ -4,8 +4,6 @@
 
 import * as Flatfile from "../../..";
 
-export interface Metadata {
-    certainty?: Flatfile.Certainty;
-    confidence?: number;
-    source?: string;
+export interface GetRecordsResponse {
+    data: Flatfile.GetRecordsResponseData;
 }

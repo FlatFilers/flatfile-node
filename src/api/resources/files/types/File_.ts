@@ -26,9 +26,9 @@ export interface File_ {
     /** Number of bytes that have been uploaded so far (useful for progress tracking) */
     bytesReceived: number;
     /** Date the file was created */
-    createdAt: string;
+    createdAt: Date;
     /** Date the file was last updated */
-    updatedAt: string;
+    updatedAt: Date;
     spaceId: Flatfile.SpaceId;
     workbookId?: Flatfile.WorkbookId;
     sheetId?: Flatfile.SheetId;

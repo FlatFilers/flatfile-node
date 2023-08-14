@@ -4,8 +4,11 @@
 
 import * as Flatfile from "../../..";
 
-export interface RecordsResponseData extends Flatfile.SuccessData {
-    records?: Flatfile.RecordsWithLinks;
+/**
+ * A list of records with optional record counts
+ */
+export interface GetRecordsResponseData extends Flatfile.SuccessData {
+    records: Flatfile.RecordsWithLinks;
     counts?: Flatfile.RecordCounts;
     versionId?: Flatfile.VersionId;
 }

@@ -11,6 +11,7 @@ export const EnumPropertyOption: core.serialization.ObjectSchema<
     Flatfile.EnumPropertyOption
 > = core.serialization.object({
     label: core.serialization.string().optional(),
+    description: core.serialization.string().optional(),
     color: core.serialization.string().optional(),
     icon: core.serialization.string().optional(),
     meta: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
@@ -20,6 +21,7 @@ export const EnumPropertyOption: core.serialization.ObjectSchema<
 export declare namespace EnumPropertyOption {
     interface Raw {
         label?: string | null;
+        description?: string | null;
         color?: string | null;
         icon?: string | null;
         meta?: Record<string, any> | null;

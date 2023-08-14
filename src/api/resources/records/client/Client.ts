@@ -35,7 +35,7 @@ export class Records {
         sheetId: Flatfile.SheetId,
         request: Flatfile.GetRecordsRequest = {},
         requestOptions?: Records.RequestOptions
-    ): Promise<Flatfile.RecordsResponse> {
+    ): Promise<Flatfile.GetRecordsResponse> {
         const {
             versionId,
             sinceVersionId,
@@ -136,14 +136,14 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.20",
+                "X-Fern-SDK-Version": "1.5.21",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
-            return await serializers.RecordsResponse.parseOrThrow(_response.body, {
+            return await serializers.GetRecordsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -218,7 +218,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.20",
+                "X-Fern-SDK-Version": "1.5.21",
             },
             contentType: "application/json",
             body: await serializers.Records.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -300,7 +300,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.20",
+                "X-Fern-SDK-Version": "1.5.21",
             },
             contentType: "application/json",
             body: await serializers.records.insert.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -394,7 +394,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.20",
+                "X-Fern-SDK-Version": "1.5.21",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -490,7 +490,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.20",
+                "X-Fern-SDK-Version": "1.5.21",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -578,7 +578,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.20",
+                "X-Fern-SDK-Version": "1.5.21",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

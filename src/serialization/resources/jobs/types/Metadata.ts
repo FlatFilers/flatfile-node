@@ -9,12 +9,14 @@ import * as core from "../../../../core";
 export const Metadata: core.serialization.ObjectSchema<serializers.Metadata.Raw, Flatfile.Metadata> =
     core.serialization.object({
         certainty: core.serialization.lazy(async () => (await import("../../..")).Certainty).optional(),
+        confidence: core.serialization.number().optional(),
         source: core.serialization.string().optional(),
     });
 
 export declare namespace Metadata {
     interface Raw {
         certainty?: serializers.Certainty.Raw | null;
+        confidence?: number | null;
         source?: string | null;
     }
 }

@@ -5,6 +5,8 @@
 export interface EnumPropertyOption {
     /** A visual label for this option, defaults to value if not provided */
     label?: string;
+    /** A short description for this option */
+    description?: string;
     /** An optional color to assign this option */
     color?: string;
     /** A reference pointer to a previously registered icon */

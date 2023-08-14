@@ -1,5 +1,7 @@
 export * from "./RecordsResponse";
 export * from "./RecordsResponseData";
+export * from "./GetRecordsResponse";
+export * from "./GetRecordsResponseData";
 export * from "./RecordCounts";
 export * from "./RecordsWithLinks";
 export * from "./RecordWithLinks";
