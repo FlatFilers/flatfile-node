@@ -7,7 +7,7 @@ The Flatfile Node.js library provides convenient access to the Flatfile API from
 
 ## Documentation
 
-API reference documentation is available [here](https://flatfile.stoplight.io/docs/v10).
+API reference documentation is available [here](https://flatfile.stoplight.io/docs/api).
 
 ## Installation
 
