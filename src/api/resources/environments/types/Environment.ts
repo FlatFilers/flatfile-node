@@ -12,7 +12,8 @@ import * as Flatfile from "../../..";
  *         name: "dev",
  *         isProd: false,
  *         guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink],
- *         features: {}
+ *         features: {},
+ *         metadata: {}
  *     }
  */
 export interface Environment {
@@ -24,4 +25,5 @@ export interface Environment {
     isProd: boolean;
     guestAuthentication: Flatfile.GuestAuthenticationEnum[];
     features: Record<string, any>;
+    metadata: Record<string, any>;
 }

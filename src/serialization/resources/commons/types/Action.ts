@@ -18,6 +18,7 @@ export const Action: core.serialization.ObjectSchema<serializers.Action.Raw, Fla
         primary: core.serialization.boolean().optional(),
         confirm: core.serialization.boolean().optional(),
         icon: core.serialization.string().optional(),
+        requireSelection: core.serialization.boolean().optional(),
     });
 
 export declare namespace Action {
@@ -32,5 +33,6 @@ export declare namespace Action {
         primary?: boolean | null;
         confirm?: boolean | null;
         icon?: string | null;
+        requireSelection?: boolean | null;
     }
 }

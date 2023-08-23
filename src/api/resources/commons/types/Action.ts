@@ -15,4 +15,5 @@ export interface Action {
     primary?: boolean;
     confirm?: boolean;
     icon?: string;
+    requireSelection?: boolean;
 }

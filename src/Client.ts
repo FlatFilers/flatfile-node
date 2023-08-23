@@ -17,6 +17,7 @@ import { Jobs } from "./api/resources/jobs/client/Client";
 import { Records } from "./api/resources/records/client/Client";
 import { Secrets } from "./api/resources/secrets/client/Client";
 import { Sheets } from "./api/resources/sheets/client/Client";
+import { Snapshots } from "./api/resources/snapshots/client/Client";
 import { Users } from "./api/resources/users/client/Client";
 import { Versions } from "./api/resources/versions/client/Client";
 import { Workbooks } from "./api/resources/workbooks/client/Client";
@@ -113,6 +114,12 @@ export class FlatfileClient {
 
     public get sheets(): Sheets {
         return (this._sheets ??= new Sheets(this._options));
+    }
+
+    protected _snapshots: Snapshots | undefined;
+
+    public get snapshots(): Snapshots {
+        return (this._snapshots ??= new Snapshots(this._options));
     }
 
     protected _users: Users | undefined;

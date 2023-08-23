@@ -16,6 +16,7 @@ export const Environment: core.serialization.ObjectSchema<serializers.Environmen
             core.serialization.lazy(async () => (await import("../../..")).GuestAuthenticationEnum)
         ),
         features: core.serialization.record(core.serialization.string(), core.serialization.any()),
+        metadata: core.serialization.record(core.serialization.string(), core.serialization.any()),
     });
 
 export declare namespace Environment {
@@ -26,5 +27,6 @@ export declare namespace Environment {
         isProd: boolean;
         guestAuthentication: serializers.GuestAuthenticationEnum.Raw[];
         features: Record<string, any>;
+        metadata: Record<string, any>;
     }
 }

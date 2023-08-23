@@ -5,12 +5,11 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import { default as URLSearchParams } from "@ungap/url-search-params";
-import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
+import urlJoin from "url-join";
 import * as errors from "../../../../errors";
 
-export declare namespace Auth {
+export declare namespace Snapshots {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token: core.Supplier<core.BearerToken>;
@@ -23,26 +22,24 @@ export declare namespace Auth {
     }
 }
 
-export class Auth {
-    constructor(protected readonly _options: Auth.Options) {}
+export class Snapshots {
+    constructor(protected readonly _options: Snapshots.Options) {}
 
     /**
+     * Restores a snapshot of a sheet
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      */
-    public async getApiKeys(
-        request: Flatfile.GetApiKeysRequest,
-        requestOptions?: Auth.RequestOptions
-    ): Promise<Flatfile.ApiKeysResponse> {
-        const { environmentId } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("environmentId", environmentId);
+    public async restoreSnapshot(
+        snapshotId: Flatfile.SnapshotId,
+        requestOptions?: Snapshots.RequestOptions
+    ): Promise<Flatfile.SnapshotResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/auth/api-keys"
+                `/snapshots/${await serializers.SnapshotId.jsonOrThrow(snapshotId)}`
             ),
-            method: "GET",
+            method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": "true",
@@ -51,11 +48,10 @@ export class Auth {
                 "X-Fern-SDK-Version": "1.5.22",
             },
             contentType: "application/json",
-            queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
-            return await serializers.ApiKeysResponse.parseOrThrow(_response.body, {
+            return await serializers.SnapshotResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -110,105 +106,18 @@ export class Auth {
     }
 
     /**
+     * Deletes a snapshot of a sheet
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      */
-    public async createNewApiKey(
-        request: Flatfile.CreateNewApiKeyRequest,
-        requestOptions?: Auth.RequestOptions
-    ): Promise<Flatfile.ApiKeysResponse> {
-        const { environmentId, type: type_ } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("environmentId", environmentId);
-        _queryParams.append("type", type_);
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/auth/api-key"
-            ),
-            method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.22",
-            },
-            contentType: "application/json",
-            queryParameters: _queryParams,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-        });
-        if (_response.ok) {
-            return await serializers.ApiKeysResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
-                case 404:
-                    throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
-                default:
-                    throw new errors.FlatfileError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.FlatfileError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.FlatfileTimeoutError();
-            case "unknown":
-                throw new errors.FlatfileError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
-     * @throws {@link Flatfile.BadRequestError}
-     * @throws {@link Flatfile.NotFoundError}
-     */
-    public async deleteApiKey(
-        request: Flatfile.DeleteApiKeyRequest,
-        requestOptions?: Auth.RequestOptions
+    public async deleteSnapshot(
+        snapshotId: Flatfile.SnapshotId,
+        requestOptions?: Snapshots.RequestOptions
     ): Promise<Flatfile.Success> {
-        const { environmentId, key } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("environmentId", environmentId);
-        _queryParams.append("key", key);
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/auth/api-key"
+                `/snapshots/${await serializers.SnapshotId.jsonOrThrow(snapshotId)}`
             ),
             method: "DELETE",
             headers: {
@@ -219,7 +128,6 @@ export class Auth {
                 "X-Fern-SDK-Version": "1.5.22",
             },
             contentType: "application/json",
-            queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {

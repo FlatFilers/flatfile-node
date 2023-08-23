@@ -35,5 +35,6 @@ export * as workbooks from "./workbooks";
 export * from "./workbooks/types";
 export * from "./files/client/requests";
 export * from "./records/client/requests";
+export * from "./sheets/client/requests";
 export * from "./users/client/requests";
 export * from "./versions/client/requests";

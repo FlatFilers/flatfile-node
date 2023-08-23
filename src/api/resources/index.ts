@@ -34,6 +34,7 @@ export * from "./versions/types";
 export * as workbooks from "./workbooks";
 export * from "./workbooks/types";
 export * from "./commons/errors";
+export * as snapshots from "./snapshots";
 export * from "./agents/client/requests";
 export * from "./auth/client/requests";
 export * from "./cells/client/requests";

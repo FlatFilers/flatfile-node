@@ -8,6 +8,7 @@ export * from "./SpaceId";
 export * from "./WorkbookId";
 export * from "./EventId";
 export * from "./SheetId";
+export * from "./SnapshotId";
 export * from "./VersionId";
 export * from "./JobId";
 export * from "./UserId";

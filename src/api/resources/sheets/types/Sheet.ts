@@ -14,4 +14,8 @@ export interface Sheet {
     config: Flatfile.SheetConfig;
     countRecords?: Flatfile.RecordCounts;
     namespace?: string;
+    /** Date the sheet was last updated */
+    updatedAt: Date;
+    /** Date the sheet was created */
+    createdAt: Date;
 }
