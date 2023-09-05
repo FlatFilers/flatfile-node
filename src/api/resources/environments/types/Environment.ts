@@ -26,4 +26,5 @@ export interface Environment {
     guestAuthentication: Flatfile.GuestAuthenticationEnum[];
     features: Record<string, any>;
     metadata: Record<string, any>;
+    translationsPath?: string;
 }

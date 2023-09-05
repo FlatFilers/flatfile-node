@@ -10,13 +10,13 @@ export const CategoryMapping: core.serialization.ObjectSchema<
     serializers.CategoryMapping.Raw,
     Flatfile.CategoryMapping
 > = core.serialization.object({
-    sourceValue: core.serialization.string().optional(),
-    destinationValue: core.serialization.string().optional(),
+    sourceValue: core.serialization.lazy(async () => (await import("../../..")).EnumValue).optional(),
+    destinationValue: core.serialization.lazy(async () => (await import("../../..")).EnumValue).optional(),
 });
 
 export declare namespace CategoryMapping {
     interface Raw {
-        sourceValue?: string | null;
-        destinationValue?: string | null;
+        sourceValue?: serializers.EnumValue.Raw | null;
+        destinationValue?: serializers.EnumValue.Raw | null;
     }
 }

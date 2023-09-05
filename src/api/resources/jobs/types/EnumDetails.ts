@@ -9,6 +9,6 @@ import * as Flatfile from "../../..";
  */
 export interface EnumDetails {
     mapping?: Flatfile.CategoryMapping[];
-    unusedSourceValues?: string[];
-    unusedDestinationValues?: string[];
+    unusedSourceValues?: Flatfile.EnumValue[];
+    unusedDestinationValues?: Flatfile.EnumValue[];
 }

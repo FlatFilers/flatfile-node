@@ -7,32 +7,40 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Event> = core.serialization
-    .union("type", {
-        "space:added": core.serialization.lazyObject(async () => (await import("../../..")).SpaceAddedEvent),
-        "space:removed": core.serialization.lazyObject(async () => (await import("../../..")).SpaceRemovedEvent),
-        "workbook:added": core.serialization.lazyObject(async () => (await import("../../..")).WorkbookAddedEvent),
-        "workbook:updated": core.serialization.lazyObject(async () => (await import("../../..")).WorkbookUpdatedEvent),
-        "workbook:removed": core.serialization.lazyObject(async () => (await import("../../..")).WorkbookRemovedEvent),
-        "user:added": core.serialization.lazyObject(async () => (await import("../../..")).UserAddedEvent),
-        "user:removed": core.serialization.lazyObject(async () => (await import("../../..")).UserRemovedEvent),
-        "user:online": core.serialization.lazyObject(async () => (await import("../../..")).UserOnlineEvent),
-        "user:offline": core.serialization.lazyObject(async () => (await import("../../..")).UserOfflineEvent),
-        "upload:started": core.serialization.lazyObject(async () => (await import("../../..")).UploadStartedEvent),
-        "upload:failed": core.serialization.lazyObject(async () => (await import("../../..")).UploadFailedEvent),
-        "upload:completed": core.serialization.lazyObject(async () => (await import("../../..")).UploadCompletedEvent),
-        "job:started": core.serialization.lazyObject(async () => (await import("../../..")).JobStartedEvent),
-        "job:waiting": core.serialization.lazyObject(async () => (await import("../../..")).JobWaitingEvent),
-        "job:updated": core.serialization.lazyObject(async () => (await import("../../..")).JobUpdatedEvent),
-        "job:failed": core.serialization.lazyObject(async () => (await import("../../..")).JobFailedEvent),
-        "job:completed": core.serialization.lazyObject(async () => (await import("../../..")).JobCompletedEvent),
-        "job:deleted": core.serialization.lazyObject(async () => (await import("../../..")).JobDeletedEvent),
-        "records:created": core.serialization.lazyObject(async () => (await import("../../..")).RecordsCreatedEvent),
-        "records:updated": core.serialization.lazyObject(async () => (await import("../../..")).RecordsUpdatedEvent),
-        "records:deleted": core.serialization.lazyObject(async () => (await import("../../..")).RecordsDeletedEvent),
-        "sheet:validated": core.serialization.lazyObject(async () => (await import("../../..")).SheetValidatedEvent),
-        "action:triggered": core.serialization.lazyObject(async () => (await import("../../..")).ActionTriggeredEvent),
-        "file:deleted": core.serialization.lazyObject(async () => (await import("../../..")).FileDeletedEvent),
-        "client:init": core.serialization.lazyObject(async () => (await import("../../..")).ClientInitializedEvent),
+    .union("topic", {
+        "agent:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "agent:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "agent:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "space:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "space:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "space:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "document:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "document:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "document:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "workbook:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "workbook:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "workbook:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "sheet:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "sheet:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "sheet:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "snapshot:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "records:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "records:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "records:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "file:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "file:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "file:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "job:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "job:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "job:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "job:failed": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "job:completed": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "job:ready": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "job:scheduled": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "job:outcome-acknowledged": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "commit:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "commit:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "layer:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
     })
     .transform<Flatfile.Event>({
         transform: (value) => value,
@@ -41,129 +49,169 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
 
 export declare namespace Event {
     type Raw =
-        | Event.SpaceAdded
-        | Event.SpaceRemoved
-        | Event.WorkbookAdded
+        | Event.AgentCreated
+        | Event.AgentUpdated
+        | Event.AgentDeleted
+        | Event.SpaceCreated
+        | Event.SpaceUpdated
+        | Event.SpaceDeleted
+        | Event.DocumentCreated
+        | Event.DocumentUpdated
+        | Event.DocumentDeleted
+        | Event.WorkbookCreated
         | Event.WorkbookUpdated
-        | Event.WorkbookRemoved
-        | Event.UserAdded
-        | Event.UserRemoved
-        | Event.UserOnline
-        | Event.UserOffline
-        | Event.UploadStarted
-        | Event.UploadFailed
-        | Event.UploadCompleted
-        | Event.JobStarted
-        | Event.JobWaiting
-        | Event.JobUpdated
-        | Event.JobFailed
-        | Event.JobCompleted
-        | Event.JobDeleted
+        | Event.WorkbookDeleted
+        | Event.SheetCreated
+        | Event.SheetUpdated
+        | Event.SheetDeleted
+        | Event.SnapshotCreated
         | Event.RecordsCreated
         | Event.RecordsUpdated
         | Event.RecordsDeleted
-        | Event.SheetValidated
-        | Event.ActionTriggered
+        | Event.FileCreated
+        | Event.FileUpdated
         | Event.FileDeleted
-        | Event.ClientInitialized;
+        | Event.JobCreated
+        | Event.JobUpdated
+        | Event.JobDeleted
+        | Event.JobFailed
+        | Event.JobCompleted
+        | Event.JobReady
+        | Event.JobScheduled
+        | Event.JobOutcomeAcknowledged
+        | Event.CommitCreated
+        | Event.CommitUpdated
+        | Event.LayerCreated;
 
-    interface SpaceAdded extends serializers.SpaceAddedEvent.Raw {
-        type: "space:added";
+    interface AgentCreated extends serializers.GenericEvent.Raw {
+        topic: "agent:created";
     }
 
-    interface SpaceRemoved extends serializers.SpaceRemovedEvent.Raw {
-        type: "space:removed";
+    interface AgentUpdated extends serializers.GenericEvent.Raw {
+        topic: "agent:updated";
     }
 
-    interface WorkbookAdded extends serializers.WorkbookAddedEvent.Raw {
-        type: "workbook:added";
+    interface AgentDeleted extends serializers.GenericEvent.Raw {
+        topic: "agent:deleted";
     }
 
-    interface WorkbookUpdated extends serializers.WorkbookUpdatedEvent.Raw {
-        type: "workbook:updated";
+    interface SpaceCreated extends serializers.GenericEvent.Raw {
+        topic: "space:created";
     }
 
-    interface WorkbookRemoved extends serializers.WorkbookRemovedEvent.Raw {
-        type: "workbook:removed";
+    interface SpaceUpdated extends serializers.GenericEvent.Raw {
+        topic: "space:updated";
     }
 
-    interface UserAdded extends serializers.UserAddedEvent.Raw {
-        type: "user:added";
+    interface SpaceDeleted extends serializers.GenericEvent.Raw {
+        topic: "space:deleted";
     }
 
-    interface UserRemoved extends serializers.UserRemovedEvent.Raw {
-        type: "user:removed";
+    interface DocumentCreated extends serializers.GenericEvent.Raw {
+        topic: "document:created";
     }
 
-    interface UserOnline extends serializers.UserOnlineEvent.Raw {
-        type: "user:online";
+    interface DocumentUpdated extends serializers.GenericEvent.Raw {
+        topic: "document:updated";
     }
 
-    interface UserOffline extends serializers.UserOfflineEvent.Raw {
-        type: "user:offline";
+    interface DocumentDeleted extends serializers.GenericEvent.Raw {
+        topic: "document:deleted";
     }
 
-    interface UploadStarted extends serializers.UploadStartedEvent.Raw {
-        type: "upload:started";
+    interface WorkbookCreated extends serializers.GenericEvent.Raw {
+        topic: "workbook:created";
     }
 
-    interface UploadFailed extends serializers.UploadFailedEvent.Raw {
-        type: "upload:failed";
+    interface WorkbookUpdated extends serializers.GenericEvent.Raw {
+        topic: "workbook:updated";
     }
 
-    interface UploadCompleted extends serializers.UploadCompletedEvent.Raw {
-        type: "upload:completed";
+    interface WorkbookDeleted extends serializers.GenericEvent.Raw {
+        topic: "workbook:deleted";
     }
 
-    interface JobStarted extends serializers.JobStartedEvent.Raw {
-        type: "job:started";
+    interface SheetCreated extends serializers.GenericEvent.Raw {
+        topic: "sheet:created";
     }
 
-    interface JobWaiting extends serializers.JobWaitingEvent.Raw {
-        type: "job:waiting";
+    interface SheetUpdated extends serializers.GenericEvent.Raw {
+        topic: "sheet:updated";
     }
 
-    interface JobUpdated extends serializers.JobUpdatedEvent.Raw {
-        type: "job:updated";
+    interface SheetDeleted extends serializers.GenericEvent.Raw {
+        topic: "sheet:deleted";
     }
 
-    interface JobFailed extends serializers.JobFailedEvent.Raw {
-        type: "job:failed";
+    interface SnapshotCreated extends serializers.GenericEvent.Raw {
+        topic: "snapshot:created";
     }
 
-    interface JobCompleted extends serializers.JobCompletedEvent.Raw {
-        type: "job:completed";
+    interface RecordsCreated extends serializers.GenericEvent.Raw {
+        topic: "records:created";
     }
 
-    interface JobDeleted extends serializers.JobDeletedEvent.Raw {
-        type: "job:deleted";
+    interface RecordsUpdated extends serializers.GenericEvent.Raw {
+        topic: "records:updated";
     }
 
-    interface RecordsCreated extends serializers.RecordsCreatedEvent.Raw {
-        type: "records:created";
+    interface RecordsDeleted extends serializers.GenericEvent.Raw {
+        topic: "records:deleted";
     }
 
-    interface RecordsUpdated extends serializers.RecordsUpdatedEvent.Raw {
-        type: "records:updated";
+    interface FileCreated extends serializers.GenericEvent.Raw {
+        topic: "file:created";
     }
 
-    interface RecordsDeleted extends serializers.RecordsDeletedEvent.Raw {
-        type: "records:deleted";
+    interface FileUpdated extends serializers.GenericEvent.Raw {
+        topic: "file:updated";
     }
 
-    interface SheetValidated extends serializers.SheetValidatedEvent.Raw {
-        type: "sheet:validated";
+    interface FileDeleted extends serializers.GenericEvent.Raw {
+        topic: "file:deleted";
     }
 
-    interface ActionTriggered extends serializers.ActionTriggeredEvent.Raw {
-        type: "action:triggered";
+    interface JobCreated extends serializers.GenericEvent.Raw {
+        topic: "job:created";
     }
 
-    interface FileDeleted extends serializers.FileDeletedEvent.Raw {
-        type: "file:deleted";
+    interface JobUpdated extends serializers.GenericEvent.Raw {
+        topic: "job:updated";
     }
 
-    interface ClientInitialized extends serializers.ClientInitializedEvent.Raw {
-        type: "client:init";
+    interface JobDeleted extends serializers.GenericEvent.Raw {
+        topic: "job:deleted";
+    }
+
+    interface JobFailed extends serializers.GenericEvent.Raw {
+        topic: "job:failed";
+    }
+
+    interface JobCompleted extends serializers.GenericEvent.Raw {
+        topic: "job:completed";
+    }
+
+    interface JobReady extends serializers.GenericEvent.Raw {
+        topic: "job:ready";
+    }
+
+    interface JobScheduled extends serializers.GenericEvent.Raw {
+        topic: "job:scheduled";
+    }
+
+    interface JobOutcomeAcknowledged extends serializers.GenericEvent.Raw {
+        topic: "job:outcome-acknowledged";
+    }
+
+    interface CommitCreated extends serializers.GenericEvent.Raw {
+        topic: "commit:created";
+    }
+
+    interface CommitUpdated extends serializers.GenericEvent.Raw {
+        topic: "commit:updated";
+    }
+
+    interface LayerCreated extends serializers.GenericEvent.Raw {
+        topic: "layer:created";
     }
 }

@@ -8,6 +8,8 @@ import * as core from "../../../../core";
 
 export const Context: core.serialization.ObjectSchema<serializers.Context.Raw, Flatfile.Context> =
     core.serialization.object({
+        namespaces: core.serialization.list(core.serialization.string()).optional(),
+        slugs: core.serialization.lazyObject(async () => (await import("../../..")).EventContextSlugs).optional(),
         actionName: core.serialization.lazy(async () => (await import("../../..")).ActionName).optional(),
         accountId: core.serialization.lazy(async () => (await import("../../..")).AccountId),
         environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId),
@@ -15,6 +17,7 @@ export const Context: core.serialization.ObjectSchema<serializers.Context.Raw, F
         workbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId).optional(),
         sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId).optional(),
         sheetSlug: core.serialization.lazy(async () => (await import("../../..")).SheetSlug).optional(),
+        snapshotId: core.serialization.lazy(async () => (await import("../../..")).SnapshotId).optional(),
         versionId: core.serialization.lazy(async () => (await import("../../..")).VersionId).optional(),
         jobId: core.serialization.lazy(async () => (await import("../../..")).JobId).optional(),
         fileId: core.serialization.lazy(async () => (await import("../../..")).FileId).optional(),
@@ -25,6 +28,8 @@ export const Context: core.serialization.ObjectSchema<serializers.Context.Raw, F
 
 export declare namespace Context {
     interface Raw {
+        namespaces?: string[] | null;
+        slugs?: serializers.EventContextSlugs.Raw | null;
         actionName?: serializers.ActionName.Raw | null;
         accountId: serializers.AccountId.Raw;
         environmentId: serializers.EnvironmentId.Raw;
@@ -32,6 +37,7 @@ export declare namespace Context {
         workbookId?: serializers.WorkbookId.Raw | null;
         sheetId?: serializers.SheetId.Raw | null;
         sheetSlug?: serializers.SheetSlug.Raw | null;
+        snapshotId?: serializers.SnapshotId.Raw | null;
         versionId?: serializers.VersionId.Raw | null;
         jobId?: serializers.JobId.Raw | null;
         fileId?: serializers.FileId.Raw | null;

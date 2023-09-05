@@ -17,6 +17,7 @@ export const Environment: core.serialization.ObjectSchema<serializers.Environmen
         ),
         features: core.serialization.record(core.serialization.string(), core.serialization.any()),
         metadata: core.serialization.record(core.serialization.string(), core.serialization.any()),
+        translationsPath: core.serialization.string().optional(),
     });
 
 export declare namespace Environment {
@@ -28,5 +29,6 @@ export declare namespace Environment {
         guestAuthentication: serializers.GuestAuthenticationEnum.Raw[];
         features: Record<string, any>;
         metadata: Record<string, any>;
+        translationsPath?: string | null;
     }
 }

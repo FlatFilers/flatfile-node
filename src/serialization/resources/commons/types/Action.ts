@@ -12,12 +12,14 @@ export const Action: core.serialization.ObjectSchema<serializers.Action.Raw, Fla
         operation: core.serialization.string().optional(),
         mode: core.serialization.lazy(async () => (await import("../../..")).ActionMode).optional(),
         label: core.serialization.string(),
+        tooltip: core.serialization.string().optional(),
         type: core.serialization.string().optional(),
         description: core.serialization.string().optional(),
         schedule: core.serialization.lazy(async () => (await import("../../..")).ActionSchedule).optional(),
         primary: core.serialization.boolean().optional(),
         confirm: core.serialization.boolean().optional(),
         icon: core.serialization.string().optional(),
+        requireAllValid: core.serialization.boolean().optional(),
         requireSelection: core.serialization.boolean().optional(),
     });
 
@@ -27,12 +29,14 @@ export declare namespace Action {
         operation?: string | null;
         mode?: serializers.ActionMode.Raw | null;
         label: string;
+        tooltip?: string | null;
         type?: string | null;
         description?: string | null;
         schedule?: serializers.ActionSchedule.Raw | null;
         primary?: boolean | null;
         confirm?: boolean | null;
         icon?: string | null;
+        requireAllValid?: boolean | null;
         requireSelection?: boolean | null;
     }
 }

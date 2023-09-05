@@ -5,133 +5,173 @@
 import * as Flatfile from "../../..";
 
 /**
- * Properties used to create a new event
+ * An event that tracks an activity within an environment
  */
 export type Event =
-    | Flatfile.Event.SpaceAdded
-    | Flatfile.Event.SpaceRemoved
-    | Flatfile.Event.WorkbookAdded
+    | Flatfile.Event.AgentCreated
+    | Flatfile.Event.AgentUpdated
+    | Flatfile.Event.AgentDeleted
+    | Flatfile.Event.SpaceCreated
+    | Flatfile.Event.SpaceUpdated
+    | Flatfile.Event.SpaceDeleted
+    | Flatfile.Event.DocumentCreated
+    | Flatfile.Event.DocumentUpdated
+    | Flatfile.Event.DocumentDeleted
+    | Flatfile.Event.WorkbookCreated
     | Flatfile.Event.WorkbookUpdated
-    | Flatfile.Event.WorkbookRemoved
-    | Flatfile.Event.UserAdded
-    | Flatfile.Event.UserRemoved
-    | Flatfile.Event.UserOnline
-    | Flatfile.Event.UserOffline
-    | Flatfile.Event.UploadStarted
-    | Flatfile.Event.UploadFailed
-    | Flatfile.Event.UploadCompleted
-    | Flatfile.Event.JobStarted
-    | Flatfile.Event.JobWaiting
-    | Flatfile.Event.JobUpdated
-    | Flatfile.Event.JobFailed
-    | Flatfile.Event.JobCompleted
-    | Flatfile.Event.JobDeleted
+    | Flatfile.Event.WorkbookDeleted
+    | Flatfile.Event.SheetCreated
+    | Flatfile.Event.SheetUpdated
+    | Flatfile.Event.SheetDeleted
+    | Flatfile.Event.SnapshotCreated
     | Flatfile.Event.RecordsCreated
     | Flatfile.Event.RecordsUpdated
     | Flatfile.Event.RecordsDeleted
-    | Flatfile.Event.SheetValidated
-    | Flatfile.Event.ActionTriggered
+    | Flatfile.Event.FileCreated
+    | Flatfile.Event.FileUpdated
     | Flatfile.Event.FileDeleted
-    | Flatfile.Event.ClientInitialized;
+    | Flatfile.Event.JobCreated
+    | Flatfile.Event.JobUpdated
+    | Flatfile.Event.JobDeleted
+    | Flatfile.Event.JobFailed
+    | Flatfile.Event.JobCompleted
+    | Flatfile.Event.JobReady
+    | Flatfile.Event.JobScheduled
+    | Flatfile.Event.JobOutcomeAcknowledged
+    | Flatfile.Event.CommitCreated
+    | Flatfile.Event.CommitUpdated
+    | Flatfile.Event.LayerCreated;
 
 export declare namespace Event {
-    interface SpaceAdded extends Flatfile.SpaceAddedEvent {
-        type: "space:added";
+    interface AgentCreated extends Flatfile.GenericEvent {
+        topic: "agent:created";
     }
 
-    interface SpaceRemoved extends Flatfile.SpaceRemovedEvent {
-        type: "space:removed";
+    interface AgentUpdated extends Flatfile.GenericEvent {
+        topic: "agent:updated";
     }
 
-    interface WorkbookAdded extends Flatfile.WorkbookAddedEvent {
-        type: "workbook:added";
+    interface AgentDeleted extends Flatfile.GenericEvent {
+        topic: "agent:deleted";
     }
 
-    interface WorkbookUpdated extends Flatfile.WorkbookUpdatedEvent {
-        type: "workbook:updated";
+    interface SpaceCreated extends Flatfile.GenericEvent {
+        topic: "space:created";
     }
 
-    interface WorkbookRemoved extends Flatfile.WorkbookRemovedEvent {
-        type: "workbook:removed";
+    interface SpaceUpdated extends Flatfile.GenericEvent {
+        topic: "space:updated";
     }
 
-    interface UserAdded extends Flatfile.UserAddedEvent {
-        type: "user:added";
+    interface SpaceDeleted extends Flatfile.GenericEvent {
+        topic: "space:deleted";
     }
 
-    interface UserRemoved extends Flatfile.UserRemovedEvent {
-        type: "user:removed";
+    interface DocumentCreated extends Flatfile.GenericEvent {
+        topic: "document:created";
     }
 
-    interface UserOnline extends Flatfile.UserOnlineEvent {
-        type: "user:online";
+    interface DocumentUpdated extends Flatfile.GenericEvent {
+        topic: "document:updated";
     }
 
-    interface UserOffline extends Flatfile.UserOfflineEvent {
-        type: "user:offline";
+    interface DocumentDeleted extends Flatfile.GenericEvent {
+        topic: "document:deleted";
     }
 
-    interface UploadStarted extends Flatfile.UploadStartedEvent {
-        type: "upload:started";
+    interface WorkbookCreated extends Flatfile.GenericEvent {
+        topic: "workbook:created";
     }
 
-    interface UploadFailed extends Flatfile.UploadFailedEvent {
-        type: "upload:failed";
+    interface WorkbookUpdated extends Flatfile.GenericEvent {
+        topic: "workbook:updated";
     }
 
-    interface UploadCompleted extends Flatfile.UploadCompletedEvent {
-        type: "upload:completed";
+    interface WorkbookDeleted extends Flatfile.GenericEvent {
+        topic: "workbook:deleted";
     }
 
-    interface JobStarted extends Flatfile.JobStartedEvent {
-        type: "job:started";
+    interface SheetCreated extends Flatfile.GenericEvent {
+        topic: "sheet:created";
     }
 
-    interface JobWaiting extends Flatfile.JobWaitingEvent {
-        type: "job:waiting";
+    interface SheetUpdated extends Flatfile.GenericEvent {
+        topic: "sheet:updated";
     }
 
-    interface JobUpdated extends Flatfile.JobUpdatedEvent {
-        type: "job:updated";
+    interface SheetDeleted extends Flatfile.GenericEvent {
+        topic: "sheet:deleted";
     }
 
-    interface JobFailed extends Flatfile.JobFailedEvent {
-        type: "job:failed";
+    interface SnapshotCreated extends Flatfile.GenericEvent {
+        topic: "snapshot:created";
     }
 
-    interface JobCompleted extends Flatfile.JobCompletedEvent {
-        type: "job:completed";
+    interface RecordsCreated extends Flatfile.GenericEvent {
+        topic: "records:created";
     }
 
-    interface JobDeleted extends Flatfile.JobDeletedEvent {
-        type: "job:deleted";
+    interface RecordsUpdated extends Flatfile.GenericEvent {
+        topic: "records:updated";
     }
 
-    interface RecordsCreated extends Flatfile.RecordsCreatedEvent {
-        type: "records:created";
+    interface RecordsDeleted extends Flatfile.GenericEvent {
+        topic: "records:deleted";
     }
 
-    interface RecordsUpdated extends Flatfile.RecordsUpdatedEvent {
-        type: "records:updated";
+    interface FileCreated extends Flatfile.GenericEvent {
+        topic: "file:created";
     }
 
-    interface RecordsDeleted extends Flatfile.RecordsDeletedEvent {
-        type: "records:deleted";
+    interface FileUpdated extends Flatfile.GenericEvent {
+        topic: "file:updated";
     }
 
-    interface SheetValidated extends Flatfile.SheetValidatedEvent {
-        type: "sheet:validated";
+    interface FileDeleted extends Flatfile.GenericEvent {
+        topic: "file:deleted";
     }
 
-    interface ActionTriggered extends Flatfile.ActionTriggeredEvent {
-        type: "action:triggered";
+    interface JobCreated extends Flatfile.GenericEvent {
+        topic: "job:created";
     }
 
-    interface FileDeleted extends Flatfile.FileDeletedEvent {
-        type: "file:deleted";
+    interface JobUpdated extends Flatfile.GenericEvent {
+        topic: "job:updated";
     }
 
-    interface ClientInitialized extends Flatfile.ClientInitializedEvent {
-        type: "client:init";
+    interface JobDeleted extends Flatfile.GenericEvent {
+        topic: "job:deleted";
+    }
+
+    interface JobFailed extends Flatfile.GenericEvent {
+        topic: "job:failed";
+    }
+
+    interface JobCompleted extends Flatfile.GenericEvent {
+        topic: "job:completed";
+    }
+
+    interface JobReady extends Flatfile.GenericEvent {
+        topic: "job:ready";
+    }
+
+    interface JobScheduled extends Flatfile.GenericEvent {
+        topic: "job:scheduled";
+    }
+
+    interface JobOutcomeAcknowledged extends Flatfile.GenericEvent {
+        topic: "job:outcome-acknowledged";
+    }
+
+    interface CommitCreated extends Flatfile.GenericEvent {
+        topic: "commit:created";
+    }
+
+    interface CommitUpdated extends Flatfile.GenericEvent {
+        topic: "commit:updated";
+    }
+
+    interface LayerCreated extends Flatfile.GenericEvent {
+        topic: "layer:created";
     }
 }

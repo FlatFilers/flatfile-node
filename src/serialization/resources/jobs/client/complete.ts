@@ -8,9 +8,9 @@ import * as core from "../../../../core";
 
 export const Request: core.serialization.Schema<
     serializers.jobs.complete.Request.Raw,
-    Flatfile.JobOutcome | undefined
-> = core.serialization.lazyObject(async () => (await import("../../..")).JobOutcome).optional();
+    Flatfile.JobCompleteDetails | undefined
+> = core.serialization.lazyObject(async () => (await import("../../..")).JobCompleteDetails).optional();
 
 export declare namespace Request {
-    type Raw = serializers.JobOutcome.Raw | null | undefined;
+    type Raw = serializers.JobCompleteDetails.Raw | null | undefined;
 }

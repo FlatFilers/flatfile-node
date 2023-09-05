@@ -12,6 +12,7 @@ export const SheetConfig: core.serialization.ObjectSchema<serializers.SheetConfi
         description: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
         readonly: core.serialization.boolean().optional(),
+        allowAdditionalFields: core.serialization.boolean().optional(),
         access: core.serialization
             .list(core.serialization.lazy(async () => (await import("../../..")).SheetAccess))
             .optional(),
@@ -27,6 +28,7 @@ export declare namespace SheetConfig {
         description?: string | null;
         slug?: string | null;
         readonly?: boolean | null;
+        allowAdditionalFields?: boolean | null;
         access?: serializers.SheetAccess.Raw[] | null;
         fields: serializers.Property.Raw[];
         actions?: serializers.Action.Raw[] | null;

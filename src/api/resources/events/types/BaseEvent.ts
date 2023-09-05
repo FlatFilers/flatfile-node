@@ -5,10 +5,8 @@
 import * as Flatfile from "../../..";
 
 export interface BaseEvent {
-    id: Flatfile.EventId;
     /** The domain of the event */
     domain: Flatfile.Domain;
-    topic: Flatfile.EventTopic;
     /** The context of the event */
     context: Flatfile.Context;
     /** The attributes of the event */
@@ -17,14 +15,6 @@ export interface BaseEvent {
     callbackUrl?: string;
     /** The url to retrieve the data associated with the event */
     dataUrl?: string;
-    /** Date the event was created */
-    createdAt: Date;
-    /** Date the event was deleted */
-    deletedAt?: Date;
-    /** Date the event was acknowledged */
-    acknowledgedAt?: Date;
-    /** The actor (user or system) who acknowledged the event */
-    acknowledgedBy?: string;
     target?: string;
     origin?: Flatfile.Origin;
     namespaces?: string[];

@@ -12,6 +12,7 @@ export interface SheetConfig {
     description?: string;
     slug?: string;
     readonly?: boolean;
+    allowAdditionalFields?: boolean;
     access?: Flatfile.SheetAccess[];
     fields: Flatfile.Property[];
     actions?: Flatfile.Action[];

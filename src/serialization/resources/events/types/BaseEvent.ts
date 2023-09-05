@@ -8,17 +8,11 @@ import * as core from "../../../../core";
 
 export const BaseEvent: core.serialization.ObjectSchema<serializers.BaseEvent.Raw, Flatfile.BaseEvent> =
     core.serialization.object({
-        id: core.serialization.lazy(async () => (await import("../../..")).EventId),
         domain: core.serialization.lazy(async () => (await import("../../..")).Domain),
-        topic: core.serialization.lazy(async () => (await import("../../..")).EventTopic),
         context: core.serialization.lazyObject(async () => (await import("../../..")).Context),
         attributes: core.serialization.lazyObject(async () => (await import("../../..")).EventAttributes).optional(),
         callbackUrl: core.serialization.string().optional(),
         dataUrl: core.serialization.string().optional(),
-        createdAt: core.serialization.date(),
-        deletedAt: core.serialization.date().optional(),
-        acknowledgedAt: core.serialization.date().optional(),
-        acknowledgedBy: core.serialization.string().optional(),
         target: core.serialization.string().optional(),
         origin: core.serialization.lazyObject(async () => (await import("../../..")).Origin).optional(),
         namespaces: core.serialization.list(core.serialization.string()).optional(),
@@ -26,17 +20,11 @@ export const BaseEvent: core.serialization.ObjectSchema<serializers.BaseEvent.Ra
 
 export declare namespace BaseEvent {
     interface Raw {
-        id: serializers.EventId.Raw;
         domain: serializers.Domain.Raw;
-        topic: serializers.EventTopic.Raw;
         context: serializers.Context.Raw;
         attributes?: serializers.EventAttributes.Raw | null;
         callbackUrl?: string | null;
         dataUrl?: string | null;
-        createdAt: string;
-        deletedAt?: string | null;
-        acknowledgedAt?: string | null;
-        acknowledgedBy?: string | null;
         target?: string | null;
         origin?: serializers.Origin.Raw | null;
         namespaces?: string[] | null;

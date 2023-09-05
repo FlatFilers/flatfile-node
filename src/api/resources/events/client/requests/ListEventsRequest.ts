@@ -5,8 +5,14 @@
 import * as Flatfile from "../../../..";
 
 export interface ListEventsRequest {
-    environmentId: Flatfile.EnvironmentId;
-    spaceId?: string;
+    /**
+     * Filter by environment
+     */
+    environmentId?: Flatfile.EnvironmentId;
+    /**
+     * Filter by space
+     */
+    spaceId?: Flatfile.SpaceId;
     /**
      * Filter by event domain
      */
@@ -18,13 +24,13 @@ export interface ListEventsRequest {
     /**
      * Filter by event timestamp
      */
-    since?: string;
+    since?: Date;
     /**
-     * Number of tokens to return in a page (default 10)
+     * Number of results to return in a page (default 10)
      */
     pageSize?: number;
     /**
-     * Based on pageSize, which page of records to return
+     * Based on pageSize, which page of results to return
      */
     pageNumber?: number;
     /**

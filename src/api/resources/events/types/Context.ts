@@ -8,6 +8,10 @@ import * as Flatfile from "../../..";
  * The context of the event
  */
 export interface Context {
+    /** The namespaces of the event */
+    namespaces?: string[];
+    /** The slugs of related resources */
+    slugs?: Flatfile.EventContextSlugs;
     actionName?: Flatfile.ActionName;
     accountId: Flatfile.AccountId;
     environmentId: Flatfile.EnvironmentId;
@@ -15,6 +19,7 @@ export interface Context {
     workbookId?: Flatfile.WorkbookId;
     sheetId?: Flatfile.SheetId;
     sheetSlug?: Flatfile.SheetSlug;
+    snapshotId?: Flatfile.SnapshotId;
     versionId?: Flatfile.VersionId;
     jobId?: Flatfile.JobId;
     fileId?: Flatfile.FileId;

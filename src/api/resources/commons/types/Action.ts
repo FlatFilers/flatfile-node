@@ -9,11 +9,13 @@ export interface Action {
     operation?: string;
     mode?: Flatfile.ActionMode;
     label: string;
+    tooltip?: string;
     type?: string;
     description?: string;
     schedule?: Flatfile.ActionSchedule;
     primary?: boolean;
     confirm?: boolean;
     icon?: string;
+    requireAllValid?: boolean;
     requireSelection?: boolean;
 }

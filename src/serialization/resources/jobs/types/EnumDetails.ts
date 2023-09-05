@@ -11,14 +11,18 @@ export const EnumDetails: core.serialization.ObjectSchema<serializers.EnumDetail
         mapping: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).CategoryMapping))
             .optional(),
-        unusedSourceValues: core.serialization.list(core.serialization.string()).optional(),
-        unusedDestinationValues: core.serialization.list(core.serialization.string()).optional(),
+        unusedSourceValues: core.serialization
+            .list(core.serialization.lazy(async () => (await import("../../..")).EnumValue))
+            .optional(),
+        unusedDestinationValues: core.serialization
+            .list(core.serialization.lazy(async () => (await import("../../..")).EnumValue))
+            .optional(),
     });
 
 export declare namespace EnumDetails {
     interface Raw {
         mapping?: serializers.CategoryMapping.Raw[] | null;
-        unusedSourceValues?: string[] | null;
-        unusedDestinationValues?: string[] | null;
+        unusedSourceValues?: serializers.EnumValue.Raw[] | null;
+        unusedDestinationValues?: serializers.EnumValue.Raw[] | null;
     }
 }
