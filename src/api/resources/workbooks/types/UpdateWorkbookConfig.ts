@@ -5,14 +5,14 @@
 import * as Flatfile from "../../..";
 
 /**
- * The updates to be made to an existing workbook
+ * Properties used to create a new Workbook
  */
-export interface WorkbookUpdate {
-    name?: string;
+export interface UpdateWorkbookConfig {
+    name: string;
     labels?: string[];
     spaceId?: Flatfile.SpaceId;
     environmentId?: Flatfile.EnvironmentId;
     namespace?: string;
-    sheets?: Flatfile.SheetConfigOrUpdate[];
+    sheets?: Flatfile.SheetConfig[];
     actions?: Flatfile.Action[];
 }

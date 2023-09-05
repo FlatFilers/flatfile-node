@@ -5,7 +5,7 @@
 import * as Flatfile from "../../..";
 
 /**
- * Properties used to update an existing guest
+ * Configurations for the guests
  */
 export interface GuestConfigUpdate {
     environmentId?: Flatfile.EnvironmentId;
