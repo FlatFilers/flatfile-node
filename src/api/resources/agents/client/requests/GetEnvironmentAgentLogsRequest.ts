@@ -6,6 +6,8 @@ import * as Flatfile from "../../../..";
 
 export interface GetEnvironmentAgentLogsRequest {
     environmentId: Flatfile.EnvironmentId;
+    spaceId: Flatfile.SpaceId;
+    success?: boolean;
     /**
      * Number of logs to return in a page (default 20)
      */

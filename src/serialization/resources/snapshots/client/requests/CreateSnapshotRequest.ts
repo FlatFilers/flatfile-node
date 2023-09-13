@@ -10,11 +10,13 @@ export const CreateSnapshotRequest: core.serialization.Schema<
     serializers.CreateSnapshotRequest.Raw,
     Flatfile.CreateSnapshotRequest
 > = core.serialization.object({
+    sheetId: core.serialization.lazy(async () => (await import("../../../..")).SheetId),
     label: core.serialization.string().optional(),
 });
 
 export declare namespace CreateSnapshotRequest {
     interface Raw {
+        sheetId: serializers.SheetId.Raw;
         label?: string | null;
     }
 }

@@ -7,11 +7,6 @@ import * as Flatfile from "../../..";
 /**
  * A single row of data in a Sheet
  */
-export interface Record_ {
-    versionId?: Flatfile.VersionId;
-    id: Flatfile.RecordId;
+export interface Record_ extends Flatfile.RecordBase {
     values: Flatfile.RecordData;
-    valid?: boolean;
-    messages?: Flatfile.ValidationMessage[];
-    metadata?: Record<string, any>;
 }

@@ -8,6 +8,7 @@ export interface Snapshot {
     id: Flatfile.SnapshotId;
     sheetId: Flatfile.SheetId;
     label?: string;
-    summary: Flatfile.SnapshotSummary;
+    summary?: Flatfile.SnapshotSummary;
     createdAt: Date;
+    createdBy: Flatfile.UserId;
 }

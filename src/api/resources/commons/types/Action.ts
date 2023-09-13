@@ -18,4 +18,5 @@ export interface Action {
     icon?: string;
     requireAllValid?: boolean;
     requireSelection?: boolean;
+    inputForm?: Record<string, any>;
 }

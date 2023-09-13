@@ -15,4 +15,5 @@ export interface InternalSpaceConfigBase {
     autoConfigure?: boolean;
     namespace?: string;
     labels?: string[];
+    translationsPath?: string;
 }

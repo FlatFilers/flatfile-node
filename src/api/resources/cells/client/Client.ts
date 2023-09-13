@@ -95,7 +95,7 @@ export class Cells {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.24",
+                "X-Fern-SDK-Version": "1.5.25",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

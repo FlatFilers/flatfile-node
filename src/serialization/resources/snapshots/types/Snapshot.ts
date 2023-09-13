@@ -11,8 +11,9 @@ export const Snapshot: core.serialization.ObjectSchema<serializers.Snapshot.Raw,
         id: core.serialization.lazy(async () => (await import("../../..")).SnapshotId),
         sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId),
         label: core.serialization.string().optional(),
-        summary: core.serialization.lazyObject(async () => (await import("../../..")).SnapshotSummary),
+        summary: core.serialization.lazyObject(async () => (await import("../../..")).SnapshotSummary).optional(),
         createdAt: core.serialization.date(),
+        createdBy: core.serialization.lazy(async () => (await import("../../..")).UserId),
     });
 
 export declare namespace Snapshot {
@@ -20,7 +21,8 @@ export declare namespace Snapshot {
         id: serializers.SnapshotId.Raw;
         sheetId: serializers.SheetId.Raw;
         label?: string | null;
-        summary: serializers.SnapshotSummary.Raw;
+        summary?: serializers.SnapshotSummary.Raw | null;
         createdAt: string;
+        createdBy: serializers.UserId.Raw;
     }
 }

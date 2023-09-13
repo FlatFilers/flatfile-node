@@ -6,25 +6,14 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
-export const Record_: core.serialization.ObjectSchema<serializers.Record_.Raw, Flatfile.Record_> =
-    core.serialization.object({
-        versionId: core.serialization.lazy(async () => (await import("../../..")).VersionId).optional(),
-        id: core.serialization.lazy(async () => (await import("../../..")).RecordId),
+export const Record_: core.serialization.ObjectSchema<serializers.Record_.Raw, Flatfile.Record_> = core.serialization
+    .object({
         values: core.serialization.lazy(async () => (await import("../../..")).RecordData),
-        valid: core.serialization.boolean().optional(),
-        messages: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).ValidationMessage))
-            .optional(),
-        metadata: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
-    });
+    })
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).RecordBase));
 
 export declare namespace Record_ {
-    interface Raw {
-        versionId?: serializers.VersionId.Raw | null;
-        id: serializers.RecordId.Raw;
+    interface Raw extends serializers.RecordBase.Raw {
         values: serializers.RecordData.Raw;
-        valid?: boolean | null;
-        messages?: serializers.ValidationMessage.Raw[] | null;
-        metadata?: Record<string, any> | null;
     }
 }

@@ -23,6 +23,7 @@ export const InternalSpaceConfigBase: core.serialization.ObjectSchema<
     autoConfigure: core.serialization.boolean().optional(),
     namespace: core.serialization.string().optional(),
     labels: core.serialization.list(core.serialization.string()).optional(),
+    translationsPath: core.serialization.string().optional(),
 });
 
 export declare namespace InternalSpaceConfigBase {
@@ -36,5 +37,6 @@ export declare namespace InternalSpaceConfigBase {
         autoConfigure?: boolean | null;
         namespace?: string | null;
         labels?: string[] | null;
+        translationsPath?: string | null;
     }
 }
