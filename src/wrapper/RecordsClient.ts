@@ -13,9 +13,9 @@ export class Records extends FernRecords {
      * @throws {@link Flatfile.NotFoundError}
      */
     public async insert(
-        sheetId: Flatfile.SheetId,
-        request: Flatfile.RecordData[],
-        requestOptions?: FernRecords.RequestOptions
+        _sheetId: Flatfile.SheetId,
+        _request: Flatfile.RecordData[],
+        _requestOptions?: FernRecords.RequestOptions
     ): Promise<Flatfile.RecordsResponse> {
         /* add your own implementation of addRecords */
         throw new Error("Unimplemnted");
