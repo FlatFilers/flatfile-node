@@ -3,6 +3,7 @@ import * as environments from "../environments";
 import * as core from "../core";
 import urlJoin from "url-join";
 import { CrossEnvConfig } from "@flatfile/cross-env-config";
+import { Records } from "./RecordsClient";
 
 CrossEnvConfig.alias("FLATFILE_API_URL", "AGENT_INTERNAL_URL");
 CrossEnvConfig.alias("FLATFILE_BEARER_TOKEN", "FLATFILE_API_KEY");
@@ -27,6 +28,14 @@ export class FlatfileClient extends FernClient {
             token: options.token ?? tokenSupplier
         });
     }
+
+    /* reference the overridden records client */
+    protected _records: Records | undefined;
+
+    public get records(): Records {
+        return (this._records ??= new Records(this._options));
+    }
+
 }
 
 const environmentSupplier = () => {
