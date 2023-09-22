@@ -29,13 +29,11 @@ export class FlatfileClient extends FernClient {
         });
     }
 
-    /* reference the overridden records client */
     protected _records: Records | undefined;
 
     public get records(): Records {
         return (this._records ??= new Records(this._options));
     }
-
 }
 
 const environmentSupplier = () => {
