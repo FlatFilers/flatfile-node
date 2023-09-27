@@ -11,7 +11,7 @@ export const ApiToken: core.serialization.ObjectSchema<serializers.ApiToken.Raw,
         clientId: core.serialization.string(),
         description: core.serialization.string(),
         metadata: core.serialization.record(core.serialization.string(), core.serialization.any()),
-        createdAt: core.serialization.date(),
+        createdAt: core.serialization.string(),
         secret: core.serialization.string().optional(),
     });
 

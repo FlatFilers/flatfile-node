@@ -10,11 +10,13 @@ export const ListAgentsResponse: core.serialization.ObjectSchema<
     serializers.ListAgentsResponse.Raw,
     Flatfile.ListAgentsResponse
 > = core.serialization.object({
-    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Agent)),
+    data: core.serialization
+        .list(core.serialization.lazyObject(async () => (await import("../../..")).Agent))
+        .optional(),
 });
 
 export declare namespace ListAgentsResponse {
     interface Raw {
-        data: serializers.Agent.Raw[];
+        data?: serializers.Agent.Raw[] | null;
     }
 }

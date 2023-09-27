@@ -15,5 +15,5 @@ import * as Flatfile from "../../..";
  *     }
  */
 export interface Success {
-    data: Flatfile.SuccessData;
+    data?: Flatfile.SuccessData;
 }

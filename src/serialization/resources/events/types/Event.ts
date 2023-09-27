@@ -40,6 +40,7 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "job:outcome-acknowledged": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "commit:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "commit:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "commit:completed": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "layer:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
     })
     .transform<Flatfile.Event>({
@@ -81,6 +82,7 @@ export declare namespace Event {
         | Event.JobOutcomeAcknowledged
         | Event.CommitCreated
         | Event.CommitUpdated
+        | Event.CommitCompleted
         | Event.LayerCreated;
 
     interface AgentCreated extends serializers.GenericEvent.Raw {
@@ -209,6 +211,10 @@ export declare namespace Event {
 
     interface CommitUpdated extends serializers.GenericEvent.Raw {
         topic: "commit:updated";
+    }
+
+    interface CommitCompleted extends serializers.GenericEvent.Raw {
+        topic: "commit:completed";
     }
 
     interface LayerCreated extends serializers.GenericEvent.Raw {

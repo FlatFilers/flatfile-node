@@ -9,5 +9,5 @@ import * as Flatfile from "../../..";
  */
 export interface ListSpacesResponse {
     pagination?: Flatfile.Pagination;
-    data: Flatfile.spaces.Space[];
+    data: Flatfile.Space[];
 }

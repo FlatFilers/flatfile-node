@@ -8,4 +8,5 @@
 export interface JobAckDetails {
     info?: string;
     progress?: number;
+    estimatedCompletionAt?: Date;
 }

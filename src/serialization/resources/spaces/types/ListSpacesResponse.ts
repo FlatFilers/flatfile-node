@@ -7,16 +7,16 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const ListSpacesResponse: core.serialization.ObjectSchema<
-    serializers.spaces.ListSpacesResponse.Raw,
-    Flatfile.spaces.ListSpacesResponse
+    serializers.ListSpacesResponse.Raw,
+    Flatfile.ListSpacesResponse
 > = core.serialization.object({
     pagination: core.serialization.lazyObject(async () => (await import("../../..")).Pagination).optional(),
-    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).spaces.Space)),
+    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Space)),
 });
 
 export declare namespace ListSpacesResponse {
     interface Raw {
         pagination?: serializers.Pagination.Raw | null;
-        data: serializers.spaces.Space.Raw[];
+        data: serializers.Space.Raw[];
     }
 }

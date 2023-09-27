@@ -1,5 +1,6 @@
 export * from "./ListGuestsResponse";
 export * from "./CreateGuestResponse";
+export * from "./GuestResponse";
 export * from "./Guest";
 export * from "./GuestConfig";
 export * from "./GuestConfigUpdate";

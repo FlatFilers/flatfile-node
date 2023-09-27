@@ -40,6 +40,7 @@ export type Event =
     | Flatfile.Event.JobOutcomeAcknowledged
     | Flatfile.Event.CommitCreated
     | Flatfile.Event.CommitUpdated
+    | Flatfile.Event.CommitCompleted
     | Flatfile.Event.LayerCreated;
 
 export declare namespace Event {
@@ -169,6 +170,10 @@ export declare namespace Event {
 
     interface CommitUpdated extends Flatfile.GenericEvent {
         topic: "commit:updated";
+    }
+
+    interface CommitCompleted extends Flatfile.GenericEvent {
+        topic: "commit:completed";
     }
 
     interface LayerCreated extends Flatfile.GenericEvent {

@@ -78,7 +78,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -135,7 +135,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             body: await serializers.CreateEventConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -211,7 +211,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -260,7 +260,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -305,7 +305,7 @@ export class Events {
     public async getEventToken(
         request: Flatfile.GetEventTokenRequest = {},
         requestOptions?: Events.RequestOptions
-    ): Promise<Flatfile.spaces.EventTokenResponse> {
+    ): Promise<Flatfile.EventTokenResponse> {
         const { spaceId, scope } = request;
         const _queryParams = new URLSearchParams();
         if (spaceId != null) {
@@ -327,14 +327,14 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
-            return await serializers.spaces.EventTokenResponse.parseOrThrow(_response.body, {
+            return await serializers.EventTokenResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

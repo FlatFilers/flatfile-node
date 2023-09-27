@@ -5,7 +5,7 @@
 import * as Flatfile from "../../..";
 
 export interface SnapshotSummary {
-    created: Flatfile.SummarySection;
-    updated: Flatfile.SummarySection;
-    deleted: Flatfile.SummarySection;
+    createdSince: Flatfile.SummarySection;
+    updatedSince: Flatfile.SummarySection;
+    deletedSince: Flatfile.SummarySection;
 }

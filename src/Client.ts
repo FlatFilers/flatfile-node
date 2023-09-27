@@ -4,10 +4,10 @@
 
 import * as environments from "./environments";
 import * as core from "./core";
-import { Spaces } from "./api/resources/spaces/client/Client";
 import { Agents } from "./api/resources/agents/client/Client";
 import { Auth } from "./api/resources/auth/client/Client";
 import { Cells } from "./api/resources/cells/client/Client";
+import { Commits } from "./api/resources/commits/client/Client";
 import { Documents } from "./api/resources/documents/client/Client";
 import { Environments } from "./api/resources/environments/client/Client";
 import { Events } from "./api/resources/events/client/Client";
@@ -18,6 +18,7 @@ import { Records } from "./api/resources/records/client/Client";
 import { Secrets } from "./api/resources/secrets/client/Client";
 import { Sheets } from "./api/resources/sheets/client/Client";
 import { Snapshots } from "./api/resources/snapshots/client/Client";
+import { Spaces } from "./api/resources/spaces/client/Client";
 import { Users } from "./api/resources/users/client/Client";
 import { Versions } from "./api/resources/versions/client/Client";
 import { Workbooks } from "./api/resources/workbooks/client/Client";
@@ -38,12 +39,6 @@ export declare namespace FlatfileClient {
 export class FlatfileClient {
     constructor(protected readonly _options: FlatfileClient.Options) {}
 
-    protected _spaces: Spaces | undefined;
-
-    public get spaces(): Spaces {
-        return (this._spaces ??= new Spaces(this._options));
-    }
-
     protected _agents: Agents | undefined;
 
     public get agents(): Agents {
@@ -60,6 +55,12 @@ export class FlatfileClient {
 
     public get cells(): Cells {
         return (this._cells ??= new Cells(this._options));
+    }
+
+    protected _commits: Commits | undefined;
+
+    public get commits(): Commits {
+        return (this._commits ??= new Commits(this._options));
     }
 
     protected _documents: Documents | undefined;
@@ -120,6 +121,12 @@ export class FlatfileClient {
 
     public get snapshots(): Snapshots {
         return (this._snapshots ??= new Snapshots(this._options));
+    }
+
+    protected _spaces: Spaces | undefined;
+
+    public get spaces(): Spaces {
+        return (this._spaces ??= new Spaces(this._options));
     }
 
     protected _users: Users | undefined;

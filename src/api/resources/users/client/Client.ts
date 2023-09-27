@@ -50,7 +50,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -106,7 +106,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             body: await serializers.UserConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -159,7 +159,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -226,7 +226,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -271,7 +271,7 @@ export class Users {
         userId: Flatfile.UserId,
         request: Flatfile.CreateApiTokenRequest,
         requestOptions?: Users.RequestOptions
-    ): Promise<void> {
+    ): Promise<Flatfile.ApiTokenResponse> {
         const { tenantId } = request;
         const _queryParams = new URLSearchParams();
         _queryParams.append("tenantId", tenantId);
@@ -286,14 +286,20 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
-            return;
+            return await serializers.ApiTokenResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
         }
 
         if (_response.error.reason === "status-code") {
@@ -336,7 +342,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             body: await serializers.ExchangeTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),

@@ -7,8 +7,8 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const ChangeType: core.serialization.Schema<serializers.ChangeType.Raw, Flatfile.ChangeType> =
-    core.serialization.enum_(["created", "updated", "deleted"]);
+    core.serialization.enum_(["createdSince", "updatedSince", "deletedSince"]);
 
 export declare namespace ChangeType {
-    type Raw = "created" | "updated" | "deleted";
+    type Raw = "createdSince" | "updatedSince" | "deletedSince";
 }

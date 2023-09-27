@@ -9,6 +9,6 @@ export interface ApiToken {
     clientId: string;
     description: string;
     metadata: Record<string, any>;
-    createdAt: Date;
+    createdAt: string;
     secret?: string;
 }

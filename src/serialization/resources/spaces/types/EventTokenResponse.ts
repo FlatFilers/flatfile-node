@@ -7,14 +7,14 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const EventTokenResponse: core.serialization.ObjectSchema<
-    serializers.spaces.EventTokenResponse.Raw,
-    Flatfile.spaces.EventTokenResponse
+    serializers.EventTokenResponse.Raw,
+    Flatfile.EventTokenResponse
 > = core.serialization.object({
-    data: core.serialization.lazyObject(async () => (await import("../../..")).spaces.EventToken),
+    data: core.serialization.lazyObject(async () => (await import("../../..")).EventToken),
 });
 
 export declare namespace EventTokenResponse {
     interface Raw {
-        data: serializers.spaces.EventToken.Raw;
+        data: serializers.EventToken.Raw;
     }
 }

@@ -40,6 +40,7 @@ export type EventTopic =
     | "job:failed"
     | "commit:created"
     | "commit:updated"
+    | "commit:completed"
     | "layer:created";
 
 export const EventTopic = {
@@ -74,5 +75,6 @@ export const EventTopic = {
     JobFailed: "job:failed",
     CommitCreated: "commit:created",
     CommitUpdated: "commit:updated",
+    CommitCompleted: "commit:completed",
     LayerCreated: "layer:created",
 } as const;

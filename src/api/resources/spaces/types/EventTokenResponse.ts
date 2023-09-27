@@ -5,5 +5,5 @@
 import * as Flatfile from "../../..";
 
 export interface EventTokenResponse {
-    data: Flatfile.spaces.EventToken;
+    data: Flatfile.EventToken;
 }

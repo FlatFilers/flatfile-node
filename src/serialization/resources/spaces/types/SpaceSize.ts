@@ -6,7 +6,7 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
-export const SpaceSize: core.serialization.ObjectSchema<serializers.spaces.SpaceSize.Raw, Flatfile.spaces.SpaceSize> =
+export const SpaceSize: core.serialization.ObjectSchema<serializers.SpaceSize.Raw, Flatfile.SpaceSize> =
     core.serialization.object({
         name: core.serialization.string(),
         id: core.serialization.string(),

@@ -5,5 +5,5 @@
 import * as Flatfile from "../../..";
 
 export interface SpaceResponse {
-    data: Flatfile.spaces.Space;
+    data: Flatfile.Space;
 }

@@ -6,7 +6,7 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
-export const SpaceAccess: core.serialization.Schema<serializers.spaces.SpaceAccess.Raw, Flatfile.spaces.SpaceAccess> =
+export const SpaceAccess: core.serialization.Schema<serializers.SpaceAccess.Raw, Flatfile.SpaceAccess> =
     core.serialization.enum_(["*", "upload"]);
 
 export declare namespace SpaceAccess {

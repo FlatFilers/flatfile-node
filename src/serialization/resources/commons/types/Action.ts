@@ -21,7 +21,7 @@ export const Action: core.serialization.ObjectSchema<serializers.Action.Raw, Fla
         icon: core.serialization.string().optional(),
         requireAllValid: core.serialization.boolean().optional(),
         requireSelection: core.serialization.boolean().optional(),
-        inputForm: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
+        inputForm: core.serialization.lazyObject(async () => (await import("../../..")).InputForm).optional(),
     });
 
 export declare namespace Action {
@@ -39,6 +39,6 @@ export declare namespace Action {
         icon?: string | null;
         requireAllValid?: boolean | null;
         requireSelection?: boolean | null;
-        inputForm?: Record<string, any> | null;
+        inputForm?: serializers.InputForm.Raw | null;
     }
 }

@@ -7,7 +7,7 @@ import * as Flatfile from "../../..";
 /**
  * Properties used to create a new Space
  */
-export interface SpaceConfig extends Flatfile.spaces.InternalSpaceConfigBase {
+export interface SpaceConfig extends Flatfile.InternalSpaceConfigBase {
     /** The name of the space */
     name?: string;
     /** The display order */

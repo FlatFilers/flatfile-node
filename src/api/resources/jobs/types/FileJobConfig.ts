@@ -7,4 +7,6 @@ import * as Flatfile from "../../..";
 export interface FileJobConfig {
     /** The driver to use for extracting data from the file */
     driver: Flatfile.Driver;
+    /** The options to use for extracting data from the file */
+    options?: Record<string, any>;
 }

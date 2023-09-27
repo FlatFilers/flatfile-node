@@ -9,10 +9,12 @@ import * as core from "../../../../core";
 export const FileJobConfig: core.serialization.ObjectSchema<serializers.FileJobConfig.Raw, Flatfile.FileJobConfig> =
     core.serialization.object({
         driver: core.serialization.lazy(async () => (await import("../../..")).Driver),
+        options: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
     });
 
 export declare namespace FileJobConfig {
     interface Raw {
         driver: serializers.Driver.Raw;
+        options?: Record<string, any> | null;
     }
 }

@@ -51,7 +51,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -107,7 +107,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             body: await serializers.guests.create.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -148,7 +148,10 @@ export class Guests {
     /**
      * Returns a single guest
      */
-    public async get(guestId: Flatfile.GuestId, requestOptions?: Guests.RequestOptions): Promise<Flatfile.Guest> {
+    public async get(
+        guestId: Flatfile.GuestId,
+        requestOptions?: Guests.RequestOptions
+    ): Promise<Flatfile.GuestResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -160,13 +163,13 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
-            return await serializers.Guest.parseOrThrow(_response.body, {
+            return await serializers.GuestResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -212,7 +215,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -256,7 +259,7 @@ export class Guests {
         guestId: Flatfile.GuestId,
         request: Flatfile.GuestConfigUpdate,
         requestOptions?: Guests.RequestOptions
-    ): Promise<Flatfile.Guest> {
+    ): Promise<Flatfile.GuestResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -268,14 +271,14 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             body: await serializers.GuestConfigUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
-            return await serializers.Guest.parseOrThrow(_response.body, {
+            return await serializers.GuestResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -321,7 +324,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
+                "X-Fern-SDK-Version": "1.5.26",
             },
             contentType: "application/json",
             body: await serializers.guests.invite.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),

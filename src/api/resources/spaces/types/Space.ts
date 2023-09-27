@@ -7,7 +7,7 @@ import * as Flatfile from "../../..";
 /**
  * A place to store your workbooks
  */
-export interface Space extends Flatfile.spaces.InternalSpaceConfigBase {
+export interface Space extends Flatfile.InternalSpaceConfigBase {
     id: Flatfile.SpaceId;
     /** Amount of workbooks in the space */
     workbooksCount?: number;
@@ -30,7 +30,7 @@ export interface Space extends Flatfile.spaces.InternalSpaceConfigBase {
     displayOrder?: number;
     accessToken?: string;
     isCollaborative?: boolean;
-    size?: Flatfile.spaces.SpaceSize;
+    size?: Flatfile.SpaceSize;
     upgradedAt?: Date;
     guestAuthentication: Flatfile.GuestAuthenticationEnum[];
 }

@@ -16,7 +16,7 @@ export const EnvironmentConfigCreate: core.serialization.ObjectSchema<
         .list(core.serialization.lazy(async () => (await import("../../..")).GuestAuthenticationEnum))
         .optional(),
     metadata: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
-    translationPath: core.serialization.string().optional(),
+    translationsPath: core.serialization.string().optional(),
 });
 
 export declare namespace EnvironmentConfigCreate {
@@ -25,6 +25,6 @@ export declare namespace EnvironmentConfigCreate {
         isProd: boolean;
         guestAuthentication?: serializers.GuestAuthenticationEnum.Raw[] | null;
         metadata?: Record<string, any> | null;
-        translationPath?: string | null;
+        translationsPath?: string | null;
     }
 }

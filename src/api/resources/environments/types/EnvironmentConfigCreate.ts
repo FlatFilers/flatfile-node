@@ -24,5 +24,5 @@ export interface EnvironmentConfigCreate {
     isProd: boolean;
     guestAuthentication?: Flatfile.GuestAuthenticationEnum[];
     metadata?: Record<string, any>;
-    translationPath?: string;
+    translationsPath?: string;
 }

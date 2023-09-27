@@ -5,10 +5,10 @@
 /**
  * Options to filter records in a snapshot
  */
-export type ChangeType = "created" | "updated" | "deleted";
+export type ChangeType = "createdSince" | "updatedSince" | "deletedSince";
 
 export const ChangeType = {
-    Created: "created",
-    Updated: "updated",
-    Deleted: "deleted",
+    CreatedSince: "createdSince",
+    UpdatedSince: "updatedSince",
+    DeletedSince: "deletedSince",
 } as const;

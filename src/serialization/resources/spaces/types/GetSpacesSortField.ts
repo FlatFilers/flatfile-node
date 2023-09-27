@@ -7,8 +7,8 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const GetSpacesSortField: core.serialization.Schema<
-    serializers.spaces.GetSpacesSortField.Raw,
-    Flatfile.spaces.GetSpacesSortField
+    serializers.GetSpacesSortField.Raw,
+    Flatfile.GetSpacesSortField
 > = core.serialization.enum_([
     "name",
     "workbooksCount",

@@ -16,5 +16,5 @@ import * as Flatfile from "../../..";
  *     }
  */
 export interface ListAgentsResponse {
-    data: Flatfile.Agent[];
+    data?: Flatfile.Agent[];
 }

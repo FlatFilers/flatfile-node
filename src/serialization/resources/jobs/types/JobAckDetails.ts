@@ -10,11 +10,13 @@ export const JobAckDetails: core.serialization.ObjectSchema<serializers.JobAckDe
     core.serialization.object({
         info: core.serialization.string().optional(),
         progress: core.serialization.number().optional(),
+        estimatedCompletionAt: core.serialization.date().optional(),
     });
 
 export declare namespace JobAckDetails {
     interface Raw {
         info?: string | null;
         progress?: number | null;
+        estimatedCompletionAt?: string | null;
     }
 }

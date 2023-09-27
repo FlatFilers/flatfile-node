@@ -6,15 +6,13 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
-export const EventToken: core.serialization.ObjectSchema<
-    serializers.spaces.EventToken.Raw,
-    Flatfile.spaces.EventToken
-> = core.serialization.object({
-    accountId: core.serialization.lazy(async () => (await import("../../..")).AccountId).optional(),
-    subscribeKey: core.serialization.string().optional(),
-    ttl: core.serialization.number().optional(),
-    token: core.serialization.string().optional(),
-});
+export const EventToken: core.serialization.ObjectSchema<serializers.EventToken.Raw, Flatfile.EventToken> =
+    core.serialization.object({
+        accountId: core.serialization.lazy(async () => (await import("../../..")).AccountId).optional(),
+        subscribeKey: core.serialization.string().optional(),
+        ttl: core.serialization.number().optional(),
+        token: core.serialization.string().optional(),
+    });
 
 export declare namespace EventToken {
     interface Raw {
