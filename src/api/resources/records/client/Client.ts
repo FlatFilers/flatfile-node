@@ -49,6 +49,7 @@ export class Records {
             pageSize,
             pageNumber,
             includeCounts,
+            includeLength,
             includeLinks,
             includeMessages,
             for: for_,
@@ -109,6 +110,10 @@ export class Records {
             _queryParams.append("includeCounts", includeCounts.toString());
         }
 
+        if (includeLength != null) {
+            _queryParams.append("includeLength", includeLength.toString());
+        }
+
         if (includeLinks != null) {
             _queryParams.append("includeLinks", includeLinks.toString());
         }
@@ -136,7 +141,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.26",
+                "X-Fern-SDK-Version": "1.5.27",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -218,7 +223,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.26",
+                "X-Fern-SDK-Version": "1.5.27",
             },
             contentType: "application/json",
             body: await serializers.Records.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -300,7 +305,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.26",
+                "X-Fern-SDK-Version": "1.5.27",
             },
             contentType: "application/json",
             body: await serializers.records.insert.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -394,7 +399,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.26",
+                "X-Fern-SDK-Version": "1.5.27",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -490,7 +495,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.26",
+                "X-Fern-SDK-Version": "1.5.27",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -578,7 +583,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.26",
+                "X-Fern-SDK-Version": "1.5.27",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

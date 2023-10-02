@@ -17,6 +17,7 @@ export const EnvironmentConfigUpdate: core.serialization.ObjectSchema<
         .optional(),
     metadata: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
     translationsPath: core.serialization.string().optional(),
+    namespaces: core.serialization.list(core.serialization.string()).optional(),
 });
 
 export declare namespace EnvironmentConfigUpdate {
@@ -26,5 +27,6 @@ export declare namespace EnvironmentConfigUpdate {
         guestAuthentication?: serializers.GuestAuthenticationEnum.Raw[] | null;
         metadata?: Record<string, any> | null;
         translationsPath?: string | null;
+        namespaces?: string[] | null;
     }
 }

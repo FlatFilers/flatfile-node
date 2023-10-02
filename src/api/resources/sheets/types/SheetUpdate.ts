@@ -10,7 +10,6 @@ import * as Flatfile from "../../..";
 export interface SheetUpdate {
     id?: Flatfile.SheetId;
     workbookId?: Flatfile.WorkbookId;
-    name?: string;
     config?: Flatfile.SheetConfig;
     countRecords?: Flatfile.RecordCounts;
     namespace?: string;

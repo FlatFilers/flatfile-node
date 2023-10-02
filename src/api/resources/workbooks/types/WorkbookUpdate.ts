@@ -15,4 +15,6 @@ export interface WorkbookUpdate {
     namespace?: string;
     sheets?: Flatfile.SheetConfigOrUpdate[];
     actions?: Flatfile.Action[];
+    /** Metadata for the workbook */
+    metadata?: any;
 }

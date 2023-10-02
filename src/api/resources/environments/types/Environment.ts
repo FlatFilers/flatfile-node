@@ -13,7 +13,8 @@ import * as Flatfile from "../../..";
  *         isProd: false,
  *         guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink],
  *         features: {},
- *         metadata: {}
+ *         metadata: {},
+ *         namespaces: ["default"]
  *     }
  */
 export interface Environment {
@@ -27,4 +28,5 @@ export interface Environment {
     features: Record<string, any>;
     metadata: Record<string, any>;
     translationsPath?: string;
+    namespaces?: string[];
 }

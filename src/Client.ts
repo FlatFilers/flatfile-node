@@ -14,6 +14,7 @@ import { Events } from "./api/resources/events/client/Client";
 import { Files } from "./api/resources/files/client/Client";
 import { Guests } from "./api/resources/guests/client/Client";
 import { Jobs } from "./api/resources/jobs/client/Client";
+import { Mapping } from "./api/resources/mapping/client/Client";
 import { Records } from "./api/resources/records/client/Client";
 import { Secrets } from "./api/resources/secrets/client/Client";
 import { Sheets } from "./api/resources/sheets/client/Client";
@@ -97,6 +98,12 @@ export class FlatfileClient {
 
     public get jobs(): Jobs {
         return (this._jobs ??= new Jobs(this._options));
+    }
+
+    protected _mapping: Mapping | undefined;
+
+    public get mapping(): Mapping {
+        return (this._mapping ??= new Mapping(this._options));
     }
 
     protected _records: Records | undefined;

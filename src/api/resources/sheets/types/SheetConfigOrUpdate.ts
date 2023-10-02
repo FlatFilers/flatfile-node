@@ -4,4 +4,4 @@
 
 import * as Flatfile from "../../..";
 
-export type SheetConfigOrUpdate = Flatfile.SheetUpdate | Flatfile.SheetConfig;
+export interface SheetConfigOrUpdate extends Flatfile.SheetConfigUpdate, Flatfile.SheetUpdate {}

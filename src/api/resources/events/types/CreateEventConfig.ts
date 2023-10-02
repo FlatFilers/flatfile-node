@@ -10,4 +10,6 @@ import * as Flatfile from "../../..";
 export interface CreateEventConfig extends Flatfile.BaseEvent {
     topic: Flatfile.EventTopic;
     payload: Record<string, any>;
+    /** Date the event was deleted */
+    deletedAt?: Date;
 }

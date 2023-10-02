@@ -14,11 +14,12 @@ export const WorkbookUpdate: core.serialization.ObjectSchema<serializers.Workboo
         environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
         namespace: core.serialization.string().optional(),
         sheets: core.serialization
-            .list(core.serialization.lazy(async () => (await import("../../..")).SheetConfigOrUpdate))
+            .list(core.serialization.lazyObject(async () => (await import("../../..")).SheetConfigOrUpdate))
             .optional(),
         actions: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
             .optional(),
+        metadata: core.serialization.any().optional(),
     });
 
 export declare namespace WorkbookUpdate {
@@ -30,5 +31,6 @@ export declare namespace WorkbookUpdate {
         namespace?: string | null;
         sheets?: serializers.SheetConfigOrUpdate.Raw[] | null;
         actions?: serializers.Action.Raw[] | null;
+        metadata?: any | null;
     }
 }

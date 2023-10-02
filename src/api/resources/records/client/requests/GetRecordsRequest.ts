@@ -30,9 +30,13 @@ export interface GetRecordsRequest {
      */
     pageNumber?: number;
     /**
-     * Include counts for the total records, valid records and records with errors
+     * **DEPRECATED** Use GET /sheets/:sheetId/counts
      */
     includeCounts?: boolean;
+    /**
+     * The length of the record result set, returned as counts.total
+     */
+    includeLength?: boolean;
     /**
      * If true, linked records will be included in the results. Defaults to false.
      */

@@ -20,6 +20,8 @@ export * as guests from "./guests";
 export * from "./guests/types";
 export * as jobs from "./jobs";
 export * from "./jobs/types";
+export * as mapping from "./mapping";
+export * from "./mapping/types";
 export * as property from "./property";
 export * from "./property/types";
 export * as records from "./records";

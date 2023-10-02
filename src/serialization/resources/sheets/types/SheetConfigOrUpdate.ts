@@ -6,14 +6,14 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
-export const SheetConfigOrUpdate: core.serialization.Schema<
+export const SheetConfigOrUpdate: core.serialization.ObjectSchema<
     serializers.SheetConfigOrUpdate.Raw,
     Flatfile.SheetConfigOrUpdate
-> = core.serialization.undiscriminatedUnion([
-    core.serialization.lazyObject(async () => (await import("../../..")).SheetUpdate),
-    core.serialization.lazyObject(async () => (await import("../../..")).SheetConfig),
-]);
+> = core.serialization
+    .object({})
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).SheetConfigUpdate))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).SheetUpdate));
 
 export declare namespace SheetConfigOrUpdate {
-    type Raw = serializers.SheetUpdate.Raw | serializers.SheetConfig.Raw;
+    interface Raw extends serializers.SheetConfigUpdate.Raw, serializers.SheetUpdate.Raw {}
 }

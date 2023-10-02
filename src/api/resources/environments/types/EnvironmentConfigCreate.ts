@@ -14,7 +14,8 @@ import * as Flatfile from "../../..";
  *         guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink],
  *         metadata: {
  *             "key": "value"
- *         }
+ *         },
+ *         namespaces: ["default"]
  *     }
  */
 export interface EnvironmentConfigCreate {
@@ -25,4 +26,5 @@ export interface EnvironmentConfigCreate {
     guestAuthentication?: Flatfile.GuestAuthenticationEnum[];
     metadata?: Record<string, any>;
     translationsPath?: string;
+    namespaces?: string[];
 }

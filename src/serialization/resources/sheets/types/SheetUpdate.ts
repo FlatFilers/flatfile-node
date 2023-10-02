@@ -10,7 +10,6 @@ export const SheetUpdate: core.serialization.ObjectSchema<serializers.SheetUpdat
     core.serialization.object({
         id: core.serialization.lazy(async () => (await import("../../..")).SheetId).optional(),
         workbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId).optional(),
-        name: core.serialization.string().optional(),
         config: core.serialization.lazyObject(async () => (await import("../../..")).SheetConfig).optional(),
         countRecords: core.serialization.lazyObject(async () => (await import("../../..")).RecordCounts).optional(),
         namespace: core.serialization.string().optional(),
@@ -22,7 +21,6 @@ export declare namespace SheetUpdate {
     interface Raw {
         id?: serializers.SheetId.Raw | null;
         workbookId?: serializers.WorkbookId.Raw | null;
-        name?: string | null;
         config?: serializers.SheetConfig.Raw | null;
         countRecords?: serializers.RecordCounts.Raw | null;
         namespace?: string | null;

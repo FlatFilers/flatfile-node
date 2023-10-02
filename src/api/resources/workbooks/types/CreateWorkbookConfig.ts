@@ -15,4 +15,6 @@ export interface CreateWorkbookConfig {
     namespace?: string;
     sheets?: Flatfile.SheetConfig[];
     actions?: Flatfile.Action[];
+    /** Metadata for the workbook */
+    metadata?: any;
 }

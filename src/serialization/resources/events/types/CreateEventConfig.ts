@@ -13,6 +13,7 @@ export const CreateEventConfig: core.serialization.ObjectSchema<
     .object({
         topic: core.serialization.lazy(async () => (await import("../../..")).EventTopic),
         payload: core.serialization.record(core.serialization.string(), core.serialization.any()),
+        deletedAt: core.serialization.date().optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseEvent));
 
@@ -20,5 +21,6 @@ export declare namespace CreateEventConfig {
     interface Raw extends serializers.BaseEvent.Raw {
         topic: serializers.EventTopic.Raw;
         payload: Record<string, any>;
+        deletedAt?: string | null;
     }
 }

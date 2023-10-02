@@ -23,6 +23,7 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "sheet:created",
         "sheet:updated",
         "sheet:deleted",
+        "snapshot:created",
         "records:created",
         "records:updated",
         "records:deleted",
@@ -60,6 +61,7 @@ export declare namespace EventTopic {
         | "sheet:created"
         | "sheet:updated"
         | "sheet:deleted"
+        | "snapshot:created"
         | "records:created"
         | "records:updated"
         | "records:deleted"
