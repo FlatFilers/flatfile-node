@@ -1,5 +1,5 @@
+import pako from "pako";
 import urlJoin from "url-join";
-import * as zlib from "zlib";
 import { Flatfile } from "..";
 import { Records as FernRecords } from "../api/resources/records/client/Client";
 import * as core from "../core";
@@ -18,7 +18,7 @@ export class Records extends FernRecords {
         request: Flatfile.RecordData[],
         requestOptions?: FernRecords.RequestOptions
     ): Promise<Flatfile.RecordsResponse> {
-        const body = zlib.gzipSync(JSON.stringify(request));
+        const body = pako.deflate(JSON.stringify(request));
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
