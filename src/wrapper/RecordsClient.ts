@@ -18,7 +18,7 @@ export class Records extends FernRecords {
         request: Flatfile.RecordData[],
         requestOptions?: FernRecords.RequestOptions
     ): Promise<Flatfile.RecordsResponse> {
-        const body = pako.deflate(JSON.stringify(request));
+        const body = pako.gzip(JSON.stringify(request));
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
