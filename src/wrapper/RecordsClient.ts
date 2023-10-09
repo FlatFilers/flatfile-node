@@ -7,6 +7,10 @@ import * as environments from "../environments";
 import * as errors from "../errors";
 import * as serializers from "../serialization";
 
+interface InsertRequestOptions extends FernRecords.RequestOptions {
+    compressRequestBody?: boolean;
+}
+
 export class Records extends FernRecords {
     /**
      * Adds records to a workbook sheet
@@ -16,9 +20,14 @@ export class Records extends FernRecords {
     public async insert(
         sheetId: Flatfile.SheetId,
         request: Flatfile.RecordData[],
-        requestOptions?: FernRecords.RequestOptions
+        requestOptions?: InsertRequestOptions
     ): Promise<Flatfile.RecordsResponse> {
-        const body = pako.gzip(JSON.stringify(request));
+        const body = requestOptions?.compressRequestBody
+            ? pako.gzip(JSON.stringify(request))
+            : await serializers.records.insert.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" });
+        const gzipHeaders = requestOptions?.compressRequestBody
+            ? { "Content-Encoding": "gzip", "Content-Length": body.length.toString() }
+            : {};
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -30,9 +39,8 @@ export class Records extends FernRecords {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.25",
-                "Content-Length": body.length.toString(),
-                "Content-Encoding": "gzip",
+                "X-Fern-SDK-Version": "1.5.27",
+                ...gzipHeaders,
             },
             contentType: "application/json",
             body,
