@@ -9,4 +9,6 @@ export interface CreateFileRequest {
     environmentId: Flatfile.EnvironmentId;
     /** The storage mode of file to insert, defaults to "import" */
     mode?: Flatfile.Mode;
+    /** The actions attached to the file */
+    actions?: Flatfile.Action[];
 }

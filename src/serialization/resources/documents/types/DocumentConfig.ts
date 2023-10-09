@@ -10,11 +10,13 @@ export const DocumentConfig: core.serialization.ObjectSchema<serializers.Documen
     core.serialization.object({
         title: core.serialization.string(),
         body: core.serialization.string(),
+        treatments: core.serialization.list(core.serialization.string()).optional(),
     });
 
 export declare namespace DocumentConfig {
     interface Raw {
         title: string;
         body: string;
+        treatments?: string[] | null;
     }
 }

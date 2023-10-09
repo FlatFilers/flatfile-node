@@ -5,4 +5,5 @@
 export interface DocumentConfig {
     title: string;
     body: string;
+    treatments?: string[];
 }
