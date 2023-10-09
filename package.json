@@ -11,16 +11,18 @@
         "prepack": "cp -rv dist/. ."
     },
     "dependencies": {
-        "@ungap/url-search-params": "0.2.2",
-        "url-join": "4.0.1",
+        "@flatfile/cross-env-config": "0.0.4",
         "@types/url-join": "4.0.1",
-        "form-data": "4.0.0",
+        "@ungap/url-search-params": "0.2.2",
         "axios": "0.27.2",
+        "form-data": "4.0.0",
         "js-base64": "3.7.2",
-        "@flatfile/cross-env-config": "0.0.4"
+        "pako": "^2.1.0",
+        "url-join": "4.0.1"
     },
     "devDependencies": {
         "@types/node": "17.0.33",
+        "@types/pako": "^2.0.1",
         "prettier": "2.7.1",
         "typescript": "4.6.4"
     }
