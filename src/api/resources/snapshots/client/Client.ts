@@ -46,7 +46,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.28",
+                "X-Fern-SDK-Version": "1.5.29",
             },
             contentType: "application/json",
             body: await serializers.CreateSnapshotRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -130,7 +130,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.28",
+                "X-Fern-SDK-Version": "1.5.29",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -215,7 +215,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.28",
+                "X-Fern-SDK-Version": "1.5.29",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -296,7 +296,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.28",
+                "X-Fern-SDK-Version": "1.5.29",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -363,6 +363,7 @@ export class Snapshots {
      */
     public async restoreSnapshot(
         snapshotId: Flatfile.SnapshotId,
+        request?: Flatfile.RestoreOptions,
         requestOptions?: Snapshots.RequestOptions
     ): Promise<Flatfile.SnapshotResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -376,9 +377,15 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.28",
+                "X-Fern-SDK-Version": "1.5.29",
             },
             contentType: "application/json",
+            body:
+                request != null
+                    ? await serializers.snapshots.restoreSnapshot.Request.jsonOrThrow(request, {
+                          unrecognizedObjectKeys: "strip",
+                      })
+                    : undefined,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
@@ -471,7 +478,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.28",
+                "X-Fern-SDK-Version": "1.5.29",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

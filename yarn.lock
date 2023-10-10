@@ -78,6 +78,11 @@ mime-types@^2.1.12:
   dependencies:
     mime-db "1.52.0"
 
+pako@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/pako/-/pako-2.0.1.tgz#31e05b87f8ceae06ef286421575ea962ac9c0d8a"
+  integrity sha512-mqHoEQRZ4d+JREr7Csg+QbdfuOHtojEmsAKo/cYiCJICjjB0mOMSKnRlL42P5luMWUXksJ7UDZCRkEqPrBj0Dg==
+
 prettier@2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.7.1.tgz#e235806850d057f97bb08368a4f7d899f7760c64"
