@@ -1,5 +1,6 @@
-import { default as URLSearchParams } from "@ungap/url-search-params";
 import axios, { AxiosAdapter, AxiosError } from "axios";
+import axiosRetry from "axios-retry";
+import qs from "qs";
 import { APIResponse } from "./APIResponse";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
@@ -10,9 +11,10 @@ export declare namespace Fetcher {
         method: string;
         contentType?: string;
         headers?: Record<string, string | undefined>;
-        queryParameters?: URLSearchParams;
+        queryParameters?: Record<string, string>;
         body?: unknown;
         timeoutMs?: number;
+        maxRetries?: number;
         withCredentials?: boolean;
         responseType?: "json" | "blob";
         adapter?: AxiosAdapter;
@@ -43,6 +45,12 @@ export declare namespace Fetcher {
     }
 }
 
+const INITIAL_RETRY_DELAY = 1;
+const MAX_RETRY_DELAY = 60;
+const DEFAULT_MAX_RETRIES = 2;
+
+const AXIOS = axios.create();
+
 async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
     const headers: Record<string, string> = {};
     if (args.body !== undefined && args.contentType != null) {
@@ -57,10 +65,27 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
         }
     }
 
+    axiosRetry(AXIOS, {
+        retries: args.maxRetries ?? DEFAULT_MAX_RETRIES,
+        retryCondition: (error) => {
+            return error.response != null && [500, 502, 429].includes(error.response.status);
+        },
+        retryDelay: (count) => {
+            if (count == 0) {
+                return INITIAL_RETRY_DELAY;
+            }
+            // Apply exponential backoff, but not more than the max.
+            return Math.min(INITIAL_RETRY_DELAY * Math.pow(count - 1, 2), MAX_RETRY_DELAY);
+        },
+    });
+
     try {
-        const response = await axios({
+        const response = await AXIOS.request({
             url: args.url,
             params: args.queryParameters,
+            paramsSerializer: (params) => {
+                return qs.stringify(params);
+            },
             method: args.method,
             headers,
             data: args.body,

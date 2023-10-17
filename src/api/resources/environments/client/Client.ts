@@ -5,7 +5,6 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import { default as URLSearchParams } from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
@@ -20,6 +19,7 @@ export declare namespace Environments {
 
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 
@@ -34,13 +34,13 @@ export class Environments {
         requestOptions?: Environments.RequestOptions
     ): Promise<Flatfile.ListEnvironmentsResponse> {
         const { pageSize, pageNumber } = request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string> = {};
         if (pageSize != null) {
-            _queryParams.append("pageSize", pageSize.toString());
+            _queryParams["pageSize"] = pageSize.toString();
         }
 
         if (pageNumber != null) {
-            _queryParams.append("pageNumber", pageNumber.toString());
+            _queryParams["pageNumber"] = pageNumber.toString();
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -54,11 +54,12 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.ListEnvironmentsResponse.parseOrThrow(_response.body, {
@@ -110,11 +111,12 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             body: await serializers.EnvironmentConfigCreate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.EnvironmentResponse.parseOrThrow(_response.body, {
@@ -158,8 +160,8 @@ export class Environments {
         requestOptions?: Environments.RequestOptions
     ): Promise<Flatfile.EventTokenResponse> {
         const { environmentId } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("environmentId", environmentId);
+        const _queryParams: Record<string, string> = {};
+        _queryParams["environmentId"] = environmentId;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -171,11 +173,12 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.EventTokenResponse.parseOrThrow(_response.body, {
@@ -252,10 +255,11 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.EnvironmentResponse.parseOrThrow(_response.body, {
@@ -331,11 +335,12 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             body: await serializers.EnvironmentConfigUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.Environment.parseOrThrow(_response.body, {
@@ -389,10 +394,11 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {

@@ -5,7 +5,6 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import { default as URLSearchParams } from "@ungap/url-search-params";
 import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
@@ -20,6 +19,7 @@ export declare namespace Records {
 
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 
@@ -55,79 +55,79 @@ export class Records {
             for: for_,
             q,
         } = request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string> = {};
         if (versionId != null) {
-            _queryParams.append("versionId", versionId);
+            _queryParams["versionId"] = versionId;
         }
 
         if (sinceVersionId != null) {
-            _queryParams.append("sinceVersionId", sinceVersionId);
+            _queryParams["sinceVersionId"] = sinceVersionId;
         }
 
         if (sortField != null) {
-            _queryParams.append("sortField", sortField);
+            _queryParams["sortField"] = sortField;
         }
 
         if (sortDirection != null) {
-            _queryParams.append("sortDirection", sortDirection);
+            _queryParams["sortDirection"] = sortDirection;
         }
 
         if (filter != null) {
-            _queryParams.append("filter", filter);
+            _queryParams["filter"] = filter;
         }
 
         if (filterField != null) {
-            _queryParams.append("filterField", filterField);
+            _queryParams["filterField"] = filterField;
         }
 
         if (searchValue != null) {
-            _queryParams.append("searchValue", searchValue);
+            _queryParams["searchValue"] = searchValue;
         }
 
         if (searchField != null) {
-            _queryParams.append("searchField", searchField);
+            _queryParams["searchField"] = searchField;
         }
 
         if (ids != null) {
             if (Array.isArray(ids)) {
                 for (const _item of ids) {
-                    _queryParams.append("ids", _item);
+                    _queryParams["ids"] = _item;
                 }
             } else {
-                _queryParams.append("ids", ids);
+                _queryParams["ids"] = ids;
             }
         }
 
         if (pageSize != null) {
-            _queryParams.append("pageSize", pageSize.toString());
+            _queryParams["pageSize"] = pageSize.toString();
         }
 
         if (pageNumber != null) {
-            _queryParams.append("pageNumber", pageNumber.toString());
+            _queryParams["pageNumber"] = pageNumber.toString();
         }
 
         if (includeCounts != null) {
-            _queryParams.append("includeCounts", includeCounts.toString());
+            _queryParams["includeCounts"] = includeCounts.toString();
         }
 
         if (includeLength != null) {
-            _queryParams.append("includeLength", includeLength.toString());
+            _queryParams["includeLength"] = includeLength.toString();
         }
 
         if (includeLinks != null) {
-            _queryParams.append("includeLinks", includeLinks.toString());
+            _queryParams["includeLinks"] = includeLinks.toString();
         }
 
         if (includeMessages != null) {
-            _queryParams.append("includeMessages", includeMessages.toString());
+            _queryParams["includeMessages"] = includeMessages.toString();
         }
 
         if (for_ != null) {
-            _queryParams.append("for", for_);
+            _queryParams["for"] = for_;
         }
 
         if (q != null) {
-            _queryParams.append("q", q);
+            _queryParams["q"] = q;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -141,11 +141,12 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.GetRecordsResponse.parseOrThrow(_response.body, {
@@ -223,11 +224,12 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             body: await serializers.Records.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.VersionResponse.parseOrThrow(_response.body, {
@@ -305,11 +307,12 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             body: await serializers.records.insert.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.RecordsResponse.parseOrThrow(_response.body, {
@@ -377,14 +380,14 @@ export class Records {
         requestOptions?: Records.RequestOptions
     ): Promise<Flatfile.Success> {
         const { ids } = request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string> = {};
         if (ids != null) {
             if (Array.isArray(ids)) {
                 for (const _item of ids) {
-                    _queryParams.append("ids", _item);
+                    _queryParams["ids"] = _item;
                 }
             } else {
-                _queryParams.append("ids", ids);
+                _queryParams["ids"] = ids;
             }
         }
 
@@ -399,11 +402,12 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -469,19 +473,19 @@ export class Records {
         requestOptions?: Records.RequestOptions
     ): Promise<Flatfile.RecordsResponse> {
         const { fieldKey, searchValue, filter, pageSize, pageNumber, ..._body } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("fieldKey", fieldKey);
-        _queryParams.append("searchValue", searchValue);
+        const _queryParams: Record<string, string> = {};
+        _queryParams["fieldKey"] = fieldKey;
+        _queryParams["searchValue"] = searchValue;
         if (filter != null) {
-            _queryParams.append("filter", filter);
+            _queryParams["filter"] = filter;
         }
 
         if (pageSize != null) {
-            _queryParams.append("pageSize", pageSize.toString());
+            _queryParams["pageSize"] = pageSize.toString();
         }
 
         if (pageNumber != null) {
-            _queryParams.append("pageNumber", pageNumber.toString());
+            _queryParams["pageNumber"] = pageNumber.toString();
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -495,7 +499,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -503,6 +507,7 @@ export class Records {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.RecordsResponse.parseOrThrow(_response.body, {
@@ -545,30 +550,30 @@ export class Records {
         requestOptions?: Records.RequestOptions
     ): Promise<Flatfile.VersionResponse> {
         const { filter, filterField, searchValue, searchField, ids, ..._body } = request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string> = {};
         if (filter != null) {
-            _queryParams.append("filter", filter);
+            _queryParams["filter"] = filter;
         }
 
         if (filterField != null) {
-            _queryParams.append("filterField", filterField);
+            _queryParams["filterField"] = filterField;
         }
 
         if (searchValue != null) {
-            _queryParams.append("searchValue", searchValue);
+            _queryParams["searchValue"] = searchValue;
         }
 
         if (searchField != null) {
-            _queryParams.append("searchField", searchField);
+            _queryParams["searchField"] = searchField;
         }
 
         if (ids != null) {
             if (Array.isArray(ids)) {
                 for (const _item of ids) {
-                    _queryParams.append("ids", _item);
+                    _queryParams["ids"] = _item;
                 }
             } else {
-                _queryParams.append("ids", ids);
+                _queryParams["ids"] = ids;
             }
         }
 
@@ -583,12 +588,13 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             body: await serializers.FindAndReplaceRecordRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.VersionResponse.parseOrThrow(_response.body, {

@@ -8,6 +8,7 @@ import * as Flatfile from "../../..";
 export class NotFoundError extends errors.FlatfileError {
     constructor(body: Flatfile.Errors) {
         super({
+            message: "NotFoundError",
             statusCode: 404,
             body: body,
         });

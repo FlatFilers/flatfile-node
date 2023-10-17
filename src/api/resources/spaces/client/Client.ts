@@ -5,7 +5,6 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import { default as URLSearchParams } from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
@@ -20,6 +19,7 @@ export declare namespace Spaces {
 
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 
@@ -36,37 +36,37 @@ export class Spaces {
     ): Promise<Flatfile.ListSpacesResponse> {
         const { environmentId, pageSize, pageNumber, search, archived, sortField, sortDirection, isCollaborative } =
             request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string> = {};
         if (environmentId != null) {
-            _queryParams.append("environmentId", environmentId);
+            _queryParams["environmentId"] = environmentId;
         }
 
         if (pageSize != null) {
-            _queryParams.append("pageSize", pageSize.toString());
+            _queryParams["pageSize"] = pageSize.toString();
         }
 
         if (pageNumber != null) {
-            _queryParams.append("pageNumber", pageNumber.toString());
+            _queryParams["pageNumber"] = pageNumber.toString();
         }
 
         if (search != null) {
-            _queryParams.append("search", search);
+            _queryParams["search"] = search;
         }
 
         if (archived != null) {
-            _queryParams.append("archived", archived.toString());
+            _queryParams["archived"] = archived.toString();
         }
 
         if (sortField != null) {
-            _queryParams.append("sortField", sortField);
+            _queryParams["sortField"] = sortField;
         }
 
         if (sortDirection != null) {
-            _queryParams.append("sortDirection", sortDirection);
+            _queryParams["sortDirection"] = sortDirection;
         }
 
         if (isCollaborative != null) {
-            _queryParams.append("isCollaborative", isCollaborative.toString());
+            _queryParams["isCollaborative"] = isCollaborative.toString();
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -80,11 +80,12 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.ListSpacesResponse.parseOrThrow(_response.body, {
@@ -151,11 +152,12 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             body: await serializers.SpaceConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.SpaceResponse.parseOrThrow(_response.body, {
@@ -232,10 +234,11 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.SpaceResponse.parseOrThrow(_response.body, {
@@ -309,10 +312,11 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -390,11 +394,12 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             body: await serializers.SpaceConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.SpaceResponse.parseOrThrow(_response.body, {
@@ -471,10 +476,11 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {

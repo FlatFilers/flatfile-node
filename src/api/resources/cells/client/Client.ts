@@ -5,7 +5,6 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import { default as URLSearchParams } from "@ungap/url-search-params";
 import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
@@ -20,6 +19,7 @@ export declare namespace Cells {
 
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 
@@ -46,42 +46,42 @@ export class Cells {
             includeCounts,
             searchValue,
         } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("fieldKey", fieldKey);
+        const _queryParams: Record<string, string> = {};
+        _queryParams["fieldKey"] = fieldKey;
         if (sortField != null) {
-            _queryParams.append("sortField", sortField);
+            _queryParams["sortField"] = sortField;
         }
 
         if (sortDirection != null) {
-            _queryParams.append("sortDirection", sortDirection);
+            _queryParams["sortDirection"] = sortDirection;
         }
 
         if (filter != null) {
-            _queryParams.append("filter", filter);
+            _queryParams["filter"] = filter;
         }
 
         if (filterField != null) {
-            _queryParams.append("filterField", filterField);
+            _queryParams["filterField"] = filterField;
         }
 
         if (pageSize != null) {
-            _queryParams.append("pageSize", pageSize.toString());
+            _queryParams["pageSize"] = pageSize.toString();
         }
 
         if (pageNumber != null) {
-            _queryParams.append("pageNumber", pageNumber.toString());
+            _queryParams["pageNumber"] = pageNumber.toString();
         }
 
         if (distinct != null) {
-            _queryParams.append("distinct", distinct.toString());
+            _queryParams["distinct"] = distinct.toString();
         }
 
         if (includeCounts != null) {
-            _queryParams.append("includeCounts", includeCounts.toString());
+            _queryParams["includeCounts"] = includeCounts.toString();
         }
 
         if (searchValue != null) {
-            _queryParams.append("searchValue", searchValue);
+            _queryParams["searchValue"] = searchValue;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -95,11 +95,12 @@ export class Cells {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.CellsResponse.parseOrThrow(_response.body, {

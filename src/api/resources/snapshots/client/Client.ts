@@ -8,7 +8,6 @@ import * as Flatfile from "../../..";
 import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
-import { default as URLSearchParams } from "@ungap/url-search-params";
 
 export declare namespace Snapshots {
     interface Options {
@@ -20,6 +19,7 @@ export declare namespace Snapshots {
 
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 
@@ -46,11 +46,12 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             body: await serializers.CreateSnapshotRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.SnapshotResponse.parseOrThrow(_response.body, {
@@ -117,8 +118,8 @@ export class Snapshots {
         requestOptions?: Snapshots.RequestOptions
     ): Promise<Flatfile.SnapshotsResponse> {
         const { sheetId } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("sheetId", sheetId);
+        const _queryParams: Record<string, string> = {};
+        _queryParams["sheetId"] = sheetId;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -130,11 +131,12 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.SnapshotsResponse.parseOrThrow(_response.body, {
@@ -202,8 +204,8 @@ export class Snapshots {
         requestOptions?: Snapshots.RequestOptions
     ): Promise<Flatfile.SnapshotResponse> {
         const { includeSummary } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("includeSummary", includeSummary.toString());
+        const _queryParams: Record<string, string> = {};
+        _queryParams["includeSummary"] = includeSummary.toString();
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -215,11 +217,12 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.SnapshotResponse.parseOrThrow(_response.body, {
@@ -296,10 +299,11 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -377,7 +381,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             body:
@@ -387,6 +391,7 @@ export class Snapshots {
                       })
                     : undefined,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.SnapshotResponse.parseOrThrow(_response.body, {
@@ -454,17 +459,17 @@ export class Snapshots {
         requestOptions?: Snapshots.RequestOptions
     ): Promise<Flatfile.DiffRecordsResponse> {
         const { pageSize, pageNumber, changeType } = request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string> = {};
         if (pageSize != null) {
-            _queryParams.append("pageSize", pageSize.toString());
+            _queryParams["pageSize"] = pageSize.toString();
         }
 
         if (pageNumber != null) {
-            _queryParams.append("pageNumber", pageNumber.toString());
+            _queryParams["pageNumber"] = pageNumber.toString();
         }
 
         if (changeType != null) {
-            _queryParams.append("changeType", changeType);
+            _queryParams["changeType"] = changeType;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -478,11 +483,12 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.DiffRecordsResponse.parseOrThrow(_response.body, {

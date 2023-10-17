@@ -5,9 +5,10 @@
 /**
  * the mode of the job
  */
-export type JobMode = "foreground" | "background";
+export type JobMode = "foreground" | "background" | "toolbarBlocking";
 
 export const JobMode = {
     Foreground: "foreground",
     Background: "background",
+    ToolbarBlocking: "toolbarBlocking",
 } as const;

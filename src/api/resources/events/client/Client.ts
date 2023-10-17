@@ -5,7 +5,6 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import { default as URLSearchParams } from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
@@ -20,6 +19,7 @@ export declare namespace Events {
 
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 
@@ -34,37 +34,37 @@ export class Events {
         requestOptions?: Events.RequestOptions
     ): Promise<Flatfile.ListAllEventsResponse> {
         const { environmentId, spaceId, domain, topic, since, pageSize, pageNumber, includeAcknowledged } = request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string> = {};
         if (environmentId != null) {
-            _queryParams.append("environmentId", environmentId);
+            _queryParams["environmentId"] = environmentId;
         }
 
         if (spaceId != null) {
-            _queryParams.append("spaceId", spaceId);
+            _queryParams["spaceId"] = spaceId;
         }
 
         if (domain != null) {
-            _queryParams.append("domain", domain);
+            _queryParams["domain"] = domain;
         }
 
         if (topic != null) {
-            _queryParams.append("topic", topic);
+            _queryParams["topic"] = topic;
         }
 
         if (since != null) {
-            _queryParams.append("since", since.toISOString());
+            _queryParams["since"] = since.toISOString();
         }
 
         if (pageSize != null) {
-            _queryParams.append("pageSize", pageSize.toString());
+            _queryParams["pageSize"] = pageSize.toString();
         }
 
         if (pageNumber != null) {
-            _queryParams.append("pageNumber", pageNumber.toString());
+            _queryParams["pageNumber"] = pageNumber.toString();
         }
 
         if (includeAcknowledged != null) {
-            _queryParams.append("includeAcknowledged", includeAcknowledged.toString());
+            _queryParams["includeAcknowledged"] = includeAcknowledged.toString();
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -78,11 +78,12 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.ListAllEventsResponse.parseOrThrow(_response.body, {
@@ -135,11 +136,12 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             body: await serializers.CreateEventConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.EventResponse.parseOrThrow(_response.body, {
@@ -211,10 +213,11 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.EventResponse.parseOrThrow(_response.body, {
@@ -260,10 +263,11 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -307,13 +311,13 @@ export class Events {
         requestOptions?: Events.RequestOptions
     ): Promise<Flatfile.EventTokenResponse> {
         const { spaceId, scope } = request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string> = {};
         if (spaceId != null) {
-            _queryParams.append("spaceId", spaceId);
+            _queryParams["spaceId"] = spaceId;
         }
 
         if (scope != null) {
-            _queryParams.append("scope", scope);
+            _queryParams["scope"] = scope;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -327,11 +331,12 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.EventTokenResponse.parseOrThrow(_response.body, {

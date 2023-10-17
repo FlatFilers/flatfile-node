@@ -5,7 +5,6 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import { default as URLSearchParams } from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
@@ -20,6 +19,7 @@ export declare namespace Auth {
 
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 
@@ -35,8 +35,8 @@ export class Auth {
         requestOptions?: Auth.RequestOptions
     ): Promise<Flatfile.ApiKeysResponse> {
         const { environmentId } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("environmentId", environmentId);
+        const _queryParams: Record<string, string> = {};
+        _queryParams["environmentId"] = environmentId;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -48,11 +48,12 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.ApiKeysResponse.parseOrThrow(_response.body, {
@@ -118,9 +119,9 @@ export class Auth {
         requestOptions?: Auth.RequestOptions
     ): Promise<Flatfile.ApiKeysResponse> {
         const { environmentId, type: type_ } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("environmentId", environmentId);
-        _queryParams.append("type", type_);
+        const _queryParams: Record<string, string> = {};
+        _queryParams["environmentId"] = environmentId;
+        _queryParams["type"] = type_;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -132,11 +133,12 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.ApiKeysResponse.parseOrThrow(_response.body, {
@@ -202,9 +204,9 @@ export class Auth {
         requestOptions?: Auth.RequestOptions
     ): Promise<Flatfile.Success> {
         const { environmentId, key } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("environmentId", environmentId);
-        _queryParams.append("key", key);
+        const _queryParams: Record<string, string> = {};
+        _queryParams["environmentId"] = environmentId;
+        _queryParams["key"] = key;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -216,11 +218,12 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {

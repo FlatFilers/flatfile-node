@@ -5,7 +5,6 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import { default as URLSearchParams } from "@ungap/url-search-params";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
@@ -21,6 +20,7 @@ export declare namespace Sheets {
 
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 
@@ -35,8 +35,8 @@ export class Sheets {
         requestOptions?: Sheets.RequestOptions
     ): Promise<Flatfile.ListSheetsResponse> {
         const { workbookId } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("workbookId", workbookId);
+        const _queryParams: Record<string, string> = {};
+        _queryParams["workbookId"] = workbookId;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -48,11 +48,12 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.ListSheetsResponse.parseOrThrow(_response.body, {
@@ -104,10 +105,11 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.SheetResponse.parseOrThrow(_response.body, {
@@ -158,10 +160,11 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -238,10 +241,11 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.Success.parseOrThrow(_response.body, {
@@ -317,46 +321,46 @@ export class Sheets {
             searchField,
             ids,
         } = request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string> = {};
         if (versionId != null) {
-            _queryParams.append("versionId", versionId);
+            _queryParams["versionId"] = versionId;
         }
 
         if (sinceVersionId != null) {
-            _queryParams.append("sinceVersionId", sinceVersionId);
+            _queryParams["sinceVersionId"] = sinceVersionId;
         }
 
         if (sortField != null) {
-            _queryParams.append("sortField", sortField);
+            _queryParams["sortField"] = sortField;
         }
 
         if (sortDirection != null) {
-            _queryParams.append("sortDirection", sortDirection);
+            _queryParams["sortDirection"] = sortDirection;
         }
 
         if (filter != null) {
-            _queryParams.append("filter", filter);
+            _queryParams["filter"] = filter;
         }
 
         if (filterField != null) {
-            _queryParams.append("filterField", filterField);
+            _queryParams["filterField"] = filterField;
         }
 
         if (searchValue != null) {
-            _queryParams.append("searchValue", searchValue);
+            _queryParams["searchValue"] = searchValue;
         }
 
         if (searchField != null) {
-            _queryParams.append("searchField", searchField);
+            _queryParams["searchField"] = searchField;
         }
 
         if (ids != null) {
             if (Array.isArray(ids)) {
                 for (const _item of ids) {
-                    _queryParams.append("ids", _item);
+                    _queryParams["ids"] = _item;
                 }
             } else {
-                _queryParams.append("ids", ids);
+                _queryParams["ids"] = ids;
             }
         }
 
@@ -371,7 +375,7 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -393,37 +397,37 @@ export class Sheets {
         requestOptions?: Sheets.RequestOptions
     ): Promise<Flatfile.RecordCountsResponse> {
         const { versionId, sinceVersionId, filter, filterField, searchValue, searchField, byField, q } = request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string> = {};
         if (versionId != null) {
-            _queryParams.append("versionId", versionId);
+            _queryParams["versionId"] = versionId;
         }
 
         if (sinceVersionId != null) {
-            _queryParams.append("sinceVersionId", sinceVersionId);
+            _queryParams["sinceVersionId"] = sinceVersionId;
         }
 
         if (filter != null) {
-            _queryParams.append("filter", filter);
+            _queryParams["filter"] = filter;
         }
 
         if (filterField != null) {
-            _queryParams.append("filterField", filterField);
+            _queryParams["filterField"] = filterField;
         }
 
         if (searchValue != null) {
-            _queryParams.append("searchValue", searchValue);
+            _queryParams["searchValue"] = searchValue;
         }
 
         if (searchField != null) {
-            _queryParams.append("searchField", searchField);
+            _queryParams["searchField"] = searchField;
         }
 
         if (byField != null) {
-            _queryParams.append("byField", byField.toString());
+            _queryParams["byField"] = byField.toString();
         }
 
         if (q != null) {
-            _queryParams.append("q", q);
+            _queryParams["q"] = q;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -437,11 +441,12 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.RecordCountsResponse.parseOrThrow(_response.body, {
@@ -496,11 +501,12 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             body: await serializers.Property.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.FieldConfigResponse.parseOrThrow(_response.body, {
@@ -566,9 +572,9 @@ export class Sheets {
         requestOptions?: Sheets.RequestOptions
     ): Promise<Flatfile.ListCommitsResponse> {
         const { completed } = request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string> = {};
         if (completed != null) {
-            _queryParams.append("completed", completed.toString());
+            _queryParams["completed"] = completed.toString();
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -582,11 +588,12 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.31",
+                "X-Fern-SDK-Version": "1.5.32",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.ListCommitsResponse.parseOrThrow(_response.body, {

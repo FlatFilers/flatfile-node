@@ -34,6 +34,7 @@ export declare namespace FlatfileClient {
 
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 

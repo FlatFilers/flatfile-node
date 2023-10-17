@@ -9,8 +9,9 @@ import * as core from "../../../../core";
 export const JobMode: core.serialization.Schema<serializers.JobMode.Raw, Flatfile.JobMode> = core.serialization.enum_([
     "foreground",
     "background",
+    "toolbarBlocking",
 ]);
 
 export declare namespace JobMode {
-    type Raw = "foreground" | "background";
+    type Raw = "foreground" | "background" | "toolbarBlocking";
 }

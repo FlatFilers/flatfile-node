@@ -7,8 +7,8 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const ActionMode: core.serialization.Schema<serializers.ActionMode.Raw, Flatfile.ActionMode> =
-    core.serialization.enum_(["foreground", "background"]);
+    core.serialization.enum_(["foreground", "background", "toolbarBlocking"]);
 
 export declare namespace ActionMode {
-    type Raw = "foreground" | "background";
+    type Raw = "foreground" | "background" | "toolbarBlocking";
 }
