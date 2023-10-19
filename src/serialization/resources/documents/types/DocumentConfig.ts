@@ -11,6 +11,9 @@ export const DocumentConfig: core.serialization.ObjectSchema<serializers.Documen
         title: core.serialization.string(),
         body: core.serialization.string(),
         treatments: core.serialization.list(core.serialization.string()).optional(),
+        actions: core.serialization
+            .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
+            .optional(),
     });
 
 export declare namespace DocumentConfig {
@@ -18,5 +21,6 @@ export declare namespace DocumentConfig {
         title: string;
         body: string;
         treatments?: string[] | null;
+        actions?: serializers.Action.Raw[] | null;
     }
 }

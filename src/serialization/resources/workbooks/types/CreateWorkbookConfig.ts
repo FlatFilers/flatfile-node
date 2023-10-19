@@ -21,6 +21,7 @@ export const CreateWorkbookConfig: core.serialization.ObjectSchema<
     actions: core.serialization
         .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
         .optional(),
+    settings: core.serialization.lazyObject(async () => (await import("../../..")).WorkbookConfigSettings).optional(),
     metadata: core.serialization.any().optional(),
 });
 
@@ -33,6 +34,7 @@ export declare namespace CreateWorkbookConfig {
         namespace?: string | null;
         sheets?: serializers.SheetConfig.Raw[] | null;
         actions?: serializers.Action.Raw[] | null;
+        settings?: serializers.WorkbookConfigSettings.Raw | null;
         metadata?: any | null;
     }
 }

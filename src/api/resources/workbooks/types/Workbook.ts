@@ -15,6 +15,7 @@ export interface Workbook {
     sheets?: Flatfile.Sheet[];
     labels?: string[];
     actions?: Flatfile.Action[];
+    settings?: Flatfile.WorkbookConfigSettings;
     /** Metadata for the workbook */
     metadata?: any;
     namespace?: string;
