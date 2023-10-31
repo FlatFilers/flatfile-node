@@ -19,6 +19,7 @@ export const Environment: core.serialization.ObjectSchema<serializers.Environmen
         metadata: core.serialization.record(core.serialization.string(), core.serialization.any()),
         translationsPath: core.serialization.string().optional(),
         namespaces: core.serialization.list(core.serialization.string()).optional(),
+        languageOverride: core.serialization.string().optional(),
     });
 
 export declare namespace Environment {
@@ -32,5 +33,6 @@ export declare namespace Environment {
         metadata: Record<string, any>;
         translationsPath?: string | null;
         namespaces?: string[] | null;
+        languageOverride?: string | null;
     }
 }

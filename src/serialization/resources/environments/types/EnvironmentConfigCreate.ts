@@ -18,6 +18,7 @@ export const EnvironmentConfigCreate: core.serialization.ObjectSchema<
     metadata: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
     translationsPath: core.serialization.string().optional(),
     namespaces: core.serialization.list(core.serialization.string()).optional(),
+    languageOverride: core.serialization.string().optional(),
 });
 
 export declare namespace EnvironmentConfigCreate {
@@ -28,5 +29,6 @@ export declare namespace EnvironmentConfigCreate {
         metadata?: Record<string, any> | null;
         translationsPath?: string | null;
         namespaces?: string[] | null;
+        languageOverride?: string | null;
     }
 }

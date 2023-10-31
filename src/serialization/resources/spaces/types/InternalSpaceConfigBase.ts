@@ -24,6 +24,8 @@ export const InternalSpaceConfigBase: core.serialization.ObjectSchema<
     namespace: core.serialization.string().optional(),
     labels: core.serialization.list(core.serialization.string()).optional(),
     translationsPath: core.serialization.string().optional(),
+    languageOverride: core.serialization.string().optional(),
+    archivedAt: core.serialization.date().optional(),
 });
 
 export declare namespace InternalSpaceConfigBase {
@@ -38,5 +40,7 @@ export declare namespace InternalSpaceConfigBase {
         namespace?: string | null;
         labels?: string[] | null;
         translationsPath?: string | null;
+        languageOverride?: string | null;
+        archivedAt?: string | null;
     }
 }

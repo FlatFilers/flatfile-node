@@ -11,4 +11,8 @@ export interface Document extends Flatfile.DocumentConfig {
     id: Flatfile.DocumentId;
     spaceId?: Flatfile.SpaceId;
     environmentId?: Flatfile.EnvironmentId;
+    /** Date the document was created */
+    createdAt: Date;
+    /** Date the document was last updated */
+    updatedAt: Date;
 }

@@ -27,4 +27,5 @@ export interface EnvironmentConfigCreate {
     metadata?: Record<string, any>;
     translationsPath?: string;
     namespaces?: string[];
+    languageOverride?: string;
 }

@@ -16,4 +16,7 @@ export interface InternalSpaceConfigBase {
     namespace?: string;
     labels?: string[];
     translationsPath?: string;
+    languageOverride?: string;
+    /** Date when space was archived */
+    archivedAt?: Date;
 }

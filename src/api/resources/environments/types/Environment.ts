@@ -29,4 +29,5 @@ export interface Environment {
     metadata: Record<string, any>;
     translationsPath?: string;
     namespaces?: string[];
+    languageOverride?: string;
 }
