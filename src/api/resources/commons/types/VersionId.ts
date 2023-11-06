@@ -6,6 +6,6 @@
  * Version ID
  *
  * @example
- *     "us_vr_jte4tzVn"
+ *     "us_vr_YOUR_ID"
  */
 export type VersionId = string;

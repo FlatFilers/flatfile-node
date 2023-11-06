@@ -6,6 +6,6 @@
  * Guest ID
  *
  * @example
- *     "us_g_5ue7P9cU"
+ *     "us_g_YOUR_ID"
  */
 export type GuestId = string;

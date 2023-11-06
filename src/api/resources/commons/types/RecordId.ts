@@ -6,6 +6,6 @@
  * Record ID
  *
  * @example
- *     "us_rc_a7W9cuesESa7W9cu"
+ *     "us_rc_YOUR_ID"
  */
 export type RecordId = string;

@@ -7,8 +7,8 @@ import * as Flatfile from "../../..";
 /**
  * @example
  *     {
- *         id: "us_env_hVXkXs0b",
- *         accountId: "us_acc_uj6s91wc",
+ *         id: "us_env_YOUR_ID",
+ *         accountId: "us_acc_YOUR_ID",
  *         name: "dev",
  *         isProd: false,
  *         guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink],

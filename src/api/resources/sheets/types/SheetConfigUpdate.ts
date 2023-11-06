@@ -13,6 +13,7 @@ export interface SheetConfigUpdate {
     slug?: string;
     readonly?: boolean;
     allowAdditionalFields?: boolean;
+    mappingConfidenceThreshold?: number;
     access?: Flatfile.SheetAccess[];
     fields?: Flatfile.Property[];
     actions?: Flatfile.Action[];

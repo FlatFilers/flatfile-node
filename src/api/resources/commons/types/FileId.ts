@@ -6,6 +6,6 @@
  * File ID
  *
  * @example
- *     "us_fl_qGZbKwDW"
+ *     "us_fl_YOUR_ID"
  */
 export type FileId = string;

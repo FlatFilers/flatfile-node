@@ -3,9 +3,9 @@
  */
 
 /**
- * Space Config ID
+ * Based on pageSize, which page of records to return
  *
  * @example
- *     "us_sc_YOUR_ID"
+ *     1
  */
-export type SpaceConfigId = string;
+export type PageNumber = number;

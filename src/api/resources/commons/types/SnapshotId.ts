@@ -6,6 +6,6 @@
  * Snapshot ID
  *
  * @example
- *     "us_ss_4tzVnfHf"
+ *     "us_ss_YOUR_ID"
  */
 export type SnapshotId = string;

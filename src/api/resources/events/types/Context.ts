@@ -21,6 +21,7 @@ export interface Context {
     sheetSlug?: Flatfile.SheetSlug;
     snapshotId?: Flatfile.SnapshotId;
     versionId?: Flatfile.VersionId;
+    commitId?: Flatfile.VersionId;
     jobId?: Flatfile.JobId;
     fileId?: Flatfile.FileId;
     documentId?: Flatfile.DocumentId;

@@ -6,14 +6,8 @@ import * as Flatfile from "../../../..";
 
 export interface GetEnvironmentAgentExecutionsRequest {
     environmentId: Flatfile.EnvironmentId;
-    spaceId: Flatfile.SpaceId;
-    success?: boolean;
-    /**
-     * Number of logs to return in a page (default 20)
-     */
-    pageSize?: number;
-    /**
-     * Based on pageSize, which page of records to return
-     */
-    pageNumber?: number;
+    spaceId?: Flatfile.SpaceId;
+    success?: Flatfile.SuccessQueryParameter;
+    pageSize?: Flatfile.PageSize;
+    pageNumber?: Flatfile.PageNumber;
 }

@@ -6,6 +6,6 @@
  * Sheet ID
  *
  * @example
- *     "us_sh_fHfzjzHb"
+ *     "us_sh_YOUR_ID"
  */
 export type SheetId = string;

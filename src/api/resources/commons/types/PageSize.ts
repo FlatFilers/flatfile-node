@@ -3,9 +3,9 @@
  */
 
 /**
- * Space Config ID
+ * Number of logs to return in a page (default 20)
  *
  * @example
- *     "us_sc_YOUR_ID"
+ *     20
  */
-export type SpaceConfigId = string;
+export type PageSize = number;

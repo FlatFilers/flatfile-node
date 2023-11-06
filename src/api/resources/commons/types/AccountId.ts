@@ -6,6 +6,6 @@
  * Account ID
  *
  * @example
- *     "us_acc_uj6s91wc"
+ *     "us_acc_YOUR_ID"
  */
 export type AccountId = string;

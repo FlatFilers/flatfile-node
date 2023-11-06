@@ -6,6 +6,6 @@
  * Agent ID
  *
  * @example
- *     "us_ag_qGZbKwDW"
+ *     "us_ag_YOUR_ID"
  */
 export type AgentId = string;

@@ -3,9 +3,9 @@
  */
 
 /**
- * Space Config ID
+ * Boolean
  *
  * @example
- *     "us_sc_YOUR_ID"
+ *     true
  */
-export type SpaceConfigId = string;
+export type SuccessQueryParameter = boolean;

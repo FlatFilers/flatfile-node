@@ -8,7 +8,7 @@ import * as Flatfile from "../../..";
  * @example
  *     {
  *         data: {
- *             id: "123",
+ *             id: "us_ag_YOUR_ID",
  *             topics: [Flatfile.EventTopic.FileCreated],
  *             compiler: Flatfile.Compiler.Js,
  *             source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"

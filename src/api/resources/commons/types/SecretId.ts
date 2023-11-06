@@ -6,6 +6,6 @@
  * Secret ID
  *
  * @example
- *     "us_sec_9cuesESa7W9cuesE"
+ *     "us_sec_YOUR_ID"
  */
 export type SecretId = string;

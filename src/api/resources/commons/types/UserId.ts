@@ -6,6 +6,6 @@
  * User ID
  *
  * @example
- *     "us_usr_a7Ws9cue"
+ *     "us_usr_YOUR_ID"
  */
 export type UserId = string;

@@ -6,6 +6,6 @@
  * Event ID
  *
  * @example
- *     "us_evt_9cuesESa7W9cuesE"
+ *     "us_evt_YOUR_ID"
  */
 export type EventId = string;

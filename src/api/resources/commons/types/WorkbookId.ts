@@ -6,6 +6,6 @@
  * Workbook ID
  *
  * @example
- *     "us_wb_qGZbKwDW"
+ *     "us_wb_YOUR_ID"
  */
 export type WorkbookId = string;

@@ -6,6 +6,6 @@
  * Document ID
  *
  * @example
- *     "us_dc_KwDW6cfH"
+ *     "us_dc_YOUR_ID"
  */
 export type DocumentId = string;

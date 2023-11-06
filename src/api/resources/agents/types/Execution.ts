@@ -9,7 +9,7 @@ import * as Flatfile from "../../..";
  *
  * @example
  *     {
- *         eventId: "us_evt_9cuesESa7W9cuesE",
+ *         eventId: "us_evt_YOUR_ID",
  *         success: true,
  *         createdAt: new Date("2022-09-18T00:19:57.007Z"),
  *         completedAt: new Date("2022-09-18T00:20:04.007Z"),

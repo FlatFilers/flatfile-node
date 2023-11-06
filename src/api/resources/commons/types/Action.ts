@@ -19,4 +19,5 @@ export interface Action {
     requireAllValid?: boolean;
     requireSelection?: boolean;
     inputForm?: Flatfile.InputForm;
+    constraints?: Flatfile.ActionConstraint[];
 }

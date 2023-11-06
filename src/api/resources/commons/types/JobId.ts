@@ -6,6 +6,6 @@
  * Pipeline Job ID
  *
  * @example
- *     "us_jb_UQg89Drd"
+ *     "us_jb_YOUR_ID"
  */
 export type JobId = string;

@@ -13,7 +13,7 @@ import * as Flatfile from "../../..";
  *             totalCount: 100
  *         },
  *         data: [{
- *                 eventId: "us_evt_9cuesESa7W9cuesE",
+ *                 eventId: "us_evt_YOUR_ID",
  *                 success: true,
  *                 createdAt: "2022-09-18T00:19:57.007Z",
  *                 completedAt: "2022-09-18T00:20:04.007Z",
