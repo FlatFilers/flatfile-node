@@ -34,7 +34,7 @@ export class Environments {
         requestOptions?: Environments.RequestOptions
     ): Promise<Flatfile.ListEnvironmentsResponse> {
         const { pageSize, pageNumber } = request;
-        const _queryParams: Record<string, string> = {};
+        const _queryParams: Record<string, string | string[]> = {};
         if (pageSize != null) {
             _queryParams["pageSize"] = pageSize.toString();
         }
@@ -54,7 +54,7 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -111,7 +111,7 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             body: await serializers.EnvironmentConfigCreate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -160,7 +160,7 @@ export class Environments {
         requestOptions?: Environments.RequestOptions
     ): Promise<Flatfile.EventTokenResponse> {
         const { environmentId } = request;
-        const _queryParams: Record<string, string> = {};
+        const _queryParams: Record<string, string | string[]> = {};
         _queryParams["environmentId"] = environmentId;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
@@ -173,7 +173,7 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -255,7 +255,7 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -335,7 +335,7 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             body: await serializers.EnvironmentConfigUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -394,7 +394,7 @@ export class Environments {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

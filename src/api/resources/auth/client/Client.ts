@@ -35,7 +35,7 @@ export class Auth {
         requestOptions?: Auth.RequestOptions
     ): Promise<Flatfile.ApiKeysResponse> {
         const { environmentId } = request;
-        const _queryParams: Record<string, string> = {};
+        const _queryParams: Record<string, string | string[]> = {};
         _queryParams["environmentId"] = environmentId;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
@@ -48,7 +48,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -119,7 +119,7 @@ export class Auth {
         requestOptions?: Auth.RequestOptions
     ): Promise<Flatfile.ApiKeysResponse> {
         const { environmentId, type: type_ } = request;
-        const _queryParams: Record<string, string> = {};
+        const _queryParams: Record<string, string | string[]> = {};
         _queryParams["environmentId"] = environmentId;
         _queryParams["type"] = type_;
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -133,7 +133,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -204,7 +204,7 @@ export class Auth {
         requestOptions?: Auth.RequestOptions
     ): Promise<Flatfile.Success> {
         const { environmentId, key } = request;
-        const _queryParams: Record<string, string> = {};
+        const _queryParams: Record<string, string | string[]> = {};
         _queryParams["environmentId"] = environmentId;
         _queryParams["key"] = key;
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -218,7 +218,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

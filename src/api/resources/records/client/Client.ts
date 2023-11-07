@@ -55,7 +55,7 @@ export class Records {
             for: for_,
             q,
         } = request;
-        const _queryParams: Record<string, string> = {};
+        const _queryParams: Record<string, string | string[]> = {};
         if (versionId != null) {
             _queryParams["versionId"] = versionId;
         }
@@ -90,9 +90,7 @@ export class Records {
 
         if (ids != null) {
             if (Array.isArray(ids)) {
-                for (const _item of ids) {
-                    _queryParams["ids"] = _item;
-                }
+                _queryParams["ids"] = ids.map((item) => item);
             } else {
                 _queryParams["ids"] = ids;
             }
@@ -141,7 +139,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -224,7 +222,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             body: await serializers.Records.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -307,7 +305,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             body: await serializers.records.insert.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -380,12 +378,10 @@ export class Records {
         requestOptions?: Records.RequestOptions
     ): Promise<Flatfile.Success> {
         const { ids } = request;
-        const _queryParams: Record<string, string> = {};
+        const _queryParams: Record<string, string | string[]> = {};
         if (ids != null) {
             if (Array.isArray(ids)) {
-                for (const _item of ids) {
-                    _queryParams["ids"] = _item;
-                }
+                _queryParams["ids"] = ids.map((item) => item);
             } else {
                 _queryParams["ids"] = ids;
             }
@@ -402,7 +398,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -473,7 +469,7 @@ export class Records {
         requestOptions?: Records.RequestOptions
     ): Promise<Flatfile.RecordsResponse> {
         const { fieldKey, searchValue, filter, pageSize, pageNumber, ..._body } = request;
-        const _queryParams: Record<string, string> = {};
+        const _queryParams: Record<string, string | string[]> = {};
         _queryParams["fieldKey"] = fieldKey;
         _queryParams["searchValue"] = searchValue;
         if (filter != null) {
@@ -499,7 +495,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -550,7 +546,7 @@ export class Records {
         requestOptions?: Records.RequestOptions
     ): Promise<Flatfile.VersionResponse> {
         const { filter, filterField, searchValue, searchField, ids, ..._body } = request;
-        const _queryParams: Record<string, string> = {};
+        const _queryParams: Record<string, string | string[]> = {};
         if (filter != null) {
             _queryParams["filter"] = filter;
         }
@@ -569,9 +565,7 @@ export class Records {
 
         if (ids != null) {
             if (Array.isArray(ids)) {
-                for (const _item of ids) {
-                    _queryParams["ids"] = _item;
-                }
+                _queryParams["ids"] = ids.map((item) => item);
             } else {
                 _queryParams["ids"] = ids;
             }
@@ -588,7 +582,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.36",
+                "X-Fern-SDK-Version": "1.5.37",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
