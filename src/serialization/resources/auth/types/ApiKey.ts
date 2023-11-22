@@ -8,8 +8,8 @@ import * as core from "../../../../core";
 
 export const ApiKey: core.serialization.ObjectSchema<serializers.ApiKey.Raw, Flatfile.ApiKey> =
     core.serialization.object({
-        id: core.serialization.string(),
-        rawKey: core.serialization.string().optional(),
+        id: core.serialization.lazy(async () => (await import("../../..")).ApiKeyId),
+        rawKey: core.serialization.lazy(async () => (await import("../../..")).RawKey).optional(),
         type: core.serialization.lazy(async () => (await import("../../..")).ApiKeyType),
         environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
         accountId: core.serialization.lazy(async () => (await import("../../..")).AccountId).optional(),
@@ -24,8 +24,8 @@ export const ApiKey: core.serialization.ObjectSchema<serializers.ApiKey.Raw, Fla
 
 export declare namespace ApiKey {
     interface Raw {
-        id: string;
-        rawKey?: string | null;
+        id: serializers.ApiKeyId.Raw;
+        rawKey?: serializers.RawKey.Raw | null;
         type: serializers.ApiKeyType.Raw;
         environmentId?: serializers.EnvironmentId.Raw | null;
         accountId?: serializers.AccountId.Raw | null;

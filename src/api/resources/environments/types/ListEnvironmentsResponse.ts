@@ -4,6 +4,21 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         data: [{
+ *                 id: "us_env_YOUR_ID",
+ *                 accountId: "us_acc_YOUR_ID",
+ *                 name: "dev",
+ *                 isProd: false,
+ *                 guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink],
+ *                 features: {},
+ *                 metadata: {},
+ *                 namespaces: ["default"]
+ *             }]
+ *     }
+ */
 export interface ListEnvironmentsResponse {
     data: Flatfile.Environment[];
     pagination?: Flatfile.Pagination;

@@ -10,7 +10,7 @@ export interface GetEventTokenRequest {
      */
     spaceId?: Flatfile.SpaceId;
     /**
-     * The scope of the event stream (space or environment id)
+     * The resource ID of the event stream (space or environment id)
      */
     scope?: string;
 }

@@ -10,11 +10,11 @@ export const ArrayableProperty: core.serialization.ObjectSchema<
     serializers.ArrayableProperty.Raw,
     Flatfile.ArrayableProperty
 > = core.serialization.object({
-    isArray: core.serialization.property("is_array", core.serialization.boolean().optional()),
+    isArray: core.serialization.boolean().optional(),
 });
 
 export declare namespace ArrayableProperty {
     interface Raw {
-        is_array?: boolean | null;
+        isArray?: boolean | null;
     }
 }

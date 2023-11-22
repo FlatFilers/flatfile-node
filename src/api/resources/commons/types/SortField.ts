@@ -4,5 +4,8 @@
 
 /**
  * Name of field by which to sort records
+ *
+ * @example
+ *     "firstName"
  */
 export type SortField = string;

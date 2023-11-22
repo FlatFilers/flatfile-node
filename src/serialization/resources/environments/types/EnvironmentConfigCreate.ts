@@ -19,6 +19,9 @@ export const EnvironmentConfigCreate: core.serialization.ObjectSchema<
     translationsPath: core.serialization.string().optional(),
     namespaces: core.serialization.list(core.serialization.string()).optional(),
     languageOverride: core.serialization.string().optional(),
+    dataRetentionPolicy: core.serialization
+        .lazy(async () => (await import("../../..")).DataRetentionPolicyEnum)
+        .optional(),
 });
 
 export declare namespace EnvironmentConfigCreate {
@@ -30,5 +33,6 @@ export declare namespace EnvironmentConfigCreate {
         translationsPath?: string | null;
         namespaces?: string[] | null;
         languageOverride?: string | null;
+        dataRetentionPolicy?: serializers.DataRetentionPolicyEnum.Raw | null;
     }
 }

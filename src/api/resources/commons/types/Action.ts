@@ -4,6 +4,16 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         operation: "submitAction",
+ *         mode: Flatfile.ActionMode.Foreground,
+ *         label: "Submit",
+ *         description: "Submit data to webhook.site",
+ *         primary: true
+ *     }
+ */
 export interface Action {
     slug?: string;
     operation?: string;

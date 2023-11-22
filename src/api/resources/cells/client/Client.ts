@@ -31,7 +31,7 @@ export class Cells {
      */
     public async getValues(
         sheetId: Flatfile.SheetId,
-        request: Flatfile.GetFieldValuesRequest,
+        request: Flatfile.GetFieldValuesRequest = {},
         requestOptions?: Cells.RequestOptions
     ): Promise<Flatfile.CellsResponse> {
         const {
@@ -47,7 +47,10 @@ export class Cells {
             searchValue,
         } = request;
         const _queryParams: Record<string, string | string[]> = {};
-        _queryParams["fieldKey"] = fieldKey;
+        if (fieldKey != null) {
+            _queryParams["fieldKey"] = fieldKey;
+        }
+
         if (sortField != null) {
             _queryParams["sortField"] = sortField;
         }
@@ -95,7 +98,7 @@ export class Cells {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.37",
+                "X-Fern-SDK-Version": "1.5.38",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

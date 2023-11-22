@@ -34,4 +34,12 @@ export interface JobConfig {
     info?: string;
     /** Indicates if Flatfile is managing the control flow of this job or if it is being manually tracked. */
     managed?: boolean;
+    /** The part number of this job */
+    part?: number;
+    /** The data for this part of the job */
+    partData?: Record<string, any>;
+    /** The execution mode for this part of the job */
+    partExecution?: Flatfile.JobPartExecution;
+    /** The id of the parent job */
+    parentId?: Flatfile.JobId;
 }

@@ -1,0 +1,1 @@
+export { AssignRoleRequest } from "./AssignRoleRequest";

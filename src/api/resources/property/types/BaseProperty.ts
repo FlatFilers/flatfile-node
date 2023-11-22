@@ -14,4 +14,5 @@ export interface BaseProperty {
     /** Useful for any contextual metadata regarding the schema. Store any valid json here. */
     metadata?: any;
     treatments?: string[];
+    alternativeNames?: string[];
 }

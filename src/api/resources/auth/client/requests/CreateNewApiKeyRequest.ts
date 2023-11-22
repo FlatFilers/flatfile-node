@@ -5,10 +5,7 @@
 import * as Flatfile from "../../../..";
 
 export interface CreateNewApiKeyRequest {
-    /**
-     * ID of environment to search
-     */
-    environmentId: string;
+    environmentId: Flatfile.EnvironmentId;
     /**
      * API key type (SECRET or PUBLISHABLE)
      */

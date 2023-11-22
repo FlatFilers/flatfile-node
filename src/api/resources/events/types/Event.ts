@@ -6,6 +6,30 @@ import * as Flatfile from "../../..";
 
 /**
  * An event that tracks an activity within an environment
+ *
+ * @example
+ *     {
+ *         topic: "workbook:updated",
+ *         id: "us_evt_YOUR_ID",
+ *         createdAt: new Date("2023-11-07T20:46:04.300Z"),
+ *         payload: {
+ *             "recordsAdded": 100
+ *         },
+ *         domain: Flatfile.Domain.Workbook,
+ *         context: {
+ *             accountId: "us_acc_YOUR_ID",
+ *             actorId: "us_key_SOME_KEY",
+ *             environmentId: "us_env_YOUR_ID",
+ *             spaceId: "us_sp_YOUR_ID",
+ *             workbookId: "us_wb_YOUR_ID"
+ *         },
+ *         callbackUrl: "",
+ *         dataUrl: "",
+ *         namespaces: ["workbook"],
+ *         origin: {
+ *             id: "us_wb_YOUR_ID"
+ *         }
+ *     }
  */
 export type Event =
     | Flatfile.Event.AgentCreated
@@ -38,6 +62,7 @@ export type Event =
     | Flatfile.Event.JobReady
     | Flatfile.Event.JobScheduled
     | Flatfile.Event.JobOutcomeAcknowledged
+    | Flatfile.Event.JobPartsCompleted
     | Flatfile.Event.CommitCreated
     | Flatfile.Event.CommitUpdated
     | Flatfile.Event.CommitCompleted
@@ -162,6 +187,10 @@ export declare namespace Event {
 
     interface JobOutcomeAcknowledged extends Flatfile.GenericEvent {
         topic: "job:outcome-acknowledged";
+    }
+
+    interface JobPartsCompleted extends Flatfile.GenericEvent {
+        topic: "job:parts-completed";
     }
 
     interface CommitCreated extends Flatfile.GenericEvent {

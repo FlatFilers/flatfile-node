@@ -15,4 +15,6 @@ export interface EnumPropertyOption {
     meta?: Record<string, any>;
     /** The value or ID of this option. This value will be sent in egress.  The type is a string | integer | boolean. */
     value?: any;
+    /** Alternative names to match this enum option to */
+    alternativeNames?: string[];
 }

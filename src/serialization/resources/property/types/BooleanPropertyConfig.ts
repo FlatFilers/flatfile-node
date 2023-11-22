@@ -10,11 +10,11 @@ export const BooleanPropertyConfig: core.serialization.ObjectSchema<
     serializers.BooleanPropertyConfig.Raw,
     Flatfile.BooleanPropertyConfig
 > = core.serialization.object({
-    allowIndeterminate: core.serialization.property("allow_indeterminate", core.serialization.boolean()),
+    allowIndeterminate: core.serialization.boolean(),
 });
 
 export declare namespace BooleanPropertyConfig {
     interface Raw {
-        allow_indeterminate: boolean;
+        allowIndeterminate: boolean;
     }
 }

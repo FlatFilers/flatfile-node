@@ -8,11 +8,11 @@ import * as core from "../../../../core";
 
 export const NumberConfig: core.serialization.ObjectSchema<serializers.NumberConfig.Raw, Flatfile.NumberConfig> =
     core.serialization.object({
-        decimalPlaces: core.serialization.property("decimal_places", core.serialization.number()),
+        decimalPlaces: core.serialization.number(),
     });
 
 export declare namespace NumberConfig {
     interface Raw {
-        decimal_places: number;
+        decimalPlaces: number;
     }
 }

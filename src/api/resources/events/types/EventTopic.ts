@@ -6,7 +6,7 @@
  * The topic of the event
  *
  * @example
- *     Flatfile.EventTopic.FileCreated
+ *     Flatfile.EventTopic.WorkbookUpdated
  */
 export type EventTopic =
     | "agent:created"
@@ -38,6 +38,7 @@ export type EventTopic =
     | "job:ready"
     | "job:scheduled"
     | "job:outcome-acknowledged"
+    | "job:parts-completed"
     | "job:failed"
     | "commit:created"
     | "commit:updated"
@@ -74,6 +75,7 @@ export const EventTopic = {
     JobReady: "job:ready",
     JobScheduled: "job:scheduled",
     JobOutcomeAcknowledged: "job:outcome-acknowledged",
+    JobPartsCompleted: "job:parts-completed",
     JobFailed: "job:failed",
     CommitCreated: "commit:created",
     CommitUpdated: "commit:updated",

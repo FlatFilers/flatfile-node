@@ -16,6 +16,7 @@ import { Guests } from "./api/resources/guests/client/Client";
 import { Jobs } from "./api/resources/jobs/client/Client";
 import { Mapping } from "./api/resources/mapping/client/Client";
 import { Records } from "./api/resources/records/client/Client";
+import { Roles } from "./api/resources/roles/client/Client";
 import { Secrets } from "./api/resources/secrets/client/Client";
 import { Sheets } from "./api/resources/sheets/client/Client";
 import { Snapshots } from "./api/resources/snapshots/client/Client";
@@ -111,6 +112,12 @@ export class FlatfileClient {
 
     public get records(): Records {
         return (this._records ??= new Records(this._options));
+    }
+
+    protected _roles: Roles | undefined;
+
+    public get roles(): Roles {
+        return (this._roles ??= new Roles(this._options));
     }
 
     protected _secrets: Secrets | undefined;

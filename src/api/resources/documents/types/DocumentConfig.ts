@@ -4,6 +4,26 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         title: "My Document 1",
+ *         body: "My information",
+ *         actions: [{
+ *                 operation: "submitAction",
+ *                 mode: Flatfile.ActionMode.Foreground,
+ *                 label: "Submit",
+ *                 description: "Submit data to webhook.site",
+ *                 primary: true
+ *             }]
+ *     }
+ *
+ * @example
+ *     {
+ *         title: "Updated Title",
+ *         body: "Updated My information"
+ *     }
+ */
 export interface DocumentConfig {
     title: string;
     body: string;

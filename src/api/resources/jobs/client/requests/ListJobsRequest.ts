@@ -9,6 +9,7 @@ export interface ListJobsRequest {
     spaceId?: Flatfile.SpaceId;
     workbookId?: Flatfile.WorkbookId;
     fileId?: Flatfile.FileId;
+    parentId?: Flatfile.JobId;
     /**
      * Number of jobs to return in a page (default 20)
      */

@@ -6,6 +6,14 @@ import * as Flatfile from "../../..";
 
 /**
  * Properties used to allow users to connect to the event bus
+ *
+ * @example
+ *     {
+ *         accountId: "us_acc_YOUR_ID",
+ *         subscribeKey: "sub-c-TOKEN",
+ *         ttl: 15,
+ *         token: "LONG-TOKEN"
+ *     }
  */
 export interface EventToken {
     accountId?: Flatfile.AccountId;

@@ -9,7 +9,7 @@ import * as Flatfile from "../../..";
  *     {
  *         data: [{
  *                 id: "us_ag_YOUR_ID",
- *                 topics: [Flatfile.EventTopic.FileCreated],
+ *                 topics: [Flatfile.EventTopic.WorkbookUpdated],
  *                 compiler: Flatfile.Compiler.Js,
  *                 source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
  *             }]

@@ -4,6 +4,9 @@
 
 /**
  * The type of authentication to use for guests
+ *
+ * @example
+ *     Flatfile.GuestAuthenticationEnum.MagicLink
  */
 export type GuestAuthenticationEnum = "shared_link" | "magic_link";
 

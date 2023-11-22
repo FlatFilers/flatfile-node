@@ -16,6 +16,7 @@ export const EnumPropertyOption: core.serialization.ObjectSchema<
     icon: core.serialization.string().optional(),
     meta: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
     value: core.serialization.any(),
+    alternativeNames: core.serialization.list(core.serialization.string()).optional(),
 });
 
 export declare namespace EnumPropertyOption {
@@ -26,5 +27,6 @@ export declare namespace EnumPropertyOption {
         icon?: string | null;
         meta?: Record<string, any> | null;
         value?: any;
+        alternativeNames?: string[] | null;
     }
 }

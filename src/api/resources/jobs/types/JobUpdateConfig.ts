@@ -11,4 +11,5 @@ export type JobUpdateConfig =
     | Flatfile.ExportJobConfig
     | Flatfile.MutateJobConfig
     | Flatfile.FindAndReplaceJobConfig
+    | Flatfile.MappingProgramJobConfig
     | Flatfile.EmptyObject;

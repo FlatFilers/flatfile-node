@@ -23,6 +23,10 @@ export const JobConfig: core.serialization.ObjectSchema<serializers.JobConfig.Ra
         outcome: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
         info: core.serialization.string().optional(),
         managed: core.serialization.boolean().optional(),
+        part: core.serialization.number().optional(),
+        partData: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
+        partExecution: core.serialization.lazy(async () => (await import("../../..")).JobPartExecution).optional(),
+        parentId: core.serialization.lazy(async () => (await import("../../..")).JobId).optional(),
     });
 
 export declare namespace JobConfig {
@@ -42,5 +46,9 @@ export declare namespace JobConfig {
         outcome?: Record<string, any> | null;
         info?: string | null;
         managed?: boolean | null;
+        part?: number | null;
+        partData?: Record<string, any> | null;
+        partExecution?: serializers.JobPartExecution.Raw | null;
+        parentId?: serializers.JobId.Raw | null;
     }
 }

@@ -4,6 +4,23 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         data: [{
+ *                 id: "us_key_YOUR_ID",
+ *                 rawKey: "pk_YOUR_RAW_API_KEY",
+ *                 type: Flatfile.ApiKeyType.Publishable,
+ *                 environmentId: "us_env_YOUR_ID",
+ *                 accountId: "us_acc_YOUR_ID",
+ *                 operations: [{
+ *                         path: "/v1/spaces",
+ *                         method: "POST"
+ *                     }],
+ *                 createdAt: new Date("2017-07-21T17:32:28.000Z")
+ *             }]
+ *     }
+ */
 export interface ApiKeysResponse {
     data: Flatfile.ApiKey[];
 }

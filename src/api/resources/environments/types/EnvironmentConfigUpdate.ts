@@ -28,4 +28,5 @@ export interface EnvironmentConfigUpdate {
     translationsPath?: string;
     namespaces?: string[];
     languageOverride?: string;
+    dataRetentionPolicy?: Flatfile.DataRetentionPolicyEnum;
 }

@@ -17,6 +17,7 @@ export const BaseProperty: core.serialization.ObjectSchema<serializers.BasePrope
         readonly: core.serialization.boolean().optional(),
         metadata: core.serialization.any().optional(),
         treatments: core.serialization.list(core.serialization.string()).optional(),
+        alternativeNames: core.serialization.list(core.serialization.string()).optional(),
     });
 
 export declare namespace BaseProperty {
@@ -28,5 +29,6 @@ export declare namespace BaseProperty {
         readonly?: boolean | null;
         metadata?: any | null;
         treatments?: string[] | null;
+        alternativeNames?: string[] | null;
     }
 }

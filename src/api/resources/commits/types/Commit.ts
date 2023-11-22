@@ -6,6 +6,14 @@ import * as Flatfile from "../../..";
 
 /**
  * A commit version
+ *
+ * @example
+ *     {
+ *         id: "us_vr_YOUR_ID",
+ *         sheetId: "us_sh_YOUR_ID",
+ *         createdBy: "us_usr_YOUR_ID",
+ *         createdAt: new Date("2019-08-24T14:15:22.000Z")
+ *     }
  */
 export interface Commit {
     id: Flatfile.VersionId;

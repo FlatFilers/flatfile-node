@@ -6,10 +6,24 @@ import * as Flatfile from "../../..";
 
 /**
  * API Key used for authenticating against our APIs
+ *
+ * @example
+ *     {
+ *         id: "us_key_YOUR_ID",
+ *         rawKey: "pk_YOUR_RAW_API_KEY",
+ *         type: Flatfile.ApiKeyType.Publishable,
+ *         environmentId: "us_env_YOUR_ID",
+ *         accountId: "us_acc_YOUR_ID",
+ *         operations: [{
+ *                 path: "/v1/spaces",
+ *                 method: "POST"
+ *             }],
+ *         createdAt: new Date("2017-07-21T17:32:28.000Z")
+ *     }
  */
 export interface ApiKey {
-    id: string;
-    rawKey?: string;
+    id: Flatfile.ApiKeyId;
+    rawKey?: Flatfile.RawKey;
     type: Flatfile.ApiKeyType;
     environmentId?: Flatfile.EnvironmentId;
     accountId?: Flatfile.AccountId;

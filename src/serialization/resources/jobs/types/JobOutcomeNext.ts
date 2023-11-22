@@ -13,6 +13,7 @@ export const JobOutcomeNext: core.serialization.Schema<serializers.JobOutcomeNex
             url: core.serialization.lazyObject(async () => (await import("../../..")).JobOutcomeNextUrl),
             download: core.serialization.lazyObject(async () => (await import("../../..")).JobOutcomeNextDownload),
             wait: core.serialization.lazyObject(async () => (await import("../../..")).JobOutcomeNextWait),
+            snapshot: core.serialization.lazyObject(async () => (await import("../../..")).JobOutcomeNextSnapshot),
         })
         .transform<Flatfile.JobOutcomeNext>({
             transform: (value) => value,
@@ -20,7 +21,12 @@ export const JobOutcomeNext: core.serialization.Schema<serializers.JobOutcomeNex
         });
 
 export declare namespace JobOutcomeNext {
-    type Raw = JobOutcomeNext.Id | JobOutcomeNext.Url | JobOutcomeNext.Download | JobOutcomeNext.Wait;
+    type Raw =
+        | JobOutcomeNext.Id
+        | JobOutcomeNext.Url
+        | JobOutcomeNext.Download
+        | JobOutcomeNext.Wait
+        | JobOutcomeNext.Snapshot;
 
     interface Id extends serializers.JobOutcomeNextId.Raw {
         type: "id";
@@ -36,5 +42,9 @@ export declare namespace JobOutcomeNext {
 
     interface Wait extends serializers.JobOutcomeNextWait.Raw {
         type: "wait";
+    }
+
+    interface Snapshot extends serializers.JobOutcomeNextSnapshot.Raw {
+        type: "snapshot";
     }
 }

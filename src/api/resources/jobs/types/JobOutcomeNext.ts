@@ -8,7 +8,8 @@ export type JobOutcomeNext =
     | Flatfile.JobOutcomeNext.Id
     | Flatfile.JobOutcomeNext.Url
     | Flatfile.JobOutcomeNext.Download
-    | Flatfile.JobOutcomeNext.Wait;
+    | Flatfile.JobOutcomeNext.Wait
+    | Flatfile.JobOutcomeNext.Snapshot;
 
 export declare namespace JobOutcomeNext {
     interface Id extends Flatfile.JobOutcomeNextId {
@@ -25,5 +26,9 @@ export declare namespace JobOutcomeNext {
 
     interface Wait extends Flatfile.JobOutcomeNextWait {
         type: "wait";
+    }
+
+    interface Snapshot extends Flatfile.JobOutcomeNextSnapshot {
+        type: "snapshot";
     }
 }

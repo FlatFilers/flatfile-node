@@ -6,6 +6,15 @@ import * as Flatfile from "../../..";
 
 /**
  * The context of the event
+ *
+ * @example
+ *     {
+ *         accountId: "us_acc_YOUR_ID",
+ *         actorId: "us_key_SOME_KEY",
+ *         environmentId: "us_env_YOUR_ID",
+ *         spaceId: "us_sp_YOUR_ID",
+ *         workbookId: "us_wb_YOUR_ID"
+ *     }
  */
 export interface Context {
     /** The namespaces of the event */

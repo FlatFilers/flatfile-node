@@ -5,39 +5,26 @@
 import * as Flatfile from "../../../..";
 
 export interface GetFieldValuesRequest {
-    /**
-     * Returns results from the given field only. Otherwise all field cells are returned
-     *
-     */
-    fieldKey: string;
+    fieldKey?: Flatfile.FieldKey;
     sortField?: Flatfile.SortField;
     sortDirection?: Flatfile.SortDirection;
-    /**
-     * Options to filter records
-     */
     filter?: Flatfile.Filter;
     /**
      * Name of field by which to filter records
      */
-    filterField?: string;
+    filterField?: Flatfile.FilterField;
     /**
      * Number of records to return in a page (default 1000 if pageNumber included)
      */
-    pageSize?: number;
+    pageSize?: Flatfile.PageSize;
     /**
      * Based on pageSize, which page of records to return
      */
-    pageNumber?: number;
-    /**
-     * When true, excludes duplicate values
-     */
-    distinct?: boolean;
-    /**
-     * When both distinct and includeCounts are true, the count of distinct field values will be returned
-     */
-    includeCounts?: boolean;
+    pageNumber?: Flatfile.PageNumber;
+    distinct?: Flatfile.Distinct;
+    includeCounts?: Flatfile.IncludeCounts;
     /**
      * A value to find for a given field in a sheet. Wrap the value in "" for exact match
      */
-    searchValue?: string;
+    searchValue?: Flatfile.SearchValue;
 }
