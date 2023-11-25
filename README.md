@@ -1,7 +1,7 @@
 # Flatfile Node API Library
 
 [![npm shield](https://img.shields.io/npm/v/@flatfile/api)](https://www.npmjs.com/package/@flatfile/api)
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://buildwithfern.com/?utm_source=flatfilers/flatfile-node/readme)
 
 The Flatfile Node.js library provides convenient access to the Flatfile API from JavaScript/TypeScript.
 
