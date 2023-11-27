@@ -4,6 +4,15 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         guestId: "us_g_YOUR_ID",
+ *         spaceId: "us_sp_YOUR_ID",
+ *         fromName: "Your Name",
+ *         message: "Hello, I would like to invite you to my space."
+ *     }
+ */
 export interface Invite {
     guestId: Flatfile.GuestId;
     spaceId: Flatfile.SpaceId;

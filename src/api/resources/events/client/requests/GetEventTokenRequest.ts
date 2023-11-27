@@ -6,11 +6,11 @@ import * as Flatfile from "../../../..";
 
 export interface GetEventTokenRequest {
     /**
-     * The space id
-     */
-    spaceId?: Flatfile.SpaceId;
-    /**
      * The resource ID of the event stream (space or environment id)
      */
     scope?: string;
+    /**
+     * The space ID of the event stream
+     */
+    spaceId?: Flatfile.SpaceId;
 }

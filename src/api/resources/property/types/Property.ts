@@ -55,18 +55,30 @@ import * as Flatfile from "../../..";
  *         config: {
  *             allowCustom: false,
  *             options: [{
- *                     value: 9,
+ *                     value: {
+ *                         "unknown": 9,
+ *                         "type": "unknown"
+ *                     },
  *                     label: "Kitchenware",
  *                     icon: "pots-and-pans",
  *                     color: "#f00000",
  *                     meta: {
- *                         "product_code_prefix": "KI-"
+ *                         "product_code_prefix": {
+ *                             "unknown": "KI-",
+ *                             "type": "unknown"
+ *                         }
  *                     }
  *                 }, {
- *                     value: 9,
+ *                     value: {
+ *                         "unknown": 9,
+ *                         "type": "unknown"
+ *                     },
  *                     label: "Clothing",
  *                     meta: {
- *                         "product_code_prefix": "CL-"
+ *                         "product_code_prefix": {
+ *                             "unknown": "CL-",
+ *                             "type": "unknown"
+ *                         }
  *                     }
  *                 }]
  *         }

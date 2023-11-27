@@ -7,3 +7,5 @@ export * from "./GuestConfigUpdate";
 export * from "./GuestWorkbook";
 export * from "./GuestSpace";
 export * from "./Invite";
+export * from "./GuestToken";
+export * from "./GuestTokenResponse";

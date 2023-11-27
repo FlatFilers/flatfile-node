@@ -44,7 +44,7 @@ export class Versions {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.38",
+                "X-Fern-SDK-Version": "1.5.39",
             },
             contentType: "application/json",
             body: await serializers.VersionsPostRequestBody.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),

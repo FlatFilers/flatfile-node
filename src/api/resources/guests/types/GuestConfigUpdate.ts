@@ -6,6 +6,12 @@ import * as Flatfile from "../../..";
 
 /**
  * Properties used to update an existing guest
+ *
+ * @example
+ *     {
+ *         email: "updated@example.com",
+ *         name: "Your Name Updated"
+ *     }
  */
 export interface GuestConfigUpdate {
     environmentId?: Flatfile.EnvironmentId;

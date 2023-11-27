@@ -13,7 +13,10 @@ import * as Flatfile from "../../..";
  *         isProd: false,
  *         guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink],
  *         metadata: {
- *             "key": "value"
+ *             "key": {
+ *                 "unknown": "value",
+ *                 "type": "unknown"
+ *             }
  *         },
  *         namespaces: ["default"]
  *     }

@@ -4,6 +4,16 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         id: "us_sp_YOUR_ID",
+ *         workbooks: [{
+ *                 id: "us_wb_YOUR_ID"
+ *             }],
+ *         lastAccessed: new Date("2023-10-30T16:59:45.735Z")
+ *     }
+ */
 export interface GuestSpace {
     id: Flatfile.SpaceId;
     workbooks?: Flatfile.GuestWorkbook[];
