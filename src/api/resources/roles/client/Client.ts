@@ -47,7 +47,7 @@ export class Roles {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.39",
+                "X-Fern-SDK-Version": "1.5.40",
             },
             contentType: "application/json",
             body: await serializers.AssignRoleRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),

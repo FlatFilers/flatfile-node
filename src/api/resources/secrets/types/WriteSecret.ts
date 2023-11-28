@@ -6,6 +6,14 @@ import * as Flatfile from "../../..";
 
 /**
  * The properties required to write to a secret. Value is the only mutable property. Name, environmentId, spaceId (optional) are used for finding the secret.
+ *
+ * @example
+ *     {
+ *         name: "My Secret",
+ *         value: "Sup3r$ecret\\/alue!",
+ *         environmentId: "us_env_YOUR_ID",
+ *         spaceId: "us_sp_YOUR_ID"
+ *     }
  */
 export interface WriteSecret {
     name: Flatfile.SecretName;

@@ -30,5 +30,4 @@ export interface Environment {
     translationsPath?: string;
     namespaces?: string[];
     languageOverride?: string;
-    dataRetentionPolicy?: Flatfile.DataRetentionPolicyEnum;
 }

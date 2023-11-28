@@ -6,6 +6,15 @@ import * as Flatfile from "../../..";
 
 /**
  * The value of a secret
+ *
+ * @example
+ *     {
+ *         id: "us_sec_YOUR_ID",
+ *         name: "My Secret",
+ *         value: "Sup3r$ecret\\/alue!",
+ *         environmentId: "us_env_YOUR_ID",
+ *         spaceId: "us_sp_YOUR_ID"
+ *     }
  */
 export interface Secret extends Flatfile.WriteSecret {
     id: Flatfile.SecretId;

@@ -10,8 +10,10 @@ export const JobType: core.serialization.Schema<serializers.JobType.Raw, Flatfil
     "file",
     "workbook",
     "sheet",
+    "space",
+    "document",
 ]);
 
 export declare namespace JobType {
-    type Raw = "file" | "workbook" | "sheet";
+    type Raw = "file" | "workbook" | "sheet" | "space" | "document";
 }

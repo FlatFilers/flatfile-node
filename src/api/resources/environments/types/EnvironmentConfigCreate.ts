@@ -31,5 +31,4 @@ export interface EnvironmentConfigCreate {
     translationsPath?: string;
     namespaces?: string[];
     languageOverride?: string;
-    dataRetentionPolicy?: Flatfile.DataRetentionPolicyEnum;
 }

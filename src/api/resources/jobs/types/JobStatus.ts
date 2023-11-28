@@ -5,12 +5,23 @@
 /**
  * the status of the job
  */
-export type JobStatus = "planning" | "ready" | "executing" | "complete" | "failed";
+export type JobStatus =
+    | "created"
+    | "planning"
+    | "scheduled"
+    | "ready"
+    | "executing"
+    | "complete"
+    | "failed"
+    | "canceled";
 
 export const JobStatus = {
+    Created: "created",
     Planning: "planning",
+    Scheduled: "scheduled",
     Ready: "ready",
     Executing: "executing",
     Complete: "complete",
     Failed: "failed",
+    Canceled: "canceled",
 } as const;

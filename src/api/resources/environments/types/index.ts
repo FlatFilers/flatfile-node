@@ -4,4 +4,3 @@ export * from "./Environment";
 export * from "./EnvironmentConfigCreate";
 export * from "./EnvironmentConfigUpdate";
 export * from "./GuestAuthenticationEnum";
-export * from "./DataRetentionPolicyEnum";

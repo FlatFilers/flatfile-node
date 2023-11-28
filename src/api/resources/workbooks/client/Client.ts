@@ -55,7 +55,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.39",
+                "X-Fern-SDK-Version": "1.5.40",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -126,7 +126,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.39",
+                "X-Fern-SDK-Version": "1.5.40",
             },
             contentType: "application/json",
             body: await serializers.CreateWorkbookConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -198,7 +198,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.39",
+                "X-Fern-SDK-Version": "1.5.40",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -279,7 +279,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.39",
+                "X-Fern-SDK-Version": "1.5.40",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -361,7 +361,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.39",
+                "X-Fern-SDK-Version": "1.5.40",
             },
             contentType: "application/json",
             body: await serializers.WorkbookUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -406,6 +406,70 @@ export class Workbooks {
                         body: _response.error.body,
                     });
             }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Returns the commits for a workbook
+     */
+    public async getWorkbookCommits(
+        workbookId: Flatfile.WorkbookId,
+        request: Flatfile.ListWorkbookCommitsRequest = {},
+        requestOptions?: Workbooks.RequestOptions
+    ): Promise<Flatfile.ListCommitsResponse> {
+        const { completed } = request;
+        const _queryParams: Record<string, string | string[]> = {};
+        if (completed != null) {
+            _queryParams["completed"] = completed.toString();
+        }
+
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `/workbooks/${await serializers.WorkbookId.jsonOrThrow(workbookId)}/commits`
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.5.40",
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.ListCommitsResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
         }
 
         switch (_response.error.reason) {

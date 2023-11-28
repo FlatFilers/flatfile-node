@@ -7,8 +7,17 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const JobStatus: core.serialization.Schema<serializers.JobStatus.Raw, Flatfile.JobStatus> =
-    core.serialization.enum_(["planning", "ready", "executing", "complete", "failed"]);
+    core.serialization.enum_([
+        "created",
+        "planning",
+        "scheduled",
+        "ready",
+        "executing",
+        "complete",
+        "failed",
+        "canceled",
+    ]);
 
 export declare namespace JobStatus {
-    type Raw = "planning" | "ready" | "executing" | "complete" | "failed";
+    type Raw = "created" | "planning" | "scheduled" | "ready" | "executing" | "complete" | "failed" | "canceled";
 }
