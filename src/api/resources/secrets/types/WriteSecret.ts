@@ -16,8 +16,12 @@ import * as Flatfile from "../../..";
  *     }
  */
 export interface WriteSecret {
+    /** The reference name for a secret. */
     name: Flatfile.SecretName;
+    /** The secret value. This is hidden in the UI. */
     value: Flatfile.SecretValue;
+    /** The Environment of the secret. */
     environmentId: Flatfile.EnvironmentId;
+    /** The Space of the secret. */
     spaceId?: Flatfile.SpaceId;
 }

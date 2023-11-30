@@ -4,6 +4,12 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         spaceId: "us_sp_YOUR_ID"
+ *     }
+ */
 export interface ListGuestsRequest {
     /**
      * ID of space to return

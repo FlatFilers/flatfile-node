@@ -4,9 +4,21 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {}
+ */
 export interface GetRecordsRequest {
-    versionId?: string;
+    /**
+     * Deprecated, use `commitId` instead.
+     */
+    versionId?: Flatfile.VersionId;
+    commitId?: Flatfile.CommitId;
+    /**
+     * Deprecated, use `sinceCommitId` instead.
+     */
     sinceVersionId?: Flatfile.VersionId;
+    sinceCommitId?: Flatfile.CommitId;
     sortField?: Flatfile.SortField;
     sortDirection?: Flatfile.SortDirection;
     filter?: Flatfile.Filter;

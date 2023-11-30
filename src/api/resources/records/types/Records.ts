@@ -6,5 +6,28 @@ import * as Flatfile from "../../..";
 
 /**
  * List of Record objects
+ *
+ * @example
+ *     [{
+ *             id: "us_rc_YOUR_ID",
+ *             versionId: "us_vr_YOUR_ID",
+ *             commitId: "us_vr_YOUR_ID",
+ *             values: {
+ *                 "firstName": {
+ *                     messages: [],
+ *                     valid: true
+ *                 },
+ *                 "lastName": {
+ *                     messages: [],
+ *                     valid: true
+ *                 },
+ *                 "email": {
+ *                     messages: [],
+ *                     valid: true
+ *                 }
+ *             },
+ *             valid: true,
+ *             metadata: {}
+ *         }]
  */
 export type Records = Flatfile.Record_[];

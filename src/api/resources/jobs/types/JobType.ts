@@ -4,6 +4,15 @@
 
 /**
  * The type of job
+ *
+ * @example
+ *     Flatfile.JobType.File
+ *
+ * @example
+ *     Flatfile.JobType.Workbook
+ *
+ * @example
+ *     Flatfile.JobType.Sheet
  */
 export type JobType = "file" | "workbook" | "sheet" | "space" | "document";
 

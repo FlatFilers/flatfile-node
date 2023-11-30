@@ -4,6 +4,12 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         sheetId: "us_sh_YOUR_ID"
+ *     }
+ */
 export interface ListSnapshotRequest {
     /**
      * ID of sheet

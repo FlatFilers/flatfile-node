@@ -8,10 +8,15 @@ import * as Flatfile from "../../..";
  * Changes to make to an existing sheet
  */
 export interface SheetUpdate {
+    /** The ID of the Sheet. */
     id?: Flatfile.SheetId;
+    /** The ID of the Workbook. */
     workbookId?: Flatfile.WorkbookId;
+    /** Describes shape of data as well as behavior. */
     config?: Flatfile.SheetConfig;
+    /** The amount of records in the Sheet. */
     countRecords?: Flatfile.RecordCounts;
+    /** The scoped namespace of the Sheet. */
     namespace?: string;
     /** Date the sheet was last updated */
     updatedAt?: Date;

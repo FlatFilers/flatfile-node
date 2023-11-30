@@ -4,6 +4,13 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         environmentId: "us_env_YOUR_ID",
+ *         key: "us_key_YOUR_ID"
+ *     }
+ */
 export interface DeleteApiKeyRequest {
     environmentId: Flatfile.EnvironmentId;
     key: Flatfile.ApiKeyId;

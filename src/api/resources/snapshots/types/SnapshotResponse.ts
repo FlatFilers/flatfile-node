@@ -4,6 +4,35 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         data: {
+ *             id: "us_ss_YOUR_ID",
+ *             sheetId: "us_sh_YOUR_ID",
+ *             label: "My snapshot",
+ *             summary: {
+ *                 createdSince: {
+ *                     total: 0
+ *                 },
+ *                 updatedSince: {
+ *                     total: 5,
+ *                     byField: {
+ *                         "lastName": 5
+ *                     }
+ *                 },
+ *                 deletedSince: {
+ *                     total: 5,
+ *                     byField: {
+ *                         "firstName": 1
+ *                     }
+ *                 }
+ *             },
+ *             createdAt: new Date("2023-01-01T00:00:00.000Z"),
+ *             createdBy: "us_usr_YOUR_ID"
+ *         }
+ *     }
+ */
 export interface SnapshotResponse {
     data: Flatfile.Snapshot;
 }

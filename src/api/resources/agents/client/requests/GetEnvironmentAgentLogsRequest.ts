@@ -4,6 +4,16 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         environmentId: "us_env_YOUR_ID",
+ *         spaceId: "us_sp_YOUR_ID",
+ *         success: true,
+ *         pageSize: 20,
+ *         pageNumber: 1
+ *     }
+ */
 export interface GetEnvironmentAgentLogsRequest {
     environmentId: Flatfile.EnvironmentId;
     spaceId?: Flatfile.SpaceId;

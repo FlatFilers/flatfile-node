@@ -4,11 +4,33 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         environmentId: "us_env_YOUR_ID",
+ *         spaceId: "us_sp_YOUR_ID"
+ *     }
+ */
 export interface ListJobsRequest {
+    /**
+     * When provided, only jobs for the given environment will be returned
+     */
     environmentId?: Flatfile.EnvironmentId;
+    /**
+     * When provided, only jobs for the given space will be returned
+     */
     spaceId?: Flatfile.SpaceId;
+    /**
+     * When provided, only jobs for the given workbook will be returned
+     */
     workbookId?: Flatfile.WorkbookId;
+    /**
+     * When provided, only jobs for the given file will be returned
+     */
     fileId?: Flatfile.FileId;
+    /**
+     * When provided, only jobs that are parts of the given job will be returned
+     */
     parentId?: Flatfile.JobId;
     /**
      * Number of jobs to return in a page (default 20)
@@ -18,5 +40,8 @@ export interface ListJobsRequest {
      * Based on pageSize, which page of jobs to return
      */
     pageNumber?: number;
+    /**
+     * Sort direction - asc (ascending) or desc (descending)
+     */
     sortDirection?: Flatfile.SortDirection;
 }

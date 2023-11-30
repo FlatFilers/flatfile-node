@@ -5,6 +5,8 @@
 import * as Flatfile from "../../../..";
 
 export interface VersionsPostRequestBody {
+    /** The ID of the Sheet. */
     sheetId?: Flatfile.SheetId;
+    /** Deprecated, creating or updating a group of records together will automatically generate a commitId to group those record changes together. */
     parentVersionId?: Flatfile.VersionId;
 }

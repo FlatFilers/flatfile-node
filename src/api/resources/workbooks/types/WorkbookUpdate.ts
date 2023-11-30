@@ -8,11 +8,17 @@ import * as Flatfile from "../../..";
  * The updates to be made to an existing workbook
  */
 export interface WorkbookUpdate {
+    /** The name of the Workbook. */
     name?: string;
+    /** An optional list of labels for the Workbook. */
     labels?: string[];
+    /** The Space Id associated with the Workbook. */
     spaceId?: Flatfile.SpaceId;
+    /** The Environment Id associated with the Workbook. */
     environmentId?: Flatfile.EnvironmentId;
+    /** The namespace of the Workbook. */
     namespace?: string;
+    /** Describes shape of data as well as behavior */
     sheets?: Flatfile.SheetConfigOrUpdate[];
     actions?: Flatfile.Action[];
     /** Metadata for the workbook */

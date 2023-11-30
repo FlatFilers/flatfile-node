@@ -9,14 +9,14 @@ import * as core from "../../../../core";
 export const RecordCountsResponseData: core.serialization.ObjectSchema<
     serializers.RecordCountsResponseData.Raw,
     Flatfile.RecordCountsResponseData
-> = core.serialization
-    .object({
-        counts: core.serialization.lazyObject(async () => (await import("../../..")).RecordCounts),
-    })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).Success));
+> = core.serialization.object({
+    counts: core.serialization.lazyObject(async () => (await import("../../..")).RecordCounts),
+    success: core.serialization.boolean(),
+});
 
 export declare namespace RecordCountsResponseData {
-    interface Raw extends serializers.Success.Raw {
+    interface Raw {
         counts: serializers.RecordCounts.Raw;
+        success: boolean;
     }
 }

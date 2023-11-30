@@ -4,15 +4,44 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         versionId: "us_vr_YOUR_ID"
+ *     }
+ */
 export interface GetRecordCountsRequest {
+    /**
+     * Returns records that were changed in that version and only those records.
+     */
     versionId?: string;
+    /**
+     * Deprecated, use `sinceCommitId` instead.
+     */
     sinceVersionId?: Flatfile.VersionId;
+    /**
+     * Returns records that were changed in that version in addition to any records from versions after that version.
+     */
+    commitId?: Flatfile.CommitId;
+    /**
+     * Listing a commit ID here will return all records since the specified commit.
+     */
+    sinceCommitId?: Flatfile.CommitId;
     /**
      * Options to filter records
      */
     filter?: Flatfile.Filter;
+    /**
+     * The field to filter the data on.
+     */
     filterField?: Flatfile.FilterField;
+    /**
+     * The value to search for data on.
+     */
     searchValue?: Flatfile.SearchValue;
+    /**
+     * The field to search for data on.
+     */
     searchField?: Flatfile.SearchField;
     /**
      * If true, the error counts for each field will also be returned

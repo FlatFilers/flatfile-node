@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Jobs {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
@@ -24,7 +24,7 @@ export declare namespace Jobs {
 }
 
 export class Jobs {
-    constructor(protected readonly _options: Jobs.Options) {}
+    constructor(protected readonly _options: Jobs.Options = {}) {}
 
     public async list(
         request: Flatfile.ListJobsRequest = {},
@@ -75,7 +75,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -129,7 +129,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body: await serializers.JobConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -180,7 +180,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -234,7 +234,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body: await serializers.JobUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -285,7 +285,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -325,6 +325,9 @@ export class Jobs {
 
     /**
      * Execute a job and return the job
+     *
+     * @example
+     *     await flatfile.jobs.execute("us_jb_YOUR_ID")
      */
     public async execute(jobId: string, requestOptions?: Jobs.RequestOptions): Promise<Flatfile.Success> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -338,7 +341,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -378,6 +381,9 @@ export class Jobs {
 
     /**
      * Returns a single job's execution plan
+     *
+     * @example
+     *     await flatfile.jobs.getExecutionPlan("us_jb_YOUR_ID")
      */
     public async getExecutionPlan(
         jobId: Flatfile.JobId,
@@ -394,7 +400,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -451,7 +457,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body: await serializers.JobExecutionPlanRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -509,7 +515,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body: await serializers.JobExecutionPlanConfigRequest.jsonOrThrow(request, {
@@ -569,7 +575,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body:
@@ -613,6 +619,9 @@ export class Jobs {
 
     /**
      * Acknowledge a job outcome and return the job
+     *
+     * @example
+     *     await flatfile.jobs.ackOutcome("us_jb_YOUR_ID")
      */
     public async ackOutcome(
         jobId: Flatfile.JobId,
@@ -629,7 +638,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -686,7 +695,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body:
@@ -747,7 +756,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body:
@@ -808,7 +817,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body:
@@ -869,7 +878,7 @@ export class Jobs {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body: await serializers.JobSplitDetails.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -909,6 +918,11 @@ export class Jobs {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

@@ -4,6 +4,19 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         data: [{
+ *                 id: "us_rc_YOUR_ID",
+ *                 values: {
+ *                     "firstName": {},
+ *                     "lastName": {},
+ *                     "email": {}
+ *                 }
+ *             }]
+ *     }
+ */
 export interface DiffRecordsResponse {
     data: Flatfile.DiffRecords;
 }

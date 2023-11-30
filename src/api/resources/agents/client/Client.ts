@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Agents {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
@@ -24,7 +24,7 @@ export declare namespace Agents {
 }
 
 export class Agents {
-    constructor(protected readonly _options: Agents.Options) {}
+    constructor(protected readonly _options: Agents.Options = {}) {}
 
     public async list(
         request: Flatfile.ListAgentsRequest,
@@ -44,7 +44,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -85,6 +85,26 @@ export class Agents {
 
     /**
      * @throws {@link Flatfile.BadRequestError}
+     *
+     * @example
+     *     await flatfile.agents.create({
+     *         environmentId: "us_env_YOUR_ID",
+     *         body: {
+     *             topics: [Flatfile.EventTopic.WorkbookUpdated],
+     *             compiler: Flatfile.Compiler.Js,
+     *             source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
+     *         }
+     *     })
+     *
+     * @example
+     *     await flatfile.agents.create({
+     *         environmentId: "us_env_YOUR_ID",
+     *         body: {
+     *             topics: [Flatfile.EventTopic.WorkbookUpdated],
+     *             compiler: Flatfile.Compiler.Js,
+     *             source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
+     *         }
+     *     })
      */
     public async create(
         request: Flatfile.CreateAgentsRequest,
@@ -104,7 +124,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -160,6 +180,11 @@ export class Agents {
     /**
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.agents.get_("us_ag_YOUR_ID", {
+     *         environmentId: "us_env_YOUR_ID"
+     *     })
      */
     public async get(
         agentId: Flatfile.AgentId,
@@ -180,7 +205,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -245,6 +270,11 @@ export class Agents {
     /**
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.agents.getAgentLogs("us_ag_YOUR_ID", {
+     *         environmentId: "us_env_YOUR_ID"
+     *     })
      */
     public async getAgentLogs(
         agentId: Flatfile.AgentId,
@@ -265,7 +295,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -330,6 +360,11 @@ export class Agents {
     /**
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.agents.getAgentLog("commons.EventId", {
+     *         environmentId: "us_env_YOUR_ID"
+     *     })
      */
     public async getAgentLog(
         eventId: Flatfile.EventId,
@@ -350,7 +385,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -415,6 +450,15 @@ export class Agents {
     /**
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.agents.getEnvironmentAgentLogs({
+     *         environmentId: "us_env_YOUR_ID",
+     *         spaceId: "us_sp_YOUR_ID",
+     *         success: true,
+     *         pageSize: 20,
+     *         pageNumber: 1
+     *     })
      */
     public async getEnvironmentAgentLogs(
         request: Flatfile.GetEnvironmentAgentLogsRequest,
@@ -450,7 +494,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -515,6 +559,15 @@ export class Agents {
     /**
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.agents.getEnvironmentAgentExecutions({
+     *         environmentId: "us_env_YOUR_ID",
+     *         spaceId: "us_sp_YOUR_ID",
+     *         success: true,
+     *         pageSize: 20,
+     *         pageNumber: 1
+     *     })
      */
     public async getEnvironmentAgentExecutions(
         request: Flatfile.GetEnvironmentAgentExecutionsRequest,
@@ -550,7 +603,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -616,6 +669,11 @@ export class Agents {
      * Deletes a single agent
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.agents.delete_("us_ag_YOUR_ID", {
+     *         environmentId: "us_env_YOUR_ID"
+     *     })
      */
     public async delete(
         agentId: Flatfile.AgentId,
@@ -636,7 +694,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -699,6 +757,11 @@ export class Agents {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

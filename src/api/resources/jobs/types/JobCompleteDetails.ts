@@ -6,6 +6,36 @@ import * as Flatfile from "../../..";
 
 /**
  * Outcome summary of a job
+ *
+ * @example
+ *     {
+ *         outcome: {
+ *             acknowledge: true,
+ *             buttonText: "Acknowledge",
+ *             next: {
+ *                 type: "id",
+ *                 id: "us_jb_YOUR_ID"
+ *             },
+ *             heading: "Success",
+ *             message: "Job was successful"
+ *         },
+ *         info: "Job is Complete"
+ *     }
+ *
+ * @example
+ *     {
+ *         outcome: {
+ *             acknowledge: true,
+ *             buttonText: "Acknowledge",
+ *             next: {
+ *                 type: "id",
+ *                 id: "us_jb_YOUR_ID"
+ *             },
+ *             heading: "Failed",
+ *             message: "Job failed"
+ *         },
+ *         info: "Job was failed"
+ *     }
  */
 export interface JobCompleteDetails {
     outcome?: Flatfile.JobOutcome;

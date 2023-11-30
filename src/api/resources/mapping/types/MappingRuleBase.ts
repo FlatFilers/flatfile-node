@@ -4,6 +4,19 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         id: "mapping-rule-id",
+ *         name: "Assign mapping rule",
+ *         type: Flatfile.MappingRuleType.Assign,
+ *         config: {},
+ *         confidence: 1,
+ *         createdBy: "us_usr_YOUR_ID",
+ *         createdAt: new Date("2021-01-01T00:00:00.000Z"),
+ *         updatedAt: new Date("2021-01-01T00:00:00.000Z")
+ *     }
+ */
 export interface MappingRuleBase extends Flatfile.MappingRuleConfig {
     /** ID of the mapping rule */
     id: Flatfile.MappingId;

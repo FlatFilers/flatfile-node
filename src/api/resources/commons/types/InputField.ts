@@ -5,10 +5,16 @@
 import * as Flatfile from "../../..";
 
 export interface InputField {
+    /** Unique key for a Field. */
     key: string;
+    /** Visible name of a Field. */
     label: string;
+    /** Brief description below the name of the Field. */
     description?: string;
+    /** Field Types inform the user interface how to sort and display data. */
     type: string;
+    /** Additional configuration for enum Fields. */
     config?: Flatfile.InputConfig;
+    /** Indicate additional validations that will be applied to the Field. */
     constraints?: Flatfile.InputConstraint[];
 }

@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Mapping {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
@@ -24,7 +24,7 @@ export declare namespace Mapping {
 }
 
 export class Mapping {
-    constructor(protected readonly _options: Mapping.Options) {}
+    constructor(protected readonly _options: Mapping.Options = {}) {}
 
     /**
      * Creates a mapping rule
@@ -46,7 +46,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body: await serializers.MappingRuleConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -112,6 +112,9 @@ export class Mapping {
      * List all mapping rules
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.mapping.listMappings()
      */
     public async listMappings(requestOptions?: Mapping.RequestOptions): Promise<Flatfile.MappingRulesResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -125,7 +128,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -190,6 +193,9 @@ export class Mapping {
      * Deletes a mapping rule
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.mapping.deleteMapping("us_mp_YOUR_ID")
      */
     public async deleteMapping(
         mappingId: Flatfile.MappingId,
@@ -206,7 +212,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -268,6 +274,11 @@ export class Mapping {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

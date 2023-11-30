@@ -1,6 +1,6 @@
 {
     "name": "@flatfile/api",
-    "version": "1.5.40",
+    "version": "1.5.41",
     "private": false,
     "repository": "https://github.com/FlatFilers/flatfile-node",
     "main": "./index.js",
@@ -18,7 +18,6 @@
         "qs": "6.11.2",
         "@types/qs": "6.9.8",
         "js-base64": "3.7.2",
-        "@ungap/url-search-params": "0.2.2",
         "@flatfile/cross-env-config": "0.0.4",
         "@types/pako": "2.0.1",
         "pako": "2.0.1"

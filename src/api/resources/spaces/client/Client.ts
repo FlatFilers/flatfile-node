@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Spaces {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
@@ -24,11 +24,16 @@ export declare namespace Spaces {
 }
 
 export class Spaces {
-    constructor(protected readonly _options: Spaces.Options) {}
+    constructor(protected readonly _options: Spaces.Options = {}) {}
 
     /**
      * Returns all spaces for an account or environment
      * @throws {@link Flatfile.BadRequestError}
+     *
+     * @example
+     *     await flatfile.spaces.list({
+     *         environmentId: "us_env_YOUR_ID"
+     *     })
      */
     public async list(
         request: Flatfile.ListSpacesRequest = {},
@@ -80,7 +85,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -152,7 +157,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body: await serializers.SpaceConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -218,6 +223,9 @@ export class Spaces {
      * Returns a single space
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.spaces.get_("us_sp_YOUR_ID")
      */
     public async get(
         spaceId: Flatfile.SpaceId,
@@ -234,7 +242,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -299,6 +307,9 @@ export class Spaces {
      * Delete a space
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.spaces.delete_("us_sp_YOUR_ID")
      */
     public async delete(spaceId: Flatfile.SpaceId, requestOptions?: Spaces.RequestOptions): Promise<Flatfile.Success> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -312,7 +323,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -377,6 +388,11 @@ export class Spaces {
      * Delete multiple spaces by id
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.spaces.bulkDelete({
+     *         ids: "us_sp_YOUR_ID"
+     *     })
      */
     public async bulkDelete(
         request: Flatfile.DeleteSpacesRequest,
@@ -401,7 +417,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -484,7 +500,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body: await serializers.SpaceConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -550,6 +566,9 @@ export class Spaces {
      * Sets archivedAt timestamp on a space
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.spaces.archiveSpace("us_sp_YOUR_ID")
      */
     public async archiveSpace(
         spaceId: Flatfile.SpaceId,
@@ -566,7 +585,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -628,6 +647,11 @@ export class Spaces {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

@@ -5,6 +5,8 @@
 import * as Flatfile from "../../..";
 
 export interface CategoryMapping {
+    /** The source value to map from */
     sourceValue?: Flatfile.EnumValue;
+    /** The destination value to map to */
     destinationValue?: Flatfile.EnumValue;
 }

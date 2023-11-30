@@ -4,6 +4,12 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         workbookId: "us_wb_YOUR_ID"
+ *     }
+ */
 export interface ListSheetsRequest {
     /**
      * ID of workbook

@@ -4,6 +4,13 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         type: "id",
+ *         id: "us_jb_YOUR_ID"
+ *     }
+ */
 export type JobOutcomeNext =
     | Flatfile.JobOutcomeNext.Id
     | Flatfile.JobOutcomeNext.Url

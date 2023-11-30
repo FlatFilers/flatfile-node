@@ -6,5 +6,21 @@ import * as Flatfile from "../../..";
 
 /**
  * A single row of data in a Sheet
+ *
+ * @example
+ *     {
+ *         "firstName": {
+ *             messages: [],
+ *             valid: true
+ *         },
+ *         "lastName": {
+ *             messages: [],
+ *             valid: true
+ *         },
+ *         "email": {
+ *             messages: [],
+ *             valid: true
+ *         }
+ *     }
  */
 export type RecordData = Record<string, Flatfile.CellValue>;

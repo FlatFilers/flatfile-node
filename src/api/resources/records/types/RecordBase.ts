@@ -4,9 +4,21 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         id: "us_rc_YOUR_ID",
+ *         versionId: "us_vr_YOUR_ID",
+ *         commitId: "us_vr_YOUR_ID",
+ *         valid: true,
+ *         metadata: {}
+ *     }
+ */
 export interface RecordBase {
     id: Flatfile.RecordId;
+    /** Deprecated, use `commitId` instead. */
     versionId?: Flatfile.VersionId;
+    commitId?: Flatfile.CommitId;
     valid?: boolean;
     messages?: Flatfile.ValidationMessage[];
     metadata?: Record<string, any>;

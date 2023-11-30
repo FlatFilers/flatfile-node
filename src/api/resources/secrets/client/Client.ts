@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Secrets {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
@@ -24,12 +24,17 @@ export declare namespace Secrets {
 }
 
 export class Secrets {
-    constructor(protected readonly _options: Secrets.Options) {}
+    constructor(protected readonly _options: Secrets.Options = {}) {}
 
     /**
      * Fetch all secrets for a given environmentId and optionally apply space overrides
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.secrets.list({
+     *         environmentId: "us_env_YOUR_ID"
+     *     })
      */
     public async list(
         request: Flatfile.ListSecrets,
@@ -53,7 +58,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -135,7 +140,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body: await serializers.WriteSecret.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -201,6 +206,9 @@ export class Secrets {
      * Deletes a specific Secret from the Environment or Space as is the case
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.secrets.delete_("us_sec_YOUR_ID")
      */
     public async delete(
         secretId: Flatfile.SecretId,
@@ -217,7 +225,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -279,6 +287,11 @@ export class Secrets {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

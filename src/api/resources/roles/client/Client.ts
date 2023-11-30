@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Roles {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
@@ -24,7 +24,7 @@ export declare namespace Roles {
 }
 
 export class Roles {
-    constructor(protected readonly _options: Roles.Options) {}
+    constructor(protected readonly _options: Roles.Options = {}) {}
 
     /**
      * Assign an existing role to the specified actor in the specified resource context
@@ -47,7 +47,7 @@ export class Roles {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body: await serializers.AssignRoleRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -110,6 +110,11 @@ export class Roles {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

@@ -4,6 +4,12 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         fieldKey: "email"
+ *     }
+ */
 export interface FindAndReplaceRecordRequest {
     filter?: Flatfile.Filter;
     /**
@@ -21,6 +27,6 @@ export interface FindAndReplaceRecordRequest {
     find?: Flatfile.CellValueUnion;
     /** The value to replace found values with */
     replace?: Flatfile.CellValueUnion;
-    /** The value to replace found values with */
+    /** A unique key used to identify a field in a sheet */
     fieldKey: string;
 }

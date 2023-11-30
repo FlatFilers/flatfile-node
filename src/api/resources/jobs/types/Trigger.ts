@@ -3,7 +3,13 @@
  */
 
 /**
- * the type of trigger to use for this job
+ * The type of trigger to use for this job
+ *
+ * @example
+ *     Flatfile.Trigger.Immediate
+ *
+ * @example
+ *     Flatfile.Trigger.Manual
  */
 export type Trigger = "manual" | "immediate";
 

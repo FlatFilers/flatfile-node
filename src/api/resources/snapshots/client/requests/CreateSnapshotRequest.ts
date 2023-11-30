@@ -4,6 +4,13 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         sheetId: "us_sh_YOUR_ID",
+ *         label: "My snapshot"
+ *     }
+ */
 export interface CreateSnapshotRequest {
     /** ID of sheet */
     sheetId: Flatfile.SheetId;

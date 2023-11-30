@@ -4,6 +4,10 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {}
+ */
 export interface ListFilesRequest {
     spaceId?: string;
     /**

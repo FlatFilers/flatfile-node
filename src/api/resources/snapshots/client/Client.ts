@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Snapshots {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
@@ -24,12 +24,18 @@ export declare namespace Snapshots {
 }
 
 export class Snapshots {
-    constructor(protected readonly _options: Snapshots.Options) {}
+    constructor(protected readonly _options: Snapshots.Options = {}) {}
 
     /**
      * Creates a snapshot of a sheet
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.snapshots.createSnapshot({
+     *         sheetId: "us_sh_YOUR_ID",
+     *         label: "My snapshot"
+     *     })
      */
     public async createSnapshot(
         request: Flatfile.CreateSnapshotRequest,
@@ -46,7 +52,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body: await serializers.CreateSnapshotRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -112,6 +118,11 @@ export class Snapshots {
      * List all snapshots of a sheet
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.snapshots.listSnapshots({
+     *         sheetId: "us_sh_YOUR_ID"
+     *     })
      */
     public async listSnapshots(
         request: Flatfile.ListSnapshotRequest,
@@ -131,7 +142,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -197,6 +208,11 @@ export class Snapshots {
      * Gets a snapshot of a sheet
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.snapshots.getSnapshot("us_ss_YOUR_ID", {
+     *         includeSummary: true
+     *     })
      */
     public async getSnapshot(
         snapshotId: Flatfile.SnapshotId,
@@ -217,7 +233,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -283,6 +299,9 @@ export class Snapshots {
      * Deletes a snapshot of a sheet
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.snapshots.deleteSnapshot("us_ss_YOUR_ID")
      */
     public async deleteSnapshot(
         snapshotId: Flatfile.SnapshotId,
@@ -299,7 +318,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -381,7 +400,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body:
@@ -452,6 +471,13 @@ export class Snapshots {
      * Gets records from a snapshot of a sheet
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.snapshots.getSnapshotRecords("us_ss_YOUR_ID", {
+     *         pageSize: 10,
+     *         pageNumber: 1,
+     *         changeType: Flatfile.ChangeType.CreatedSince
+     *     })
      */
     public async getSnapshotRecords(
         snapshotId: Flatfile.SnapshotId,
@@ -483,7 +509,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -546,6 +572,11 @@ export class Snapshots {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

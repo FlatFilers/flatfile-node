@@ -6,6 +6,12 @@ import * as Flatfile from "../../..";
 
 /**
  * Subject parameters for this job type
+ *
+ * @example
+ *     {
+ *         type: "resource",
+ *         id: "us_wb_YOUR_ID"
+ *     }
  */
 export type JobSubject = Flatfile.JobSubject.Resource | Flatfile.JobSubject.Collection;
 

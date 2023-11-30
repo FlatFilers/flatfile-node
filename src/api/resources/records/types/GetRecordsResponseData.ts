@@ -6,9 +6,45 @@ import * as Flatfile from "../../..";
 
 /**
  * A list of records with optional record counts
+ *
+ * @example
+ *     {
+ *         records: [{
+ *                 id: "us_rc_YOUR_ID",
+ *                 values: {
+ *                     "firstName": {
+ *                         messages: [],
+ *                         valid: true,
+ *                         updatedAt: new Date("2023-11-20T16:59:40.286Z")
+ *                     },
+ *                     "lastName": {
+ *                         messages: [],
+ *                         valid: true,
+ *                         updatedAt: new Date("2023-11-20T16:59:40.286Z")
+ *                     },
+ *                     "email": {
+ *                         messages: [],
+ *                         valid: true,
+ *                         updatedAt: new Date("2023-11-20T16:59:40.286Z")
+ *                     }
+ *                 },
+ *                 valid: true,
+ *                 metadata: {}
+ *             }],
+ *         counts: {
+ *             valid: 1000,
+ *             error: 0,
+ *             total: 1000
+ *         },
+ *         versionId: "us_vr_YOUR_ID",
+ *         commitId: "us_vr_YOUR_ID",
+ *         success: true
+ *     }
  */
 export interface GetRecordsResponseData extends Flatfile.SuccessData {
     records: Flatfile.RecordsWithLinks;
     counts?: Flatfile.RecordCounts;
+    /** Deprecated, use `commitId` instead. */
     versionId?: Flatfile.VersionId;
+    commitId?: Flatfile.CommitId;
 }

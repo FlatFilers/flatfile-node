@@ -14,6 +14,7 @@ export const GetRecordsResponseData: core.serialization.ObjectSchema<
         records: core.serialization.lazy(async () => (await import("../../..")).RecordsWithLinks),
         counts: core.serialization.lazyObject(async () => (await import("../../..")).RecordCounts).optional(),
         versionId: core.serialization.lazy(async () => (await import("../../..")).VersionId).optional(),
+        commitId: core.serialization.lazy(async () => (await import("../../..")).CommitId).optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).SuccessData));
 
@@ -22,5 +23,6 @@ export declare namespace GetRecordsResponseData {
         records: serializers.RecordsWithLinks.Raw;
         counts?: serializers.RecordCounts.Raw | null;
         versionId?: serializers.VersionId.Raw | null;
+        commitId?: serializers.CommitId.Raw | null;
     }
 }

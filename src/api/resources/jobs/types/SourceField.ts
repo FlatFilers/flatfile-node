@@ -5,6 +5,8 @@
 import * as Flatfile from "../../..";
 
 export interface SourceField {
+    /** The description of the source field */
     sourceField: Flatfile.Property;
+    /** A list of preview values of the data in the source field */
     preview?: string[];
 }

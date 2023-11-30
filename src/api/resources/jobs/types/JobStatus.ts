@@ -4,6 +4,21 @@
 
 /**
  * the status of the job
+ *
+ * @example
+ *     Flatfile.JobStatus.Planning
+ *
+ * @example
+ *     Flatfile.JobStatus.Ready
+ *
+ * @example
+ *     Flatfile.JobStatus.Executing
+ *
+ * @example
+ *     Flatfile.JobStatus.Complete
+ *
+ * @example
+ *     Flatfile.JobStatus.Failed
  */
 export type JobStatus =
     | "created"

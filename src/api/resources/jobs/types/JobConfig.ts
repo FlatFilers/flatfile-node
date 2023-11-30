@@ -6,6 +6,13 @@ import * as Flatfile from "../../..";
 
 /**
  * A single unit of work that a pipeline will execute
+ *
+ * @example
+ *     {
+ *         type: Flatfile.JobType.Workbook,
+ *         operation: "submitAction",
+ *         source: "us_wb_YOUR_ID"
+ *     }
  */
 export interface JobConfig {
     /** The type of job */
@@ -19,7 +26,7 @@ export interface JobConfig {
     trigger?: Flatfile.Trigger;
     /** the status of the job */
     status?: Flatfile.JobStatus;
-    /** the progress of the job */
+    /** the progress of the job. Whole number between 0 and 100 */
     progress?: number;
     fileId?: Flatfile.FileId;
     /** the mode of the job */

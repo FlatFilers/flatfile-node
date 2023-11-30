@@ -6,11 +6,9 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
-export const DataRetentionPolicyId: core.serialization.Schema<
-    serializers.DataRetentionPolicyId.Raw,
-    Flatfile.DataRetentionPolicyId
-> = core.serialization.string();
+export const CommitId: core.serialization.Schema<serializers.CommitId.Raw, Flatfile.CommitId> =
+    core.serialization.string();
 
-export declare namespace DataRetentionPolicyId {
+export declare namespace CommitId {
     type Raw = string;
 }

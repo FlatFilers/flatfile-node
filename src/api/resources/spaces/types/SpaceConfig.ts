@@ -6,6 +6,19 @@ import * as Flatfile from "../../..";
 
 /**
  * Properties used to create a new Space
+ *
+ * @example
+ *     {
+ *         name: "My First Worbook",
+ *         displayOrder: 1,
+ *         environmentId: "us_env_YOUR_ID",
+ *         primaryWorkbookId: "us_wb_YOUR_ID"
+ *     }
+ *
+ * @example
+ *     {
+ *         name: "My Updated Worbook"
+ *     }
  */
 export interface SpaceConfig extends Flatfile.InternalSpaceConfigBase {
     /** The name of the space */

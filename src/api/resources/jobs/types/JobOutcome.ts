@@ -6,6 +6,18 @@ import * as Flatfile from "../../..";
 
 /**
  * Outcome summary of a job
+ *
+ * @example
+ *     {
+ *         acknowledge: true,
+ *         buttonText: "Acknowledge",
+ *         next: {
+ *             type: "id",
+ *             id: "us_jb_YOUR_ID"
+ *         },
+ *         heading: "Success",
+ *         message: "Job was successful"
+ *     }
  */
 export interface JobOutcome {
     acknowledge?: boolean;

@@ -4,11 +4,44 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         id: "us_ss_YOUR_ID",
+ *         sheetId: "us_sh_YOUR_ID",
+ *         label: "My snapshot",
+ *         summary: {
+ *             createdSince: {
+ *                 total: 0
+ *             },
+ *             updatedSince: {
+ *                 total: 5,
+ *                 byField: {
+ *                     "lastName": 5
+ *                 }
+ *             },
+ *             deletedSince: {
+ *                 total: 5,
+ *                 byField: {
+ *                     "firstName": 1
+ *                 }
+ *             }
+ *         },
+ *         createdAt: new Date("2023-01-01T00:00:00.000Z"),
+ *         createdBy: "us_usr_YOUR_ID"
+ *     }
+ */
 export interface Snapshot {
+    /** The ID of the Snapshot. */
     id: Flatfile.SnapshotId;
+    /** The ID of the Sheet. */
     sheetId: Flatfile.SheetId;
+    /** The title of the Snapshot. */
     label?: string;
+    /** A summary of the Snapshot. */
     summary?: Flatfile.SnapshotSummary;
+    /** The time the Snapshot was created. */
     createdAt: Date;
+    /** The actor who created the Snapshot. */
     createdBy: Flatfile.UserId;
 }

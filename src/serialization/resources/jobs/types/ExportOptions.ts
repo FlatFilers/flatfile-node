@@ -9,6 +9,7 @@ import * as core from "../../../../core";
 export const ExportOptions: core.serialization.ObjectSchema<serializers.ExportOptions.Raw, Flatfile.ExportOptions> =
     core.serialization.object({
         versionId: core.serialization.lazy(async () => (await import("../../..")).VersionId).optional(),
+        commitId: core.serialization.lazy(async () => (await import("../../..")).CommitId).optional(),
         sortField: core.serialization.lazy(async () => (await import("../../..")).SortField).optional(),
         sortDirection: core.serialization.lazy(async () => (await import("../../..")).SortDirection).optional(),
         filter: core.serialization.lazy(async () => (await import("../../..")).Filter).optional(),
@@ -24,6 +25,7 @@ export const ExportOptions: core.serialization.ObjectSchema<serializers.ExportOp
 export declare namespace ExportOptions {
     interface Raw {
         versionId?: serializers.VersionId.Raw | null;
+        commitId?: serializers.CommitId.Raw | null;
         sortField?: serializers.SortField.Raw | null;
         sortDirection?: serializers.SortDirection.Raw | null;
         filter?: serializers.Filter.Raw | null;

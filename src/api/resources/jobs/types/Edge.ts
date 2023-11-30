@@ -5,10 +5,14 @@
 import * as Flatfile from "../../..";
 
 export interface Edge {
+    /** The description of the source field */
     sourceField: Flatfile.Property;
+    /** The description of the destination field */
     destinationField: Flatfile.Property;
+    /** A list of preview values of the data in the destination field */
     preview?: string[];
     /** Only available if one or more of the destination fields is of type enum. Provides category mapping. */
     enumDetails?: Flatfile.EnumDetails;
+    /** Metadata about the edge */
     metadata?: Flatfile.Metadata;
 }

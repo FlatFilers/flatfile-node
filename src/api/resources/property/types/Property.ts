@@ -55,30 +55,18 @@ import * as Flatfile from "../../..";
  *         config: {
  *             allowCustom: false,
  *             options: [{
- *                     value: {
- *                         "unknown": 9,
- *                         "type": "unknown"
- *                     },
+ *                     value: 9,
  *                     label: "Kitchenware",
  *                     icon: "pots-and-pans",
  *                     color: "#f00000",
  *                     meta: {
- *                         "product_code_prefix": {
- *                             "unknown": "KI-",
- *                             "type": "unknown"
- *                         }
+ *                         "product_code_prefix": "KI-"
  *                     }
  *                 }, {
- *                     value: {
- *                         "unknown": 9,
- *                         "type": "unknown"
- *                     },
+ *                     value: 9,
  *                     label: "Clothing",
  *                     meta: {
- *                         "product_code_prefix": {
- *                             "unknown": "CL-",
- *                             "type": "unknown"
- *                         }
+ *                         "product_code_prefix": "CL-"
  *                     }
  *                 }]
  *         }
@@ -93,6 +81,45 @@ import * as Flatfile from "../../..";
  *             relationship: Flatfile.ReferencePropertyRelationship.HasMany,
  *             key: "id"
  *         }
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "string",
+ *         key: "firstName"
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "string",
+ *         key: "firstName",
+ *         label: "First Name"
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "string",
+ *         key: "lastName"
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "string",
+ *         key: "lastName",
+ *         label: "Last Name"
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "string",
+ *         key: "email"
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "string",
+ *         key: "email",
+ *         label: "Email"
  *     }
  */
 export type Property =

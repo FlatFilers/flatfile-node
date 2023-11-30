@@ -6,5 +6,8 @@ import * as Flatfile from "../../..";
 
 /**
  * The id of the workbook where extracted file data will be sent
+ *
+ * @example
+ *     "us_wb_YOUR_ID"
  */
 export type JobDestination = Flatfile.WorkbookId;

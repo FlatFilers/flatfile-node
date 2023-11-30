@@ -4,6 +4,10 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {}
+ */
 export interface MappingRulesResponse {
     data: Flatfile.MappingRule[];
 }

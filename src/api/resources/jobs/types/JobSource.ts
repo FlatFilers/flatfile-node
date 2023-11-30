@@ -4,5 +4,8 @@
 
 /**
  * The id of a file, workbook, or sheet
+ *
+ * @example
+ *     "us_wb_YOUR_ID"
  */
 export type JobSource = string;

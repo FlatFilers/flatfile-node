@@ -27,6 +27,7 @@ import * as Flatfile from "../../..";
 export interface DocumentConfig {
     title: string;
     body: string;
+    /** Certain treatments will cause your Document to look or behave differently. */
     treatments?: string[];
     actions?: Flatfile.Action[];
 }

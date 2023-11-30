@@ -6,18 +6,60 @@ import * as Flatfile from "../../..";
 
 /**
  * A place to store tabular data
+ *
+ * @example
+ *     {
+ *         id: "us_sh_YOUR_ID",
+ *         workbookId: "us_wb_YOUR_ID",
+ *         name: "Contacts",
+ *         config: {
+ *             name: "Contacts",
+ *             slug: "contacts",
+ *             fields: [{
+ *                     type: "string",
+ *                     key: "firstName",
+ *                     label: "First Name"
+ *                 }, {
+ *                     type: "string",
+ *                     key: "lastName",
+ *                     label: "Last Name"
+ *                 }, {
+ *                     type: "string",
+ *                     key: "email",
+ *                     label: "Email"
+ *                 }],
+ *             mappingConfidenceThreshold: 0.5
+ *         },
+ *         countRecords: {
+ *             valid: 1000,
+ *             error: 0,
+ *             total: 1000
+ *         },
+ *         namespace: "Example0",
+ *         lockedBy: "Example0",
+ *         updatedAt: new Date("2021-08-31T18:00:00.000Z"),
+ *         createdAt: new Date("2021-08-31T18:00:00.000Z")
+ *     }
  */
 export interface Sheet {
+    /** The ID of the Sheet. */
     id: Flatfile.SheetId;
+    /** The ID of the Workbook. */
     workbookId: Flatfile.WorkbookId;
+    /** The name of the Sheet. */
     name: string;
+    /** Describes shape of data as well as behavior */
     config: Flatfile.SheetConfig;
+    /** The amount of records in the Sheet. */
     countRecords?: Flatfile.RecordCounts;
+    /** The scoped namespace of the Sheet. */
     namespace?: string;
+    /** The actor who locked the Sheet. */
     lockedBy?: string;
     /** Date the sheet was last updated */
     updatedAt: Date;
     /** Date the sheet was created */
     createdAt: Date;
+    /** The time the Sheet was locked. */
     lockedAt?: Date;
 }

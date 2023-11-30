@@ -6,5 +6,43 @@ import * as Flatfile from "../../..";
 
 /**
  * A single row of data in a Sheet, including links to related rows
+ *
+ * @example
+ *     {
+ *         "firstName": {
+ *             messages: [],
+ *             valid: true,
+ *             updatedAt: new Date("2023-11-20T16:59:40.286Z")
+ *         },
+ *         "lastName": {
+ *             messages: [],
+ *             valid: true,
+ *             updatedAt: new Date("2023-11-20T16:59:40.286Z")
+ *         },
+ *         "email": {
+ *             messages: [],
+ *             valid: true,
+ *             updatedAt: new Date("2023-11-20T16:59:40.286Z")
+ *         }
+ *     }
+ *
+ * @example
+ *     {
+ *         "firstName": {
+ *             messages: [],
+ *             valid: true,
+ *             updatedAt: new Date("2023-11-20T16:59:40.286Z")
+ *         },
+ *         "lastName": {
+ *             messages: [],
+ *             valid: true,
+ *             updatedAt: new Date("2023-11-20T16:59:40.286Z")
+ *         },
+ *         "email": {
+ *             messages: [],
+ *             valid: true,
+ *             updatedAt: new Date("2023-11-20T16:59:40.286Z")
+ *         }
+ *     }
  */
 export type RecordDataWithLinks = Record<string, Flatfile.CellValueWithLinks>;

@@ -4,6 +4,27 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         environmentId: "us_env_YOUR_ID",
+ *         body: {
+ *             topics: [Flatfile.EventTopic.WorkbookUpdated],
+ *             compiler: Flatfile.Compiler.Js,
+ *             source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
+ *         }
+ *     }
+ *
+ * @example
+ *     {
+ *         environmentId: "us_env_YOUR_ID",
+ *         body: {
+ *             topics: [Flatfile.EventTopic.WorkbookUpdated],
+ *             compiler: Flatfile.Compiler.Js,
+ *             source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
+ *         }
+ *     }
+ */
 export interface CreateAgentsRequest {
     environmentId: Flatfile.EnvironmentId;
     body: Flatfile.AgentConfig;

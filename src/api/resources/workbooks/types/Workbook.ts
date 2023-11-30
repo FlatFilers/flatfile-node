@@ -8,13 +8,21 @@ import * as Flatfile from "../../..";
  * A collection of one or more sheets
  */
 export interface Workbook {
+    /** ID of the Workbook. */
     id: Flatfile.WorkbookId;
+    /** Name of the Workbook. */
     name?: string;
+    /** Associated Space ID of the Workbook. */
     spaceId: Flatfile.SpaceId;
+    /** Associated Environment ID of the Workbook. */
     environmentId: Flatfile.EnvironmentId;
+    /** A list of Sheets associated with the Workbook. */
     sheets?: Flatfile.Sheet[];
+    /** A list of labels for the Workbook. */
     labels?: string[];
+    /** A list of Actions associated with the Workbook. */
     actions?: Flatfile.Action[];
+    /** The Workbook settings. */
     settings?: Flatfile.WorkbookConfigSettings;
     /** Metadata for the workbook */
     metadata?: any;

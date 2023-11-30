@@ -6,5 +6,29 @@ import * as Flatfile from "../../..";
 
 /**
  * List of Record objects, including links to related rows
+ *
+ * @example
+ *     [{
+ *             id: "us_rc_YOUR_ID",
+ *             values: {
+ *                 "firstName": {
+ *                     messages: [],
+ *                     valid: true,
+ *                     updatedAt: new Date("2023-11-20T16:59:40.286Z")
+ *                 },
+ *                 "lastName": {
+ *                     messages: [],
+ *                     valid: true,
+ *                     updatedAt: new Date("2023-11-20T16:59:40.286Z")
+ *                 },
+ *                 "email": {
+ *                     messages: [],
+ *                     valid: true,
+ *                     updatedAt: new Date("2023-11-20T16:59:40.286Z")
+ *                 }
+ *             },
+ *             valid: true,
+ *             metadata: {}
+ *         }]
  */
 export type RecordsWithLinks = Flatfile.RecordWithLinks[];

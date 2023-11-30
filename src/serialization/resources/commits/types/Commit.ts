@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const Commit: core.serialization.ObjectSchema<serializers.Commit.Raw, Flatfile.Commit> =
     core.serialization.object({
-        id: core.serialization.lazy(async () => (await import("../../..")).VersionId),
+        id: core.serialization.lazy(async () => (await import("../../..")).CommitId),
         sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId),
         createdBy: core.serialization.string(),
         completedBy: core.serialization.string().optional(),
@@ -18,7 +18,7 @@ export const Commit: core.serialization.ObjectSchema<serializers.Commit.Raw, Fla
 
 export declare namespace Commit {
     interface Raw {
-        id: serializers.VersionId.Raw;
+        id: serializers.CommitId.Raw;
         sheetId: serializers.SheetId.Raw;
         createdBy: string;
         completedBy?: string | null;

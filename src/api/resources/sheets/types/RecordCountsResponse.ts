@@ -4,6 +4,19 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         data: {
+ *             counts: {
+ *                 valid: 1000,
+ *                 error: 0,
+ *                 total: 1000
+ *             },
+ *             success: true
+ *         }
+ *     }
+ */
 export interface RecordCountsResponse {
     data: Flatfile.RecordCountsResponseData;
 }

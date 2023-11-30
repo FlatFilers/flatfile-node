@@ -4,6 +4,15 @@
 
 /**
  * the mode of the job
+ *
+ * @example
+ *     Flatfile.JobMode.Foreground
+ *
+ * @example
+ *     Flatfile.JobMode.Background
+ *
+ * @example
+ *     Flatfile.JobMode.ToolbarBlocking
  */
 export type JobMode = "foreground" | "background" | "toolbarBlocking";
 

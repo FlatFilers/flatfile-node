@@ -4,6 +4,12 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         name: "NewFileName"
+ *     }
+ */
 export interface UpdateFileRequest {
     workbookId?: Flatfile.WorkbookId;
     /** The name of the file */

@@ -8,13 +8,22 @@ import * as Flatfile from "../../..";
  * Changes to make to an existing sheet config
  */
 export interface SheetConfigUpdate {
+    /** The name of your Sheet as it will appear to your end users. */
     name?: string;
+    /** A sentence or two describing the purpose of your Sheet. */
     description?: string;
+    /** A unique identifier for your Sheet. */
     slug?: string;
+    /** A boolean specifying whether or not this sheet is read only. Read only sheets are not editable by end users. */
     readonly?: boolean;
+    /** Allow end users to add fields during mapping. */
     allowAdditionalFields?: boolean;
+    /** The minimum confidence required to automatically map a field */
     mappingConfidenceThreshold?: number;
+    /** Control Sheet-level access for all users. */
     access?: Flatfile.SheetAccess[];
+    /** Where you define your Sheet’s data schema. */
     fields?: Flatfile.Property[];
+    /** An array of actions that end users can perform on this Sheet. */
     actions?: Flatfile.Action[];
 }

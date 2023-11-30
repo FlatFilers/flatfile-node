@@ -13,6 +13,7 @@ export interface BaseProperty {
     readonly?: boolean;
     /** Useful for any contextual metadata regarding the schema. Store any valid json here. */
     metadata?: any;
+    /** A unique presentation for a field in the UI. */
     treatments?: string[];
     alternativeNames?: string[];
 }

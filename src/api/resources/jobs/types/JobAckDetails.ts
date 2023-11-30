@@ -4,9 +4,17 @@
 
 /**
  * Details about the user who acknowledged the job
+ *
+ * @example
+ *     {
+ *         info: "Acknowledged by user",
+ *         progress: 100,
+ *         estimatedCompletionAt: new Date("2023-10-30T20:04:32.074Z")
+ *     }
  */
 export interface JobAckDetails {
     info?: string;
+    /** the progress of the job. Whole number between 0 and 100 */
     progress?: number;
     estimatedCompletionAt?: Date;
 }

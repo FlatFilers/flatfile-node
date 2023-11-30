@@ -8,7 +8,6 @@ import { Agents } from "./api/resources/agents/client/Client";
 import { Auth } from "./api/resources/auth/client/Client";
 import { Cells } from "./api/resources/cells/client/Client";
 import { Commits } from "./api/resources/commits/client/Client";
-import { DataRetentionPolicies } from "./api/resources/dataRetentionPolicies/client/Client";
 import { Documents } from "./api/resources/documents/client/Client";
 import { Environments } from "./api/resources/environments/client/Client";
 import { Events } from "./api/resources/events/client/Client";
@@ -29,7 +28,7 @@ import { Workbooks } from "./api/resources/workbooks/client/Client";
 export declare namespace FlatfileClient {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
@@ -41,7 +40,7 @@ export declare namespace FlatfileClient {
 }
 
 export class FlatfileClient {
-    constructor(protected readonly _options: FlatfileClient.Options) {}
+    constructor(protected readonly _options: FlatfileClient.Options = {}) {}
 
     protected _agents: Agents | undefined;
 
@@ -65,12 +64,6 @@ export class FlatfileClient {
 
     public get commits(): Commits {
         return (this._commits ??= new Commits(this._options));
-    }
-
-    protected _dataRetentionPolicies: DataRetentionPolicies | undefined;
-
-    public get dataRetentionPolicies(): DataRetentionPolicies {
-        return (this._dataRetentionPolicies ??= new DataRetentionPolicies(this._options));
     }
 
     protected _documents: Documents | undefined;

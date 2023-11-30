@@ -6,6 +6,29 @@ import * as Flatfile from "../../..";
 
 /**
  * A single row of data in a Sheet
+ *
+ * @example
+ *     {
+ *         id: "us_rc_YOUR_ID",
+ *         versionId: "us_vr_YOUR_ID",
+ *         commitId: "us_vr_YOUR_ID",
+ *         values: {
+ *             "firstName": {
+ *                 messages: [],
+ *                 valid: true
+ *             },
+ *             "lastName": {
+ *                 messages: [],
+ *                 valid: true
+ *             },
+ *             "email": {
+ *                 messages: [],
+ *                 valid: true
+ *             }
+ *         },
+ *         valid: true,
+ *         metadata: {}
+ *     }
  */
 export interface Record_ extends Flatfile.RecordBase {
     values: Flatfile.RecordData;

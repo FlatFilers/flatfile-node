@@ -4,7 +4,19 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         environmentId: "us_env_YOUR_ID"
+ *     }
+ */
 export interface ListSecrets {
+    /**
+     * The Environment of the secret.
+     */
     environmentId: Flatfile.EnvironmentId;
+    /**
+     * The Space of the secret.
+     */
     spaceId?: Flatfile.SpaceId;
 }

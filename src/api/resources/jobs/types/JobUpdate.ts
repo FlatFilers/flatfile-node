@@ -6,12 +6,18 @@ import * as Flatfile from "../../..";
 
 /**
  * A single unit of work that will be executed
+ *
+ * @example
+ *     {
+ *         status: Flatfile.JobStatus.Complete,
+ *         progress: 100
+ *     }
  */
 export interface JobUpdate {
     config?: Flatfile.JobUpdateConfig;
     /** the status of the job */
     status?: Flatfile.JobStatus;
-    /** the progress of the job */
+    /** the progress of the job. Whole number between 0 and 100 */
     progress?: number;
     /** the time that the job's outcome has been acknowledged by a user */
     outcomeAcknowledgedAt?: Date;

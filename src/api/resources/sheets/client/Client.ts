@@ -13,7 +13,7 @@ import * as stream from "stream";
 export declare namespace Sheets {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
@@ -25,10 +25,15 @@ export declare namespace Sheets {
 }
 
 export class Sheets {
-    constructor(protected readonly _options: Sheets.Options) {}
+    constructor(protected readonly _options: Sheets.Options = {}) {}
 
     /**
      * Returns sheets in a workbook
+     *
+     * @example
+     *     await flatfile.sheets.list({
+     *         workbookId: "us_wb_YOUR_ID"
+     *     })
      */
     public async list(
         request: Flatfile.ListSheetsRequest,
@@ -48,7 +53,7 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -89,6 +94,9 @@ export class Sheets {
 
     /**
      * Returns a sheet in a workbook
+     *
+     * @example
+     *     await flatfile.sheets.get_("us_sh_YOUR_ID")
      */
     public async get(
         sheetId: Flatfile.SheetId,
@@ -105,7 +113,7 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -147,6 +155,9 @@ export class Sheets {
      * Deletes a specific sheet from a workbook
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.sheets.delete_("us_sh_YOUR_ID")
      */
     public async delete(sheetId: Flatfile.SheetId, requestOptions?: Sheets.RequestOptions): Promise<Flatfile.Success> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -160,7 +171,7 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -225,6 +236,9 @@ export class Sheets {
      * Trigger data hooks and validation to run on a sheet
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.sheets.validate("us_sh_YOUR_ID")
      */
     public async validate(
         sheetId: Flatfile.SheetId,
@@ -241,7 +255,7 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -312,7 +326,9 @@ export class Sheets {
     ): Promise<stream.Readable> {
         const {
             versionId,
+            commitId,
             sinceVersionId,
+            sinceCommitId,
             sortField,
             sortDirection,
             filter,
@@ -326,8 +342,16 @@ export class Sheets {
             _queryParams["versionId"] = versionId;
         }
 
+        if (commitId != null) {
+            _queryParams["commitId"] = commitId;
+        }
+
         if (sinceVersionId != null) {
             _queryParams["sinceVersionId"] = sinceVersionId;
+        }
+
+        if (sinceCommitId != null) {
+            _queryParams["sinceCommitId"] = sinceCommitId;
         }
 
         if (sortField != null) {
@@ -373,28 +397,39 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            onError: (error) => {
-                throw new errors.FlatfileError({
-                    message: (error as any)?.message,
-                });
-            },
         });
         return _response.data;
     }
 
     /**
      * Returns counts of records from a sheet
+     *
+     * @example
+     *     await flatfile.sheets.getRecordCounts("us_sh_YOUR_ID", {
+     *         versionId: "us_vr_YOUR_ID"
+     *     })
      */
     public async getRecordCounts(
         sheetId: Flatfile.SheetId,
         request: Flatfile.GetRecordCountsRequest = {},
         requestOptions?: Sheets.RequestOptions
     ): Promise<Flatfile.RecordCountsResponse> {
-        const { versionId, sinceVersionId, filter, filterField, searchValue, searchField, byField, q } = request;
+        const {
+            versionId,
+            sinceVersionId,
+            commitId,
+            sinceCommitId,
+            filter,
+            filterField,
+            searchValue,
+            searchField,
+            byField,
+            q,
+        } = request;
         const _queryParams: Record<string, string | string[]> = {};
         if (versionId != null) {
             _queryParams["versionId"] = versionId;
@@ -402,6 +437,14 @@ export class Sheets {
 
         if (sinceVersionId != null) {
             _queryParams["sinceVersionId"] = sinceVersionId;
+        }
+
+        if (commitId != null) {
+            _queryParams["commitId"] = commitId;
+        }
+
+        if (sinceCommitId != null) {
+            _queryParams["sinceCommitId"] = sinceCommitId;
         }
 
         if (filter != null) {
@@ -439,7 +482,7 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -480,6 +523,9 @@ export class Sheets {
 
     /**
      * Returns the commit versions for a sheet
+     *
+     * @example
+     *     await flatfile.sheets.getSheetCommits("us_sh_YOUR_ID", {})
      */
     public async getSheetCommits(
         sheetId: Flatfile.SheetId,
@@ -503,7 +549,7 @@ export class Sheets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -542,7 +588,299 @@ export class Sheets {
         }
     }
 
+    /**
+     * Locks a sheet
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.sheets.lockSheet("us_sh_YOUR_ID")
+     */
+    public async lockSheet(
+        sheetId: Flatfile.SheetId,
+        requestOptions?: Sheets.RequestOptions
+    ): Promise<Flatfile.Success> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/lock`
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.5.41",
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.Success.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Removes a lock from a sheet
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.sheets.unlockSheet("us_sh_YOUR_ID")
+     */
+    public async unlockSheet(
+        sheetId: Flatfile.SheetId,
+        requestOptions?: Sheets.RequestOptions
+    ): Promise<Flatfile.Success> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/unlock`
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.5.41",
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.Success.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Returns record cell values grouped by all fields in the sheet
+     *
+     * @example
+     *     await flatfile.sheets.getCellValues("us_sh_YOUR_ID", {
+     *         fieldKey: "firstName",
+     *         sortField: "firstName",
+     *         sortDirection: Flatfile.SortDirection.Asc,
+     *         filter: Flatfile.Filter.Valid
+     *     })
+     */
+    public async getCellValues(
+        sheetId: Flatfile.SheetId,
+        request: Flatfile.GetFieldValuesRequest = {},
+        requestOptions?: Sheets.RequestOptions
+    ): Promise<Flatfile.CellsResponse> {
+        const {
+            fieldKey,
+            sortField,
+            sortDirection,
+            filter,
+            filterField,
+            pageSize,
+            pageNumber,
+            distinct,
+            includeCounts,
+            searchValue,
+        } = request;
+        const _queryParams: Record<string, string | string[]> = {};
+        if (fieldKey != null) {
+            _queryParams["fieldKey"] = fieldKey;
+        }
+
+        if (sortField != null) {
+            _queryParams["sortField"] = sortField;
+        }
+
+        if (sortDirection != null) {
+            _queryParams["sortDirection"] = sortDirection;
+        }
+
+        if (filter != null) {
+            _queryParams["filter"] = filter;
+        }
+
+        if (filterField != null) {
+            _queryParams["filterField"] = filterField;
+        }
+
+        if (pageSize != null) {
+            _queryParams["pageSize"] = pageSize.toString();
+        }
+
+        if (pageNumber != null) {
+            _queryParams["pageNumber"] = pageNumber.toString();
+        }
+
+        if (distinct != null) {
+            _queryParams["distinct"] = distinct.toString();
+        }
+
+        if (includeCounts != null) {
+            _queryParams["includeCounts"] = includeCounts.toString();
+        }
+
+        if (searchValue != null) {
+            _queryParams["searchValue"] = searchValue;
+        }
+
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `/sheets/${await serializers.SheetId.jsonOrThrow(sheetId)}/cells`
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.5.41",
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.CellsResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

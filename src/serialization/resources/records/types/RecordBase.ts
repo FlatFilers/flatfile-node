@@ -10,6 +10,7 @@ export const RecordBase: core.serialization.ObjectSchema<serializers.RecordBase.
     core.serialization.object({
         id: core.serialization.lazy(async () => (await import("../../..")).RecordId),
         versionId: core.serialization.lazy(async () => (await import("../../..")).VersionId).optional(),
+        commitId: core.serialization.lazy(async () => (await import("../../..")).CommitId).optional(),
         valid: core.serialization.boolean().optional(),
         messages: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).ValidationMessage))
@@ -21,6 +22,7 @@ export declare namespace RecordBase {
     interface Raw {
         id: serializers.RecordId.Raw;
         versionId?: serializers.VersionId.Raw | null;
+        commitId?: serializers.CommitId.Raw | null;
         valid?: boolean | null;
         messages?: serializers.ValidationMessage.Raw[] | null;
         metadata?: Record<string, any> | null;

@@ -12,10 +12,7 @@ import * as Flatfile from "../../..";
  *             id: "us_evt_YOUR_ID",
  *             createdAt: new Date("2023-11-07T20:46:04.300Z"),
  *             payload: {
- *                 "recordsAdded": {
- *                     "unknown": 100,
- *                     "type": "unknown"
- *                 }
+ *                 "recordsAdded": 100
  *             },
  *             domain: Flatfile.Domain.Workbook,
  *             context: {

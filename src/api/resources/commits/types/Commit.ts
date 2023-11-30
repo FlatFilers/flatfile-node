@@ -16,7 +16,7 @@ import * as Flatfile from "../../..";
  *     }
  */
 export interface Commit {
-    id: Flatfile.VersionId;
+    id: Flatfile.CommitId;
     sheetId: Flatfile.SheetId;
     /** The actor (user or system) who created the commit */
     createdBy: string;

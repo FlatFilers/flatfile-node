@@ -6,6 +6,11 @@ import * as Flatfile from "../../..";
 
 /**
  * Info about the reason the job was split
+ *
+ * @example
+ *     {
+ *         runInParallel: true
+ *     }
  */
 export interface JobSplitDetails {
     parts: Flatfile.JobParts;

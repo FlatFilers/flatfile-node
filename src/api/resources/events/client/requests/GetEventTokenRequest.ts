@@ -4,6 +4,10 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {}
+ */
 export interface GetEventTokenRequest {
     /**
      * The resource ID of the event stream (space or environment id)

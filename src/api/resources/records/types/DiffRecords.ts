@@ -6,5 +6,15 @@ import * as Flatfile from "../../..";
 
 /**
  * List of DiffRecord objects
+ *
+ * @example
+ *     [{
+ *             id: "us_rc_YOUR_ID",
+ *             values: {
+ *                 "firstName": {},
+ *                 "lastName": {},
+ *                 "email": {}
+ *             }
+ *         }]
  */
 export type DiffRecords = Flatfile.DiffRecord[];

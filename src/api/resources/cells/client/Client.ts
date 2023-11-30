@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Cells {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
@@ -24,16 +24,24 @@ export declare namespace Cells {
 }
 
 export class Cells {
-    constructor(protected readonly _options: Cells.Options) {}
+    constructor(protected readonly _options: Cells.Options = {}) {}
 
     /**
      * Returns record cell values grouped by all fields in the sheet
+     *
+     * @example
+     *     await flatfile.cells.getValues("us_sh_YOUR_ID", {
+     *         fieldKey: "firstName",
+     *         sortField: "firstName",
+     *         sortDirection: Flatfile.SortDirection.Asc,
+     *         filter: Flatfile.Filter.Valid
+     *     })
      */
     public async getValues(
         sheetId: Flatfile.SheetId,
-        request: Flatfile.GetFieldValuesRequest = {},
+        request: Flatfile.GetFieldValuesRequestDeprecated = {},
         requestOptions?: Cells.RequestOptions
-    ): Promise<Flatfile.CellsResponse> {
+    ): Promise<Flatfile.CellsResponseDeprecated> {
         const {
             fieldKey,
             sortField,
@@ -98,7 +106,7 @@ export class Cells {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -106,7 +114,7 @@ export class Cells {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.CellsResponse.parseOrThrow(_response.body, {
+            return await serializers.CellsResponseDeprecated.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -138,6 +146,11 @@ export class Cells {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

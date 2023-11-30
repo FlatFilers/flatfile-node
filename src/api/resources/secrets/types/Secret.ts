@@ -17,5 +17,6 @@ import * as Flatfile from "../../..";
  *     }
  */
 export interface Secret extends Flatfile.WriteSecret {
+    /** The ID of the secret. */
     id: Flatfile.SecretId;
 }

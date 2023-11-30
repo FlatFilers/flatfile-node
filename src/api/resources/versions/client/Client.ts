@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Versions {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
@@ -24,11 +24,8 @@ export declare namespace Versions {
 }
 
 export class Versions {
-    constructor(protected readonly _options: Versions.Options) {}
+    constructor(protected readonly _options: Versions.Options = {}) {}
 
-    /**
-     * Creates a new version id that can be used to group record updates
-     */
     public async createId(
         request: Flatfile.VersionsPostRequestBody = {},
         requestOptions?: Versions.RequestOptions
@@ -44,7 +41,7 @@ export class Versions {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body: await serializers.VersionsPostRequestBody.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -84,6 +81,11 @@ export class Versions {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

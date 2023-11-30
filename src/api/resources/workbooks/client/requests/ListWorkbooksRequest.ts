@@ -5,6 +5,9 @@
 import * as Flatfile from "../../../..";
 
 export interface ListWorkbooksRequest {
+    /**
+     * The associated Space ID of the Workbook.
+     */
     spaceId?: Flatfile.SpaceId;
     /**
      * Include counts for the workbook

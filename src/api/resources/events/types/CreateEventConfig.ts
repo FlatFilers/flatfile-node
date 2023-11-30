@@ -11,10 +11,7 @@ import * as Flatfile from "../../..";
  *     {
  *         topic: Flatfile.EventTopic.WorkbookUpdated,
  *         payload: {
- *             "recordsAdded": {
- *                 "unknown": 100,
- *                 "type": "unknown"
- *             }
+ *             "recordsAdded": 100
  *         },
  *         domain: Flatfile.Domain.Workbook,
  *         context: {

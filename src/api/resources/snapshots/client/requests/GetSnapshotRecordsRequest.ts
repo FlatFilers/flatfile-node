@@ -4,6 +4,14 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         pageSize: 10,
+ *         pageNumber: 1,
+ *         changeType: Flatfile.ChangeType.CreatedSince
+ *     }
+ */
 export interface GetSnapshotRecordsRequest {
     /**
      * Number of records to return in a page

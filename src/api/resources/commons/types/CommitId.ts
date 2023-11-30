@@ -3,9 +3,9 @@
  */
 
 /**
- * Data Retention Policy ID
+ * Commit ID
  *
  * @example
- *     "us_drp_YOUR_ID"
+ *     "us_vr_YOUR_ID"
  */
-export type DataRetentionPolicyId = string;
+export type CommitId = string;

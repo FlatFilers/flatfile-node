@@ -4,6 +4,15 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         fieldKey: "firstName",
+ *         sortField: "firstName",
+ *         sortDirection: Flatfile.SortDirection.Asc,
+ *         filter: Flatfile.Filter.Valid
+ *     }
+ */
 export interface GetFieldValuesRequest {
     fieldKey?: Flatfile.FieldKey;
     sortField?: Flatfile.SortField;

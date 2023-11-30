@@ -12,7 +12,7 @@ import * as errors from "../../../../errors";
 export declare namespace Auth {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
@@ -24,7 +24,7 @@ export declare namespace Auth {
 }
 
 export class Auth {
-    constructor(protected readonly _options: Auth.Options) {}
+    constructor(protected readonly _options: Auth.Options = {}) {}
 
     /**
      * Exchange credentials for an access token. Credentials can be a Client ID and Secret or an Email and Password
@@ -46,7 +46,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             body: await serializers.Credentials.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -111,6 +111,11 @@ export class Auth {
     /**
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.auth.getApiKeys({
+     *         environmentId: "us_env_YOUR_ID"
+     *     })
      */
     public async getApiKeys(
         request: Flatfile.GetApiKeysRequest,
@@ -130,7 +135,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -195,6 +200,12 @@ export class Auth {
     /**
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.auth.createNewApiKey({
+     *         environmentId: "us_env_YOUR_ID",
+     *         type: Flatfile.ApiKeyType.Publishable
+     *     })
      */
     public async createNewApiKey(
         request: Flatfile.CreateNewApiKeyRequest,
@@ -215,7 +226,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -280,6 +291,12 @@ export class Auth {
     /**
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.auth.deleteApiKey({
+     *         environmentId: "us_env_YOUR_ID",
+     *         key: "us_key_YOUR_ID"
+     *     })
      */
     public async deleteApiKey(
         request: Flatfile.DeleteApiKeyRequest,
@@ -300,7 +317,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.40",
+                "X-Fern-SDK-Version": "1.5.41",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -363,6 +380,11 @@ export class Auth {
     }
 
     protected async _getAuthorizationHeader() {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

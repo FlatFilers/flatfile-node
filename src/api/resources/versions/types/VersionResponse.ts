@@ -4,6 +4,14 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         data: {
+ *             versionId: "us_vr_YOUR_ID"
+ *         }
+ *     }
+ */
 export interface VersionResponse {
     data: Flatfile.Version;
 }

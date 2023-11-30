@@ -16,10 +16,12 @@ import * as Flatfile from "../../..";
  *     }
  */
 export interface EventToken {
+    /** The ID of the Account. */
     accountId?: Flatfile.AccountId;
     /** The id of the event bus to subscribe to */
     subscribeKey?: string;
     /** Time to live in minutes */
     ttl?: number;
+    /** This should be your API key. */
     token?: string;
 }

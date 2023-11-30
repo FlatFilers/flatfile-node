@@ -4,6 +4,13 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         environmentId: "us_env_YOUR_ID",
+ *         type: Flatfile.ApiKeyType.Publishable
+ *     }
+ */
 export interface CreateNewApiKeyRequest {
     environmentId: Flatfile.EnvironmentId;
     /**

@@ -8,7 +8,10 @@ import * as Flatfile from "../../..";
  * Only available if one or more of the destination fields is of type enum. Provides category mapping.
  */
 export interface EnumDetails {
+    /** The mapping of source values to destination values */
     mapping?: Flatfile.CategoryMapping[];
+    /** A list of source values that are not mapped from */
     unusedSourceValues?: Flatfile.EnumValue[];
+    /** A list of destination values that are not mapped to */
     unusedDestinationValues?: Flatfile.EnumValue[];
 }

@@ -6,6 +6,44 @@ import * as Flatfile from "../../..";
 
 /**
  * A place to store your workbooks
+ *
+ * @example
+ *     {
+ *         id: "us_sp_YOUR_ID",
+ *         name: "My First Worbook",
+ *         displayOrder: 1,
+ *         createdAt: new Date("2021-01-01T00:00:00.000Z"),
+ *         updatedAt: new Date("2021-01-01T00:00:00.000Z"),
+ *         createdByUserId: "us_usr_YOUR_ID",
+ *         workbooksCount: 1,
+ *         filesCount: 1,
+ *         isCollaborative: true,
+ *         upgradedAt: new Date("2021-01-01T00:00:00.000Z"),
+ *         guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink, Flatfile.GuestAuthenticationEnum.SharedLink],
+ *         environmentId: "us_env_YOUR_ID",
+ *         primaryWorkbookId: "us_wb_YOUR_ID",
+ *         labels: [],
+ *         metadata: undefined
+ *     }
+ *
+ * @example
+ *     {
+ *         id: "us_sp_YOUR_ID",
+ *         name: "My Updated Worbook",
+ *         displayOrder: 1,
+ *         createdAt: new Date("2021-01-01T00:00:00.000Z"),
+ *         updatedAt: new Date("2021-01-01T00:00:00.000Z"),
+ *         createdByUserId: "us_usr_YOUR_ID",
+ *         workbooksCount: 1,
+ *         filesCount: 1,
+ *         isCollaborative: true,
+ *         upgradedAt: new Date("2021-01-01T00:00:00.000Z"),
+ *         guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink, Flatfile.GuestAuthenticationEnum.SharedLink],
+ *         environmentId: "us_env_YOUR_ID",
+ *         primaryWorkbookId: "us_wb_YOUR_ID",
+ *         labels: [],
+ *         metadata: undefined
+ *     }
  */
 export interface Space extends Flatfile.InternalSpaceConfigBase {
     id: Flatfile.SpaceId;
@@ -26,9 +64,14 @@ export interface Space extends Flatfile.InternalSpaceConfigBase {
     name: string;
     /** The display order */
     displayOrder?: number;
+    /** Access token for the space */
     accessToken?: string;
+    /** Flag for collaborative (project) spaces */
     isCollaborative?: boolean;
+    /** Size information for the space */
     size?: Flatfile.SpaceSize;
+    /** Date when the space was upgraded */
     upgradedAt?: Date;
+    /** Type of guest authentication */
     guestAuthentication: Flatfile.GuestAuthenticationEnum[];
 }

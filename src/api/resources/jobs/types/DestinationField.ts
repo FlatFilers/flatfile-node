@@ -5,6 +5,8 @@
 import * as Flatfile from "../../..";
 
 export interface DestinationField {
+    /** The description of the destination field */
     destinationField: Flatfile.Property;
+    /** A list of preview values of the data in the destination field */
     preview?: string[];
 }
