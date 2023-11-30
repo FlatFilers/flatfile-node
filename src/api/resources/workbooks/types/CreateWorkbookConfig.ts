@@ -6,6 +6,40 @@ import * as Flatfile from "../../..";
 
 /**
  * Properties used to create a new Workbook
+ *
+ * @example
+ *     {
+ *         name: "My First Workbook",
+ *         sheets: [{
+ *                 name: "Contacts",
+ *                 slug: "contacts",
+ *                 fields: [{
+ *                         type: "string",
+ *                         key: "firstName",
+ *                         label: "First Name"
+ *                     }, {
+ *                         type: "string",
+ *                         key: "lastName",
+ *                         label: "Last Name"
+ *                     }, {
+ *                         type: "string",
+ *                         key: "email",
+ *                         label: "Email"
+ *                     }],
+ *                 mappingConfidenceThreshold: 0.5
+ *             }],
+ *         labels: ["simple-demo"],
+ *         actions: [{
+ *                 operation: "submitAction",
+ *                 mode: Flatfile.ActionMode.Foreground,
+ *                 label: "Submit",
+ *                 description: "Submit data to webhook.site",
+ *                 primary: true
+ *             }],
+ *         settings: {
+ *             trackChanges: true
+ *         }
+ *     }
  */
 export interface CreateWorkbookConfig {
     /** The name of the Workbook. */

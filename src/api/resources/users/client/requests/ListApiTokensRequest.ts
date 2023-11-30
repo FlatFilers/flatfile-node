@@ -3,6 +3,9 @@
  */
 
 export interface ListApiTokensRequest {
+    /**
+     * Tenant id
+     */
     tenantId: string;
     /**
      * Number of tokens to return in a page (default 10)

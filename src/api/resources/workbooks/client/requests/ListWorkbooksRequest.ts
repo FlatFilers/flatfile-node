@@ -4,6 +4,13 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         spaceId: "us_sp_YOUR_ID",
+ *         includeCounts: true
+ *     }
+ */
 export interface ListWorkbooksRequest {
     /**
      * The associated Space ID of the Workbook.

@@ -6,6 +6,19 @@ import * as Flatfile from "../../..";
 
 /**
  * The updates to be made to an existing workbook
+ *
+ * @example
+ *     {
+ *         name: "My Updated Workbook",
+ *         labels: ["my-new-label"],
+ *         actions: [{
+ *                 operation: "submitAction",
+ *                 mode: Flatfile.ActionMode.Foreground,
+ *                 label: "Submit Changes",
+ *                 description: "Submit data to webhook.site",
+ *                 primary: true
+ *             }]
+ *     }
  */
 export interface WorkbookUpdate {
     /** The name of the Workbook. */

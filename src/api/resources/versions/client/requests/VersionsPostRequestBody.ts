@@ -4,6 +4,13 @@
 
 import * as Flatfile from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         sheetId: "us_sh_YOUR_ID",
+ *         parentVersionId: "us_vr_YOUR_ID"
+ *     }
+ */
 export interface VersionsPostRequestBody {
     /** The ID of the Sheet. */
     sheetId?: Flatfile.SheetId;

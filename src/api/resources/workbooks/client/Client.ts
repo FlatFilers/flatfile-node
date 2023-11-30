@@ -29,6 +29,12 @@ export class Workbooks {
     /**
      * Returns all workbooks matching a filter for an account or space
      * @throws {@link Flatfile.BadRequestError}
+     *
+     * @example
+     *     await flatfile.workbooks.list({
+     *         spaceId: "us_sp_YOUR_ID",
+     *         includeCounts: true
+     *     })
      */
     public async list(
         request: Flatfile.ListWorkbooksRequest = {},
@@ -55,7 +61,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.41",
+                "X-Fern-SDK-Version": "1.5.42",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -126,7 +132,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.41",
+                "X-Fern-SDK-Version": "1.5.42",
             },
             contentType: "application/json",
             body: await serializers.CreateWorkbookConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -182,6 +188,9 @@ export class Workbooks {
      * Returns a single workbook
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.workbooks.get_("us_wb_YOUR_ID")
      */
     public async get(
         workbookId: Flatfile.WorkbookId,
@@ -198,7 +207,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.41",
+                "X-Fern-SDK-Version": "1.5.42",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -263,6 +272,9 @@ export class Workbooks {
      * Deletes a workbook and all of its record data permanently
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.workbooks.delete_("us_wb_YOUR_ID")
      */
     public async delete(
         workbookId: Flatfile.WorkbookId,
@@ -279,7 +291,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.41",
+                "X-Fern-SDK-Version": "1.5.42",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -361,7 +373,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.41",
+                "X-Fern-SDK-Version": "1.5.42",
             },
             contentType: "application/json",
             body: await serializers.WorkbookUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -425,6 +437,9 @@ export class Workbooks {
 
     /**
      * Returns the commits for a workbook
+     *
+     * @example
+     *     await flatfile.workbooks.getWorkbookCommits("us_wb_YOUR_ID", {})
      */
     public async getWorkbookCommits(
         workbookId: Flatfile.WorkbookId,
@@ -448,7 +463,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.41",
+                "X-Fern-SDK-Version": "1.5.42",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

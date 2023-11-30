@@ -4,6 +4,17 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         data: {
+ *             id: "us_usr_YOUR_ID",
+ *             email: "john.smith@example.com",
+ *             name: "john.smith",
+ *             accountId: "us_acc_YOUR_ID"
+ *         }
+ *     }
+ */
 export interface UserResponse {
     data: Flatfile.User;
 }

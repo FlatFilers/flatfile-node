@@ -6,6 +6,13 @@ import * as Flatfile from "../../..";
 
 /**
  * Properties used to create a new user
+ *
+ * @example
+ *     {
+ *         email: "john.smith@example.com",
+ *         name: "john.smith",
+ *         accountId: "us_acc_YOUR_ID"
+ *     }
  */
 export interface UserConfig {
     email: string;

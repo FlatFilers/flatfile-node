@@ -13,6 +13,15 @@ import * as Flatfile from "../../..";
  *         description: "Submit data to webhook.site",
  *         primary: true
  *     }
+ *
+ * @example
+ *     {
+ *         operation: "submitAction",
+ *         mode: Flatfile.ActionMode.Foreground,
+ *         label: "Submit Changes",
+ *         description: "Submit data to webhook.site",
+ *         primary: true
+ *     }
  */
 export interface Action {
     /**
