@@ -49,7 +49,7 @@ export class Documents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -131,7 +131,7 @@ export class Documents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             body: await serializers.DocumentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -199,7 +199,7 @@ export class Documents {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.documents.get_("us_sp_YOUR_ID", "us_dc_YOUR_ID")
+     *     await flatfile.documents.get("us_sp_YOUR_ID", "us_dc_YOUR_ID")
      */
     public async get(
         spaceId: Flatfile.SpaceId,
@@ -219,7 +219,7 @@ export class Documents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -304,7 +304,7 @@ export class Documents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             body: await serializers.DocumentConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -389,7 +389,7 @@ export class Documents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

@@ -32,6 +32,7 @@ export * from "./JobOutcomeNextId";
 export * from "./JobOutcomeNextUrl";
 export * from "./JobOutcomeNextDownload";
 export * from "./JobOutcomeNextWait";
+export * from "./JobOutcomeNextRetry";
 export * from "./JobOutcomeNextSnapshot";
 export * from "./JobCancelDetails";
 export * from "./JobSplitDetails";

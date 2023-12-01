@@ -55,7 +55,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -98,7 +98,7 @@ export class Users {
      * Gets a user
      *
      * @example
-     *     await flatfile.users.get_("us_usr_YOUR_ID")
+     *     await flatfile.users.get("us_usr_YOUR_ID")
      */
     public async get(userId: Flatfile.UserId, requestOptions?: Users.RequestOptions): Promise<Flatfile.UserResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -112,7 +112,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -180,7 +180,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -241,7 +241,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -298,7 +298,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             body: await serializers.ExchangeTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),

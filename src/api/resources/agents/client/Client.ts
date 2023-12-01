@@ -44,7 +44,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -124,7 +124,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -182,7 +182,7 @@ export class Agents {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.agents.get_("us_ag_YOUR_ID", {
+     *     await flatfile.agents.get("us_ag_YOUR_ID", {
      *         environmentId: "us_env_YOUR_ID"
      *     })
      */
@@ -205,7 +205,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -295,7 +295,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -385,7 +385,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -494,7 +494,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -603,7 +603,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -671,7 +671,7 @@ export class Agents {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.agents.delete_("us_ag_YOUR_ID", {
+     *     await flatfile.agents.delete("us_ag_YOUR_ID", {
      *         environmentId: "us_env_YOUR_ID"
      *     })
      */
@@ -694,7 +694,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

@@ -32,7 +32,7 @@ export class Commits {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.commits.get_("us_vr_YOUR_ID")
+     *     await flatfile.commits.get("us_vr_YOUR_ID")
      */
     public async get(
         commitId: Flatfile.CommitId,
@@ -49,7 +49,7 @@ export class Commits {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -130,7 +130,7 @@ export class Commits {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -211,7 +211,7 @@ export class Commits {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

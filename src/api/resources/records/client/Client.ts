@@ -32,7 +32,7 @@ export class Records {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.records.get_("us_sh_YOUR_ID", {})
+     *     await flatfile.records.get("us_sh_YOUR_ID", {})
      */
     public async get(
         sheetId: Flatfile.SheetId,
@@ -152,7 +152,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -235,7 +235,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             body: await serializers.Records.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -318,7 +318,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             body: await serializers.records.insert.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -386,7 +386,7 @@ export class Records {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.records.delete_("us_sh_YOUR_ID", {
+     *     await flatfile.records.delete("us_sh_YOUR_ID", {
      *         ids: "us_rc_YOUR_ID"
      *     })
      */
@@ -416,7 +416,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -528,7 +528,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.42",
+                "X-Fern-SDK-Version": "1.5.43",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
