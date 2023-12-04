@@ -11,4 +11,6 @@
 export interface JobOutcomeNextId {
     id: string;
     label?: string;
+    path?: string;
+    query?: string;
 }

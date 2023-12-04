@@ -12,11 +12,15 @@ export const JobOutcomeNextId: core.serialization.ObjectSchema<
 > = core.serialization.object({
     id: core.serialization.string(),
     label: core.serialization.string().optional(),
+    path: core.serialization.string().optional(),
+    query: core.serialization.string().optional(),
 });
 
 export declare namespace JobOutcomeNextId {
     interface Raw {
         id: string;
         label?: string | null;
+        path?: string | null;
+        query?: string | null;
     }
 }

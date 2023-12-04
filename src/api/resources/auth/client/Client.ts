@@ -30,6 +30,13 @@ export class Auth {
      * Exchange credentials for an access token. Credentials can be a Client ID and Secret or an Email and Password
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.auth.createAccessToken({
+     *         type: "userCredentials",
+     *         email: "yourEmail@example.com",
+     *         password: "yourSuper$ecurePassw0rd"
+     *     })
      */
     public async createAccessToken(
         request: Flatfile.Credentials,
@@ -46,7 +53,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             body: await serializers.Credentials.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -135,7 +142,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -226,7 +233,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -317,7 +324,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

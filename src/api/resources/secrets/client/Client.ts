@@ -58,7 +58,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -124,6 +124,14 @@ export class Secrets {
      * Insert or Update a Secret by name for environment or space
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.secrets.upsert({
+     *         name: "My Secret",
+     *         value: "Sup3r$ecret\\/alue!",
+     *         environmentId: "us_env_YOUR_ID",
+     *         spaceId: "us_sp_YOUR_ID"
+     *     })
      */
     public async upsert(
         request: Flatfile.WriteSecret,
@@ -140,7 +148,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             body: await serializers.WriteSecret.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -225,7 +233,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

@@ -38,12 +38,14 @@ export type Event =
     | Flatfile.Event.SpaceCreated
     | Flatfile.Event.SpaceUpdated
     | Flatfile.Event.SpaceDeleted
+    | Flatfile.Event.SpaceExpired
     | Flatfile.Event.DocumentCreated
     | Flatfile.Event.DocumentUpdated
     | Flatfile.Event.DocumentDeleted
     | Flatfile.Event.WorkbookCreated
     | Flatfile.Event.WorkbookUpdated
     | Flatfile.Event.WorkbookDeleted
+    | Flatfile.Event.WorkbookExpired
     | Flatfile.Event.SheetCreated
     | Flatfile.Event.SheetUpdated
     | Flatfile.Event.SheetDeleted
@@ -54,6 +56,7 @@ export type Event =
     | Flatfile.Event.FileCreated
     | Flatfile.Event.FileUpdated
     | Flatfile.Event.FileDeleted
+    | Flatfile.Event.FileExpired
     | Flatfile.Event.JobCreated
     | Flatfile.Event.JobUpdated
     | Flatfile.Event.JobDeleted
@@ -93,6 +96,10 @@ export declare namespace Event {
         topic: "space:deleted";
     }
 
+    interface SpaceExpired extends Flatfile.GenericEvent {
+        topic: "space:expired";
+    }
+
     interface DocumentCreated extends Flatfile.GenericEvent {
         topic: "document:created";
     }
@@ -115,6 +122,10 @@ export declare namespace Event {
 
     interface WorkbookDeleted extends Flatfile.GenericEvent {
         topic: "workbook:deleted";
+    }
+
+    interface WorkbookExpired extends Flatfile.GenericEvent {
+        topic: "workbook:expired";
     }
 
     interface SheetCreated extends Flatfile.GenericEvent {
@@ -155,6 +166,10 @@ export declare namespace Event {
 
     interface FileDeleted extends Flatfile.GenericEvent {
         topic: "file:deleted";
+    }
+
+    interface FileExpired extends Flatfile.GenericEvent {
+        topic: "file:expired";
     }
 
     interface JobCreated extends Flatfile.GenericEvent {

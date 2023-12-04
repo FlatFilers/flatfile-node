@@ -7,11 +7,6 @@ import * as Flatfile from "../../..";
 /**
  * @example
  *     {
- *         counts: {
- *             valid: 1000,
- *             error: 0,
- *             total: 1000
- *         },
  *         success: true
  *     }
  */

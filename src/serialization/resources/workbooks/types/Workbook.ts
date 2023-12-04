@@ -26,6 +26,7 @@ export const Workbook: core.serialization.ObjectSchema<serializers.Workbook.Raw,
         namespace: core.serialization.string().optional(),
         updatedAt: core.serialization.date(),
         createdAt: core.serialization.date(),
+        expiredAt: core.serialization.date().optional(),
     });
 
 export declare namespace Workbook {
@@ -42,5 +43,6 @@ export declare namespace Workbook {
         namespace?: string | null;
         updatedAt: string;
         createdAt: string;
+        expiredAt?: string | null;
     }
 }

@@ -152,7 +152,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -218,6 +218,29 @@ export class Records {
      * Updates existing records in a workbook sheet
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.records.update("us_sh_YOUR_ID", [{
+     *             id: "us_rc_YOUR_ID",
+     *             versionId: "us_vr_YOUR_ID",
+     *             commitId: "us_vr_YOUR_ID",
+     *             values: {
+     *                 "firstName": {
+     *                     messages: [],
+     *                     valid: true
+     *                 },
+     *                 "lastName": {
+     *                     messages: [],
+     *                     valid: true
+     *                 },
+     *                 "email": {
+     *                     messages: [],
+     *                     valid: true
+     *                 }
+     *             },
+     *             valid: true,
+     *             metadata: {}
+     *         }])
      */
     public async update(
         sheetId: Flatfile.SheetId,
@@ -235,7 +258,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             body: await serializers.Records.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -301,6 +324,22 @@ export class Records {
      * Adds records to a workbook sheet
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.records.insert("us_sh_YOUR_ID", [{
+     *             "firstName": {
+     *                 messages: [],
+     *                 valid: true
+     *             },
+     *             "lastName": {
+     *                 messages: [],
+     *                 valid: true
+     *             },
+     *             "email": {
+     *                 messages: [],
+     *                 valid: true
+     *             }
+     *         }])
      */
     public async insert(
         sheetId: Flatfile.SheetId,
@@ -318,7 +357,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             body: await serializers.records.insert.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -416,7 +455,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -528,7 +567,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

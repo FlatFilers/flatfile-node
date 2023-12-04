@@ -14,12 +14,14 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "space:created",
         "space:updated",
         "space:deleted",
+        "space:expired",
         "document:created",
         "document:updated",
         "document:deleted",
         "workbook:created",
         "workbook:updated",
         "workbook:deleted",
+        "workbook:expired",
         "sheet:created",
         "sheet:updated",
         "sheet:deleted",
@@ -30,6 +32,7 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "file:created",
         "file:updated",
         "file:deleted",
+        "file:expired",
         "job:created",
         "job:updated",
         "job:deleted",
@@ -53,12 +56,14 @@ export declare namespace EventTopic {
         | "space:created"
         | "space:updated"
         | "space:deleted"
+        | "space:expired"
         | "document:created"
         | "document:updated"
         | "document:deleted"
         | "workbook:created"
         | "workbook:updated"
         | "workbook:deleted"
+        | "workbook:expired"
         | "sheet:created"
         | "sheet:updated"
         | "sheet:deleted"
@@ -69,6 +74,7 @@ export declare namespace EventTopic {
         | "file:created"
         | "file:updated"
         | "file:deleted"
+        | "file:expired"
         | "job:created"
         | "job:updated"
         | "job:deleted"

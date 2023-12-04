@@ -18,6 +18,7 @@ export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, Flatf
     bytesReceived: core.serialization.number(),
     createdAt: core.serialization.date(),
     updatedAt: core.serialization.date(),
+    expiredAt: core.serialization.date().optional(),
     spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId),
     workbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId).optional(),
     sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId).optional(),
@@ -39,6 +40,7 @@ export declare namespace File_ {
         bytesReceived: number;
         createdAt: string;
         updatedAt: string;
+        expiredAt?: string | null;
         spaceId: serializers.SpaceId.Raw;
         workbookId?: serializers.WorkbookId.Raw | null;
         sheetId?: serializers.SheetId.Raw | null;

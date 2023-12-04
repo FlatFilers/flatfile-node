@@ -15,12 +15,14 @@ export type EventTopic =
     | "space:created"
     | "space:updated"
     | "space:deleted"
+    | "space:expired"
     | "document:created"
     | "document:updated"
     | "document:deleted"
     | "workbook:created"
     | "workbook:updated"
     | "workbook:deleted"
+    | "workbook:expired"
     | "sheet:created"
     | "sheet:updated"
     | "sheet:deleted"
@@ -31,6 +33,7 @@ export type EventTopic =
     | "file:created"
     | "file:updated"
     | "file:deleted"
+    | "file:expired"
     | "job:created"
     | "job:updated"
     | "job:deleted"
@@ -52,12 +55,14 @@ export const EventTopic = {
     SpaceCreated: "space:created",
     SpaceUpdated: "space:updated",
     SpaceDeleted: "space:deleted",
+    SpaceExpired: "space:expired",
     DocumentCreated: "document:created",
     DocumentUpdated: "document:updated",
     DocumentDeleted: "document:deleted",
     WorkbookCreated: "workbook:created",
     WorkbookUpdated: "workbook:updated",
     WorkbookDeleted: "workbook:deleted",
+    WorkbookExpired: "workbook:expired",
     SheetCreated: "sheet:created",
     SheetUpdated: "sheet:updated",
     SheetDeleted: "sheet:deleted",
@@ -68,6 +73,7 @@ export const EventTopic = {
     FileCreated: "file:created",
     FileUpdated: "file:updated",
     FileDeleted: "file:deleted",
+    FileExpired: "file:expired",
     JobCreated: "job:created",
     JobUpdated: "job:updated",
     JobDeleted: "job:deleted",

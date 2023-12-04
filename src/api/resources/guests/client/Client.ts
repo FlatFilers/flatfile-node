@@ -56,7 +56,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -97,6 +97,20 @@ export class Guests {
 
     /**
      * Guests are only there to upload, edit, and download files and perform their tasks in a specific Space.
+     *
+     * @example
+     *     await flatfile.guests.create([{
+     *             environmentId: "us_env_YOUR_ID",
+     *             email: "email@example.com",
+     *             name: "Your Name",
+     *             spaces: [{
+     *                     id: "us_sp_YOUR_ID",
+     *                     workbooks: [{
+     *                             id: "us_wb_YOUR_ID"
+     *                         }],
+     *                     lastAccessed: new Date("2023-10-30T16:59:45.735Z")
+     *                 }]
+     *         }])
      */
     public async create(
         request: Flatfile.GuestConfig[],
@@ -113,7 +127,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             body: await serializers.guests.create.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -173,7 +187,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -229,7 +243,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -269,6 +283,12 @@ export class Guests {
 
     /**
      * Updates a single guest, for example to change name or email
+     *
+     * @example
+     *     await flatfile.guests.update("us_g_YOUR_ID", {
+     *         email: "updated@example.com",
+     *         name: "Your Name Updated"
+     *     })
      */
     public async update(
         guestId: Flatfile.GuestId,
@@ -286,7 +306,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             body: await serializers.GuestConfigUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -353,7 +373,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -394,6 +414,14 @@ export class Guests {
 
     /**
      * Guests can be created as a named guest on the Space or there’s a global link that will let anonymous guests into the space.
+     *
+     * @example
+     *     await flatfile.guests.invite([{
+     *             guestId: "us_g_YOUR_ID",
+     *             spaceId: "us_sp_YOUR_ID",
+     *             fromName: "Your Name",
+     *             message: "Hello, I would like to invite you to my space."
+     *         }])
      */
     public async invite(request: Flatfile.Invite[], requestOptions?: Guests.RequestOptions): Promise<Flatfile.Success> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -407,7 +435,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             body: await serializers.guests.invite.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),

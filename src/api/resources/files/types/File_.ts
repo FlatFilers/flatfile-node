@@ -61,6 +61,8 @@ export interface File_ {
     createdAt: Date;
     /** Date the file was last updated */
     updatedAt: Date;
+    /** Date the file was expired */
+    expiredAt?: Date;
     spaceId: Flatfile.SpaceId;
     workbookId?: Flatfile.WorkbookId;
     sheetId?: Flatfile.SheetId;

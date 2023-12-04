@@ -38,15 +38,6 @@ import * as Flatfile from "../../..";
  *         },
  *         plan: {
  *             fieldMapping: [{
- *                     sourceField: {
- *                         type: "string",
- *                         key: "firstName"
- *                     },
- *                     destinationField: {
- *                         type: "string",
- *                         key: "firstName",
- *                         label: "First Name"
- *                     },
  *                     preview: ["John", "Suzy", "Joe"],
  *                     metadata: {
  *                         certainty: Flatfile.Certainty.Absolute,
@@ -54,15 +45,6 @@ import * as Flatfile from "../../..";
  *                         source: "exact"
  *                     }
  *                 }, {
- *                     sourceField: {
- *                         type: "string",
- *                         key: "lastName"
- *                     },
- *                     destinationField: {
- *                         type: "string",
- *                         key: "lastName",
- *                         label: "Last Name"
- *                     },
  *                     preview: ["Smith", "Que", "Montana"],
  *                     metadata: {
  *                         certainty: Flatfile.Certainty.Absolute,

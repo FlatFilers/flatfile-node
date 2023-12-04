@@ -81,7 +81,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -123,6 +123,22 @@ export class Events {
     /**
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.events.create({
+     *         topic: Flatfile.EventTopic.WorkbookUpdated,
+     *         payload: {
+     *             "recordsAdded": 100
+     *         },
+     *         domain: Flatfile.Domain.Workbook,
+     *         context: {
+     *             accountId: "us_acc_YOUR_ID",
+     *             actorId: "us_key_SOME_KEY",
+     *             environmentId: "us_env_YOUR_ID",
+     *             spaceId: "us_sp_YOUR_ID",
+     *             workbookId: "us_wb_YOUR_ID"
+     *         }
+     *     })
      */
     public async create(
         request: Flatfile.CreateEventConfig,
@@ -139,7 +155,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             body: await serializers.CreateEventConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -216,7 +232,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -266,7 +282,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -337,7 +353,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.43",
+                "X-Fern-SDK-Version": "1.5.44",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

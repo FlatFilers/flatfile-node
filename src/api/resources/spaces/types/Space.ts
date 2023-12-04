@@ -58,6 +58,8 @@ export interface Space extends Flatfile.InternalSpaceConfigBase {
     createdAt: Date;
     /** Date when space was updated */
     updatedAt: Date;
+    /** Date when space was expired */
+    expiredAt?: Date;
     /** Guest link to the space */
     guestLink?: string;
     /** The name of the space */

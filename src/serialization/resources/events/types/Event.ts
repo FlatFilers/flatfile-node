@@ -14,12 +14,14 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "space:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "space:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "space:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "space:expired": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "document:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "document:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "document:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "workbook:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "workbook:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "workbook:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "workbook:expired": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "sheet:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "sheet:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "sheet:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
@@ -30,6 +32,7 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "file:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "file:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "file:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "file:expired": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "job:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "job:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "job:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
@@ -57,12 +60,14 @@ export declare namespace Event {
         | Event.SpaceCreated
         | Event.SpaceUpdated
         | Event.SpaceDeleted
+        | Event.SpaceExpired
         | Event.DocumentCreated
         | Event.DocumentUpdated
         | Event.DocumentDeleted
         | Event.WorkbookCreated
         | Event.WorkbookUpdated
         | Event.WorkbookDeleted
+        | Event.WorkbookExpired
         | Event.SheetCreated
         | Event.SheetUpdated
         | Event.SheetDeleted
@@ -73,6 +78,7 @@ export declare namespace Event {
         | Event.FileCreated
         | Event.FileUpdated
         | Event.FileDeleted
+        | Event.FileExpired
         | Event.JobCreated
         | Event.JobUpdated
         | Event.JobDeleted
@@ -111,6 +117,10 @@ export declare namespace Event {
         topic: "space:deleted";
     }
 
+    interface SpaceExpired extends serializers.GenericEvent.Raw {
+        topic: "space:expired";
+    }
+
     interface DocumentCreated extends serializers.GenericEvent.Raw {
         topic: "document:created";
     }
@@ -133,6 +143,10 @@ export declare namespace Event {
 
     interface WorkbookDeleted extends serializers.GenericEvent.Raw {
         topic: "workbook:deleted";
+    }
+
+    interface WorkbookExpired extends serializers.GenericEvent.Raw {
+        topic: "workbook:expired";
     }
 
     interface SheetCreated extends serializers.GenericEvent.Raw {
@@ -173,6 +187,10 @@ export declare namespace Event {
 
     interface FileDeleted extends serializers.GenericEvent.Raw {
         topic: "file:deleted";
+    }
+
+    interface FileExpired extends serializers.GenericEvent.Raw {
+        topic: "file:expired";
     }
 
     interface JobCreated extends serializers.GenericEvent.Raw {
