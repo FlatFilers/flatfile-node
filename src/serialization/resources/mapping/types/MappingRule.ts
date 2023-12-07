@@ -9,8 +9,9 @@ import * as core from "../../../../core";
 export const MappingRule: core.serialization.Schema<serializers.MappingRule.Raw, Flatfile.MappingRule> =
     core.serialization.undiscriminatedUnion([
         core.serialization.lazyObject(async () => (await import("../../..")).MappingRuleOneToOne),
+        core.serialization.lazyObject(async () => (await import("../../..")).MappingRuleOneToZero),
     ]);
 
 export declare namespace MappingRule {
-    type Raw = serializers.MappingRuleOneToOne.Raw;
+    type Raw = serializers.MappingRuleOneToOne.Raw | serializers.MappingRuleOneToZero.Raw;
 }

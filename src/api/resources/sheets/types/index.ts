@@ -7,6 +7,7 @@ export * from "./SheetUpdate";
 export * from "./SheetConfigOrUpdate";
 export * from "./RecordCountsResponse";
 export * from "./RecordCountsResponseData";
+export * from "./FieldConfigResponse";
 export * from "./SheetAccess";
 export * from "./CellsResponse";
 export * from "./CellsResponseData";

@@ -7,8 +7,8 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const MappingRuleType: core.serialization.Schema<serializers.MappingRuleType.Raw, Flatfile.MappingRuleType> =
-    core.serialization.enum_(["assign"]);
+    core.serialization.enum_(["assign", "ignore"]);
 
 export declare namespace MappingRuleType {
-    type Raw = "assign";
+    type Raw = "assign" | "ignore";
 }

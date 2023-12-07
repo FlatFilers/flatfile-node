@@ -4,4 +4,6 @@
 
 import * as Flatfile from "../../..";
 
-export type MappingRule = Flatfile.MappingRuleOneToOne | Flatfile.MappingRuleOneToZero;
+export interface SourceDestinationWeightsResponse {
+    data: Flatfile.SourceDestinationWeights;
+}

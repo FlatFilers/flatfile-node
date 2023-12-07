@@ -4,4 +4,10 @@
 
 import * as Flatfile from "../../..";
 
-export type MappingRule = Flatfile.MappingRuleOneToOne | Flatfile.MappingRuleOneToZero;
+/**
+ * @example
+ *     {}
+ */
+export interface FieldConfigResponse {
+    data: Flatfile.Property;
+}
