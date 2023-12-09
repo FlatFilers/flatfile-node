@@ -4,4 +4,18 @@
 
 import * as Flatfile from "../../..";
 
-export type MappingRule = Flatfile.MappingRuleOneToOne | Flatfile.MappingRuleOneToZero;
+/**
+ * @example
+ *     {
+ *         id: "mapping-rule-id",
+ *         name: "Assign mapping rule",
+ *         type: "assign",
+ *         config: {},
+ *         confidence: 1,
+ *         createdBy: "us_usr_YOUR_ID"
+ *     }
+ */
+export interface MappingRule extends Flatfile.MappingRuleConfig {
+    /** ID of the mapping rule */
+    id: Flatfile.MappingId;
+}

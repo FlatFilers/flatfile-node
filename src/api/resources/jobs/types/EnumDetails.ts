@@ -9,7 +9,7 @@ import * as Flatfile from "../../..";
  */
 export interface EnumDetails {
     /** The mapping of source values to destination values */
-    mapping?: Flatfile.CategoryMapping[];
+    mapping: Flatfile.CategoryMapping[];
     /** A list of source values that are not mapped from */
     unusedSourceValues?: Flatfile.EnumValue[];
     /** A list of destination values that are not mapped to */

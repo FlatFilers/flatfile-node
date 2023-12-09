@@ -6,12 +6,15 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
-export const MappingRule: core.serialization.Schema<serializers.MappingRule.Raw, Flatfile.MappingRule> =
-    core.serialization.undiscriminatedUnion([
-        core.serialization.lazyObject(async () => (await import("../../..")).MappingRuleOneToOne),
-        core.serialization.lazyObject(async () => (await import("../../..")).MappingRuleOneToZero),
-    ]);
+export const MappingRule: core.serialization.ObjectSchema<serializers.MappingRule.Raw, Flatfile.MappingRule> =
+    core.serialization
+        .object({
+            id: core.serialization.lazy(async () => (await import("../../..")).MappingId),
+        })
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).MappingRuleConfig));
 
 export declare namespace MappingRule {
-    type Raw = serializers.MappingRuleOneToOne.Raw | serializers.MappingRuleOneToZero.Raw;
+    interface Raw extends serializers.MappingRuleConfig.Raw {
+        id: serializers.MappingId.Raw;
+    }
 }

@@ -11,4 +11,5 @@ export interface JobExecutionPlanConfig {
     fieldMapping?: Flatfile.Edge[];
     unmappedSourceFields?: Flatfile.SourceField[];
     unmappedDestinationFields?: Flatfile.DestinationField[];
+    programId?: string;
 }

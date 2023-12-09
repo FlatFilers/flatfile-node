@@ -28,6 +28,10 @@ export interface ListSpacesRequest {
      */
     search?: string;
     /**
+     * Search by namespace
+     */
+    namespace?: string;
+    /**
      * Flag to include archived spaces
      */
     archived?: boolean;

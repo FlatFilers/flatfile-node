@@ -1,5 +1,6 @@
 export * from "./AgentId";
 export * from "./AccountId";
+export * from "./AppId";
 export * from "./DocumentId";
 export * from "./GuestId";
 export * from "./EnvironmentId";

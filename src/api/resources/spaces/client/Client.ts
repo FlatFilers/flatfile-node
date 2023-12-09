@@ -39,8 +39,17 @@ export class Spaces {
         request: Flatfile.ListSpacesRequest = {},
         requestOptions?: Spaces.RequestOptions
     ): Promise<Flatfile.ListSpacesResponse> {
-        const { environmentId, pageSize, pageNumber, search, archived, sortField, sortDirection, isCollaborative } =
-            request;
+        const {
+            environmentId,
+            pageSize,
+            pageNumber,
+            search,
+            namespace,
+            archived,
+            sortField,
+            sortDirection,
+            isCollaborative,
+        } = request;
         const _queryParams: Record<string, string | string[]> = {};
         if (environmentId != null) {
             _queryParams["environmentId"] = environmentId;
@@ -56,6 +65,10 @@ export class Spaces {
 
         if (search != null) {
             _queryParams["search"] = search;
+        }
+
+        if (namespace != null) {
+            _queryParams["namespace"] = namespace;
         }
 
         if (archived != null) {
@@ -85,7 +98,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.45",
+                "X-Fern-SDK-Version": "1.5.46",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -165,7 +178,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.45",
+                "X-Fern-SDK-Version": "1.5.46",
             },
             contentType: "application/json",
             body: await serializers.SpaceConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -250,7 +263,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.45",
+                "X-Fern-SDK-Version": "1.5.46",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -331,7 +344,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.45",
+                "X-Fern-SDK-Version": "1.5.46",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -425,7 +438,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.45",
+                "X-Fern-SDK-Version": "1.5.46",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -513,7 +526,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.45",
+                "X-Fern-SDK-Version": "1.5.46",
             },
             contentType: "application/json",
             body: await serializers.SpaceConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -598,7 +611,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.45",
+                "X-Fern-SDK-Version": "1.5.46",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

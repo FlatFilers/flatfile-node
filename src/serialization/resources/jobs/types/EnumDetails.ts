@@ -8,9 +8,9 @@ import * as core from "../../../../core";
 
 export const EnumDetails: core.serialization.ObjectSchema<serializers.EnumDetails.Raw, Flatfile.EnumDetails> =
     core.serialization.object({
-        mapping: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).CategoryMapping))
-            .optional(),
+        mapping: core.serialization.list(
+            core.serialization.lazyObject(async () => (await import("../../..")).CategoryMapping)
+        ),
         unusedSourceValues: core.serialization
             .list(core.serialization.lazy(async () => (await import("../../..")).EnumValue))
             .optional(),
@@ -21,7 +21,7 @@ export const EnumDetails: core.serialization.ObjectSchema<serializers.EnumDetail
 
 export declare namespace EnumDetails {
     interface Raw {
-        mapping?: serializers.CategoryMapping.Raw[] | null;
+        mapping: serializers.CategoryMapping.Raw[];
         unusedSourceValues?: serializers.EnumValue.Raw[] | null;
         unusedDestinationValues?: serializers.EnumValue.Raw[] | null;
     }

@@ -11,14 +11,18 @@ export const MappingRuleConfig: core.serialization.ObjectSchema<
     Flatfile.MappingRuleConfig
 > = core.serialization.object({
     name: core.serialization.string(),
-    type: core.serialization.lazy(async () => (await import("../../..")).MappingRuleType),
+    type: core.serialization.string(),
     config: core.serialization.any().optional(),
+    confidence: core.serialization.number().optional(),
+    createdBy: core.serialization.lazy(async () => (await import("../../..")).UserId).optional(),
 });
 
 export declare namespace MappingRuleConfig {
     interface Raw {
         name: string;
-        type: serializers.MappingRuleType.Raw;
+        type: string;
         config?: any | null;
+        confidence?: number | null;
+        createdBy?: serializers.UserId.Raw | null;
     }
 }

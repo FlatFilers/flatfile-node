@@ -6,6 +6,6 @@
  * Mapping Rule ID
  *
  * @example
- *     "us_mp_YOUR_ID"
+ *     "us_mr_YOUR_ID"
  */
 export type MappingId = string;

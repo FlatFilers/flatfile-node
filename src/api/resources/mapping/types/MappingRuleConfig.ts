@@ -8,13 +8,17 @@ import * as Flatfile from "../../..";
  * @example
  *     {
  *         name: "Assign mapping rule",
- *         type: Flatfile.MappingRuleType.Assign,
+ *         type: "assign",
  *         config: {}
  *     }
  */
 export interface MappingRuleConfig {
     /** Name of the mapping rule */
     name: string;
-    type: Flatfile.MappingRuleType;
+    type: string;
     config?: any;
+    /** Confidence of the mapping rule */
+    confidence?: number;
+    /** User ID of the creator of the mapping rule */
+    createdBy?: Flatfile.UserId;
 }

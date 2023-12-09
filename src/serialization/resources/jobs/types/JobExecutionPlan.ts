@@ -17,6 +17,7 @@ export const JobExecutionPlan: core.serialization.ObjectSchema<
     unmappedDestinationFields: core.serialization.list(
         core.serialization.lazyObject(async () => (await import("../../..")).DestinationField)
     ),
+    programId: core.serialization.string().optional(),
 });
 
 export declare namespace JobExecutionPlan {
@@ -24,5 +25,6 @@ export declare namespace JobExecutionPlan {
         fieldMapping: serializers.Edge.Raw[];
         unmappedSourceFields: serializers.SourceField.Raw[];
         unmappedDestinationFields: serializers.DestinationField.Raw[];
+        programId?: string | null;
     }
 }

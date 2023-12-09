@@ -10,7 +10,7 @@ export const MappingRuleResponse: core.serialization.ObjectSchema<
     serializers.MappingRuleResponse.Raw,
     Flatfile.MappingRuleResponse
 > = core.serialization.object({
-    data: core.serialization.lazy(async () => (await import("../../..")).MappingRule),
+    data: core.serialization.lazyObject(async () => (await import("../../..")).MappingRule),
 });
 
 export declare namespace MappingRuleResponse {
