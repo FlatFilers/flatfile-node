@@ -11,7 +11,8 @@ import * as Flatfile from "../../..";
  *             id: "us_usr_YOUR_ID",
  *             email: "john.smith@example.com",
  *             name: "john.smith",
- *             accountId: "us_acc_YOUR_ID"
+ *             accountId: "us_acc_YOUR_ID",
+ *             idp: "FRONTEGG"
  *         }
  *     }
  */

@@ -10,6 +10,8 @@ export * as commits from "./commits";
 export * from "./commits/types";
 export * as commons from "./commons";
 export * from "./commons/types";
+export * as dataRetentionPolicies from "./dataRetentionPolicies";
+export * from "./dataRetentionPolicies/types";
 export * as documents from "./documents";
 export * from "./documents/types";
 export * as environments from "./environments";

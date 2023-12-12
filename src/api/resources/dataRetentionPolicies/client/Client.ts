@@ -9,7 +9,7 @@ import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
 
-export declare namespace Environments {
+export declare namespace DataRetentionPolicies {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
@@ -23,33 +23,33 @@ export declare namespace Environments {
     }
 }
 
-export class Environments {
-    constructor(protected readonly _options: Environments.Options = {}) {}
+export class DataRetentionPolicies {
+    constructor(protected readonly _options: DataRetentionPolicies.Options = {}) {}
 
     /**
-     * Get all environments
+     * Returns all data retention policies on an account matching a filter for environmentId
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.environments.list({})
+     *     await flatfile.dataRetentionPolicies.list({
+     *         environmentId: "us_env_YOUR_ID"
+     *     })
      */
     public async list(
-        request: Flatfile.ListEnvironmentsRequest = {},
-        requestOptions?: Environments.RequestOptions
-    ): Promise<Flatfile.ListEnvironmentsResponse> {
-        const { pageSize, pageNumber } = request;
+        request: Flatfile.ListDataRetentionPoliciesRequest = {},
+        requestOptions?: DataRetentionPolicies.RequestOptions
+    ): Promise<Flatfile.ListDataRetentionPoliciesResponse> {
+        const { environmentId } = request;
         const _queryParams: Record<string, string | string[]> = {};
-        if (pageSize != null) {
-            _queryParams["pageSize"] = pageSize.toString();
-        }
-
-        if (pageNumber != null) {
-            _queryParams["pageNumber"] = pageNumber.toString();
+        if (environmentId != null) {
+            _queryParams["environmentId"] = environmentId;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/environments"
+                "/data-retention-policies"
             ),
             method: "GET",
             headers: {
@@ -65,7 +65,7 @@ export class Environments {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.ListEnvironmentsResponse.parseOrThrow(_response.body, {
+            return await serializers.ListDataRetentionPoliciesResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -75,10 +75,33 @@ export class Environments {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.FlatfileError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -97,27 +120,25 @@ export class Environments {
     }
 
     /**
-     * Create a new environment
+     * Add a new data retention policy to the space
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.environments.create({
-     *         name: "dev",
-     *         isProd: false,
-     *         guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink],
-     *         metadata: {
-     *             "key": "value"
-     *         },
-     *         namespaces: ["default"]
+     *     await flatfile.dataRetentionPolicies.create({
+     *         type: Flatfile.DataRetentionPolicyEnum.LastActivity,
+     *         period: 5,
+     *         environmentId: "us_env_YOUR_ID"
      *     })
      */
     public async create(
-        request: Flatfile.EnvironmentConfigCreate,
-        requestOptions?: Environments.RequestOptions
-    ): Promise<Flatfile.EnvironmentResponse> {
+        request: Flatfile.DataRetentionPolicyConfig,
+        requestOptions?: DataRetentionPolicies.RequestOptions
+    ): Promise<Flatfile.DataRetentionPolicyResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/environments"
+                "/data-retention-policies"
             ),
             method: "POST",
             headers: {
@@ -128,12 +149,12 @@ export class Environments {
                 "X-Fern-SDK-Version": "1.5.47",
             },
             contentType: "application/json",
-            body: await serializers.EnvironmentConfigCreate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.DataRetentionPolicyConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.EnvironmentResponse.parseOrThrow(_response.body, {
+            return await serializers.DataRetentionPolicyResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -143,10 +164,33 @@ export class Environments {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.FlatfileError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -165,202 +209,110 @@ export class Environments {
     }
 
     /**
-     * Get a token which can be used to subscribe to events for this environment
+     * Returns a single data retention policy
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.environments.getEnvironmentEventToken({
+     *     await flatfile.dataRetentionPolicies.get("us_drp_YOUR_ID")
+     */
+    public async get(
+        id: Flatfile.DataRetentionPolicyId,
+        requestOptions?: DataRetentionPolicies.RequestOptions
+    ): Promise<Flatfile.DataRetentionPolicyResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `/data-retention-policies/${await serializers.DataRetentionPolicyId.jsonOrThrow(id)}`
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.5.47",
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.DataRetentionPolicyResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Updates a single data retention policy
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.dataRetentionPolicies.update("us_drp_YOUR_ID", {
+     *         type: Flatfile.DataRetentionPolicyEnum.LastActivity,
+     *         period: 5,
      *         environmentId: "us_env_YOUR_ID"
      *     })
      */
-    public async getEnvironmentEventToken(
-        request: Flatfile.GetEnvironmentEventTokenRequest,
-        requestOptions?: Environments.RequestOptions
-    ): Promise<Flatfile.EventTokenResponse> {
-        const { environmentId } = request;
-        const _queryParams: Record<string, string | string[]> = {};
-        _queryParams["environmentId"] = environmentId;
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/environments/subscription-token"
-            ),
-            method: "GET",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.47",
-            },
-            contentType: "application/json",
-            queryParameters: _queryParams,
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-        });
-        if (_response.ok) {
-            return await serializers.EventTokenResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
-                case 404:
-                    throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
-                default:
-                    throw new errors.FlatfileError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.FlatfileError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.FlatfileTimeoutError();
-            case "unknown":
-                throw new errors.FlatfileError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
-     * Returns a single environment
-     * @throws {@link Flatfile.BadRequestError}
-     * @throws {@link Flatfile.NotFoundError}
-     *
-     * @example
-     *     await flatfile.environments.get("us_env_YOUR_ID")
-     */
-    public async get(
-        environmentId: string,
-        requestOptions?: Environments.RequestOptions
-    ): Promise<Flatfile.EnvironmentResponse> {
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/environments/${environmentId}`
-            ),
-            method: "GET",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.47",
-            },
-            contentType: "application/json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-        });
-        if (_response.ok) {
-            return await serializers.EnvironmentResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
-                case 404:
-                    throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
-                default:
-                    throw new errors.FlatfileError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.FlatfileError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.FlatfileTimeoutError();
-            case "unknown":
-                throw new errors.FlatfileError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
-     * Updates a single environment, to change the name for example
-     *
-     * @example
-     *     await flatfile.environments.update("us_env_YOUR_ID", {
-     *         name: "dev",
-     *         isProd: false,
-     *         guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink],
-     *         metadata: {
-     *             "key": "value"
-     *         },
-     *         namespaces: ["default"]
-     *     })
-     */
     public async update(
-        environmentId: string,
-        request: Flatfile.EnvironmentConfigUpdate,
-        requestOptions?: Environments.RequestOptions
-    ): Promise<Flatfile.Environment> {
+        id: Flatfile.DataRetentionPolicyId,
+        request: Flatfile.DataRetentionPolicyConfig,
+        requestOptions?: DataRetentionPolicies.RequestOptions
+    ): Promise<Flatfile.DataRetentionPolicyResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/environments/${environmentId}`
+                `/data-retention-policies/${await serializers.DataRetentionPolicyId.jsonOrThrow(id)}`
             ),
             method: "PATCH",
             headers: {
@@ -371,12 +323,12 @@ export class Environments {
                 "X-Fern-SDK-Version": "1.5.47",
             },
             contentType: "application/json",
-            body: await serializers.EnvironmentConfigUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.DataRetentionPolicyConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.Environment.parseOrThrow(_response.body, {
+            return await serializers.DataRetentionPolicyResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -386,10 +338,33 @@ export class Environments {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.FlatfileError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -408,18 +383,18 @@ export class Environments {
     }
 
     /**
-     * Deletes a single environment
+     * Deletes a single data retention policy
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      */
     public async delete(
-        environmentId: string,
-        requestOptions?: Environments.RequestOptions
+        id: Flatfile.DataRetentionPolicyId,
+        requestOptions?: DataRetentionPolicies.RequestOptions
     ): Promise<Flatfile.Success> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/environments/${environmentId}`
+                `/data-retention-policies/${await serializers.DataRetentionPolicyId.jsonOrThrow(id)}`
             ),
             method: "DELETE",
             headers: {
