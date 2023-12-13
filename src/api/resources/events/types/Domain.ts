@@ -8,7 +8,7 @@
  * @example
  *     Flatfile.Domain.Workbook
  */
-export type Domain = "file" | "space" | "workbook" | "job" | "document" | "sheet";
+export type Domain = "file" | "space" | "workbook" | "job" | "document" | "sheet" | "program";
 
 export const Domain = {
     File: "file",
@@ -17,4 +17,5 @@ export const Domain = {
     Job: "job",
     Document: "document",
     Sheet: "sheet",
+    Program: "program",
 } as const;

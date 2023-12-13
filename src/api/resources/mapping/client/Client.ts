@@ -46,7 +46,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.0",
+                "X-Fern-SDK-Version": "1.6.1",
             },
             contentType: "application/json",
             body: await serializers.ProgramConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -109,19 +109,133 @@ export class Mapping {
     }
 
     /**
+     * List all mapping programs
+     * @throws {@link Flatfile.BadRequestError}
+     */
+    public async listMappingPrograms(
+        request: Flatfile.ListProgramsRequest = {},
+        requestOptions?: Mapping.RequestOptions
+    ): Promise<Flatfile.ProgramsResponse> {
+        const {
+            pageSize,
+            pageNumber,
+            createdBy,
+            createdAfter,
+            createdBefore,
+            environmentId,
+            sourceKeys,
+            destinationKeys,
+        } = request;
+        const _queryParams: Record<string, string | string[]> = {};
+        if (pageSize != null) {
+            _queryParams["pageSize"] = pageSize.toString();
+        }
+
+        if (pageNumber != null) {
+            _queryParams["pageNumber"] = pageNumber.toString();
+        }
+
+        if (createdBy != null) {
+            _queryParams["createdBy"] = createdBy;
+        }
+
+        if (createdAfter != null) {
+            _queryParams["createdAfter"] = createdAfter.toISOString();
+        }
+
+        if (createdBefore != null) {
+            _queryParams["createdBefore"] = createdBefore.toISOString();
+        }
+
+        if (environmentId != null) {
+            _queryParams["environmentId"] = environmentId;
+        }
+
+        if (sourceKeys != null) {
+            _queryParams["sourceKeys"] = sourceKeys;
+        }
+
+        if (destinationKeys != null) {
+            _queryParams["destinationKeys"] = destinationKeys;
+        }
+
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                "/mapping"
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.6.1",
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.ProgramsResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
      * Add mapping rules to a program
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      */
     public async createRules(
-        programId: string,
+        programId: Flatfile.ProgramId,
         request: Flatfile.CreateMappingRulesRequest,
         requestOptions?: Mapping.RequestOptions
     ): Promise<Flatfile.MappingRulesResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/mapping/${programId}/rules`
+                `/mapping/${await serializers.ProgramId.jsonOrThrow(programId)}/rules`
             ),
             method: "POST",
             headers: {
@@ -129,7 +243,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.0",
+                "X-Fern-SDK-Version": "1.6.1",
             },
             contentType: "application/json",
             body: await serializers.CreateMappingRulesRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -200,13 +314,13 @@ export class Mapping {
      *     await flatfile.mapping.listRules("us_mp_YOUR_ID")
      */
     public async listRules(
-        programId: string,
+        programId: Flatfile.ProgramId,
         requestOptions?: Mapping.RequestOptions
     ): Promise<Flatfile.MappingRulesResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/mapping/${programId}/rules`
+                `/mapping/${await serializers.ProgramId.jsonOrThrow(programId)}/rules`
             ),
             method: "GET",
             headers: {
@@ -214,7 +328,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.0",
+                "X-Fern-SDK-Version": "1.6.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -284,14 +398,16 @@ export class Mapping {
      *     await flatfile.mapping.deleteMapping("us_mp_YOUR_ID", "us_mr_YOUR_ID")
      */
     public async deleteMapping(
-        programId: string,
+        programId: Flatfile.ProgramId,
         mappingId: Flatfile.MappingId,
         requestOptions?: Mapping.RequestOptions
     ): Promise<Flatfile.MappingRuleResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/mapping/${programId}/rules/${await serializers.MappingId.jsonOrThrow(mappingId)}`
+                `/mapping/${await serializers.ProgramId.jsonOrThrow(
+                    programId
+                )}/rules/${await serializers.MappingId.jsonOrThrow(mappingId)}`
             ),
             method: "DELETE",
             headers: {
@@ -299,7 +415,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.0",
+                "X-Fern-SDK-Version": "1.6.1",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -373,7 +489,7 @@ export class Mapping {
      *     })
      */
     public async updateMapping(
-        programId: string,
+        programId: Flatfile.ProgramId,
         mappingId: Flatfile.MappingId,
         request: Flatfile.MappingRuleConfig,
         requestOptions?: Mapping.RequestOptions
@@ -381,7 +497,9 @@ export class Mapping {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/mapping/${programId}/rules/${await serializers.MappingId.jsonOrThrow(mappingId)}`
+                `/mapping/${await serializers.ProgramId.jsonOrThrow(
+                    programId
+                )}/rules/${await serializers.MappingId.jsonOrThrow(mappingId)}`
             ),
             method: "PATCH",
             headers: {
@@ -389,7 +507,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.0",
+                "X-Fern-SDK-Version": "1.6.1",
             },
             contentType: "application/json",
             body: await serializers.MappingRuleConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -470,7 +588,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.0",
+                "X-Fern-SDK-Version": "1.6.1",
             },
             contentType: "application/json",
             body: await serializers.GetFieldWeightsRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -541,7 +659,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.0",
+                "X-Fern-SDK-Version": "1.6.1",
             },
             contentType: "application/json",
             body: await serializers.GetEnumWeightsRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),

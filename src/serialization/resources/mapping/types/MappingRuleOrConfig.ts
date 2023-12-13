@@ -12,11 +12,19 @@ export const MappingRuleOrConfig: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         id: core.serialization.lazy(async () => (await import("../../..")).MappingId).optional(),
+        createdBy: core.serialization.lazy(async () => (await import("../../..")).UserId).optional(),
+        createdAt: core.serialization.date().optional(),
+        updatedAt: core.serialization.date().optional(),
+        deletedAt: core.serialization.date().optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).MappingRuleConfig));
 
 export declare namespace MappingRuleOrConfig {
     interface Raw extends serializers.MappingRuleConfig.Raw {
         id?: serializers.MappingId.Raw | null;
+        createdBy?: serializers.UserId.Raw | null;
+        createdAt?: string | null;
+        updatedAt?: string | null;
+        deletedAt?: string | null;
     }
 }

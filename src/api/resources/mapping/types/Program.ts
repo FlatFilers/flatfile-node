@@ -9,6 +9,16 @@ export interface Program {
     rules: Flatfile.MappingRuleOrConfig[];
     /** If this program was saved, this is the ID of the program */
     id?: string;
+    /** If this program was saved, this is the time it was created */
+    createdAt?: Date;
+    /** If this program was saved, this is the user ID of the creator */
+    createdBy?: Flatfile.UserId;
+    /** Source keys */
+    sourceKeys: string[];
+    /** Destination keys */
+    destinationKeys: string[];
+    /** Summary of the mapping rules */
+    summary?: Flatfile.ProgramSummary;
     /** If this program was saved, this token allows you to modify the program */
     accessToken?: string;
 }

@@ -33,6 +33,7 @@ export interface Context {
     versionId?: Flatfile.VersionId;
     commitId?: Flatfile.CommitId;
     jobId?: Flatfile.JobId;
+    programId?: Flatfile.ProgramId;
     fileId?: Flatfile.FileId;
     documentId?: Flatfile.DocumentId;
     precedingEventId?: Flatfile.EventId;

@@ -12,10 +12,20 @@ import * as Flatfile from "../../..";
  *         type: "assign",
  *         config: {},
  *         confidence: 1,
- *         createdBy: "us_usr_YOUR_ID"
+ *         createdBy: "us_usr_YOUR_ID",
+ *         createdAt: new Date("2021-01-01T00:00:00.000Z"),
+ *         updatedAt: new Date("2021-01-01T00:00:00.000Z")
  *     }
  */
 export interface MappingRule extends Flatfile.MappingRuleConfig {
     /** ID of the mapping rule */
     id: Flatfile.MappingId;
+    /** User ID of the creator of the mapping rule */
+    createdBy?: Flatfile.UserId;
+    /** Time the mapping rule was created */
+    createdAt: Date;
+    /** Time the mapping rule was last updated */
+    updatedAt: Date;
+    /** Time the mapping rule was deleted */
+    deletedAt?: Date;
 }

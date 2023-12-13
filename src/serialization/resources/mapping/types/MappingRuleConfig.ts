@@ -14,7 +14,6 @@ export const MappingRuleConfig: core.serialization.ObjectSchema<
     type: core.serialization.string(),
     config: core.serialization.any().optional(),
     confidence: core.serialization.number().optional(),
-    createdBy: core.serialization.lazy(async () => (await import("../../..")).UserId).optional(),
 });
 
 export declare namespace MappingRuleConfig {
@@ -23,6 +22,5 @@ export declare namespace MappingRuleConfig {
         type: string;
         config?: any | null;
         confidence?: number | null;
-        createdBy?: serializers.UserId.Raw | null;
     }
 }

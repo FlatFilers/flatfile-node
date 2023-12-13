@@ -42,6 +42,8 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "job:scheduled": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "job:outcome-acknowledged": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "job:parts-completed": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "program:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "program:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "commit:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "commit:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "commit:completed": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
@@ -88,6 +90,8 @@ export declare namespace Event {
         | Event.JobScheduled
         | Event.JobOutcomeAcknowledged
         | Event.JobPartsCompleted
+        | Event.ProgramCreated
+        | Event.ProgramUpdated
         | Event.CommitCreated
         | Event.CommitUpdated
         | Event.CommitCompleted
@@ -227,6 +231,14 @@ export declare namespace Event {
 
     interface JobPartsCompleted extends serializers.GenericEvent.Raw {
         topic: "job:parts-completed";
+    }
+
+    interface ProgramCreated extends serializers.GenericEvent.Raw {
+        topic: "program:created";
+    }
+
+    interface ProgramUpdated extends serializers.GenericEvent.Raw {
+        topic: "program:updated";
     }
 
     interface CommitCreated extends serializers.GenericEvent.Raw {

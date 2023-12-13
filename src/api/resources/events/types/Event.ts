@@ -66,6 +66,8 @@ export type Event =
     | Flatfile.Event.JobScheduled
     | Flatfile.Event.JobOutcomeAcknowledged
     | Flatfile.Event.JobPartsCompleted
+    | Flatfile.Event.ProgramCreated
+    | Flatfile.Event.ProgramUpdated
     | Flatfile.Event.CommitCreated
     | Flatfile.Event.CommitUpdated
     | Flatfile.Event.CommitCompleted
@@ -206,6 +208,14 @@ export declare namespace Event {
 
     interface JobPartsCompleted extends Flatfile.GenericEvent {
         topic: "job:parts-completed";
+    }
+
+    interface ProgramCreated extends Flatfile.GenericEvent {
+        topic: "program:created";
+    }
+
+    interface ProgramUpdated extends Flatfile.GenericEvent {
+        topic: "program:updated";
     }
 
     interface CommitCreated extends Flatfile.GenericEvent {

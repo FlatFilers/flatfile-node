@@ -16,6 +16,7 @@ export const Space: core.serialization.ObjectSchema<serializers.Space.Raw, Flatf
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
         expiredAt: core.serialization.date().optional(),
+        lastActivityAt: core.serialization.date().optional(),
         guestLink: core.serialization.string().optional(),
         name: core.serialization.string(),
         displayOrder: core.serialization.number().optional(),
@@ -39,6 +40,7 @@ export declare namespace Space {
         createdAt: string;
         updatedAt: string;
         expiredAt?: string | null;
+        lastActivityAt?: string | null;
         guestLink?: string | null;
         name: string;
         displayOrder?: number | null;

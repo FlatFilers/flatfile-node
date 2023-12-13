@@ -21,6 +21,7 @@ export const Context: core.serialization.ObjectSchema<serializers.Context.Raw, F
         versionId: core.serialization.lazy(async () => (await import("../../..")).VersionId).optional(),
         commitId: core.serialization.lazy(async () => (await import("../../..")).CommitId).optional(),
         jobId: core.serialization.lazy(async () => (await import("../../..")).JobId).optional(),
+        programId: core.serialization.lazy(async () => (await import("../../..")).ProgramId).optional(),
         fileId: core.serialization.lazy(async () => (await import("../../..")).FileId).optional(),
         documentId: core.serialization.lazy(async () => (await import("../../..")).DocumentId).optional(),
         precedingEventId: core.serialization.lazy(async () => (await import("../../..")).EventId).optional(),
@@ -42,6 +43,7 @@ export declare namespace Context {
         versionId?: serializers.VersionId.Raw | null;
         commitId?: serializers.CommitId.Raw | null;
         jobId?: serializers.JobId.Raw | null;
+        programId?: serializers.ProgramId.Raw | null;
         fileId?: serializers.FileId.Raw | null;
         documentId?: serializers.DocumentId.Raw | null;
         precedingEventId?: serializers.EventId.Raw | null;

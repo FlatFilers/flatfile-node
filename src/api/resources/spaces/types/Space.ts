@@ -14,6 +14,7 @@ import * as Flatfile from "../../..";
  *         displayOrder: 1,
  *         createdAt: new Date("2021-01-01T00:00:00.000Z"),
  *         updatedAt: new Date("2021-01-01T00:00:00.000Z"),
+ *         lastActivityAt: new Date("2021-01-01T00:00:00.000Z"),
  *         createdByUserId: "us_usr_YOUR_ID",
  *         workbooksCount: 1,
  *         filesCount: 1,
@@ -33,6 +34,7 @@ import * as Flatfile from "../../..";
  *         displayOrder: 1,
  *         createdAt: new Date("2021-01-01T00:00:00.000Z"),
  *         updatedAt: new Date("2021-01-01T00:00:00.000Z"),
+ *         lastActivityAt: new Date("2021-01-01T00:00:00.000Z"),
  *         createdByUserId: "us_usr_YOUR_ID",
  *         workbooksCount: 1,
  *         filesCount: 1,
@@ -60,6 +62,8 @@ export interface Space extends Flatfile.InternalSpaceConfigBase {
     updatedAt: Date;
     /** Date when space was expired */
     expiredAt?: Date;
+    /** Date that the last activity in the space occurred. This could include any create or update activity in the space like adding a record to a sheet, uploading a new file, or updating the configuration of a workbook. This date is only tracked to the precision of a day. */
+    lastActivityAt?: Date;
     /** Guest link to the space */
     guestLink?: string;
     /** The name of the space */

@@ -56,6 +56,7 @@ export * from "./events/client/requests";
 export * from "./files/client/requests";
 export * from "./guests/client/requests";
 export * from "./jobs/client/requests";
+export * from "./mapping/client/requests";
 export * from "./records/client/requests";
 export * from "./roles/client/requests";
 export * from "./secrets/client/requests";

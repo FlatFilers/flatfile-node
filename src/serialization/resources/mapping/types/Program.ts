@@ -12,6 +12,11 @@ export const Program: core.serialization.ObjectSchema<serializers.Program.Raw, F
             core.serialization.lazyObject(async () => (await import("../../..")).MappingRuleOrConfig)
         ),
         id: core.serialization.string().optional(),
+        createdAt: core.serialization.date().optional(),
+        createdBy: core.serialization.lazy(async () => (await import("../../..")).UserId).optional(),
+        sourceKeys: core.serialization.list(core.serialization.string()),
+        destinationKeys: core.serialization.list(core.serialization.string()),
+        summary: core.serialization.lazyObject(async () => (await import("../../..")).ProgramSummary).optional(),
         accessToken: core.serialization.string().optional(),
     });
 
@@ -19,6 +24,11 @@ export declare namespace Program {
     interface Raw {
         rules: serializers.MappingRuleOrConfig.Raw[];
         id?: string | null;
+        createdAt?: string | null;
+        createdBy?: serializers.UserId.Raw | null;
+        sourceKeys: string[];
+        destinationKeys: string[];
+        summary?: serializers.ProgramSummary.Raw | null;
         accessToken?: string | null;
     }
 }
