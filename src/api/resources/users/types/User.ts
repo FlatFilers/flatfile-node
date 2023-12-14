@@ -13,11 +13,13 @@ import * as Flatfile from "../../..";
  *         email: "john.smith@example.com",
  *         name: "john.smith",
  *         accountId: "us_acc_YOUR_ID",
- *         idp: "FRONTEGG"
+ *         idp: "FRONTEGG",
+ *         updatedAt: new Date("2023-10-30T16:59:45.735Z")
  *     }
  */
 export interface User extends Flatfile.UserConfig {
     id: Flatfile.UserId;
     idp: string;
     idpRef?: string;
+    updatedAt: Date;
 }

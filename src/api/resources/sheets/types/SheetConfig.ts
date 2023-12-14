@@ -46,4 +46,6 @@ export interface SheetConfig {
     fields: Flatfile.Property[];
     /** An array of actions that end users can perform on this Sheet. */
     actions?: Flatfile.Action[];
+    /** An array of constraints that end users can perform on this Sheet. */
+    constraints?: Flatfile.SheetConstraint[];
 }
