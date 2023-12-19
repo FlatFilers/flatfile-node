@@ -14,6 +14,7 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "space:created",
         "space:updated",
         "space:deleted",
+        "space:archived",
         "space:expired",
         "document:created",
         "document:updated",
@@ -48,6 +49,9 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "commit:updated",
         "commit:completed",
         "layer:created",
+        "secret:created",
+        "secret:updated",
+        "secret:deleted",
     ]);
 
 export declare namespace EventTopic {
@@ -58,6 +62,7 @@ export declare namespace EventTopic {
         | "space:created"
         | "space:updated"
         | "space:deleted"
+        | "space:archived"
         | "space:expired"
         | "document:created"
         | "document:updated"
@@ -91,5 +96,8 @@ export declare namespace EventTopic {
         | "commit:created"
         | "commit:updated"
         | "commit:completed"
-        | "layer:created";
+        | "layer:created"
+        | "secret:created"
+        | "secret:updated"
+        | "secret:deleted";
 }
