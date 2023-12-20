@@ -14,7 +14,6 @@ export declare namespace Versions {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
-        streamingFetcher?: core.StreamingFetchFunction;
     }
 
     interface RequestOptions {
@@ -41,7 +40,7 @@ export class Versions {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.2",
+                "X-Fern-SDK-Version": "1.7.0-rc",
             },
             contentType: "application/json",
             body: await serializers.VersionsPostRequestBody.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),

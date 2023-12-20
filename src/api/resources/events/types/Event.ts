@@ -38,6 +38,7 @@ export type Event =
     | Flatfile.Event.SpaceCreated
     | Flatfile.Event.SpaceUpdated
     | Flatfile.Event.SpaceDeleted
+    | Flatfile.Event.SpaceArchived
     | Flatfile.Event.SpaceExpired
     | Flatfile.Event.DocumentCreated
     | Flatfile.Event.DocumentUpdated
@@ -71,6 +72,9 @@ export type Event =
     | Flatfile.Event.CommitCreated
     | Flatfile.Event.CommitUpdated
     | Flatfile.Event.CommitCompleted
+    | Flatfile.Event.SecretCreated
+    | Flatfile.Event.SecretUpdated
+    | Flatfile.Event.SecretDeleted
     | Flatfile.Event.LayerCreated;
 
 export declare namespace Event {
@@ -96,6 +100,10 @@ export declare namespace Event {
 
     interface SpaceDeleted extends Flatfile.GenericEvent {
         topic: "space:deleted";
+    }
+
+    interface SpaceArchived extends Flatfile.GenericEvent {
+        topic: "space:archived";
     }
 
     interface SpaceExpired extends Flatfile.GenericEvent {
@@ -228,6 +236,18 @@ export declare namespace Event {
 
     interface CommitCompleted extends Flatfile.GenericEvent {
         topic: "commit:completed";
+    }
+
+    interface SecretCreated extends Flatfile.GenericEvent {
+        topic: "secret:created";
+    }
+
+    interface SecretUpdated extends Flatfile.GenericEvent {
+        topic: "secret:updated";
+    }
+
+    interface SecretDeleted extends Flatfile.GenericEvent {
+        topic: "secret:deleted";
     }
 
     interface LayerCreated extends Flatfile.GenericEvent {
