@@ -1,6 +1,8 @@
 # Specify files that shouldn't be modified by Fern
 
 README.md
+LICENSE.txt
 
 src/wrapper
 src/index.ts
+
