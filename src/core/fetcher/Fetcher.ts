@@ -1,4 +1,4 @@
-import axios, { AxiosAdapter, AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosAdapter, AxiosError, AxiosProgressEvent, AxiosResponse } from "axios";
 import qs from "qs";
 import { APIResponse } from "./APIResponse";
 
@@ -17,7 +17,7 @@ export declare namespace Fetcher {
         withCredentials?: boolean;
         responseType?: "json" | "blob";
         adapter?: AxiosAdapter;
-        onUploadProgress?: (event: ProgressEvent) => void;
+        onUploadProgress?: ((progressEvent: AxiosProgressEvent) => void) | undefined;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
