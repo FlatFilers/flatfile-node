@@ -1,4 +1,4 @@
-import axios, { AxiosAdapter } from "axios";
+import axios, { AxiosAdapter, AxiosProgressEvent } from "axios";
 import qs from "qs";
 import { Readable } from "stream";
 
@@ -14,8 +14,8 @@ export declare namespace StreamingFetcher {
         timeoutMs?: number;
         withCredentials?: boolean;
         adapter?: AxiosAdapter;
-        onUploadProgress?: (event: ProgressEvent) => void;
-        onDownloadProgress?: (event: ProgressEvent) => void;
+        onUploadProgress?: ((progressEvent: AxiosProgressEvent) => void) | undefined;
+        onDownloadProgress?: ((progressEvent: AxiosProgressEvent) => void) | undefined;
 
         abortController?: AbortController;
     }
