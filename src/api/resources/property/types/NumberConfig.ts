@@ -10,5 +10,5 @@
  */
 export interface NumberConfig {
     /** Number of decimal places to round data to */
-    decimalPlaces: number;
+    decimalPlaces?: number;
 }

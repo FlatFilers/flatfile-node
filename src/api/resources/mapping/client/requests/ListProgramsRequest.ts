@@ -6,7 +6,7 @@ import * as Flatfile from "../../../..";
 
 export interface ListProgramsRequest {
     /**
-     * Number of spaces to return in a page (default 10)
+     * Number of programs to return in a page (default 10)
      */
     pageSize?: number;
     /**
@@ -29,6 +29,10 @@ export interface ListProgramsRequest {
      * The ID of the environment
      */
     environmentId?: Flatfile.EnvironmentId;
+    /**
+     * Filter by namespace
+     */
+    namespace?: string;
     /**
      * Filter by source keys
      */

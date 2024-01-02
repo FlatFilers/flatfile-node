@@ -23,7 +23,7 @@ export interface FindAndReplaceRecordRequest {
      *
      */
     ids?: Flatfile.RecordId | Flatfile.RecordId[];
-    /** A value to find for a given field in a sheet. Wrap the value in "" for exact match */
+    /** A value to find for a given field in a sheet. For exact matches, wrap the value in double quotes ("Bob") */
     find?: Flatfile.CellValueUnion;
     /** The value to replace found values with */
     replace?: Flatfile.CellValueUnion;

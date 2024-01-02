@@ -13,6 +13,8 @@ export interface InputField {
     description?: string;
     /** Field Types inform the user interface how to sort and display data. */
     type: string;
+    /** Default value for a Field. */
+    defaultValue?: any;
     /** Additional configuration for enum Fields. */
     config?: Flatfile.InputConfig;
     /** Indicate additional validations that will be applied to the Field. */

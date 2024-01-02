@@ -14,14 +14,17 @@ import * as Flatfile from "../../..";
  *         commitId: "us_vr_YOUR_ID",
  *         values: {
  *             "firstName": {
+ *                 value: undefined,
  *                 messages: [],
  *                 valid: true
  *             },
  *             "lastName": {
+ *                 value: undefined,
  *                 messages: [],
  *                 valid: true
  *             },
  *             "email": {
+ *                 value: undefined,
  *                 messages: [],
  *                 valid: true
  *             }

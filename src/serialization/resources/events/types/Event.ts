@@ -14,7 +14,10 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "space:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "space:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "space:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "space:archived": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "space:expired": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "space:guestAdded": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "space:guestRemoved": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "document:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "document:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "document:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
@@ -47,6 +50,9 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "commit:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "commit:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "commit:completed": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "secret:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "secret:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "secret:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "layer:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
     })
     .transform<Flatfile.Event>({
@@ -62,7 +68,10 @@ export declare namespace Event {
         | Event.SpaceCreated
         | Event.SpaceUpdated
         | Event.SpaceDeleted
+        | Event.SpaceArchived
         | Event.SpaceExpired
+        | Event.SpaceGuestAdded
+        | Event.SpaceGuestRemoved
         | Event.DocumentCreated
         | Event.DocumentUpdated
         | Event.DocumentDeleted
@@ -95,6 +104,9 @@ export declare namespace Event {
         | Event.CommitCreated
         | Event.CommitUpdated
         | Event.CommitCompleted
+        | Event.SecretCreated
+        | Event.SecretUpdated
+        | Event.SecretDeleted
         | Event.LayerCreated;
 
     interface AgentCreated extends serializers.GenericEvent.Raw {
@@ -121,8 +133,20 @@ export declare namespace Event {
         topic: "space:deleted";
     }
 
+    interface SpaceArchived extends serializers.GenericEvent.Raw {
+        topic: "space:archived";
+    }
+
     interface SpaceExpired extends serializers.GenericEvent.Raw {
         topic: "space:expired";
+    }
+
+    interface SpaceGuestAdded extends serializers.GenericEvent.Raw {
+        topic: "space:guestAdded";
+    }
+
+    interface SpaceGuestRemoved extends serializers.GenericEvent.Raw {
+        topic: "space:guestRemoved";
     }
 
     interface DocumentCreated extends serializers.GenericEvent.Raw {
@@ -251,6 +275,18 @@ export declare namespace Event {
 
     interface CommitCompleted extends serializers.GenericEvent.Raw {
         topic: "commit:completed";
+    }
+
+    interface SecretCreated extends serializers.GenericEvent.Raw {
+        topic: "secret:created";
+    }
+
+    interface SecretUpdated extends serializers.GenericEvent.Raw {
+        topic: "secret:updated";
+    }
+
+    interface SecretDeleted extends serializers.GenericEvent.Raw {
+        topic: "secret:deleted";
     }
 
     interface LayerCreated extends serializers.GenericEvent.Raw {

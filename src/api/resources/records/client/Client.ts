@@ -152,7 +152,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.2",
+                "X-Fern-SDK-Version": "1.6.3",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -226,14 +226,17 @@ export class Records {
      *             commitId: "us_vr_YOUR_ID",
      *             values: {
      *                 "firstName": {
+     *                     value: undefined,
      *                     messages: [],
      *                     valid: true
      *                 },
      *                 "lastName": {
+     *                     value: undefined,
      *                     messages: [],
      *                     valid: true
      *                 },
      *                 "email": {
+     *                     value: undefined,
      *                     messages: [],
      *                     valid: true
      *                 }
@@ -258,7 +261,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.2",
+                "X-Fern-SDK-Version": "1.6.3",
             },
             contentType: "application/json",
             body: await serializers.Records.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -328,14 +331,17 @@ export class Records {
      * @example
      *     await flatfile.records.insert("us_sh_YOUR_ID", [{
      *             "firstName": {
+     *                 value: undefined,
      *                 messages: [],
      *                 valid: true
      *             },
      *             "lastName": {
+     *                 value: undefined,
      *                 messages: [],
      *                 valid: true
      *             },
      *             "email": {
+     *                 value: undefined,
      *                 messages: [],
      *                 valid: true
      *             }
@@ -357,7 +363,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.2",
+                "X-Fern-SDK-Version": "1.6.3",
             },
             contentType: "application/json",
             body: await serializers.records.insert.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -455,7 +461,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.2",
+                "X-Fern-SDK-Version": "1.6.3",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -567,7 +573,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.2",
+                "X-Fern-SDK-Version": "1.6.3",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

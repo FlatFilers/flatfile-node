@@ -7,9 +7,40 @@ import * as Flatfile from "../../..";
 /**
  * @example
  *     {
- *         fieldMapping: [{}, {}],
- *         unmappedSourceFields: [{}],
- *         unmappedDestinationFields: [{}],
+ *         fieldMapping: [{
+ *                 sourceField: {
+ *                     type: "string",
+ *                     key: "firstName"
+ *                 },
+ *                 destinationField: {
+ *                     type: "string",
+ *                     key: "firstName",
+ *                     label: "First Name"
+ *                 }
+ *             }, {
+ *                 sourceField: {
+ *                     type: "string",
+ *                     key: "lastName"
+ *                 },
+ *                 destinationField: {
+ *                     type: "string",
+ *                     key: "lastName",
+ *                     label: "Last Name"
+ *                 }
+ *             }],
+ *         unmappedSourceFields: [{
+ *                 sourceField: {
+ *                     type: "string",
+ *                     key: "email"
+ *                 }
+ *             }],
+ *         unmappedDestinationFields: [{
+ *                 destinationField: {
+ *                     type: "string",
+ *                     key: "email",
+ *                     label: "Email"
+ *                 }
+ *             }],
  *         fileId: "us_fl_YOUR_ID",
  *         jobId: "us_jb_YOUR_ID"
  *     }

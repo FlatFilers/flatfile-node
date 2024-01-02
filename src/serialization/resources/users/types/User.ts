@@ -11,6 +11,8 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, Flatfil
         id: core.serialization.lazy(async () => (await import("../../..")).UserId),
         idp: core.serialization.string(),
         idpRef: core.serialization.string().optional(),
+        metadata: core.serialization.record(core.serialization.string(), core.serialization.any()),
+        createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).UserConfig));
@@ -20,6 +22,8 @@ export declare namespace User {
         id: serializers.UserId.Raw;
         idp: string;
         idpRef?: string | null;
+        metadata: Record<string, any>;
+        createdAt: string;
         updatedAt: string;
     }
 }

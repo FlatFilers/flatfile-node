@@ -20,6 +20,7 @@ export * from "./RecordId";
 export * from "./SecretId";
 export * from "./MappingId";
 export * from "./ProgramId";
+export * from "./FamilyId";
 export * from "./DataRetentionPolicyId";
 export * from "./Pagination";
 export * from "./PageSize";

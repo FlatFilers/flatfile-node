@@ -3,6 +3,6 @@
  */
 
 /**
- * Search the entire sheet for the given value, returning matching rows
+ * Search for the given value, returning matching rows. For exact matches, wrap the value in double quotes ("Bob"). To search for null values, send empty double quotes ("")
  */
 export type SearchValue = string;

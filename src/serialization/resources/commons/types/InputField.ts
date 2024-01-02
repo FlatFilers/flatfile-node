@@ -12,6 +12,7 @@ export const InputField: core.serialization.ObjectSchema<serializers.InputField.
         label: core.serialization.string(),
         description: core.serialization.string().optional(),
         type: core.serialization.string(),
+        defaultValue: core.serialization.any().optional(),
         config: core.serialization.lazyObject(async () => (await import("../../..")).InputConfig).optional(),
         constraints: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).InputConstraint))
@@ -24,6 +25,7 @@ export declare namespace InputField {
         label: string;
         description?: string | null;
         type: string;
+        defaultValue?: any | null;
         config?: serializers.InputConfig.Raw | null;
         constraints?: serializers.InputConstraint.Raw[] | null;
     }

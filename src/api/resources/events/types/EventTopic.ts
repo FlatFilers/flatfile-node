@@ -15,7 +15,10 @@ export type EventTopic =
     | "space:created"
     | "space:updated"
     | "space:deleted"
+    | "space:archived"
     | "space:expired"
+    | "space:guestAdded"
+    | "space:guestRemoved"
     | "document:created"
     | "document:updated"
     | "document:deleted"
@@ -48,7 +51,10 @@ export type EventTopic =
     | "commit:created"
     | "commit:updated"
     | "commit:completed"
-    | "layer:created";
+    | "layer:created"
+    | "secret:created"
+    | "secret:updated"
+    | "secret:deleted";
 
 export const EventTopic = {
     AgentCreated: "agent:created",
@@ -57,7 +63,10 @@ export const EventTopic = {
     SpaceCreated: "space:created",
     SpaceUpdated: "space:updated",
     SpaceDeleted: "space:deleted",
+    SpaceArchived: "space:archived",
     SpaceExpired: "space:expired",
+    SpaceGuestAdded: "space:guestAdded",
+    SpaceGuestRemoved: "space:guestRemoved",
     DocumentCreated: "document:created",
     DocumentUpdated: "document:updated",
     DocumentDeleted: "document:deleted",
@@ -91,4 +100,7 @@ export const EventTopic = {
     CommitUpdated: "commit:updated",
     CommitCompleted: "commit:completed",
     LayerCreated: "layer:created",
+    SecretCreated: "secret:created",
+    SecretUpdated: "secret:updated",
+    SecretDeleted: "secret:deleted",
 } as const;
