@@ -25,7 +25,7 @@ export class FlatfileClient extends FernClient {
     constructor(options: FlatfileClient.Options = {}) {
         super({
             environment: (options.environment || options.apiUrl) ?? environmentSupplier,
-            token: options.token ?? tokenSupplier
+            token: options.token ?? tokenSupplier,
         });
     }
 

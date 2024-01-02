@@ -11,19 +11,19 @@
         "prepack": "cp -rv dist/. ."
     },
     "dependencies": {
-        "url-join": "^4.0.1",
-        "@types/url-join": "^4.0.1",
-        "form-data": "^4.0.0",
-        "axios": "^1.6.2",
-        "qs": "^6.11.2",
-        "@types/qs": "^6.9.8",
-        "js-base64": "^3.7.2",
         "@flatfile/cross-env-config": "^0.0.4",
-        "@types/pako": "^2.0.1",
-        "pako": "^2.0.1"
+        "axios": "^1.6.2",
+        "form-data": "^4.0.0",
+        "js-base64": "^3.7.2",
+        "pako": "^2.0.1",
+        "qs": "^6.11.2",
+        "url-join": "^4.0.1"
     },
     "devDependencies": {
         "@types/node": "^17.0.33",
+        "@types/pako": "^2.0.1",
+        "@types/qs": "^6.9.8",
+        "@types/url-join": "^4.0.1",
         "prettier": "^2.7.1",
         "typescript": "^4.6.4"
     }
