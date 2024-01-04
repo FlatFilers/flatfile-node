@@ -16,6 +16,8 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "space:deleted",
         "space:archived",
         "space:expired",
+        "space:guestAdded",
+        "space:guestRemoved",
         "document:created",
         "document:updated",
         "document:deleted",
@@ -64,6 +66,8 @@ export declare namespace EventTopic {
         | "space:deleted"
         | "space:archived"
         | "space:expired"
+        | "space:guestAdded"
+        | "space:guestRemoved"
         | "document:created"
         | "document:updated"
         | "document:deleted"

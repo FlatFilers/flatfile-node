@@ -40,6 +40,8 @@ export type Event =
     | Flatfile.Event.SpaceDeleted
     | Flatfile.Event.SpaceArchived
     | Flatfile.Event.SpaceExpired
+    | Flatfile.Event.SpaceGuestAdded
+    | Flatfile.Event.SpaceGuestRemoved
     | Flatfile.Event.DocumentCreated
     | Flatfile.Event.DocumentUpdated
     | Flatfile.Event.DocumentDeleted
@@ -108,6 +110,14 @@ export declare namespace Event {
 
     interface SpaceExpired extends Flatfile.GenericEvent {
         topic: "space:expired";
+    }
+
+    interface SpaceGuestAdded extends Flatfile.GenericEvent {
+        topic: "space:guestAdded";
+    }
+
+    interface SpaceGuestRemoved extends Flatfile.GenericEvent {
+        topic: "space:guestRemoved";
     }
 
     interface DocumentCreated extends Flatfile.GenericEvent {

@@ -9,6 +9,10 @@ export interface ProgramConfig {
     source: Flatfile.SheetConfig;
     /** Destination schema */
     destination: Flatfile.SheetConfig;
+    /** ID of the family to add the program to */
+    familyId?: Flatfile.FamilyId;
+    /** Namespace of the program */
+    namespace?: string;
     /** Whether to save the program for editing later. Defaults to false. If true, the response will contain an ID and access token. */
     save?: boolean;
 }

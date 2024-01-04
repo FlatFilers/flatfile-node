@@ -8,6 +8,7 @@ export interface BaseProperty {
     key: string;
     /** User friendly field name */
     label?: string;
+    /** A short description of the field. Markdown syntax is supported. */
     description?: string;
     constraints?: Flatfile.Constraint[];
     readonly?: boolean;

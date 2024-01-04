@@ -9,8 +9,3 @@ export * from "./MappingRuleOrConfig";
 export * from "./CreateMappingRulesRequest";
 export * from "./MappingRuleResponse";
 export * from "./MappingRulesResponse";
-export * from "./GetFieldWeightsRequest";
-export * from "./GetEnumWeightsRequest";
-export * from "./SourceDestinationWeight";
-export * from "./SourceDestinationWeights";
-export * from "./SourceDestinationWeightsResponse";

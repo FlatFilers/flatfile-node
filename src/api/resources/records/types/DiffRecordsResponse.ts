@@ -10,9 +10,18 @@ import * as Flatfile from "../../..";
  *         data: [{
  *                 id: "us_rc_YOUR_ID",
  *                 values: {
- *                     "firstName": {},
- *                     "lastName": {},
- *                     "email": {}
+ *                     "firstName": {
+ *                         snapshotValue: undefined,
+ *                         value: undefined
+ *                     },
+ *                     "lastName": {
+ *                         snapshotValue: undefined,
+ *                         value: undefined
+ *                     },
+ *                     "email": {
+ *                         snapshotValue: undefined,
+ *                         value: undefined
+ *                     }
  *                 }
  *             }]
  *     }

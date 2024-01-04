@@ -16,6 +16,8 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "space:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "space:archived": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "space:expired": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "space:guestAdded": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "space:guestRemoved": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "document:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "document:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
         "document:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
@@ -68,6 +70,8 @@ export declare namespace Event {
         | Event.SpaceDeleted
         | Event.SpaceArchived
         | Event.SpaceExpired
+        | Event.SpaceGuestAdded
+        | Event.SpaceGuestRemoved
         | Event.DocumentCreated
         | Event.DocumentUpdated
         | Event.DocumentDeleted
@@ -135,6 +139,14 @@ export declare namespace Event {
 
     interface SpaceExpired extends serializers.GenericEvent.Raw {
         topic: "space:expired";
+    }
+
+    interface SpaceGuestAdded extends serializers.GenericEvent.Raw {
+        topic: "space:guestAdded";
+    }
+
+    interface SpaceGuestRemoved extends serializers.GenericEvent.Raw {
+        topic: "space:guestRemoved";
     }
 
     interface DocumentCreated extends serializers.GenericEvent.Raw {

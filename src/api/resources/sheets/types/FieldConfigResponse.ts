@@ -6,7 +6,13 @@ import * as Flatfile from "../../..";
 
 /**
  * @example
- *     {}
+ *     {
+ *         data: {
+ *             type: "string",
+ *             key: "firstName",
+ *             label: "First Name"
+ *         }
+ *     }
  */
 export interface FieldConfigResponse {
     data: Flatfile.Property;

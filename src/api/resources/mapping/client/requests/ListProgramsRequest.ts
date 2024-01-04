@@ -30,6 +30,10 @@ export interface ListProgramsRequest {
      */
     environmentId?: Flatfile.EnvironmentId;
     /**
+     * Filter by namespace
+     */
+    namespace?: string;
+    /**
      * Filter by source keys
      */
     sourceKeys?: string;

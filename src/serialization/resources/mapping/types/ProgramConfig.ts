@@ -10,6 +10,8 @@ export const ProgramConfig: core.serialization.ObjectSchema<serializers.ProgramC
     core.serialization.object({
         source: core.serialization.lazyObject(async () => (await import("../../..")).SheetConfig),
         destination: core.serialization.lazyObject(async () => (await import("../../..")).SheetConfig),
+        familyId: core.serialization.lazy(async () => (await import("../../..")).FamilyId).optional(),
+        namespace: core.serialization.string().optional(),
         save: core.serialization.boolean().optional(),
     });
 
@@ -17,6 +19,8 @@ export declare namespace ProgramConfig {
     interface Raw {
         source: serializers.SheetConfig.Raw;
         destination: serializers.SheetConfig.Raw;
+        familyId?: serializers.FamilyId.Raw | null;
+        namespace?: string | null;
         save?: boolean | null;
     }
 }
