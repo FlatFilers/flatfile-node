@@ -6,3 +6,4 @@ LICENSE.txt
 src/wrapper
 src/index.ts
 
+.github/workflows/ci.yml
