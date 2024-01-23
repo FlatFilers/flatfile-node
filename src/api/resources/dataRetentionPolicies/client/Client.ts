@@ -14,7 +14,6 @@ export declare namespace DataRetentionPolicies {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
-        streamingFetcher?: core.StreamingFetchFunction;
     }
 
     interface RequestOptions {

@@ -14,7 +14,6 @@ export declare namespace Auth {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
-        streamingFetcher?: core.StreamingFetchFunction;
     }
 
     interface RequestOptions {
