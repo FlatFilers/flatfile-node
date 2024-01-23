@@ -14,6 +14,7 @@ export declare namespace Auth {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
+        streamingFetcher?: core.StreamingFetchFunction;
     }
 
     interface RequestOptions {
@@ -52,7 +53,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3-rc",
+                "X-Fern-SDK-Version": "1.6.4",
             },
             contentType: "application/json",
             body: await serializers.Credentials.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -141,7 +142,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3-rc",
+                "X-Fern-SDK-Version": "1.6.4",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -232,7 +233,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3-rc",
+                "X-Fern-SDK-Version": "1.6.4",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -323,7 +324,7 @@ export class Auth {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3-rc",
+                "X-Fern-SDK-Version": "1.6.4",
             },
             contentType: "application/json",
             queryParameters: _queryParams,

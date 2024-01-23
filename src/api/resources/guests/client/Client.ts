@@ -14,6 +14,7 @@ export declare namespace Guests {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
+        streamingFetcher?: core.StreamingFetchFunction;
     }
 
     interface RequestOptions {
@@ -55,7 +56,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3-rc",
+                "X-Fern-SDK-Version": "1.6.4",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -126,7 +127,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3-rc",
+                "X-Fern-SDK-Version": "1.6.4",
             },
             contentType: "application/json",
             body: await serializers.guests.create.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -186,7 +187,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3-rc",
+                "X-Fern-SDK-Version": "1.6.4",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -242,7 +243,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3-rc",
+                "X-Fern-SDK-Version": "1.6.4",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -305,7 +306,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3-rc",
+                "X-Fern-SDK-Version": "1.6.4",
             },
             contentType: "application/json",
             body: await serializers.GuestConfigUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -372,7 +373,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3-rc",
+                "X-Fern-SDK-Version": "1.6.4",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -434,7 +435,7 @@ export class Guests {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3-rc",
+                "X-Fern-SDK-Version": "1.6.4",
             },
             contentType: "application/json",
             body: await serializers.guests.invite.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
