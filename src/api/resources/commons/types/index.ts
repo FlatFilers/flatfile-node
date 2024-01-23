@@ -37,6 +37,8 @@ export * from "./InputConstraintType";
 export * from "./InputConfig";
 export * from "./InputEnumPropertyOption";
 export * from "./ActionMode";
+export * from "./ActionMessageType";
+export * from "./ActionMessage";
 export * from "./ActionSchedule";
 export * from "./SortDirection";
 export * from "./Success";

@@ -37,6 +37,7 @@ export interface Action {
     label: string;
     /** A tooltip that appears when hovering the action button */
     tooltip?: string;
+    messages?: Flatfile.ActionMessage[];
     /**
      * **This is deprecated.**
      *

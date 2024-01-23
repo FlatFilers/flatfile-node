@@ -46,7 +46,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3",
+                "X-Fern-SDK-Version": "1.6.3-rc",
             },
             contentType: "application/json",
             body: await serializers.ProgramConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -123,6 +123,7 @@ export class Mapping {
             createdAfter,
             createdBefore,
             environmentId,
+            familyId,
             namespace,
             sourceKeys,
             destinationKeys,
@@ -152,6 +153,10 @@ export class Mapping {
             _queryParams["environmentId"] = environmentId;
         }
 
+        if (familyId != null) {
+            _queryParams["familyId"] = familyId;
+        }
+
         if (namespace != null) {
             _queryParams["namespace"] = namespace;
         }
@@ -175,7 +180,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3",
+                "X-Fern-SDK-Version": "1.6.3-rc",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -247,7 +252,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3",
+                "X-Fern-SDK-Version": "1.6.3-rc",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -329,7 +334,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3",
+                "X-Fern-SDK-Version": "1.6.3-rc",
             },
             contentType: "application/json",
             body: await serializers.ProgramConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -411,7 +416,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3",
+                "X-Fern-SDK-Version": "1.6.3-rc",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -493,7 +498,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3",
+                "X-Fern-SDK-Version": "1.6.3-rc",
             },
             contentType: "application/json",
             body: await serializers.CreateMappingRulesRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -578,7 +583,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3",
+                "X-Fern-SDK-Version": "1.6.3-rc",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -665,7 +670,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3",
+                "X-Fern-SDK-Version": "1.6.3-rc",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -757,7 +762,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3",
+                "X-Fern-SDK-Version": "1.6.3-rc",
             },
             contentType: "application/json",
             body: await serializers.MappingRuleConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -845,7 +850,7 @@ export class Mapping {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.3",
+                "X-Fern-SDK-Version": "1.6.3-rc",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

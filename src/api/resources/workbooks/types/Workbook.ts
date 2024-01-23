@@ -17,6 +17,7 @@ import * as Flatfile from "../../..";
  *                 id: "us_sh_YOUR_ID",
  *                 workbookId: "us_wb_YOUR_ID",
  *                 name: "Contacts",
+ *                 slug: "contacts",
  *                 config: {
  *                     name: "Contacts",
  *                     slug: "contacts",

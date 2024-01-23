@@ -46,6 +46,8 @@ export interface SheetConfig {
     fields: Flatfile.Property[];
     /** An array of actions that end users can perform on this Sheet. */
     actions?: Flatfile.Action[];
+    /** Useful for any contextual metadata regarding the schema. Store any valid json */
+    metadata?: any;
     /** An array of constraints that end users can perform on this Sheet. */
     constraints?: Flatfile.SheetConstraint[];
 }

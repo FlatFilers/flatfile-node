@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const ActionConstraintType: core.serialization.Schema<
     serializers.ActionConstraintType.Raw,
     Flatfile.ActionConstraintType
-> = core.serialization.enum_(["hasAllValid", "hasSelection"]);
+> = core.serialization.enum_(["hasAllValid", "hasSelection", "hasData"]);
 
 export declare namespace ActionConstraintType {
-    type Raw = "hasAllValid" | "hasSelection";
+    type Raw = "hasAllValid" | "hasSelection" | "hasData";
 }

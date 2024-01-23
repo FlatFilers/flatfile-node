@@ -21,6 +21,7 @@ export const SheetConfig: core.serialization.ObjectSchema<serializers.SheetConfi
         actions: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
             .optional(),
+        metadata: core.serialization.any().optional(),
         constraints: core.serialization
             .list(core.serialization.lazy(async () => (await import("../../..")).SheetConstraint))
             .optional(),
@@ -37,6 +38,7 @@ export declare namespace SheetConfig {
         access?: serializers.SheetAccess.Raw[] | null;
         fields: serializers.Property.Raw[];
         actions?: serializers.Action.Raw[] | null;
+        metadata?: any | null;
         constraints?: serializers.SheetConstraint.Raw[] | null;
     }
 }

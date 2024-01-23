@@ -30,6 +30,10 @@ export interface ListProgramsRequest {
      */
     environmentId?: Flatfile.EnvironmentId;
     /**
+     * Filter by family
+     */
+    familyId?: Flatfile.FamilyId;
+    /**
      * Filter by namespace
      */
     namespace?: string;

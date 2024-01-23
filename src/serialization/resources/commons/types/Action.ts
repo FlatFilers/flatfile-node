@@ -13,6 +13,9 @@ export const Action: core.serialization.ObjectSchema<serializers.Action.Raw, Fla
         mode: core.serialization.lazy(async () => (await import("../../..")).ActionMode).optional(),
         label: core.serialization.string(),
         tooltip: core.serialization.string().optional(),
+        messages: core.serialization
+            .list(core.serialization.lazyObject(async () => (await import("../../..")).ActionMessage))
+            .optional(),
         type: core.serialization.string().optional(),
         description: core.serialization.string().optional(),
         schedule: core.serialization.lazy(async () => (await import("../../..")).ActionSchedule).optional(),
@@ -34,6 +37,7 @@ export declare namespace Action {
         mode?: serializers.ActionMode.Raw | null;
         label: string;
         tooltip?: string | null;
+        messages?: serializers.ActionMessage.Raw[] | null;
         type?: string | null;
         description?: string | null;
         schedule?: serializers.ActionSchedule.Raw | null;

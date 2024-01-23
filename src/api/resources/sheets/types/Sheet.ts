@@ -12,6 +12,7 @@ import * as Flatfile from "../../..";
  *         id: "us_sh_YOUR_ID",
  *         workbookId: "us_wb_YOUR_ID",
  *         name: "Contacts",
+ *         slug: "contacts",
  *         config: {
  *             name: "Contacts",
  *             slug: "contacts",
@@ -47,6 +48,8 @@ export interface Sheet {
     workbookId: Flatfile.WorkbookId;
     /** The name of the Sheet. */
     name: string;
+    /** The slug of the Sheet. */
+    slug: string;
     /** Describes shape of data as well as behavior */
     config: Flatfile.SheetConfig;
     /** The amount of records in the Sheet. */
