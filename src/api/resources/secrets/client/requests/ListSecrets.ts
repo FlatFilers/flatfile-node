@@ -14,7 +14,7 @@ export interface ListSecrets {
     /**
      * The Environment of the secret.
      */
-    environmentId: Flatfile.EnvironmentId;
+    environmentId?: Flatfile.EnvironmentId;
     /**
      * The Space of the secret.
      */

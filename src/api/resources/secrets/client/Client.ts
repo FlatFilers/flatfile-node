@@ -37,12 +37,15 @@ export class Secrets {
      *     })
      */
     public async list(
-        request: Flatfile.ListSecrets,
+        request: Flatfile.ListSecrets = {},
         requestOptions?: Secrets.RequestOptions
     ): Promise<Flatfile.SecretsResponse> {
         const { environmentId, spaceId } = request;
         const _queryParams: Record<string, string | string[]> = {};
-        _queryParams["environmentId"] = environmentId;
+        if (environmentId != null) {
+            _queryParams["environmentId"] = environmentId;
+        }
+
         if (spaceId != null) {
             _queryParams["spaceId"] = spaceId;
         }
@@ -58,7 +61,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.5",
+                "X-Fern-SDK-Version": "1.6.6",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -148,7 +151,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.5",
+                "X-Fern-SDK-Version": "1.6.6",
             },
             contentType: "application/json",
             body: await serializers.WriteSecret.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -233,7 +236,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.5",
+                "X-Fern-SDK-Version": "1.6.6",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
