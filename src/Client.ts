@@ -11,6 +11,7 @@ import { Cells } from "./api/resources/cells/client/Client";
 import { Commits } from "./api/resources/commits/client/Client";
 import { DataRetentionPolicies } from "./api/resources/dataRetentionPolicies/client/Client";
 import { Documents } from "./api/resources/documents/client/Client";
+import { Entitlements } from "./api/resources/entitlements/client/Client";
 import { Environments } from "./api/resources/environments/client/Client";
 import { Events } from "./api/resources/events/client/Client";
 import { Files } from "./api/resources/files/client/Client";
@@ -84,6 +85,12 @@ export class FlatfileClient {
 
     public get documents(): Documents {
         return (this._documents ??= new Documents(this._options));
+    }
+
+    protected _entitlements: Entitlements | undefined;
+
+    public get entitlements(): Entitlements {
+        return (this._entitlements ??= new Entitlements(this._options));
     }
 
     protected _environments: Environments | undefined;

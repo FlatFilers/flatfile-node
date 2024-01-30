@@ -1,6 +1,6 @@
 {
     "name": "@flatfile/api",
-    "version": "1.6.6",
+    "version": "1.6.7",
     "private": false,
     "repository": "https://github.com/FlatFilers/flatfile-node",
     "main": "./index.js",

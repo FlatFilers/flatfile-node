@@ -5,11 +5,11 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
+import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
 
-export declare namespace Roles {
+export declare namespace Entitlements {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
@@ -23,25 +23,32 @@ export declare namespace Roles {
     }
 }
 
-export class Roles {
-    constructor(protected readonly _options: Roles.Options = {}) {}
+export class Entitlements {
+    constructor(protected readonly _options: Entitlements.Options = {}) {}
 
     /**
-     * Assign an existing role to the specified actor in the specified resource context
+     * Returns all entitlements matching a filter for resourceId
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.entitlements.list({
+     *         resourceId: "string"
+     *     })
      */
-    public async assign(
-        roleId: string,
-        request: Flatfile.AssignRoleRequest,
-        requestOptions?: Roles.RequestOptions
-    ): Promise<Flatfile.AssignRoleResponse> {
+    public async list(
+        request: Flatfile.ListEntitlementsRequest,
+        requestOptions?: Entitlements.RequestOptions
+    ): Promise<Flatfile.ListEntitlementsResponse> {
+        const { resourceId } = request;
+        const _queryParams: Record<string, string | string[]> = {};
+        _queryParams["resourceId"] = resourceId;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/roles/${roleId}`
+                "/entitlements"
             ),
-            method: "POST",
+            method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": "true",
@@ -50,12 +57,12 @@ export class Roles {
                 "X-Fern-SDK-Version": "1.6.7",
             },
             contentType: "application/json",
-            body: await serializers.AssignRoleRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.AssignRoleResponse.parseOrThrow(_response.body, {
+            return await serializers.ListEntitlementsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
