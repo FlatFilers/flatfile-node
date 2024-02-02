@@ -11,7 +11,6 @@ export const Constraint: core.serialization.Schema<serializers.Constraint.Raw, F
         required: core.serialization.object({}),
         unique: core.serialization.lazyObject(async () => (await import("../../..")).UniqueConstraint),
         computed: core.serialization.object({}),
-        external: core.serialization.lazyObject(async () => (await import("../../..")).ExternalConstraint),
     })
     .transform<Flatfile.Constraint>({
         transform: (value) => value,
@@ -19,7 +18,7 @@ export const Constraint: core.serialization.Schema<serializers.Constraint.Raw, F
     });
 
 export declare namespace Constraint {
-    type Raw = Constraint.Required | Constraint.Unique | Constraint.Computed | Constraint.External;
+    type Raw = Constraint.Required | Constraint.Unique | Constraint.Computed;
 
     interface Required {
         type: "required";
@@ -31,9 +30,5 @@ export declare namespace Constraint {
 
     interface Computed {
         type: "computed";
-    }
-
-    interface External extends serializers.ExternalConstraint.Raw {
-        type: "external";
     }
 }

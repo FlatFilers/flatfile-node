@@ -14,8 +14,6 @@ export * as dataRetentionPolicies from "./dataRetentionPolicies";
 export * from "./dataRetentionPolicies/types";
 export * as documents from "./documents";
 export * from "./documents/types";
-export * as entitlements from "./entitlements";
-export * from "./entitlements/types";
 export * as environments from "./environments";
 export * from "./environments/types";
 export * as events from "./events";

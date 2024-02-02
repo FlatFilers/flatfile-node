@@ -4,14 +4,10 @@
 
 import * as Flatfile from "../../..";
 
-export type SheetConstraint = Flatfile.SheetConstraint.Unique | Flatfile.SheetConstraint.External;
+export type SheetConstraint = Flatfile.SheetConstraint.Unique;
 
 export declare namespace SheetConstraint {
     interface Unique extends Flatfile.CompositeUniqueConstraint {
         type: "unique";
-    }
-
-    interface External extends Flatfile.ExternalSheetConstraint {
-        type: "external";
     }
 }

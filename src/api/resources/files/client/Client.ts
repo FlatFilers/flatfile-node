@@ -17,7 +17,6 @@ export declare namespace Files {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
-        streamingFetcher?: core.StreamingFetchFunction;
     }
 
     interface RequestOptions {
@@ -62,7 +61,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.7",
+                "X-Fern-SDK-Version": "1.6.7-rc",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -134,8 +133,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.7",
-                "Content-Length": (await core.getFormDataContentLength(_request)).toString(),
+                "X-Fern-SDK-Version": "1.6.7-rc",
             },
             contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
             body: _request,
@@ -206,7 +204,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.7",
+                "X-Fern-SDK-Version": "1.6.7-rc",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -283,7 +281,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.7",
+                "X-Fern-SDK-Version": "1.6.7-rc",
             },
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -370,7 +368,7 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.7",
+                "X-Fern-SDK-Version": "1.6.7-rc",
             },
             contentType: "application/json",
             body: await serializers.UpdateFileRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -432,8 +430,12 @@ export class Files {
         }
     }
 
+    /**
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
+     */
     public async download(fileId: Flatfile.FileId, requestOptions?: Files.RequestOptions): Promise<stream.Readable> {
-        const _response = await (this._options.streamingFetcher ?? core.streamingFetcher)({
+        const _response = await (this._options.fetcher ?? core.fetcher)<stream.Readable>({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
                 `/files/${await serializers.FileId.jsonOrThrow(fileId)}/download`
@@ -444,11 +446,60 @@ export class Files {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.6.7",
+                "X-Fern-SDK-Version": "1.6.7-rc",
             },
+            contentType: "application/json",
+            responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
-        return _response.data;
+        if (_response.ok) {
+            return _response.body;
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 
     protected async _getAuthorizationHeader() {
