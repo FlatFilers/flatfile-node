@@ -12,6 +12,7 @@ export const MappingRuleOrConfig: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         id: core.serialization.lazy(async () => (await import("../../..")).MappingId).optional(),
+        confidence: core.serialization.number().optional(),
         createdBy: core.serialization.lazy(async () => (await import("../../..")).UserId).optional(),
         createdAt: core.serialization.date().optional(),
         updatedAt: core.serialization.date().optional(),
@@ -22,6 +23,7 @@ export const MappingRuleOrConfig: core.serialization.ObjectSchema<
 export declare namespace MappingRuleOrConfig {
     interface Raw extends serializers.MappingRuleConfig.Raw {
         id?: serializers.MappingId.Raw | null;
+        confidence?: number | null;
         createdBy?: serializers.UserId.Raw | null;
         createdAt?: string | null;
         updatedAt?: string | null;

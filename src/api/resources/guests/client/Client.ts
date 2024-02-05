@@ -412,6 +412,287 @@ export class Guests {
     }
 
     /**
+     * Lists roles assigned to a guest.
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
+     * @throws {@link Flatfile.ForbiddenError}
+     */
+    public async listGuestRoles(
+        guestId: Flatfile.GuestId,
+        requestOptions?: Guests.RequestOptions
+    ): Promise<Flatfile.ListActorRolesResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `guests/${await serializers.GuestId.jsonOrThrow(guestId)}/roles`
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.6.7-rc",
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.ListActorRolesResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 403:
+                    throw new Flatfile.ForbiddenError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Assigns a role to a guest.
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
+     * @throws {@link Flatfile.ForbiddenError}
+     */
+    public async assignGuestRole(
+        guestId: Flatfile.GuestId,
+        request: Flatfile.AssignActorRoleRequest,
+        requestOptions?: Guests.RequestOptions
+    ): Promise<Flatfile.AssignRoleResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `guests/${await serializers.GuestId.jsonOrThrow(guestId)}/roles`
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.6.7-rc",
+            },
+            contentType: "application/json",
+            body: await serializers.AssignActorRoleRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.AssignRoleResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 403:
+                    throw new Flatfile.ForbiddenError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Removes a role from a guest.
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
+     * @throws {@link Flatfile.ForbiddenError}
+     */
+    public async deleteGuestRole(
+        guestId: Flatfile.GuestId,
+        actorRoleId: Flatfile.ActorRoleId,
+        requestOptions?: Guests.RequestOptions
+    ): Promise<Flatfile.Success> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `guests/${await serializers.GuestId.jsonOrThrow(
+                    guestId
+                )}/roles/${await serializers.ActorRoleId.jsonOrThrow(actorRoleId)}`
+            ),
+            method: "DELETE",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.6.7-rc",
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.Success.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 403:
+                    throw new Flatfile.ForbiddenError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
      * Guests can be created as a named guest on the Space or there’s a global link that will let anonymous guests into the space.
      *
      * @example

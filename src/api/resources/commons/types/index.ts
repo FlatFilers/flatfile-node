@@ -14,6 +14,7 @@ export * from "./CommitId";
 export * from "./VersionId";
 export * from "./JobId";
 export * from "./UserId";
+export * from "./ActorRoleId";
 export * from "./RoleId";
 export * from "./SpaceConfigId";
 export * from "./RecordId";

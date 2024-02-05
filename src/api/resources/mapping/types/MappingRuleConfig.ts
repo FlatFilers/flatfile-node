@@ -17,8 +17,8 @@ export interface MappingRuleConfig {
     name: string;
     type: string;
     config?: any;
-    /** Confidence of the mapping rule */
-    confidence?: number;
+    /** Time the mapping rule was last updated */
+    acceptedAt?: Date;
     /** User ID of the contributor of the mapping rule */
-    contributor?: Flatfile.UserId;
+    acceptedBy?: Flatfile.UserId;
 }

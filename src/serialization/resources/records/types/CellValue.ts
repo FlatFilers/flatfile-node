@@ -12,6 +12,7 @@ export const CellValue: core.serialization.ObjectSchema<serializers.CellValue.Ra
         messages: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).ValidationMessage))
             .optional(),
+        metadata: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
         value: core.serialization.lazy(async () => (await import("../../..")).CellValueUnion).optional(),
         layer: core.serialization.string().optional(),
         updatedAt: core.serialization.date().optional(),
@@ -21,6 +22,7 @@ export declare namespace CellValue {
     interface Raw {
         valid?: boolean | null;
         messages?: serializers.ValidationMessage.Raw[] | null;
+        metadata?: Record<string, any> | null;
         value?: serializers.CellValueUnion.Raw | null;
         layer?: string | null;
         updatedAt?: string | null;
