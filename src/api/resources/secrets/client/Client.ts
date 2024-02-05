@@ -36,12 +36,15 @@ export class Secrets {
      *     })
      */
     public async list(
-        request: Flatfile.ListSecrets,
+        request: Flatfile.ListSecrets = {},
         requestOptions?: Secrets.RequestOptions
     ): Promise<Flatfile.SecretsResponse> {
         const { environmentId, spaceId } = request;
         const _queryParams: Record<string, string | string[]> = {};
-        _queryParams["environmentId"] = environmentId;
+        if (environmentId != null) {
+            _queryParams["environmentId"] = environmentId;
+        }
+
         if (spaceId != null) {
             _queryParams["spaceId"] = spaceId;
         }

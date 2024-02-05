@@ -7,5 +7,6 @@ export * from "./MappingRuleConfig";
 export * from "./MappingRule";
 export * from "./MappingRuleOrConfig";
 export * from "./CreateMappingRulesRequest";
+export * from "./UpdateMappingRulesRequest";
 export * from "./MappingRuleResponse";
 export * from "./MappingRulesResponse";

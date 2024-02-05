@@ -13,8 +13,8 @@ export const MappingRuleConfig: core.serialization.ObjectSchema<
     name: core.serialization.string(),
     type: core.serialization.string(),
     config: core.serialization.any().optional(),
-    confidence: core.serialization.number().optional(),
-    contributor: core.serialization.lazy(async () => (await import("../../..")).UserId).optional(),
+    acceptedAt: core.serialization.date().optional(),
+    acceptedBy: core.serialization.lazy(async () => (await import("../../..")).UserId).optional(),
 });
 
 export declare namespace MappingRuleConfig {
@@ -22,7 +22,7 @@ export declare namespace MappingRuleConfig {
         name: string;
         type: string;
         config?: any | null;
-        confidence?: number | null;
-        contributor?: serializers.UserId.Raw | null;
+        acceptedAt?: string | null;
+        acceptedBy?: serializers.UserId.Raw | null;
     }
 }

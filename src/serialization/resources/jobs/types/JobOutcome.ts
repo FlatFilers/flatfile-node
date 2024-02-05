@@ -13,6 +13,7 @@ export const JobOutcome: core.serialization.ObjectSchema<serializers.JobOutcome.
         next: core.serialization.lazy(async () => (await import("../../..")).JobOutcomeNext).optional(),
         heading: core.serialization.string().optional(),
         message: core.serialization.string().optional(),
+        hideDefaultButton: core.serialization.boolean().optional(),
     });
 
 export declare namespace JobOutcome {
@@ -22,5 +23,6 @@ export declare namespace JobOutcome {
         next?: serializers.JobOutcomeNext.Raw | null;
         heading?: string | null;
         message?: string | null;
+        hideDefaultButton?: boolean | null;
     }
 }
