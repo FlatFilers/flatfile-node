@@ -5,8 +5,8 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as Flatfile from "../../..";
-import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
+import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
 
 export declare namespace Roles {
@@ -26,21 +26,15 @@ export class Roles {
     constructor(protected readonly _options: Roles.Options = {}) {}
 
     /**
-     * Assign an existing role to the specified actor in the specified resource context
-     * @throws {@link Flatfile.BadRequestError}
-     * @throws {@link Flatfile.NotFoundError}
+     * List all roles for an account
      */
-    public async assign(
-        roleId: string,
-        request: Flatfile.AssignRoleRequest,
-        requestOptions?: Roles.RequestOptions
-    ): Promise<Flatfile.AssignRoleResponse> {
+    public async list(requestOptions?: Roles.RequestOptions): Promise<Flatfile.ListRolesResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/roles/${roleId}`
+                "/roles"
             ),
-            method: "POST",
+            method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": "true",
@@ -49,12 +43,11 @@ export class Roles {
                 "X-Fern-SDK-Version": "1.6.7-rc",
             },
             contentType: "application/json",
-            body: await serializers.AssignRoleRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.AssignRoleResponse.parseOrThrow(_response.body, {
+            return await serializers.ListRolesResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -64,33 +57,10 @@ export class Roles {
         }
 
         if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
-                case 404:
-                    throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        })
-                    );
-                default:
-                    throw new errors.FlatfileError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-            }
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
         }
 
         switch (_response.error.reason) {

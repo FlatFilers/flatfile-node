@@ -7,6 +7,8 @@ import * as Flatfile from "../../..";
 export interface MappingRuleOrConfig extends Flatfile.MappingRuleConfig {
     /** ID of the mapping rule */
     id?: Flatfile.MappingId;
+    /** Confidence of the mapping rule */
+    confidence?: number;
     /** User ID of the creator of the mapping rule */
     createdBy?: Flatfile.UserId;
     /** Time the mapping rule was created */
