@@ -4,7 +4,11 @@
 
 import * as Flatfile from "../../..";
 
-export type Constraint = Flatfile.Constraint.Required | Flatfile.Constraint.Unique | Flatfile.Constraint.Computed;
+export type Constraint =
+    | Flatfile.Constraint.Required
+    | Flatfile.Constraint.Unique
+    | Flatfile.Constraint.Computed
+    | Flatfile.Constraint.External;
 
 export declare namespace Constraint {
     interface Required {
@@ -17,5 +21,9 @@ export declare namespace Constraint {
 
     interface Computed {
         type: "computed";
+    }
+
+    interface External extends Flatfile.ExternalConstraint {
+        type: "external";
     }
 }

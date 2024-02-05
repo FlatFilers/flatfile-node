@@ -22,4 +22,6 @@ export interface JobUpdate {
     progress?: number;
     /** the time that the job's outcome has been acknowledged by a user */
     outcomeAcknowledgedAt?: Date;
+    /** Current status of job in text */
+    info?: string;
 }

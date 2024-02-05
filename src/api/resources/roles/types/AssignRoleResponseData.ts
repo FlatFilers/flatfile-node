@@ -4,8 +4,11 @@
 
 import * as Flatfile from "../../..";
 
-export interface AssignRoleResponseData extends Flatfile.SuccessData {
+export interface AssignRoleResponseData {
+    id: Flatfile.ActorRoleId;
     roleId: Flatfile.RoleId;
     actorId: Flatfile.ActorIdUnion;
     resourceId: Flatfile.ResourceIdUnion;
+    createdAt: Date;
+    updatedAt: Date;
 }
