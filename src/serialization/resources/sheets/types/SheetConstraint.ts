@@ -10,6 +10,7 @@ export const SheetConstraint: core.serialization.Schema<serializers.SheetConstra
     core.serialization
         .union("type", {
             unique: core.serialization.lazyObject(async () => (await import("../../..")).CompositeUniqueConstraint),
+            external: core.serialization.lazyObject(async () => (await import("../../..")).ExternalSheetConstraint),
         })
         .transform<Flatfile.SheetConstraint>({
             transform: (value) => value,
@@ -17,9 +18,13 @@ export const SheetConstraint: core.serialization.Schema<serializers.SheetConstra
         });
 
 export declare namespace SheetConstraint {
-    type Raw = SheetConstraint.Unique;
+    type Raw = SheetConstraint.Unique | SheetConstraint.External;
 
     interface Unique extends serializers.CompositeUniqueConstraint.Raw {
         type: "unique";
+    }
+
+    interface External extends serializers.ExternalSheetConstraint.Raw {
+        type: "external";
     }
 }

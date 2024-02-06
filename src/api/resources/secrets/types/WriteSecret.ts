@@ -21,7 +21,7 @@ export interface WriteSecret {
     /** The secret value. This is hidden in the UI. */
     value: Flatfile.SecretValue;
     /** The Environment of the secret. */
-    environmentId: Flatfile.EnvironmentId;
+    environmentId?: Flatfile.EnvironmentId;
     /** The Space of the secret. */
     spaceId?: Flatfile.SpaceId;
 }

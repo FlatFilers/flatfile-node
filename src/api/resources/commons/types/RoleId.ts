@@ -6,6 +6,6 @@
  * Role ID
  *
  * @example
- *     "us_rol_a7Ws9cue"
+ *     "us_rol_YOUR_ID"
  */
 export type RoleId = string;

@@ -12,6 +12,7 @@ export const JobUpdate: core.serialization.ObjectSchema<serializers.JobUpdate.Ra
         status: core.serialization.lazy(async () => (await import("../../..")).JobStatus).optional(),
         progress: core.serialization.number().optional(),
         outcomeAcknowledgedAt: core.serialization.date().optional(),
+        info: core.serialization.string().optional(),
     });
 
 export declare namespace JobUpdate {
@@ -20,5 +21,6 @@ export declare namespace JobUpdate {
         status?: serializers.JobStatus.Raw | null;
         progress?: number | null;
         outcomeAcknowledgedAt?: string | null;
+        info?: string | null;
     }
 }

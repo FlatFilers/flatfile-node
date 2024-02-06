@@ -25,4 +25,5 @@ export interface JobOutcome {
     next?: Flatfile.JobOutcomeNext;
     heading?: string;
     message?: string;
+    hideDefaultButton?: boolean;
 }

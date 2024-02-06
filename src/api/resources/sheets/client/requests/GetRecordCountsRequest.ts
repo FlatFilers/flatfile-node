@@ -44,7 +44,7 @@ export interface GetRecordCountsRequest {
      */
     searchField?: Flatfile.SearchField;
     /**
-     * If true, the error counts for each field will also be returned
+     * If true, the counts for each field will also be returned
      */
     byField?: boolean;
     /**

@@ -10,7 +10,7 @@ export const WriteSecret: core.serialization.ObjectSchema<serializers.WriteSecre
     core.serialization.object({
         name: core.serialization.lazy(async () => (await import("../../..")).SecretName),
         value: core.serialization.lazy(async () => (await import("../../..")).SecretValue),
-        environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId),
+        environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
         spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId).optional(),
     });
 
@@ -18,7 +18,7 @@ export declare namespace WriteSecret {
     interface Raw {
         name: serializers.SecretName.Raw;
         value: serializers.SecretValue.Raw;
-        environmentId: serializers.EnvironmentId.Raw;
+        environmentId?: serializers.EnvironmentId.Raw | null;
         spaceId?: serializers.SpaceId.Raw | null;
     }
 }
