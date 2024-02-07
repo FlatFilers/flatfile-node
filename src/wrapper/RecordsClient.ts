@@ -16,6 +16,25 @@ export class Records extends FernRecords {
      * Adds records to a workbook sheet
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.records.insert("us_sh_YOUR_ID", [{
+     *             "firstName": {
+     *                 value: undefined,
+     *                 messages: [],
+     *                 valid: true
+     *             },
+     *             "lastName": {
+     *                 value: undefined,
+     *                 messages: [],
+     *                 valid: true
+     *             },
+     *             "email": {
+     *                 value: undefined,
+     *                 messages: [],
+     *                 valid: true
+     *             }
+     *         }])
      */
     public async insert(
         sheetId: Flatfile.SheetId,
@@ -39,12 +58,13 @@ export class Records extends FernRecords {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.5.27",
+                "X-Fern-SDK-Version": "1.7.0",
                 ...gzipHeaders,
             },
             contentType: "application/json",
             body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
             return await serializers.RecordsResponse.parseOrThrow(_response.body, {
