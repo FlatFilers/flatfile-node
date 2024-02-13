@@ -151,7 +151,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.1",
+                "X-Fern-SDK-Version": "1.7.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -260,7 +260,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.1",
+                "X-Fern-SDK-Version": "1.7.2",
             },
             contentType: "application/json",
             body: await serializers.Records.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -362,7 +362,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.1",
+                "X-Fern-SDK-Version": "1.7.2",
             },
             contentType: "application/json",
             body: await serializers.records.insert.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
@@ -436,17 +436,15 @@ export class Records {
      */
     public async delete(
         sheetId: Flatfile.SheetId,
-        request: Flatfile.DeleteRecordsRequest = {},
+        request: Flatfile.DeleteRecordsRequest,
         requestOptions?: Records.RequestOptions
     ): Promise<Flatfile.Success> {
         const { ids } = request;
         const _queryParams: Record<string, string | string[]> = {};
-        if (ids != null) {
-            if (Array.isArray(ids)) {
-                _queryParams["ids"] = ids.map((item) => item);
-            } else {
-                _queryParams["ids"] = ids;
-            }
+        if (Array.isArray(ids)) {
+            _queryParams["ids"] = ids.map((item) => item);
+        } else {
+            _queryParams["ids"] = ids;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -460,7 +458,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.1",
+                "X-Fern-SDK-Version": "1.7.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -572,7 +570,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.1",
+                "X-Fern-SDK-Version": "1.7.2",
             },
             contentType: "application/json",
             queryParameters: _queryParams,
