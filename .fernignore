@@ -5,6 +5,5 @@ LICENSE.txt
 
 src/wrapper
 src/index.ts
-src/core/fetcher/Fetcher.ts
 
 .github/workflows/ci.yml
