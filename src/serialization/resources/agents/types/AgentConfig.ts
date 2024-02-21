@@ -13,6 +13,7 @@ export const AgentConfig: core.serialization.ObjectSchema<serializers.AgentConfi
             .optional(),
         compiler: core.serialization.lazy(async () => (await import("../../..")).Compiler).optional(),
         source: core.serialization.string().optional(),
+        slug: core.serialization.string().optional(),
     });
 
 export declare namespace AgentConfig {
@@ -20,5 +21,6 @@ export declare namespace AgentConfig {
         topics?: serializers.EventTopic.Raw[] | null;
         compiler?: serializers.Compiler.Raw | null;
         source?: string | null;
+        slug?: string | null;
     }
 }

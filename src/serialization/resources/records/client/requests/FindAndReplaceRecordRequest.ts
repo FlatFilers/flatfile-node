@@ -8,7 +8,7 @@ import * as core from "../../../../../core";
 
 export const FindAndReplaceRecordRequest: core.serialization.Schema<
     serializers.FindAndReplaceRecordRequest.Raw,
-    Omit<Flatfile.FindAndReplaceRecordRequest, "filter" | "filterField" | "searchValue" | "searchField" | "ids">
+    Omit<Flatfile.FindAndReplaceRecordRequest, "filter" | "filterField" | "searchValue" | "searchField" | "ids" | "q">
 > = core.serialization.object({
     find: core.serialization.lazy(async () => (await import("../../../..")).CellValueUnion).optional(),
     replace: core.serialization.lazy(async () => (await import("../../../..")).CellValueUnion).optional(),

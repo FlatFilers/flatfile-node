@@ -23,6 +23,10 @@ export interface FindAndReplaceRecordRequest {
      *
      */
     ids?: Flatfile.RecordId | Flatfile.RecordId[];
+    /**
+     * An FFQL query used to filter the result set
+     */
+    q?: string;
     /** A value to find for a given field in a sheet. For exact matches, wrap the value in double quotes ("Bob") */
     find?: Flatfile.CellValueUnion;
     /** The value to replace found values with */

@@ -10,7 +10,8 @@ import * as Flatfile from "../../..";
  *         id: "us_ag_YOUR_ID",
  *         topics: [Flatfile.EventTopic.WorkbookUpdated],
  *         compiler: Flatfile.Compiler.Js,
- *         source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
+ *         source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }",
+ *         slug: "default"
  *     }
  */
 export interface Agent extends Flatfile.AgentConfig {

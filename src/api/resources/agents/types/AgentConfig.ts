@@ -21,4 +21,6 @@ export interface AgentConfig {
     compiler?: Flatfile.Compiler;
     /** The source of the agent */
     source?: string;
+    /** The slug of the agent */
+    slug?: string;
 }
