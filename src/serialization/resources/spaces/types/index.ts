@@ -4,6 +4,7 @@ export * from "./Space";
 export * from "./SpaceSize";
 export * from "./SpaceConfig";
 export * from "./InternalSpaceConfigBase";
+export * from "./UpgradeSpaceConfig";
 export * from "./EventTokenResponse";
 export * from "./EventToken";
 export * from "./GetSpacesSortField";
