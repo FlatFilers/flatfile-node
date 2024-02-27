@@ -22,8 +22,7 @@ import * as Flatfile from "../../..";
  *             guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink, Flatfile.GuestAuthenticationEnum.SharedLink],
  *             environmentId: "us_env_YOUR_ID",
  *             primaryWorkbookId: "us_wb_YOUR_ID",
- *             labels: [],
- *             metadata: undefined
+ *             labels: []
  *         }
  *     }
  *
@@ -44,8 +43,7 @@ import * as Flatfile from "../../..";
  *             guestAuthentication: [Flatfile.GuestAuthenticationEnum.MagicLink, Flatfile.GuestAuthenticationEnum.SharedLink],
  *             environmentId: "us_env_YOUR_ID",
  *             primaryWorkbookId: "us_wb_YOUR_ID",
- *             labels: [],
- *             metadata: undefined
+ *             labels: []
  *         }
  *     }
  */

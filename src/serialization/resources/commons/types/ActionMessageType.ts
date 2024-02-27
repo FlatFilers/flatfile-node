@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const ActionMessageType: core.serialization.Schema<
     serializers.ActionMessageType.Raw,
     Flatfile.ActionMessageType
-> = core.serialization.enum_(["success", "error", "warning", "info"]);
+> = core.serialization.enum_(["error", "info"]);
 
 export declare namespace ActionMessageType {
-    type Raw = "success" | "error" | "warning" | "info";
+    type Raw = "error" | "info";
 }

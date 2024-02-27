@@ -38,7 +38,7 @@ export class Users {
         requestOptions?: Users.RequestOptions
     ): Promise<Flatfile.ListUsersResponse> {
         const { email } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (email != null) {
             _queryParams["email"] = email;
         }
@@ -54,7 +54,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.5",
+                "X-Fern-SDK-Version": "1.7.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -114,7 +114,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.5",
+                "X-Fern-SDK-Version": "1.7.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -173,7 +173,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.5",
+                "X-Fern-SDK-Version": "1.7.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -234,7 +234,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.5",
+                "X-Fern-SDK-Version": "1.7.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -329,7 +329,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.5",
+                "X-Fern-SDK-Version": "1.7.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -427,7 +427,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.5",
+                "X-Fern-SDK-Version": "1.7.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -509,7 +509,7 @@ export class Users {
         requestOptions?: Users.RequestOptions
     ): Promise<Flatfile.ListApiTokensResponse> {
         const { tenantId, pageSize, pageNumber } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["tenantId"] = tenantId;
         if (pageSize != null) {
             _queryParams["pageSize"] = pageSize.toString();
@@ -530,7 +530,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.5",
+                "X-Fern-SDK-Version": "1.7.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -580,7 +580,7 @@ export class Users {
         requestOptions?: Users.RequestOptions
     ): Promise<Flatfile.ApiTokenResponse> {
         const { tenantId } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["tenantId"] = tenantId;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
@@ -593,7 +593,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.5",
+                "X-Fern-SDK-Version": "1.7.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -652,7 +652,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.5",
+                "X-Fern-SDK-Version": "1.7.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

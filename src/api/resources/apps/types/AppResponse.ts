@@ -19,9 +19,7 @@ import * as Flatfile from "../../..";
  *                 "foo": "bar"
  *             },
  *             createdAt: new Date("2023-10-30T16:59:45.735Z"),
- *             updatedAt: new Date("2023-10-30T16:59:45.735Z"),
- *             deletedAt: undefined,
- *             activatedAt: undefined
+ *             updatedAt: new Date("2023-10-30T16:59:45.735Z")
  *         }
  *     }
  */

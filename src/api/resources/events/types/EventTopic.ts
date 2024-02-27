@@ -54,7 +54,11 @@ export type EventTopic =
     | "layer:created"
     | "secret:created"
     | "secret:updated"
-    | "secret:deleted";
+    | "secret:deleted"
+    | "cron:5-minutes"
+    | "cron:hourly"
+    | "cron:daily"
+    | "cron:weekly";
 
 export const EventTopic = {
     AgentCreated: "agent:created",
@@ -103,4 +107,8 @@ export const EventTopic = {
     SecretCreated: "secret:created",
     SecretUpdated: "secret:updated",
     SecretDeleted: "secret:deleted",
+    Cron5Minutes: "cron:5-minutes",
+    CronHourly: "cron:hourly",
+    CronDaily: "cron:daily",
+    CronWeekly: "cron:weekly",
 } as const;

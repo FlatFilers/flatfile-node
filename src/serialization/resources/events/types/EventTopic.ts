@@ -54,6 +54,10 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "secret:created",
         "secret:updated",
         "secret:deleted",
+        "cron:5-minutes",
+        "cron:hourly",
+        "cron:daily",
+        "cron:weekly",
     ]);
 
 export declare namespace EventTopic {
@@ -103,5 +107,9 @@ export declare namespace EventTopic {
         | "layer:created"
         | "secret:created"
         | "secret:updated"
-        | "secret:deleted";
+        | "secret:deleted"
+        | "cron:5-minutes"
+        | "cron:hourly"
+        | "cron:daily"
+        | "cron:weekly";
 }

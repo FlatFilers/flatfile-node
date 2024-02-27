@@ -40,7 +40,7 @@ export class Secrets {
         requestOptions?: Secrets.RequestOptions
     ): Promise<Flatfile.SecretsResponse> {
         const { environmentId, spaceId } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (environmentId != null) {
             _queryParams["environmentId"] = environmentId;
         }
@@ -60,7 +60,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.5",
+                "X-Fern-SDK-Version": "1.7.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -152,7 +152,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.5",
+                "X-Fern-SDK-Version": "1.7.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -239,7 +239,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.5",
+                "X-Fern-SDK-Version": "1.7.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

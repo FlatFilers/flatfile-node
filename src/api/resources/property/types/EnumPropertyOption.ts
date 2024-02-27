@@ -13,7 +13,7 @@ export interface EnumPropertyOption {
     icon?: string;
     /** An arbitrary JSON object to be associated with this option and made available to hooks */
     meta?: Record<string, any>;
-    /** The value or ID of this option. This value will be sent in egress.  The type is a string | integer | boolean. */
+    /** The value or ID of this option. This value will be sent in egress. The type is a string | integer | boolean. */
     value?: any;
     /** Alternative names to match this enum option to */
     alternativeNames?: string[];

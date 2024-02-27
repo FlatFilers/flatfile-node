@@ -24,10 +24,7 @@ import * as Flatfile from "../../..";
  *     }
  */
 export interface Action {
-    /**
-     * **This is deprecated. Use `operation` instead.**
-     *
-     */
+    /** **This is deprecated. Use `operation` instead.** */
     slug?: string;
     /** This will become the job operation that is triggered */
     operation?: string;
@@ -38,10 +35,7 @@ export interface Action {
     /** A tooltip that appears when hovering the action button */
     tooltip?: string;
     messages?: Flatfile.ActionMessage[];
-    /**
-     * **This is deprecated.**
-     *
-     */
+    /** **This is deprecated.** */
     type?: string;
     /** The text that appears in the dialog after the action is clicked. */
     description?: string;
@@ -53,15 +47,9 @@ export interface Action {
     confirm?: boolean;
     /** Icon will work on primary actions. It will only accept an already existing Flatfile design system icon. */
     icon?: string;
-    /**
-     * **This is deprecated. Use `constraints` instead.**
-     *
-     */
+    /** **This is deprecated. Use `constraints` instead.** */
     requireAllValid?: boolean;
-    /**
-     * **This is deprecated. Use `constraints` instead.**
-     *
-     */
+    /** **This is deprecated. Use `constraints` instead.** */
     requireSelection?: boolean;
     /** Adds an input form for this action after it is clicked. */
     inputForm?: Flatfile.InputForm;

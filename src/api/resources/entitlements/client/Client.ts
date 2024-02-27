@@ -40,7 +40,7 @@ export class Entitlements {
         requestOptions?: Entitlements.RequestOptions
     ): Promise<Flatfile.ListEntitlementsResponse> {
         const { resourceId } = request;
-        const _queryParams: Record<string, string | string[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["resourceId"] = resourceId;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
@@ -53,7 +53,7 @@ export class Entitlements {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.5",
+                "X-Fern-SDK-Version": "1.7.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
