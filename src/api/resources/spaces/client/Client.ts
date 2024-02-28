@@ -97,7 +97,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.7",
+                "X-Fern-SDK-Version": "1.7.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -179,7 +179,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.7",
+                "X-Fern-SDK-Version": "1.7.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -266,7 +266,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.7",
+                "X-Fern-SDK-Version": "1.7.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -349,7 +349,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.7",
+                "X-Fern-SDK-Version": "1.7.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -419,19 +419,19 @@ export class Spaces {
      *
      * @example
      *     await flatfile.spaces.bulkDelete({
-     *         ids: "us_sp_YOUR_ID"
+     *         spaceIds: "us_sp_YOUR_ID"
      *     })
      */
     public async bulkDelete(
         request: Flatfile.DeleteSpacesRequest,
         requestOptions?: Spaces.RequestOptions
     ): Promise<Flatfile.Success> {
-        const { ids } = request;
+        const { spaceIds } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        if (Array.isArray(ids)) {
-            _queryParams["ids"] = ids.map((item) => item);
+        if (Array.isArray(spaceIds)) {
+            _queryParams["spaceIds"] = spaceIds.map((item) => item);
         } else {
-            _queryParams["ids"] = ids;
+            _queryParams["spaceIds"] = spaceIds;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -445,7 +445,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.7",
+                "X-Fern-SDK-Version": "1.7.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -535,7 +535,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.7",
+                "X-Fern-SDK-Version": "1.7.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -622,7 +622,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.7",
+                "X-Fern-SDK-Version": "1.7.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -705,7 +705,7 @@ export class Spaces {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.7",
+                "X-Fern-SDK-Version": "1.7.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

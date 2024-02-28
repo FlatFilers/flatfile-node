@@ -7,12 +7,12 @@ import * as Flatfile from "../../../..";
 /**
  * @example
  *     {
- *         ids: "us_sp_YOUR_ID"
+ *         spaceIds: "us_sp_YOUR_ID"
  *     }
  */
 export interface DeleteSpacesRequest {
     /**
      * List of ids for the spaces to be deleted
      */
-    ids: Flatfile.SpaceId | Flatfile.SpaceId[];
+    spaceIds: Flatfile.SpaceId | Flatfile.SpaceId[];
 }
