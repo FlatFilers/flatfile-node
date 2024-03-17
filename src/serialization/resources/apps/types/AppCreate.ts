@@ -10,7 +10,7 @@ export const AppCreate: core.serialization.ObjectSchema<serializers.AppCreate.Ra
     core.serialization.object({
         name: core.serialization.string(),
         namespace: core.serialization.string(),
-        type: core.serialization.lazy(async () => (await import("../../..")).AppType),
+        type: serialization.AppType,
         entity: core.serialization.string().optional(),
         entityPlural: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
