@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const AppResponse: core.serialization.ObjectSchema<serializers.AppResponse.Raw, Flatfile.AppResponse> =
     core.serialization.object({
-        data: core.serialization.lazyObject(async () => (await import("../../..")).App),
+        data: serializers.App,
     });
 
 export declare namespace AppResponse {
