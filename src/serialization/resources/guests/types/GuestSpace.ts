@@ -5,20 +5,20 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SpaceId } from "../../commons/types/SpaceId";
+import { GuestWorkbook } from "./GuestWorkbook";
 
 export const GuestSpace: core.serialization.ObjectSchema<serializers.GuestSpace.Raw, Flatfile.GuestSpace> =
     core.serialization.object({
-        id: core.serialization.lazy(async () => (await import("../../..")).SpaceId),
-        workbooks: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).GuestWorkbook))
-            .optional(),
+        id: SpaceId,
+        workbooks: core.serialization.list(GuestWorkbook).optional(),
         lastAccessed: core.serialization.date().optional(),
     });
 
 export declare namespace GuestSpace {
     interface Raw {
-        id: serializers.SpaceId.Raw;
-        workbooks?: serializers.GuestWorkbook.Raw[] | null;
+        id: SpaceId.Raw;
+        workbooks?: GuestWorkbook.Raw[] | null;
         lastAccessed?: string | null;
     }
 }

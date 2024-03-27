@@ -5,14 +5,15 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Commit } from "./Commit";
 
 export const CommitResponse: core.serialization.ObjectSchema<serializers.CommitResponse.Raw, Flatfile.CommitResponse> =
     core.serialization.object({
-        data: core.serialization.lazyObject(async () => (await import("../../..")).Commit),
+        data: Commit,
     });
 
 export declare namespace CommitResponse {
     interface Raw {
-        data: serializers.Commit.Raw;
+        data: Commit.Raw;
     }
 }

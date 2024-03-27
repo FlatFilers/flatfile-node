@@ -5,20 +5,21 @@
 import * as serializers from "../../../..";
 import * as Flatfile from "../../../../../api";
 import * as core from "../../../../../core";
+import { CellValueUnion } from "../../types/CellValueUnion";
 
 export const FindAndReplaceRecordRequest: core.serialization.Schema<
     serializers.FindAndReplaceRecordRequest.Raw,
     Omit<Flatfile.FindAndReplaceRecordRequest, "filter" | "filterField" | "searchValue" | "searchField" | "ids" | "q">
 > = core.serialization.object({
-    find: core.serialization.lazy(async () => (await import("../../../..")).CellValueUnion).optional(),
-    replace: core.serialization.lazy(async () => (await import("../../../..")).CellValueUnion).optional(),
+    find: CellValueUnion.optional(),
+    replace: CellValueUnion.optional(),
     fieldKey: core.serialization.string(),
 });
 
 export declare namespace FindAndReplaceRecordRequest {
     interface Raw {
-        find?: serializers.CellValueUnion.Raw | null;
-        replace?: serializers.CellValueUnion.Raw | null;
+        find?: CellValueUnion.Raw | null;
+        replace?: CellValueUnion.Raw | null;
         fieldKey: string;
     }
 }

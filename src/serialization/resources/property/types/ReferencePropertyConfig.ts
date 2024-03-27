@@ -5,6 +5,7 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { ReferencePropertyRelationship } from "./ReferencePropertyRelationship";
 
 export const ReferencePropertyConfig: core.serialization.ObjectSchema<
     serializers.ReferencePropertyConfig.Raw,
@@ -12,13 +13,13 @@ export const ReferencePropertyConfig: core.serialization.ObjectSchema<
 > = core.serialization.object({
     ref: core.serialization.string(),
     key: core.serialization.string(),
-    relationship: core.serialization.lazy(async () => (await import("../../..")).ReferencePropertyRelationship),
+    relationship: ReferencePropertyRelationship,
 });
 
 export declare namespace ReferencePropertyConfig {
     interface Raw {
         ref: string;
         key: string;
-        relationship: serializers.ReferencePropertyRelationship.Raw;
+        relationship: ReferencePropertyRelationship.Raw;
     }
 }

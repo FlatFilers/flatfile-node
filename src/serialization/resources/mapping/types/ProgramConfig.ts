@@ -5,21 +5,23 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SheetConfig } from "../../sheets/types/SheetConfig";
+import { FamilyId } from "../../commons/types/FamilyId";
 
 export const ProgramConfig: core.serialization.ObjectSchema<serializers.ProgramConfig.Raw, Flatfile.ProgramConfig> =
     core.serialization.object({
-        source: core.serialization.lazyObject(async () => (await import("../../..")).SheetConfig),
-        destination: core.serialization.lazyObject(async () => (await import("../../..")).SheetConfig),
-        familyId: core.serialization.lazy(async () => (await import("../../..")).FamilyId).optional(),
+        source: SheetConfig,
+        destination: SheetConfig,
+        familyId: FamilyId.optional(),
         namespace: core.serialization.string().optional(),
         save: core.serialization.boolean().optional(),
     });
 
 export declare namespace ProgramConfig {
     interface Raw {
-        source: serializers.SheetConfig.Raw;
-        destination: serializers.SheetConfig.Raw;
-        familyId?: serializers.FamilyId.Raw | null;
+        source: SheetConfig.Raw;
+        destination: SheetConfig.Raw;
+        familyId?: FamilyId.Raw | null;
         namespace?: string | null;
         save?: boolean | null;
     }

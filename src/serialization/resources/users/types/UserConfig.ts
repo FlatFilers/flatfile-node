@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { AccountId } from "../../commons/types/AccountId";
 
 export const UserConfig: core.serialization.ObjectSchema<serializers.UserConfig.Raw, Flatfile.UserConfig> =
     core.serialization.object({
         email: core.serialization.string(),
         name: core.serialization.string(),
-        accountId: core.serialization.lazy(async () => (await import("../../..")).AccountId),
+        accountId: AccountId,
     });
 
 export declare namespace UserConfig {
     interface Raw {
         email: string;
         name: string;
-        accountId: serializers.AccountId.Raw;
+        accountId: AccountId.Raw;
     }
 }

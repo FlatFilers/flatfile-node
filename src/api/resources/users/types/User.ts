@@ -17,7 +17,9 @@ import * as Flatfile from "../../..";
  *         idpRef: "ab1cf38e-e617-4547-b37d-376a7ac9e554",
  *         metadata: {},
  *         createdAt: new Date("2023-10-30T16:59:45.735Z"),
- *         updatedAt: new Date("2023-10-30T16:59:45.735Z")
+ *         updatedAt: new Date("2023-10-30T16:59:45.735Z"),
+ *         lastSeenAt: new Date("2023-10-30T16:59:45.735Z"),
+ *         dashboard: 2
  *     }
  */
 export interface User extends Flatfile.UserConfig {
@@ -27,4 +29,6 @@ export interface User extends Flatfile.UserConfig {
     metadata: Record<string, any>;
     createdAt: Date;
     updatedAt: Date;
+    lastSeenAt?: Date;
+    dashboard?: number;
 }

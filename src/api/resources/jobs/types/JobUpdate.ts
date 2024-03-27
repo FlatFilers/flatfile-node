@@ -9,7 +9,7 @@ import * as Flatfile from "../../..";
  *
  * @example
  *     {
- *         config: undefined,
+ *         config: {},
  *         status: Flatfile.JobStatus.Complete,
  *         progress: 100
  *     }

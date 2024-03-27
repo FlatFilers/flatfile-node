@@ -5,15 +5,13 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { CellValueWithLinks } from "./CellValueWithLinks";
 
 export const RecordDataWithLinks: core.serialization.Schema<
     serializers.RecordDataWithLinks.Raw,
     Flatfile.RecordDataWithLinks
-> = core.serialization.record(
-    core.serialization.string(),
-    core.serialization.lazyObject(async () => (await import("../../..")).CellValueWithLinks)
-);
+> = core.serialization.record(core.serialization.string(), CellValueWithLinks);
 
 export declare namespace RecordDataWithLinks {
-    type Raw = Record<string, serializers.CellValueWithLinks.Raw>;
+    type Raw = Record<string, CellValueWithLinks.Raw>;
 }

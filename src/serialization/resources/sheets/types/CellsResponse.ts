@@ -5,14 +5,16 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { CellsResponseData } from "./CellsResponseData";
+import { CellValueWithCounts } from "./CellValueWithCounts";
 
 export const CellsResponse: core.serialization.ObjectSchema<serializers.CellsResponse.Raw, Flatfile.CellsResponse> =
     core.serialization.object({
-        data: core.serialization.lazy(async () => (await import("../../..")).CellsResponseData),
+        data: CellsResponseData,
     });
 
 export declare namespace CellsResponse {
     interface Raw {
-        data: serializers.CellsResponseData.Raw;
+        data: CellsResponseData.Raw;
     }
 }

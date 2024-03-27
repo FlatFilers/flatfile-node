@@ -39,4 +39,5 @@ export interface Context {
     precedingEventId?: Flatfile.EventId;
     /** Can be a UserId, GuestId, or AgentId */
     actorId?: string;
+    appId?: Flatfile.AppId;
 }

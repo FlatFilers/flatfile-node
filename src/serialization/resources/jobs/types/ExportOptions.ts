@@ -5,34 +5,41 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { VersionId } from "../../commons/types/VersionId";
+import { CommitId } from "../../commons/types/CommitId";
+import { SortField } from "../../commons/types/SortField";
+import { SortDirection } from "../../commons/types/SortDirection";
+import { Filter } from "../../commons/types/Filter";
+import { FilterField } from "../../commons/types/FilterField";
+import { SearchValue } from "../../commons/types/SearchValue";
+import { SearchField } from "../../commons/types/SearchField";
+import { RecordId } from "../../commons/types/RecordId";
 
 export const ExportOptions: core.serialization.ObjectSchema<serializers.ExportOptions.Raw, Flatfile.ExportOptions> =
     core.serialization.object({
-        versionId: core.serialization.lazy(async () => (await import("../../..")).VersionId).optional(),
-        commitId: core.serialization.lazy(async () => (await import("../../..")).CommitId).optional(),
-        sortField: core.serialization.lazy(async () => (await import("../../..")).SortField).optional(),
-        sortDirection: core.serialization.lazy(async () => (await import("../../..")).SortDirection).optional(),
-        filter: core.serialization.lazy(async () => (await import("../../..")).Filter).optional(),
-        filterField: core.serialization.lazy(async () => (await import("../../..")).FilterField).optional(),
-        searchValue: core.serialization.lazy(async () => (await import("../../..")).SearchValue).optional(),
-        searchField: core.serialization.lazy(async () => (await import("../../..")).SearchField).optional(),
+        versionId: VersionId.optional(),
+        commitId: CommitId.optional(),
+        sortField: SortField.optional(),
+        sortDirection: SortDirection.optional(),
+        filter: Filter.optional(),
+        filterField: FilterField.optional(),
+        searchValue: SearchValue.optional(),
+        searchField: SearchField.optional(),
         q: core.serialization.string().optional(),
-        ids: core.serialization
-            .list(core.serialization.lazy(async () => (await import("../../..")).RecordId))
-            .optional(),
+        ids: core.serialization.list(RecordId).optional(),
     });
 
 export declare namespace ExportOptions {
     interface Raw {
-        versionId?: serializers.VersionId.Raw | null;
-        commitId?: serializers.CommitId.Raw | null;
-        sortField?: serializers.SortField.Raw | null;
-        sortDirection?: serializers.SortDirection.Raw | null;
-        filter?: serializers.Filter.Raw | null;
-        filterField?: serializers.FilterField.Raw | null;
-        searchValue?: serializers.SearchValue.Raw | null;
-        searchField?: serializers.SearchField.Raw | null;
+        versionId?: VersionId.Raw | null;
+        commitId?: CommitId.Raw | null;
+        sortField?: SortField.Raw | null;
+        sortDirection?: SortDirection.Raw | null;
+        filter?: Filter.Raw | null;
+        filterField?: FilterField.Raw | null;
+        searchValue?: SearchValue.Raw | null;
+        searchField?: SearchField.Raw | null;
         q?: string | null;
-        ids?: serializers.RecordId.Raw[] | null;
+        ids?: RecordId.Raw[] | null;
     }
 }

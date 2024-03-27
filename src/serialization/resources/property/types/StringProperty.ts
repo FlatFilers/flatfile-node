@@ -5,16 +5,18 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { StringConfig } from "./StringConfig";
+import { BaseProperty } from "./BaseProperty";
 
 export const StringProperty: core.serialization.ObjectSchema<serializers.StringProperty.Raw, Flatfile.StringProperty> =
     core.serialization
         .object({
-            config: core.serialization.lazyObject(async () => (await import("../../..")).StringConfig).optional(),
+            config: StringConfig.optional(),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseProperty));
+        .extend(BaseProperty);
 
 export declare namespace StringProperty {
-    interface Raw extends serializers.BaseProperty.Raw {
-        config?: serializers.StringConfig.Raw | null;
+    interface Raw extends BaseProperty.Raw {
+        config?: StringConfig.Raw | null;
     }
 }

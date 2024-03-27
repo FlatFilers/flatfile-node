@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { GuestId } from "../../commons/types/GuestId";
+import { GuestConfig } from "./GuestConfig";
 
 export const Guest: core.serialization.ObjectSchema<serializers.Guest.Raw, Flatfile.Guest> = core.serialization
     .object({
-        id: core.serialization.lazy(async () => (await import("../../..")).GuestId),
+        id: GuestId,
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).GuestConfig));
+    .extend(GuestConfig);
 
 export declare namespace Guest {
-    interface Raw extends serializers.GuestConfig.Raw {
-        id: serializers.GuestId.Raw;
+    interface Raw extends GuestConfig.Raw {
+        id: GuestId.Raw;
         createdAt: string;
         updatedAt: string;
     }

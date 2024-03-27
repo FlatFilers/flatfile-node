@@ -5,20 +5,19 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { EnumPropertyOption } from "./EnumPropertyOption";
 
 export const EnumPropertyConfig: core.serialization.ObjectSchema<
     serializers.EnumPropertyConfig.Raw,
     Flatfile.EnumPropertyConfig
 > = core.serialization.object({
     allowCustom: core.serialization.boolean().optional(),
-    options: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../..")).EnumPropertyOption)
-    ),
+    options: core.serialization.list(EnumPropertyOption),
 });
 
 export declare namespace EnumPropertyConfig {
     interface Raw {
         allowCustom?: boolean | null;
-        options: serializers.EnumPropertyOption.Raw[];
+        options: EnumPropertyOption.Raw[];
     }
 }

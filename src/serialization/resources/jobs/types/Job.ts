@@ -5,21 +5,23 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { JobId } from "../../commons/types/JobId";
+import { JobConfig } from "./JobConfig";
 
 export const Job: core.serialization.ObjectSchema<serializers.Job.Raw, Flatfile.Job> = core.serialization
     .object({
-        id: core.serialization.lazy(async () => (await import("../../..")).JobId),
+        id: JobId,
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
         startedAt: core.serialization.date().optional(),
         finishedAt: core.serialization.date().optional(),
         outcomeAcknowledgedAt: core.serialization.date().optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).JobConfig));
+    .extend(JobConfig);
 
 export declare namespace Job {
-    interface Raw extends serializers.JobConfig.Raw {
-        id: serializers.JobId.Raw;
+    interface Raw extends JobConfig.Raw {
+        id: JobId.Raw;
         createdAt: string;
         updatedAt: string;
         startedAt?: string | null;

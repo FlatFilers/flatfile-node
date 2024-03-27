@@ -54,7 +54,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -65,6 +65,80 @@ export class Users {
         });
         if (_response.ok) {
             return await serializers.ListUsersResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Creates and invites a new user to your account.
+     *
+     * @example
+     *     await flatfile.users.createAndInvite({
+     *         email: "john.smith@example.com",
+     *         name: "John Smith",
+     *         actorRoles: [{
+     *                 roleId: "us_rol_YOUR_ID",
+     *                 resourceId: "us_acc_YOUR_ID"
+     *             }, {
+     *                 roleId: "us_rol_YOUR_ID",
+     *                 resourceId: "us_env_YOUR_ID"
+     *             }]
+     *     })
+     */
+    public async createAndInvite(
+        request: Flatfile.UserCreateAndInviteRequest,
+        requestOptions?: Users.RequestOptions
+    ): Promise<Flatfile.UserResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                "users/invite"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.7.10",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            body: await serializers.UserCreateAndInviteRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+            }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.UserResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -114,7 +188,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -173,7 +247,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -234,7 +308,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -329,7 +403,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -427,7 +501,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -530,7 +604,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -593,7 +667,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -652,7 +726,7 @@ export class Users {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

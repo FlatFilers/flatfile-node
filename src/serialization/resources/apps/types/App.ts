@@ -5,16 +5,19 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { AppId } from "../../commons/types/AppId";
+import { AppType } from "./AppType";
 
 export const App: core.serialization.ObjectSchema<serializers.App.Raw, Flatfile.App> = core.serialization.object({
-    id: core.serialization.lazy(async () => (await import("../../..")).AppId),
+    id: AppId,
     name: core.serialization.string(),
     namespace: core.serialization.string(),
-    type: core.serialization.lazy(async () => (await import("../../..")).AppType),
+    type: AppType,
     entity: core.serialization.string(),
     entityPlural: core.serialization.string(),
     icon: core.serialization.string().optional(),
     metadata: core.serialization.any(),
+    environmentFilters: core.serialization.any(),
     createdAt: core.serialization.date(),
     updatedAt: core.serialization.date(),
     deletedAt: core.serialization.date().optional(),
@@ -23,14 +26,15 @@ export const App: core.serialization.ObjectSchema<serializers.App.Raw, Flatfile.
 
 export declare namespace App {
     interface Raw {
-        id: serializers.AppId.Raw;
+        id: AppId.Raw;
         name: string;
         namespace: string;
-        type: serializers.AppType.Raw;
+        type: AppType.Raw;
         entity: string;
         entityPlural: string;
         icon?: string | null;
         metadata?: any;
+        environmentFilters?: any;
         createdAt: string;
         updatedAt: string;
         deletedAt?: string | null;

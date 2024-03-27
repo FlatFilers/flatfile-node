@@ -10,19 +10,19 @@ import * as Flatfile from "../../..";
  * @example
  *     {
  *         "firstName": {
- *             value: undefined,
+ *             value: "John",
  *             messages: [],
  *             valid: true,
  *             updatedAt: new Date("2023-11-20T16:59:40.286Z")
  *         },
  *         "lastName": {
- *             value: undefined,
+ *             value: "Smith",
  *             messages: [],
  *             valid: true,
  *             updatedAt: new Date("2023-11-20T16:59:40.286Z")
  *         },
  *         "email": {
- *             value: undefined,
+ *             value: "john.smith@example.com",
  *             messages: [],
  *             valid: true,
  *             updatedAt: new Date("2023-11-20T16:59:40.286Z")
@@ -32,19 +32,19 @@ import * as Flatfile from "../../..";
  * @example
  *     {
  *         "firstName": {
- *             value: undefined,
+ *             value: "Suzie",
  *             messages: [],
  *             valid: true,
  *             updatedAt: new Date("2023-11-20T16:59:40.286Z")
  *         },
  *         "lastName": {
- *             value: undefined,
+ *             value: "Q",
  *             messages: [],
  *             valid: true,
  *             updatedAt: new Date("2023-11-20T16:59:40.286Z")
  *         },
  *         "email": {
- *             value: undefined,
+ *             value: "suzie.q@example.com",
  *             messages: [],
  *             valid: true,
  *             updatedAt: new Date("2023-11-20T16:59:40.286Z")

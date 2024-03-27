@@ -2,6 +2,7 @@ export * from "./ListUsersResponse";
 export * from "./UserResponse";
 export * from "./User";
 export * from "./UserConfig";
+export * from "./UserCreateAndInviteRequest";
 export * from "./ListApiTokensResponse";
 export * from "./ApiTokenResponse";
 export * from "./ApiToken";

@@ -7,8 +7,7 @@ import * as Flatfile from "../../../..";
 /**
  * @example
  *     {
- *         spaceId: "us_sp_YOUR_ID",
- *         includeCounts: true
+ *         spaceId: "us_sp_YOUR_ID"
  *     }
  */
 export interface ListWorkbooksRequest {
@@ -17,7 +16,7 @@ export interface ListWorkbooksRequest {
      */
     spaceId?: Flatfile.SpaceId;
     /**
-     * Include counts for the workbook
+     * Include counts for the workbook. **DEPRECATED** Counts will return 0s. Use GET /sheets/:sheetId/counts
      */
     includeCounts?: boolean;
 }

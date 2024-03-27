@@ -5,11 +5,11 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Record_ } from "./Record_";
 
-export const Records: core.serialization.Schema<serializers.Records.Raw, Flatfile.Records> = core.serialization.list(
-    core.serialization.lazyObject(async () => (await import("../../..")).Record_)
-);
+export const Records: core.serialization.Schema<serializers.Records.Raw, Flatfile.Records> =
+    core.serialization.list(Record_);
 
 export declare namespace Records {
-    type Raw = serializers.Record_.Raw[];
+    type Raw = Record_.Raw[];
 }

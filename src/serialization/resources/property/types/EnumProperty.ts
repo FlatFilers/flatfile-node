@@ -5,19 +5,22 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { EnumPropertyConfig } from "./EnumPropertyConfig";
+import { BaseProperty } from "./BaseProperty";
+import { ArrayableProperty } from "./ArrayableProperty";
 
 export const EnumProperty: core.serialization.ObjectSchema<serializers.EnumProperty.Raw, Flatfile.EnumProperty> =
     core.serialization
         .object({
             multi: core.serialization.boolean().optional(),
-            config: core.serialization.lazyObject(async () => (await import("../../..")).EnumPropertyConfig),
+            config: EnumPropertyConfig,
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseProperty))
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).ArrayableProperty));
+        .extend(BaseProperty)
+        .extend(ArrayableProperty);
 
 export declare namespace EnumProperty {
-    interface Raw extends serializers.BaseProperty.Raw, serializers.ArrayableProperty.Raw {
+    interface Raw extends BaseProperty.Raw, ArrayableProperty.Raw {
         multi?: boolean | null;
-        config: serializers.EnumPropertyConfig.Raw;
+        config: EnumPropertyConfig.Raw;
     }
 }

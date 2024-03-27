@@ -5,12 +5,13 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { RestoreOptions } from "../types/RestoreOptions";
 
 export const Request: core.serialization.Schema<
     serializers.snapshots.restoreSnapshot.Request.Raw,
     Flatfile.RestoreOptions | undefined
-> = core.serialization.lazyObject(async () => (await import("../../..")).RestoreOptions).optional();
+> = RestoreOptions.optional();
 
 export declare namespace Request {
-    type Raw = serializers.RestoreOptions.Raw | null | undefined;
+    type Raw = RestoreOptions.Raw | null | undefined;
 }

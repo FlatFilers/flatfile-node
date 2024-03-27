@@ -5,14 +5,13 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { UserId } from "../../commons/types/UserId";
+import { AgentId } from "../../commons/types/AgentId";
+import { GuestId } from "../../commons/types/GuestId";
 
 export const ActorIdUnion: core.serialization.Schema<serializers.ActorIdUnion.Raw, Flatfile.ActorIdUnion> =
-    core.serialization.undiscriminatedUnion([
-        core.serialization.lazy(async () => (await import("../../..")).UserId),
-        core.serialization.lazy(async () => (await import("../../..")).AgentId),
-        core.serialization.lazy(async () => (await import("../../..")).GuestId),
-    ]);
+    core.serialization.undiscriminatedUnion([UserId, AgentId, GuestId]);
 
 export declare namespace ActorIdUnion {
-    type Raw = serializers.UserId.Raw | serializers.AgentId.Raw | serializers.GuestId.Raw;
+    type Raw = UserId.Raw | AgentId.Raw | GuestId.Raw;
 }

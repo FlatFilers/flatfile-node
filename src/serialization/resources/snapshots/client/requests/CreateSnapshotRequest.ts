@@ -5,18 +5,19 @@
 import * as serializers from "../../../..";
 import * as Flatfile from "../../../../../api";
 import * as core from "../../../../../core";
+import { SheetId } from "../../../commons/types/SheetId";
 
 export const CreateSnapshotRequest: core.serialization.Schema<
     serializers.CreateSnapshotRequest.Raw,
     Flatfile.CreateSnapshotRequest
 > = core.serialization.object({
-    sheetId: core.serialization.lazy(async () => (await import("../../../..")).SheetId),
+    sheetId: SheetId,
     label: core.serialization.string().optional(),
 });
 
 export declare namespace CreateSnapshotRequest {
     interface Raw {
-        sheetId: serializers.SheetId.Raw;
+        sheetId: SheetId.Raw;
         label?: string | null;
     }
 }

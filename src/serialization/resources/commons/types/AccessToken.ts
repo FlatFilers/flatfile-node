@@ -5,6 +5,8 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { UserId } from "./UserId";
+import { AccountId } from "./AccountId";
 
 export const AccessToken: core.serialization.ObjectSchema<serializers.AccessToken.Raw, Flatfile.AccessToken> =
     core.serialization.object({
@@ -12,8 +14,8 @@ export const AccessToken: core.serialization.ObjectSchema<serializers.AccessToke
         expiresIn: core.serialization.string(),
         expires: core.serialization.string(),
         email: core.serialization.string().optional(),
-        userId: core.serialization.lazy(async () => (await import("../../..")).UserId).optional(),
-        accountId: core.serialization.lazy(async () => (await import("../../..")).AccountId).optional(),
+        userId: UserId.optional(),
+        accountId: AccountId.optional(),
     });
 
 export declare namespace AccessToken {
@@ -22,7 +24,7 @@ export declare namespace AccessToken {
         expiresIn: string;
         expires: string;
         email?: string | null;
-        userId?: serializers.UserId.Raw | null;
-        accountId?: serializers.AccountId.Raw | null;
+        userId?: UserId.Raw | null;
+        accountId?: AccountId.Raw | null;
     }
 }

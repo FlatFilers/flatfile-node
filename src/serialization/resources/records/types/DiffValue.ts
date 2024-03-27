@@ -5,16 +5,18 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { CellValueUnion } from "./CellValueUnion";
+import { CellValue } from "./CellValue";
 
 export const DiffValue: core.serialization.ObjectSchema<serializers.DiffValue.Raw, Flatfile.DiffValue> =
     core.serialization
         .object({
-            snapshotValue: core.serialization.lazy(async () => (await import("../../..")).CellValueUnion).optional(),
+            snapshotValue: CellValueUnion.optional(),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).CellValue));
+        .extend(CellValue);
 
 export declare namespace DiffValue {
-    interface Raw extends serializers.CellValue.Raw {
-        snapshotValue?: serializers.CellValueUnion.Raw | null;
+    interface Raw extends CellValue.Raw {
+        snapshotValue?: CellValueUnion.Raw | null;
     }
 }

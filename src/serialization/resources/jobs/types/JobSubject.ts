@@ -5,11 +5,13 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { ResourceJobSubject } from "./ResourceJobSubject";
+import { CollectionJobSubject } from "./CollectionJobSubject";
 
 export const JobSubject: core.serialization.Schema<serializers.JobSubject.Raw, Flatfile.JobSubject> = core.serialization
     .union("type", {
-        resource: core.serialization.lazyObject(async () => (await import("../../..")).ResourceJobSubject),
-        collection: core.serialization.lazyObject(async () => (await import("../../..")).CollectionJobSubject),
+        resource: ResourceJobSubject,
+        collection: CollectionJobSubject,
     })
     .transform<Flatfile.JobSubject>({
         transform: (value) => value,
@@ -19,11 +21,11 @@ export const JobSubject: core.serialization.Schema<serializers.JobSubject.Raw, F
 export declare namespace JobSubject {
     type Raw = JobSubject.Resource | JobSubject.Collection;
 
-    interface Resource extends serializers.ResourceJobSubject.Raw {
+    interface Resource extends ResourceJobSubject.Raw {
         type: "resource";
     }
 
-    interface Collection extends serializers.CollectionJobSubject.Raw {
+    interface Collection extends CollectionJobSubject.Raw {
         type: "collection";
     }
 }

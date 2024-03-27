@@ -5,14 +5,15 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { App } from "./App";
 
 export const AppResponse: core.serialization.ObjectSchema<serializers.AppResponse.Raw, Flatfile.AppResponse> =
     core.serialization.object({
-        data: core.serialization.lazyObject(async () => (await import("../../..")).App),
+        data: App,
     });
 
 export declare namespace AppResponse {
     interface Raw {
-        data: serializers.App.Raw;
+        data: App.Raw;
     }
 }

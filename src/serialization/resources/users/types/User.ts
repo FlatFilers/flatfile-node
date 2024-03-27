@@ -5,25 +5,31 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { UserId } from "../../commons/types/UserId";
+import { UserConfig } from "./UserConfig";
 
 export const User: core.serialization.ObjectSchema<serializers.User.Raw, Flatfile.User> = core.serialization
     .object({
-        id: core.serialization.lazy(async () => (await import("../../..")).UserId),
+        id: UserId,
         idp: core.serialization.string(),
         idpRef: core.serialization.string().optional(),
         metadata: core.serialization.record(core.serialization.string(), core.serialization.any()),
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
+        lastSeenAt: core.serialization.date().optional(),
+        dashboard: core.serialization.number().optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).UserConfig));
+    .extend(UserConfig);
 
 export declare namespace User {
-    interface Raw extends serializers.UserConfig.Raw {
-        id: serializers.UserId.Raw;
+    interface Raw extends UserConfig.Raw {
+        id: UserId.Raw;
         idp: string;
         idpRef?: string | null;
         metadata: Record<string, any>;
         createdAt: string;
         updatedAt: string;
+        lastSeenAt?: string | null;
+        dashboard?: number | null;
     }
 }

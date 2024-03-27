@@ -5,14 +5,15 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { VersionId } from "../../commons/types/VersionId";
 
 export const Version: core.serialization.ObjectSchema<serializers.Version.Raw, Flatfile.Version> =
     core.serialization.object({
-        versionId: core.serialization.lazy(async () => (await import("../../..")).VersionId),
+        versionId: VersionId,
     });
 
 export declare namespace Version {
     interface Raw {
-        versionId: serializers.VersionId.Raw;
+        versionId: VersionId.Raw;
     }
 }

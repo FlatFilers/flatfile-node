@@ -5,20 +5,20 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Pagination } from "../../commons/types/Pagination";
+import { AgentLog } from "./AgentLog";
 
 export const GetAgentLogsResponse: core.serialization.ObjectSchema<
     serializers.GetAgentLogsResponse.Raw,
     Flatfile.GetAgentLogsResponse
 > = core.serialization.object({
-    pagination: core.serialization.lazyObject(async () => (await import("../../..")).Pagination).optional(),
-    data: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("../../..")).AgentLog))
-        .optional(),
+    pagination: Pagination.optional(),
+    data: core.serialization.list(AgentLog).optional(),
 });
 
 export declare namespace GetAgentLogsResponse {
     interface Raw {
-        pagination?: serializers.Pagination.Raw | null;
-        data?: serializers.AgentLog.Raw[] | null;
+        pagination?: Pagination.Raw | null;
+        data?: AgentLog.Raw[] | null;
     }
 }

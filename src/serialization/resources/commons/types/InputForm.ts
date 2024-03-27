@@ -5,18 +5,18 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { InputFormType } from "./InputFormType";
+import { InputField } from "./InputField";
 
 export const InputForm: core.serialization.ObjectSchema<serializers.InputForm.Raw, Flatfile.InputForm> =
     core.serialization.object({
-        type: core.serialization.lazy(async () => (await import("../../..")).InputFormType),
-        fields: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).InputField)
-        ),
+        type: InputFormType,
+        fields: core.serialization.list(InputField),
     });
 
 export declare namespace InputForm {
     interface Raw {
-        type: serializers.InputFormType.Raw;
-        fields: serializers.InputField.Raw[];
+        type: InputFormType.Raw;
+        fields: InputField.Raw[];
     }
 }

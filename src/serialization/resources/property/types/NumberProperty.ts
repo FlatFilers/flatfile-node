@@ -5,17 +5,20 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { NumberConfig } from "./NumberConfig";
+import { BaseProperty } from "./BaseProperty";
+import { ArrayableProperty } from "./ArrayableProperty";
 
 export const NumberProperty: core.serialization.ObjectSchema<serializers.NumberProperty.Raw, Flatfile.NumberProperty> =
     core.serialization
         .object({
-            config: core.serialization.lazyObject(async () => (await import("../../..")).NumberConfig).optional(),
+            config: NumberConfig.optional(),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseProperty))
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).ArrayableProperty));
+        .extend(BaseProperty)
+        .extend(ArrayableProperty);
 
 export declare namespace NumberProperty {
-    interface Raw extends serializers.BaseProperty.Raw, serializers.ArrayableProperty.Raw {
-        config?: serializers.NumberConfig.Raw | null;
+    interface Raw extends BaseProperty.Raw, ArrayableProperty.Raw {
+        config?: NumberConfig.Raw | null;
     }
 }

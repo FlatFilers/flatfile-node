@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { RoleId } from "../../commons/types/RoleId";
+import { ResourceIdUnion } from "./ResourceIdUnion";
 
 export const AssignActorRoleRequest: core.serialization.ObjectSchema<
     serializers.AssignActorRoleRequest.Raw,
     Flatfile.AssignActorRoleRequest
 > = core.serialization.object({
-    roleId: core.serialization.lazy(async () => (await import("../../..")).RoleId),
-    resourceId: core.serialization.lazy(async () => (await import("../../..")).ResourceIdUnion),
+    roleId: RoleId,
+    resourceId: ResourceIdUnion,
 });
 
 export declare namespace AssignActorRoleRequest {
     interface Raw {
-        roleId: serializers.RoleId.Raw;
-        resourceId: serializers.ResourceIdUnion.Raw;
+        roleId: RoleId.Raw;
+        resourceId: ResourceIdUnion.Raw;
     }
 }

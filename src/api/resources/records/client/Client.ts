@@ -31,7 +31,7 @@ export class Records {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.records.get("us_sh_YOUR_ID", {})
+     *     await flatfile.records.get("us_sh_YOUR_ID")
      */
     public async get(
         sheetId: Flatfile.SheetId,
@@ -151,7 +151,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -227,17 +227,17 @@ export class Records {
      *             commitId: "us_vr_YOUR_ID",
      *             values: {
      *                 "firstName": {
-     *                     value: undefined,
+     *                     value: "John",
      *                     messages: [],
      *                     valid: true
      *                 },
      *                 "lastName": {
-     *                     value: undefined,
+     *                     value: "Smith",
      *                     messages: [],
      *                     valid: true
      *                 },
      *                 "email": {
-     *                     value: undefined,
+     *                     value: "john.smith@example.com",
      *                     messages: [],
      *                     valid: true
      *                 }
@@ -262,7 +262,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -334,17 +334,17 @@ export class Records {
      * @example
      *     await flatfile.records.insert("us_sh_YOUR_ID", [{
      *             "firstName": {
-     *                 value: undefined,
+     *                 value: "John",
      *                 messages: [],
      *                 valid: true
      *             },
      *             "lastName": {
-     *                 value: undefined,
+     *                 value: "Smith",
      *                 messages: [],
      *                 valid: true
      *             },
      *             "email": {
-     *                 value: undefined,
+     *                 value: "john.smith@example.com",
      *                 messages: [],
      *                 valid: true
      *             }
@@ -366,7 +366,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -464,7 +464,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -582,7 +582,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

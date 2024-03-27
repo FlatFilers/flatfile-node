@@ -5,6 +5,9 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SheetAccess } from "./SheetAccess";
+import { Property } from "../../property/types/Property";
+import { Action } from "../../commons/types/Action";
 
 export const SheetConfigUpdate: core.serialization.ObjectSchema<
     serializers.SheetConfigUpdate.Raw,
@@ -16,15 +19,9 @@ export const SheetConfigUpdate: core.serialization.ObjectSchema<
     readonly: core.serialization.boolean().optional(),
     allowAdditionalFields: core.serialization.boolean().optional(),
     mappingConfidenceThreshold: core.serialization.number().optional(),
-    access: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../..")).SheetAccess))
-        .optional(),
-    fields: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../..")).Property))
-        .optional(),
-    actions: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
-        .optional(),
+    access: core.serialization.list(SheetAccess).optional(),
+    fields: core.serialization.list(Property).optional(),
+    actions: core.serialization.list(Action).optional(),
 });
 
 export declare namespace SheetConfigUpdate {
@@ -35,8 +32,8 @@ export declare namespace SheetConfigUpdate {
         readonly?: boolean | null;
         allowAdditionalFields?: boolean | null;
         mappingConfidenceThreshold?: number | null;
-        access?: serializers.SheetAccess.Raw[] | null;
-        fields?: serializers.Property.Raw[] | null;
-        actions?: serializers.Action.Raw[] | null;
+        access?: SheetAccess.Raw[] | null;
+        fields?: Property.Raw[] | null;
+        actions?: Action.Raw[] | null;
     }
 }

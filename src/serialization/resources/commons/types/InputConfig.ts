@@ -5,16 +5,15 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { InputEnumPropertyOption } from "./InputEnumPropertyOption";
 
 export const InputConfig: core.serialization.ObjectSchema<serializers.InputConfig.Raw, Flatfile.InputConfig> =
     core.serialization.object({
-        options: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).InputEnumPropertyOption)
-        ),
+        options: core.serialization.list(InputEnumPropertyOption),
     });
 
 export declare namespace InputConfig {
     interface Raw {
-        options: serializers.InputEnumPropertyOption.Raw[];
+        options: InputEnumPropertyOption.Raw[];
     }
 }

@@ -5,14 +5,15 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { WorkbookId } from "../../commons/types/WorkbookId";
 
 export const GuestWorkbook: core.serialization.ObjectSchema<serializers.GuestWorkbook.Raw, Flatfile.GuestWorkbook> =
     core.serialization.object({
-        id: core.serialization.lazy(async () => (await import("../../..")).WorkbookId),
+        id: WorkbookId,
     });
 
 export declare namespace GuestWorkbook {
     interface Raw {
-        id: serializers.WorkbookId.Raw;
+        id: WorkbookId.Raw;
     }
 }

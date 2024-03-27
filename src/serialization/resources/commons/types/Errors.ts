@@ -5,14 +5,15 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Error_ } from "./Error_";
 
 export const Errors: core.serialization.ObjectSchema<serializers.Errors.Raw, Flatfile.Errors> =
     core.serialization.object({
-        errors: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Error_)),
+        errors: core.serialization.list(Error_),
     });
 
 export declare namespace Errors {
     interface Raw {
-        errors: serializers.Error_.Raw[];
+        errors: Error_.Raw[];
     }
 }

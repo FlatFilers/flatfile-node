@@ -5,24 +5,28 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SnapshotId } from "../../commons/types/SnapshotId";
+import { SheetId } from "../../commons/types/SheetId";
+import { SnapshotSummary } from "./SnapshotSummary";
+import { UserId } from "../../commons/types/UserId";
 
 export const Snapshot: core.serialization.ObjectSchema<serializers.Snapshot.Raw, Flatfile.Snapshot> =
     core.serialization.object({
-        id: core.serialization.lazy(async () => (await import("../../..")).SnapshotId),
-        sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId),
+        id: SnapshotId,
+        sheetId: SheetId,
         label: core.serialization.string().optional(),
-        summary: core.serialization.lazyObject(async () => (await import("../../..")).SnapshotSummary).optional(),
+        summary: SnapshotSummary.optional(),
         createdAt: core.serialization.date(),
-        createdBy: core.serialization.lazy(async () => (await import("../../..")).UserId),
+        createdBy: UserId,
     });
 
 export declare namespace Snapshot {
     interface Raw {
-        id: serializers.SnapshotId.Raw;
-        sheetId: serializers.SheetId.Raw;
+        id: SnapshotId.Raw;
+        sheetId: SheetId.Raw;
         label?: string | null;
-        summary?: serializers.SnapshotSummary.Raw | null;
+        summary?: SnapshotSummary.Raw | null;
         createdAt: string;
-        createdBy: serializers.UserId.Raw;
+        createdBy: UserId.Raw;
     }
 }

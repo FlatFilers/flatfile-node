@@ -5,21 +5,23 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { RoleId } from "../../commons/types/RoleId";
+import { AccountId } from "../../commons/types/AccountId";
 
 export const RoleResponse: core.serialization.ObjectSchema<serializers.RoleResponse.Raw, Flatfile.RoleResponse> =
     core.serialization.object({
-        id: core.serialization.lazy(async () => (await import("../../..")).RoleId),
+        id: RoleId,
         name: core.serialization.string(),
-        accountId: core.serialization.lazy(async () => (await import("../../..")).AccountId),
+        accountId: AccountId,
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
     });
 
 export declare namespace RoleResponse {
     interface Raw {
-        id: serializers.RoleId.Raw;
+        id: RoleId.Raw;
         name: string;
-        accountId: serializers.AccountId.Raw;
+        accountId: AccountId.Raw;
         createdAt: string;
         updatedAt: string;
     }

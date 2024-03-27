@@ -5,10 +5,11 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { AccountId } from "../../commons/types/AccountId";
 
 export const EventToken: core.serialization.ObjectSchema<serializers.EventToken.Raw, Flatfile.EventToken> =
     core.serialization.object({
-        accountId: core.serialization.lazy(async () => (await import("../../..")).AccountId).optional(),
+        accountId: AccountId.optional(),
         subscribeKey: core.serialization.string().optional(),
         ttl: core.serialization.number().optional(),
         token: core.serialization.string().optional(),
@@ -16,7 +17,7 @@ export const EventToken: core.serialization.ObjectSchema<serializers.EventToken.
 
 export declare namespace EventToken {
     interface Raw {
-        accountId?: serializers.AccountId.Raw | null;
+        accountId?: AccountId.Raw | null;
         subscribeKey?: string | null;
         ttl?: number | null;
         token?: string | null;

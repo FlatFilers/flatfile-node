@@ -5,27 +5,35 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { DeleteRecordsJobConfig } from "./DeleteRecordsJobConfig";
+import { FileJobConfig } from "./FileJobConfig";
+import { PipelineJobConfig } from "./PipelineJobConfig";
+import { ExportJobConfig } from "./ExportJobConfig";
+import { MutateJobConfig } from "./MutateJobConfig";
+import { FindAndReplaceJobConfig } from "./FindAndReplaceJobConfig";
+import { MappingProgramJobConfig } from "./MappingProgramJobConfig";
+import { EmptyObject } from "./EmptyObject";
 
 export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateConfig.Raw, Flatfile.JobUpdateConfig> =
     core.serialization.undiscriminatedUnion([
-        core.serialization.lazyObject(async () => (await import("../../..")).DeleteRecordsJobConfig),
-        core.serialization.lazyObject(async () => (await import("../../..")).FileJobConfig),
-        core.serialization.lazyObject(async () => (await import("../../..")).PipelineJobConfig),
-        core.serialization.lazyObject(async () => (await import("../../..")).ExportJobConfig),
-        core.serialization.lazyObject(async () => (await import("../../..")).MutateJobConfig),
-        core.serialization.lazyObject(async () => (await import("../../..")).FindAndReplaceJobConfig),
-        core.serialization.lazyObject(async () => (await import("../../..")).MappingProgramJobConfig),
-        core.serialization.lazyObject(async () => (await import("../../..")).EmptyObject),
+        DeleteRecordsJobConfig,
+        FileJobConfig,
+        PipelineJobConfig,
+        ExportJobConfig,
+        MutateJobConfig,
+        FindAndReplaceJobConfig,
+        MappingProgramJobConfig,
+        EmptyObject,
     ]);
 
 export declare namespace JobUpdateConfig {
     type Raw =
-        | serializers.DeleteRecordsJobConfig.Raw
-        | serializers.FileJobConfig.Raw
-        | serializers.PipelineJobConfig.Raw
-        | serializers.ExportJobConfig.Raw
-        | serializers.MutateJobConfig.Raw
-        | serializers.FindAndReplaceJobConfig.Raw
-        | serializers.MappingProgramJobConfig.Raw
-        | serializers.EmptyObject.Raw;
+        | DeleteRecordsJobConfig.Raw
+        | FileJobConfig.Raw
+        | PipelineJobConfig.Raw
+        | ExportJobConfig.Raw
+        | MutateJobConfig.Raw
+        | FindAndReplaceJobConfig.Raw
+        | MappingProgramJobConfig.Raw
+        | EmptyObject.Raw;
 }

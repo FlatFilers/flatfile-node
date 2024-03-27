@@ -5,15 +5,21 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { StringProperty } from "./StringProperty";
+import { NumberProperty } from "./NumberProperty";
+import { BooleanProperty } from "./BooleanProperty";
+import { DateProperty } from "./DateProperty";
+import { EnumProperty } from "./EnumProperty";
+import { ReferenceProperty } from "./ReferenceProperty";
 
 export const Property: core.serialization.Schema<serializers.Property.Raw, Flatfile.Property> = core.serialization
     .union("type", {
-        string: core.serialization.lazyObject(async () => (await import("../../..")).StringProperty),
-        number: core.serialization.lazyObject(async () => (await import("../../..")).NumberProperty),
-        boolean: core.serialization.lazyObject(async () => (await import("../../..")).BooleanProperty),
-        date: core.serialization.lazyObject(async () => (await import("../../..")).DateProperty),
-        enum: core.serialization.lazyObject(async () => (await import("../../..")).EnumProperty),
-        reference: core.serialization.lazyObject(async () => (await import("../../..")).ReferenceProperty),
+        string: StringProperty,
+        number: NumberProperty,
+        boolean: BooleanProperty,
+        date: DateProperty,
+        enum: EnumProperty,
+        reference: ReferenceProperty,
     })
     .transform<Flatfile.Property>({
         transform: (value) => value,
@@ -29,27 +35,27 @@ export declare namespace Property {
         | Property.Enum
         | Property.Reference;
 
-    interface String extends serializers.StringProperty.Raw {
+    interface String extends StringProperty.Raw {
         type: "string";
     }
 
-    interface Number extends serializers.NumberProperty.Raw {
+    interface Number extends NumberProperty.Raw {
         type: "number";
     }
 
-    interface Boolean extends serializers.BooleanProperty.Raw {
+    interface Boolean extends BooleanProperty.Raw {
         type: "boolean";
     }
 
-    interface Date extends serializers.DateProperty.Raw {
+    interface Date extends DateProperty.Raw {
         type: "date";
     }
 
-    interface Enum extends serializers.EnumProperty.Raw {
+    interface Enum extends EnumProperty.Raw {
         type: "enum";
     }
 
-    interface Reference extends serializers.ReferenceProperty.Raw {
+    interface Reference extends ReferenceProperty.Raw {
         type: "reference";
     }
 }

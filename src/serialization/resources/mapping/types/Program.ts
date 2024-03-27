@@ -5,34 +5,36 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { MappingRuleOrConfig } from "./MappingRuleOrConfig";
+import { FamilyId } from "../../commons/types/FamilyId";
+import { UserId } from "../../commons/types/UserId";
+import { ProgramSummary } from "./ProgramSummary";
 
 export const Program: core.serialization.ObjectSchema<serializers.Program.Raw, Flatfile.Program> =
     core.serialization.object({
-        rules: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).MappingRuleOrConfig)
-        ),
+        rules: core.serialization.list(MappingRuleOrConfig),
         id: core.serialization.string().optional(),
         namespace: core.serialization.string().optional(),
-        familyId: core.serialization.lazy(async () => (await import("../../..")).FamilyId).optional(),
+        familyId: FamilyId.optional(),
         createdAt: core.serialization.date().optional(),
-        createdBy: core.serialization.lazy(async () => (await import("../../..")).UserId).optional(),
+        createdBy: UserId.optional(),
         sourceKeys: core.serialization.list(core.serialization.string()),
         destinationKeys: core.serialization.list(core.serialization.string()),
-        summary: core.serialization.lazyObject(async () => (await import("../../..")).ProgramSummary).optional(),
+        summary: ProgramSummary.optional(),
         accessToken: core.serialization.string().optional(),
     });
 
 export declare namespace Program {
     interface Raw {
-        rules: serializers.MappingRuleOrConfig.Raw[];
+        rules: MappingRuleOrConfig.Raw[];
         id?: string | null;
         namespace?: string | null;
-        familyId?: serializers.FamilyId.Raw | null;
+        familyId?: FamilyId.Raw | null;
         createdAt?: string | null;
-        createdBy?: serializers.UserId.Raw | null;
+        createdBy?: UserId.Raw | null;
         sourceKeys: string[];
         destinationKeys: string[];
-        summary?: serializers.ProgramSummary.Raw | null;
+        summary?: ProgramSummary.Raw | null;
         accessToken?: string | null;
     }
 }

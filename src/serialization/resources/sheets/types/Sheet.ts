@@ -5,14 +5,16 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SheetId } from "../../commons/types/SheetId";
+import { WorkbookId } from "../../commons/types/WorkbookId";
+import { SheetConfig } from "./SheetConfig";
 
 export const Sheet: core.serialization.ObjectSchema<serializers.Sheet.Raw, Flatfile.Sheet> = core.serialization.object({
-    id: core.serialization.lazy(async () => (await import("../../..")).SheetId),
-    workbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId),
+    id: SheetId,
+    workbookId: WorkbookId,
     name: core.serialization.string(),
     slug: core.serialization.string(),
-    config: core.serialization.lazyObject(async () => (await import("../../..")).SheetConfig),
-    countRecords: core.serialization.lazyObject(async () => (await import("../../..")).RecordCounts).optional(),
+    config: SheetConfig,
     namespace: core.serialization.string().optional(),
     lockedBy: core.serialization.string().optional(),
     updatedAt: core.serialization.date(),
@@ -22,12 +24,11 @@ export const Sheet: core.serialization.ObjectSchema<serializers.Sheet.Raw, Flatf
 
 export declare namespace Sheet {
     interface Raw {
-        id: serializers.SheetId.Raw;
-        workbookId: serializers.WorkbookId.Raw;
+        id: SheetId.Raw;
+        workbookId: WorkbookId.Raw;
         name: string;
         slug: string;
-        config: serializers.SheetConfig.Raw;
-        countRecords?: serializers.RecordCounts.Raw | null;
+        config: SheetConfig.Raw;
         namespace?: string | null;
         lockedBy?: string | null;
         updatedAt: string;

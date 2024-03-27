@@ -5,15 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SecretId } from "../../commons/types/SecretId";
+import { WriteSecret } from "./WriteSecret";
 
 export const Secret: core.serialization.ObjectSchema<serializers.Secret.Raw, Flatfile.Secret> = core.serialization
     .object({
-        id: core.serialization.lazy(async () => (await import("../../..")).SecretId),
+        id: SecretId,
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WriteSecret));
+    .extend(WriteSecret);
 
 export declare namespace Secret {
-    interface Raw extends serializers.WriteSecret.Raw {
-        id: serializers.SecretId.Raw;
+    interface Raw extends WriteSecret.Raw {
+        id: SecretId.Raw;
     }
 }

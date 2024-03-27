@@ -10,17 +10,17 @@ import * as Flatfile from "../../..";
  * @example
  *     {
  *         "firstName": {
- *             value: undefined,
+ *             value: "John",
  *             messages: [],
  *             valid: true
  *         },
  *         "lastName": {
- *             value: undefined,
+ *             value: "Smith",
  *             messages: [],
  *             valid: true
  *         },
  *         "email": {
- *             value: undefined,
+ *             value: "john.smith@example.com",
  *             messages: [],
  *             valid: true
  *         }

@@ -19,6 +19,15 @@ import * as Flatfile from "../../..";
  *         metadata: {
  *             "foo": "bar"
  *         },
+ *         environmentFilters: {
+ *             "type": [
+ *                 "PROD",
+ *                 "DEV"
+ *             ],
+ *             "exclude_ids": [
+ *                 "us_env_123456"
+ *             ]
+ *         },
  *         createdAt: new Date("2023-10-30T16:59:45.735Z"),
  *         updatedAt: new Date("2023-10-30T16:59:45.735Z")
  *     }
@@ -32,6 +41,7 @@ export interface App {
     entityPlural: string;
     icon?: string;
     metadata?: any;
+    environmentFilters?: any;
     createdAt: Date;
     updatedAt: Date;
     deletedAt?: Date;

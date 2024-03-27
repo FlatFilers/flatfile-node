@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { UniqueConstraintConfig } from "./UniqueConstraintConfig";
 
 export const UniqueConstraint: core.serialization.ObjectSchema<
     serializers.UniqueConstraint.Raw,
     Flatfile.UniqueConstraint
 > = core.serialization.object({
-    config: core.serialization.lazyObject(async () => (await import("../../..")).UniqueConstraintConfig).optional(),
+    config: UniqueConstraintConfig.optional(),
 });
 
 export declare namespace UniqueConstraint {
     interface Raw {
-        config?: serializers.UniqueConstraintConfig.Raw | null;
+        config?: UniqueConstraintConfig.Raw | null;
     }
 }

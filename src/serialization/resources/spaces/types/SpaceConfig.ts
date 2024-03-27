@@ -5,22 +5,22 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { GuestAuthenticationEnum } from "../../environments/types/GuestAuthenticationEnum";
+import { InternalSpaceConfigBase } from "./InternalSpaceConfigBase";
 
 export const SpaceConfig: core.serialization.ObjectSchema<serializers.SpaceConfig.Raw, Flatfile.SpaceConfig> =
     core.serialization
         .object({
             name: core.serialization.string().optional(),
             displayOrder: core.serialization.number().optional(),
-            guestAuthentication: core.serialization
-                .list(core.serialization.lazy(async () => (await import("../../..")).GuestAuthenticationEnum))
-                .optional(),
+            guestAuthentication: core.serialization.list(GuestAuthenticationEnum).optional(),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).InternalSpaceConfigBase));
+        .extend(InternalSpaceConfigBase);
 
 export declare namespace SpaceConfig {
-    interface Raw extends serializers.InternalSpaceConfigBase.Raw {
+    interface Raw extends InternalSpaceConfigBase.Raw {
         name?: string | null;
         displayOrder?: number | null;
-        guestAuthentication?: serializers.GuestAuthenticationEnum.Raw[] | null;
+        guestAuthentication?: GuestAuthenticationEnum.Raw[] | null;
     }
 }

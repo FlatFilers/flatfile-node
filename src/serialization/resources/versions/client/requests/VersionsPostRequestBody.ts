@@ -5,18 +5,20 @@
 import * as serializers from "../../../..";
 import * as Flatfile from "../../../../../api";
 import * as core from "../../../../../core";
+import { SheetId } from "../../../commons/types/SheetId";
+import { VersionId } from "../../../commons/types/VersionId";
 
 export const VersionsPostRequestBody: core.serialization.Schema<
     serializers.VersionsPostRequestBody.Raw,
     Flatfile.VersionsPostRequestBody
 > = core.serialization.object({
-    sheetId: core.serialization.lazy(async () => (await import("../../../..")).SheetId).optional(),
-    parentVersionId: core.serialization.lazy(async () => (await import("../../../..")).VersionId).optional(),
+    sheetId: SheetId.optional(),
+    parentVersionId: VersionId.optional(),
 });
 
 export declare namespace VersionsPostRequestBody {
     interface Raw {
-        sheetId?: serializers.SheetId.Raw | null;
-        parentVersionId?: serializers.VersionId.Raw | null;
+        sheetId?: SheetId.Raw | null;
+        parentVersionId?: VersionId.Raw | null;
     }
 }

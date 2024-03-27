@@ -14,6 +14,7 @@ export const AppPatch: core.serialization.ObjectSchema<serializers.AppPatch.Raw,
         entityPlural: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
         metadata: core.serialization.any().optional(),
+        environmentFilters: core.serialization.any().optional(),
         activatedAt: core.serialization.date().optional(),
     });
 
@@ -25,6 +26,7 @@ export declare namespace AppPatch {
         entityPlural?: string | null;
         icon?: string | null;
         metadata?: any | null;
+        environmentFilters?: any | null;
         activatedAt?: string | null;
     }
 }

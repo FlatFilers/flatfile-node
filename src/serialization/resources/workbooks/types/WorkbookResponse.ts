@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Workbook } from "./Workbook";
 
 export const WorkbookResponse: core.serialization.ObjectSchema<
     serializers.WorkbookResponse.Raw,
     Flatfile.WorkbookResponse
 > = core.serialization.object({
-    data: core.serialization.lazyObject(async () => (await import("../../..")).Workbook),
+    data: Workbook,
 });
 
 export declare namespace WorkbookResponse {
     interface Raw {
-        data: serializers.Workbook.Raw;
+        data: Workbook.Raw;
     }
 }

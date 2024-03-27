@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { ExchangeTokenData } from "./ExchangeTokenData";
 
 export const ExchangeTokenResponse: core.serialization.ObjectSchema<
     serializers.ExchangeTokenResponse.Raw,
     Flatfile.ExchangeTokenResponse
 > = core.serialization.object({
-    data: core.serialization.lazyObject(async () => (await import("../../..")).ExchangeTokenData),
+    data: ExchangeTokenData,
 });
 
 export declare namespace ExchangeTokenResponse {
     interface Raw {
-        data: serializers.ExchangeTokenData.Raw;
+        data: ExchangeTokenData.Raw;
     }
 }

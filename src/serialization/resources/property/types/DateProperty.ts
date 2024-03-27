@@ -5,12 +5,11 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { BaseProperty } from "./BaseProperty";
 
 export const DateProperty: core.serialization.ObjectSchema<serializers.DateProperty.Raw, Flatfile.DateProperty> =
-    core.serialization
-        .object({})
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseProperty));
+    core.serialization.object({}).extend(BaseProperty);
 
 export declare namespace DateProperty {
-    interface Raw extends serializers.BaseProperty.Raw {}
+    interface Raw extends BaseProperty.Raw {}
 }

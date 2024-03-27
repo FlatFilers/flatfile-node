@@ -5,20 +5,21 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SummarySection } from "./SummarySection";
 
 export const SnapshotSummary: core.serialization.ObjectSchema<
     serializers.SnapshotSummary.Raw,
     Flatfile.SnapshotSummary
 > = core.serialization.object({
-    createdSince: core.serialization.lazyObject(async () => (await import("../../..")).SummarySection),
-    updatedSince: core.serialization.lazyObject(async () => (await import("../../..")).SummarySection),
-    deletedSince: core.serialization.lazyObject(async () => (await import("../../..")).SummarySection),
+    createdSince: SummarySection,
+    updatedSince: SummarySection,
+    deletedSince: SummarySection,
 });
 
 export declare namespace SnapshotSummary {
     interface Raw {
-        createdSince: serializers.SummarySection.Raw;
-        updatedSince: serializers.SummarySection.Raw;
-        deletedSince: serializers.SummarySection.Raw;
+        createdSince: SummarySection.Raw;
+        updatedSince: SummarySection.Raw;
+        deletedSince: SummarySection.Raw;
     }
 }

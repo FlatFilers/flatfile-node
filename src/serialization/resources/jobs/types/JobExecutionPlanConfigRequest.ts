@@ -5,20 +5,23 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { FileId } from "../../commons/types/FileId";
+import { JobId } from "../../commons/types/JobId";
+import { JobExecutionPlanConfig } from "./JobExecutionPlanConfig";
 
 export const JobExecutionPlanConfigRequest: core.serialization.ObjectSchema<
     serializers.JobExecutionPlanConfigRequest.Raw,
     Flatfile.JobExecutionPlanConfigRequest
 > = core.serialization
     .object({
-        fileId: core.serialization.lazy(async () => (await import("../../..")).FileId),
-        jobId: core.serialization.lazy(async () => (await import("../../..")).JobId),
+        fileId: FileId,
+        jobId: JobId,
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).JobExecutionPlanConfig));
+    .extend(JobExecutionPlanConfig);
 
 export declare namespace JobExecutionPlanConfigRequest {
-    interface Raw extends serializers.JobExecutionPlanConfig.Raw {
-        fileId: serializers.FileId.Raw;
-        jobId: serializers.JobId.Raw;
+    interface Raw extends JobExecutionPlanConfig.Raw {
+        fileId: FileId.Raw;
+        jobId: JobId.Raw;
     }
 }

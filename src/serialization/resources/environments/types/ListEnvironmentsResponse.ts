@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Environment } from "./Environment";
+import { Pagination } from "../../commons/types/Pagination";
 
 export const ListEnvironmentsResponse: core.serialization.ObjectSchema<
     serializers.ListEnvironmentsResponse.Raw,
     Flatfile.ListEnvironmentsResponse
 > = core.serialization.object({
-    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Environment)),
-    pagination: core.serialization.lazyObject(async () => (await import("../../..")).Pagination).optional(),
+    data: core.serialization.list(Environment),
+    pagination: Pagination.optional(),
 });
 
 export declare namespace ListEnvironmentsResponse {
     interface Raw {
-        data: serializers.Environment.Raw[];
-        pagination?: serializers.Pagination.Raw | null;
+        data: Environment.Raw[];
+        pagination?: Pagination.Raw | null;
     }
 }

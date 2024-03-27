@@ -9,6 +9,7 @@ import * as Flatfile from "../../..";
  *
  * @example
  *     {
+ *         parts: [{}],
  *         runInParallel: true
  *     }
  */

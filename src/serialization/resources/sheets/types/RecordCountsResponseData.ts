@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { RecordCounts } from "../../records/types/RecordCounts";
 
 export const RecordCountsResponseData: core.serialization.ObjectSchema<
     serializers.RecordCountsResponseData.Raw,
     Flatfile.RecordCountsResponseData
 > = core.serialization.object({
-    counts: core.serialization.lazyObject(async () => (await import("../../..")).RecordCounts),
+    counts: RecordCounts,
     success: core.serialization.boolean(),
 });
 
 export declare namespace RecordCountsResponseData {
     interface Raw {
-        counts: serializers.RecordCounts.Raw;
+        counts: RecordCounts.Raw;
         success: boolean;
     }
 }

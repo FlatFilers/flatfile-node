@@ -5,52 +5,64 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { JobType } from "./JobType";
+import { JobSource } from "./JobSource";
+import { JobDestination } from "./JobDestination";
+import { JobUpdateConfig } from "./JobUpdateConfig";
+import { Trigger } from "./Trigger";
+import { JobStatus } from "./JobStatus";
+import { FileId } from "../../commons/types/FileId";
+import { JobMode } from "./JobMode";
+import { JobSubject } from "./JobSubject";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
+import { JobPartExecution } from "./JobPartExecution";
+import { JobId } from "../../commons/types/JobId";
 
 export const JobConfig: core.serialization.ObjectSchema<serializers.JobConfig.Raw, Flatfile.JobConfig> =
     core.serialization.object({
-        type: core.serialization.lazy(async () => (await import("../../..")).JobType),
+        type: JobType,
         operation: core.serialization.string(),
-        source: core.serialization.lazy(async () => (await import("../../..")).JobSource),
-        destination: core.serialization.lazy(async () => (await import("../../..")).JobDestination).optional(),
-        config: core.serialization.lazy(async () => (await import("../../..")).JobUpdateConfig).optional(),
-        trigger: core.serialization.lazy(async () => (await import("../../..")).Trigger).optional(),
-        status: core.serialization.lazy(async () => (await import("../../..")).JobStatus).optional(),
+        source: JobSource,
+        destination: JobDestination.optional(),
+        config: JobUpdateConfig.optional(),
+        trigger: Trigger.optional(),
+        status: JobStatus.optional(),
         progress: core.serialization.number().optional(),
-        fileId: core.serialization.lazy(async () => (await import("../../..")).FileId).optional(),
-        mode: core.serialization.lazy(async () => (await import("../../..")).JobMode).optional(),
+        fileId: FileId.optional(),
+        mode: JobMode.optional(),
         input: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
-        subject: core.serialization.lazy(async () => (await import("../../..")).JobSubject).optional(),
+        subject: JobSubject.optional(),
         outcome: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
         info: core.serialization.string().optional(),
         managed: core.serialization.boolean().optional(),
-        environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
+        environmentId: EnvironmentId.optional(),
         part: core.serialization.number().optional(),
         partData: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
-        partExecution: core.serialization.lazy(async () => (await import("../../..")).JobPartExecution).optional(),
-        parentId: core.serialization.lazy(async () => (await import("../../..")).JobId).optional(),
+        partExecution: JobPartExecution.optional(),
+        parentId: JobId.optional(),
     });
 
 export declare namespace JobConfig {
     interface Raw {
-        type: serializers.JobType.Raw;
+        type: JobType.Raw;
         operation: string;
-        source: serializers.JobSource.Raw;
-        destination?: serializers.JobDestination.Raw | null;
-        config?: serializers.JobUpdateConfig.Raw | null;
-        trigger?: serializers.Trigger.Raw | null;
-        status?: serializers.JobStatus.Raw | null;
+        source: JobSource.Raw;
+        destination?: JobDestination.Raw | null;
+        config?: JobUpdateConfig.Raw | null;
+        trigger?: Trigger.Raw | null;
+        status?: JobStatus.Raw | null;
         progress?: number | null;
-        fileId?: serializers.FileId.Raw | null;
-        mode?: serializers.JobMode.Raw | null;
+        fileId?: FileId.Raw | null;
+        mode?: JobMode.Raw | null;
         input?: Record<string, any> | null;
-        subject?: serializers.JobSubject.Raw | null;
+        subject?: JobSubject.Raw | null;
         outcome?: Record<string, any> | null;
         info?: string | null;
         managed?: boolean | null;
-        environmentId?: serializers.EnvironmentId.Raw | null;
+        environmentId?: EnvironmentId.Raw | null;
         part?: number | null;
         partData?: Record<string, any> | null;
-        partExecution?: serializers.JobPartExecution.Raw | null;
-        parentId?: serializers.JobId.Raw | null;
+        partExecution?: JobPartExecution.Raw | null;
+        parentId?: JobId.Raw | null;
     }
 }

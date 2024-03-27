@@ -5,6 +5,7 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { UserId } from "../../commons/types/UserId";
 
 export const MappingRuleConfig: core.serialization.ObjectSchema<
     serializers.MappingRuleConfig.Raw,
@@ -14,7 +15,7 @@ export const MappingRuleConfig: core.serialization.ObjectSchema<
     type: core.serialization.string(),
     config: core.serialization.any().optional(),
     acceptedAt: core.serialization.date().optional(),
-    acceptedBy: core.serialization.lazy(async () => (await import("../../..")).UserId).optional(),
+    acceptedBy: UserId.optional(),
 });
 
 export declare namespace MappingRuleConfig {
@@ -23,6 +24,6 @@ export declare namespace MappingRuleConfig {
         type: string;
         config?: any | null;
         acceptedAt?: string | null;
-        acceptedBy?: serializers.UserId.Raw | null;
+        acceptedBy?: UserId.Raw | null;
     }
 }

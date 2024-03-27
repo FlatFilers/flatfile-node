@@ -5,32 +5,38 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Filter } from "../../commons/types/Filter";
+import { FilterField } from "../../commons/types/FilterField";
+import { SearchValue } from "../../commons/types/SearchValue";
+import { SearchField } from "../../commons/types/SearchField";
+import { RecordId } from "../../commons/types/RecordId";
+import { CellValueUnion } from "../../records/types/CellValueUnion";
 
 export const FindAndReplaceJobConfig: core.serialization.ObjectSchema<
     serializers.FindAndReplaceJobConfig.Raw,
     Flatfile.FindAndReplaceJobConfig
 > = core.serialization.object({
-    filter: core.serialization.lazy(async () => (await import("../../..")).Filter).optional(),
-    filterField: core.serialization.lazy(async () => (await import("../../..")).FilterField).optional(),
-    searchValue: core.serialization.lazy(async () => (await import("../../..")).SearchValue).optional(),
-    searchField: core.serialization.lazy(async () => (await import("../../..")).SearchField).optional(),
+    filter: Filter.optional(),
+    filterField: FilterField.optional(),
+    searchValue: SearchValue.optional(),
+    searchField: SearchField.optional(),
     q: core.serialization.string().optional(),
-    ids: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).RecordId)).optional(),
-    find: core.serialization.lazy(async () => (await import("../../..")).CellValueUnion).optional(),
-    replace: core.serialization.lazy(async () => (await import("../../..")).CellValueUnion).optional(),
+    ids: core.serialization.list(RecordId).optional(),
+    find: CellValueUnion.optional(),
+    replace: CellValueUnion.optional(),
     fieldKey: core.serialization.string(),
 });
 
 export declare namespace FindAndReplaceJobConfig {
     interface Raw {
-        filter?: serializers.Filter.Raw | null;
-        filterField?: serializers.FilterField.Raw | null;
-        searchValue?: serializers.SearchValue.Raw | null;
-        searchField?: serializers.SearchField.Raw | null;
+        filter?: Filter.Raw | null;
+        filterField?: FilterField.Raw | null;
+        searchValue?: SearchValue.Raw | null;
+        searchField?: SearchField.Raw | null;
         q?: string | null;
-        ids?: serializers.RecordId.Raw[] | null;
-        find?: serializers.CellValueUnion.Raw | null;
-        replace?: serializers.CellValueUnion.Raw | null;
+        ids?: RecordId.Raw[] | null;
+        find?: CellValueUnion.Raw | null;
+        replace?: CellValueUnion.Raw | null;
         fieldKey: string;
     }
 }

@@ -5,21 +5,24 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Property } from "../../property/types/Property";
+import { EnumDetails } from "./EnumDetails";
+import { Metadata } from "./Metadata";
 
 export const Edge: core.serialization.ObjectSchema<serializers.Edge.Raw, Flatfile.Edge> = core.serialization.object({
-    sourceField: core.serialization.lazy(async () => (await import("../../..")).Property),
-    destinationField: core.serialization.lazy(async () => (await import("../../..")).Property),
+    sourceField: Property,
+    destinationField: Property,
     preview: core.serialization.list(core.serialization.string()).optional(),
-    enumDetails: core.serialization.lazyObject(async () => (await import("../../..")).EnumDetails).optional(),
-    metadata: core.serialization.lazyObject(async () => (await import("../../..")).Metadata).optional(),
+    enumDetails: EnumDetails.optional(),
+    metadata: Metadata.optional(),
 });
 
 export declare namespace Edge {
     interface Raw {
-        sourceField: serializers.Property.Raw;
-        destinationField: serializers.Property.Raw;
+        sourceField: Property.Raw;
+        destinationField: Property.Raw;
         preview?: string[] | null;
-        enumDetails?: serializers.EnumDetails.Raw | null;
-        metadata?: serializers.Metadata.Raw | null;
+        enumDetails?: EnumDetails.Raw | null;
+        metadata?: Metadata.Raw | null;
     }
 }

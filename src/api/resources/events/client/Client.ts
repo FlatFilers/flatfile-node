@@ -29,7 +29,7 @@ export class Events {
      * Event topics that the Flatfile Platform emits.
      *
      * @example
-     *     await flatfile.events.list({})
+     *     await flatfile.events.list()
      */
     public async list(
         request: Flatfile.ListEventsRequest = {},
@@ -80,7 +80,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -156,7 +156,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -235,7 +235,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -287,7 +287,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -333,7 +333,7 @@ export class Events {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.events.getEventToken({})
+     *     await flatfile.events.getEventToken()
      */
     public async getEventToken(
         request: Flatfile.GetEventTokenRequest = {},
@@ -360,7 +360,7 @@ export class Events {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

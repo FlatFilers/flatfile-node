@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Environment } from "./Environment";
 
 export const EnvironmentResponse: core.serialization.ObjectSchema<
     serializers.EnvironmentResponse.Raw,
     Flatfile.EnvironmentResponse
 > = core.serialization.object({
-    data: core.serialization.lazyObject(async () => (await import("../../..")).Environment),
+    data: Environment,
 });
 
 export declare namespace EnvironmentResponse {
     interface Raw {
-        data: serializers.Environment.Raw;
+        data: Environment.Raw;
     }
 }

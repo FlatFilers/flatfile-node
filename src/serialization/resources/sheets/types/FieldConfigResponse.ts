@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Property } from "../../property/types/Property";
 
 export const FieldConfigResponse: core.serialization.ObjectSchema<
     serializers.FieldConfigResponse.Raw,
     Flatfile.FieldConfigResponse
 > = core.serialization.object({
-    data: core.serialization.lazy(async () => (await import("../../..")).Property),
+    data: Property,
 });
 
 export declare namespace FieldConfigResponse {
     interface Raw {
-        data: serializers.Property.Raw;
+        data: Property.Raw;
     }
 }

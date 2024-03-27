@@ -5,21 +5,23 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { EventTopic } from "./EventTopic";
+import { BaseEvent } from "./BaseEvent";
 
 export const CreateEventConfig: core.serialization.ObjectSchema<
     serializers.CreateEventConfig.Raw,
     Flatfile.CreateEventConfig
 > = core.serialization
     .object({
-        topic: core.serialization.lazy(async () => (await import("../../..")).EventTopic),
+        topic: EventTopic,
         payload: core.serialization.record(core.serialization.string(), core.serialization.any()),
         deletedAt: core.serialization.date().optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseEvent));
+    .extend(BaseEvent);
 
 export declare namespace CreateEventConfig {
-    interface Raw extends serializers.BaseEvent.Raw {
-        topic: serializers.EventTopic.Raw;
+    interface Raw extends BaseEvent.Raw {
+        topic: EventTopic.Raw;
         payload: Record<string, any>;
         deletedAt?: string | null;
     }

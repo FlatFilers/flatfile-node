@@ -4,6 +4,19 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         roleId: "us_rol_YOUR_ID",
+ *         resourceId: "us_acc_YOUR_ID"
+ *     }
+ *
+ * @example
+ *     {
+ *         roleId: "us_rol_YOUR_ID",
+ *         resourceId: "us_env_YOUR_ID"
+ *     }
+ */
 export interface AssignActorRoleRequest {
     roleId: Flatfile.RoleId;
     resourceId: Flatfile.ResourceIdUnion;

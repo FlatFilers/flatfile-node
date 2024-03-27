@@ -5,15 +5,14 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Constraint } from "./Constraint";
 
 export const BaseProperty: core.serialization.ObjectSchema<serializers.BaseProperty.Raw, Flatfile.BaseProperty> =
     core.serialization.object({
         key: core.serialization.string(),
         label: core.serialization.string().optional(),
         description: core.serialization.string().optional(),
-        constraints: core.serialization
-            .list(core.serialization.lazy(async () => (await import("../../..")).Constraint))
-            .optional(),
+        constraints: core.serialization.list(Constraint).optional(),
         readonly: core.serialization.boolean().optional(),
         metadata: core.serialization.any().optional(),
         treatments: core.serialization.list(core.serialization.string()).optional(),
@@ -25,7 +24,7 @@ export declare namespace BaseProperty {
         key: string;
         label?: string | null;
         description?: string | null;
-        constraints?: serializers.Constraint.Raw[] | null;
+        constraints?: Constraint.Raw[] | null;
         readonly?: boolean | null;
         metadata?: any | null;
         treatments?: string[] | null;

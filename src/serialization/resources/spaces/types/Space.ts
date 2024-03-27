@@ -5,13 +5,19 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SpaceId } from "../../commons/types/SpaceId";
+import { UserId } from "../../commons/types/UserId";
+import { SpaceSize } from "./SpaceSize";
+import { GuestAuthenticationEnum } from "../../environments/types/GuestAuthenticationEnum";
+import { AppId } from "../../commons/types/AppId";
+import { InternalSpaceConfigBase } from "./InternalSpaceConfigBase";
 
 export const Space: core.serialization.ObjectSchema<serializers.Space.Raw, Flatfile.Space> = core.serialization
     .object({
-        id: core.serialization.lazy(async () => (await import("../../..")).SpaceId),
+        id: SpaceId,
         workbooksCount: core.serialization.number().optional(),
         filesCount: core.serialization.number().optional(),
-        createdByUserId: core.serialization.lazy(async () => (await import("../../..")).UserId).optional(),
+        createdByUserId: UserId.optional(),
         createdByUserName: core.serialization.string().optional(),
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
@@ -22,20 +28,19 @@ export const Space: core.serialization.ObjectSchema<serializers.Space.Raw, Flatf
         displayOrder: core.serialization.number().optional(),
         accessToken: core.serialization.string().optional(),
         isCollaborative: core.serialization.boolean().optional(),
-        size: core.serialization.lazyObject(async () => (await import("../../..")).SpaceSize).optional(),
+        size: SpaceSize.optional(),
         upgradedAt: core.serialization.date().optional(),
-        guestAuthentication: core.serialization.list(
-            core.serialization.lazy(async () => (await import("../../..")).GuestAuthenticationEnum)
-        ),
+        guestAuthentication: core.serialization.list(GuestAuthenticationEnum),
+        appId: AppId.optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).InternalSpaceConfigBase));
+    .extend(InternalSpaceConfigBase);
 
 export declare namespace Space {
-    interface Raw extends serializers.InternalSpaceConfigBase.Raw {
-        id: serializers.SpaceId.Raw;
+    interface Raw extends InternalSpaceConfigBase.Raw {
+        id: SpaceId.Raw;
         workbooksCount?: number | null;
         filesCount?: number | null;
-        createdByUserId?: serializers.UserId.Raw | null;
+        createdByUserId?: UserId.Raw | null;
         createdByUserName?: string | null;
         createdAt: string;
         updatedAt: string;
@@ -46,8 +51,9 @@ export declare namespace Space {
         displayOrder?: number | null;
         accessToken?: string | null;
         isCollaborative?: boolean | null;
-        size?: serializers.SpaceSize.Raw | null;
+        size?: SpaceSize.Raw | null;
         upgradedAt?: string | null;
-        guestAuthentication: serializers.GuestAuthenticationEnum.Raw[];
+        guestAuthentication: GuestAuthenticationEnum.Raw[];
+        appId?: AppId.Raw | null;
     }
 }

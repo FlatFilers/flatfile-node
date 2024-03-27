@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { ExportOptions } from "./ExportOptions";
 
 export const ExportJobConfig: core.serialization.ObjectSchema<
     serializers.ExportJobConfig.Raw,
     Flatfile.ExportJobConfig
 > = core.serialization.object({
-    options: core.serialization.lazyObject(async () => (await import("../../..")).ExportOptions),
+    options: ExportOptions,
 });
 
 export declare namespace ExportJobConfig {
     interface Raw {
-        options: serializers.ExportOptions.Raw;
+        options: ExportOptions.Raw;
     }
 }

@@ -33,7 +33,7 @@ export interface GetRecordsRequest {
      */
     ids?: Flatfile.RecordId | Flatfile.RecordId[];
     /**
-     * Number of records to return in a page (default 1000 if pageNumber included)
+     * Number of records to return in a page (default 10,000)
      */
     pageSize?: number;
     /**

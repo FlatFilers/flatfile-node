@@ -24,5 +24,6 @@ export interface AppPatch {
     entityPlural?: string;
     icon?: string;
     metadata?: any;
+    environmentFilters?: any;
     activatedAt?: Date;
 }

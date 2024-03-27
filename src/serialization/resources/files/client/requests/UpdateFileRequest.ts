@@ -5,26 +5,28 @@
 import * as serializers from "../../../..";
 import * as Flatfile from "../../../../../api";
 import * as core from "../../../../../core";
+import { WorkbookId } from "../../../commons/types/WorkbookId";
+import { Mode } from "../../types/Mode";
+import { ModelFileStatusEnum } from "../../types/ModelFileStatusEnum";
+import { Action } from "../../../commons/types/Action";
 
 export const UpdateFileRequest: core.serialization.Schema<
     serializers.UpdateFileRequest.Raw,
     Flatfile.UpdateFileRequest
 > = core.serialization.object({
-    workbookId: core.serialization.lazy(async () => (await import("../../../..")).WorkbookId).optional(),
+    workbookId: WorkbookId.optional(),
     name: core.serialization.string().optional(),
-    mode: core.serialization.lazy(async () => (await import("../../../..")).Mode).optional(),
-    status: core.serialization.lazy(async () => (await import("../../../..")).ModelFileStatusEnum).optional(),
-    actions: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("../../../..")).Action))
-        .optional(),
+    mode: Mode.optional(),
+    status: ModelFileStatusEnum.optional(),
+    actions: core.serialization.list(Action).optional(),
 });
 
 export declare namespace UpdateFileRequest {
     interface Raw {
-        workbookId?: serializers.WorkbookId.Raw | null;
+        workbookId?: WorkbookId.Raw | null;
         name?: string | null;
-        mode?: serializers.Mode.Raw | null;
-        status?: serializers.ModelFileStatusEnum.Raw | null;
-        actions?: serializers.Action.Raw[] | null;
+        mode?: Mode.Raw | null;
+        status?: ModelFileStatusEnum.Raw | null;
+        actions?: Action.Raw[] | null;
     }
 }

@@ -5,12 +5,13 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { JobCompleteDetails } from "../types/JobCompleteDetails";
 
 export const Request: core.serialization.Schema<
     serializers.jobs.fail.Request.Raw,
     Flatfile.JobCompleteDetails | undefined
-> = core.serialization.lazyObject(async () => (await import("../../..")).JobCompleteDetails).optional();
+> = JobCompleteDetails.optional();
 
 export declare namespace Request {
-    type Raw = serializers.JobCompleteDetails.Raw | null | undefined;
+    type Raw = JobCompleteDetails.Raw | null | undefined;
 }

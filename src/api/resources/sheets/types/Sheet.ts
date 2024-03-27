@@ -31,11 +31,6 @@ import * as Flatfile from "../../..";
  *                 }],
  *             mappingConfidenceThreshold: 0.5
  *         },
- *         countRecords: {
- *             valid: 1000,
- *             error: 0,
- *             total: 1000
- *         },
  *         lockedBy: "Example0",
  *         updatedAt: new Date("2021-08-31T18:00:00.000Z"),
  *         createdAt: new Date("2021-08-31T18:00:00.000Z")
@@ -52,8 +47,6 @@ export interface Sheet {
     slug: string;
     /** Describes shape of data as well as behavior */
     config: Flatfile.SheetConfig;
-    /** The amount of records in the Sheet. */
-    countRecords?: Flatfile.RecordCounts;
     /** The scoped namespace of the Sheet. */
     namespace?: string;
     /** The actor who locked the Sheet. */

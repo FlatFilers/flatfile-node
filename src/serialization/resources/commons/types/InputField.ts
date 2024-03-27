@@ -5,6 +5,8 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { InputConfig } from "./InputConfig";
+import { InputConstraint } from "./InputConstraint";
 
 export const InputField: core.serialization.ObjectSchema<serializers.InputField.Raw, Flatfile.InputField> =
     core.serialization.object({
@@ -13,10 +15,8 @@ export const InputField: core.serialization.ObjectSchema<serializers.InputField.
         description: core.serialization.string().optional(),
         type: core.serialization.string(),
         defaultValue: core.serialization.any().optional(),
-        config: core.serialization.lazyObject(async () => (await import("../../..")).InputConfig).optional(),
-        constraints: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).InputConstraint))
-            .optional(),
+        config: InputConfig.optional(),
+        constraints: core.serialization.list(InputConstraint).optional(),
     });
 
 export declare namespace InputField {
@@ -26,7 +26,7 @@ export declare namespace InputField {
         description?: string | null;
         type: string;
         defaultValue?: any | null;
-        config?: serializers.InputConfig.Raw | null;
-        constraints?: serializers.InputConstraint.Raw[] | null;
+        config?: InputConfig.Raw | null;
+        constraints?: InputConstraint.Raw[] | null;
     }
 }

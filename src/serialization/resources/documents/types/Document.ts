@@ -5,22 +5,26 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { DocumentId } from "../../commons/types/DocumentId";
+import { SpaceId } from "../../commons/types/SpaceId";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
+import { DocumentConfig } from "./DocumentConfig";
 
 export const Document: core.serialization.ObjectSchema<serializers.Document.Raw, Flatfile.Document> = core.serialization
     .object({
-        id: core.serialization.lazy(async () => (await import("../../..")).DocumentId),
-        spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId).optional(),
-        environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
+        id: DocumentId,
+        spaceId: SpaceId.optional(),
+        environmentId: EnvironmentId.optional(),
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).DocumentConfig));
+    .extend(DocumentConfig);
 
 export declare namespace Document {
-    interface Raw extends serializers.DocumentConfig.Raw {
-        id: serializers.DocumentId.Raw;
-        spaceId?: serializers.SpaceId.Raw | null;
-        environmentId?: serializers.EnvironmentId.Raw | null;
+    interface Raw extends DocumentConfig.Raw {
+        id: DocumentId.Raw;
+        spaceId?: SpaceId.Raw | null;
+        environmentId?: EnvironmentId.Raw | null;
         createdAt: string;
         updatedAt: string;
     }

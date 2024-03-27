@@ -5,12 +5,14 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { UserCredentials } from "./UserCredentials";
+import { ApiCredentials } from "./ApiCredentials";
 
 export const Credentials: core.serialization.Schema<serializers.Credentials.Raw, Flatfile.Credentials> =
     core.serialization
         .union("type", {
-            userCredentials: core.serialization.lazyObject(async () => (await import("../../..")).UserCredentials),
-            apiCredentials: core.serialization.lazyObject(async () => (await import("../../..")).ApiCredentials),
+            userCredentials: UserCredentials,
+            apiCredentials: ApiCredentials,
         })
         .transform<Flatfile.Credentials>({
             transform: (value) => value,
@@ -20,11 +22,11 @@ export const Credentials: core.serialization.Schema<serializers.Credentials.Raw,
 export declare namespace Credentials {
     type Raw = Credentials.UserCredentials | Credentials.ApiCredentials;
 
-    interface UserCredentials extends serializers.UserCredentials.Raw {
+    interface UserCredentials extends UserCredentials.Raw {
         type: "userCredentials";
     }
 
-    interface ApiCredentials extends serializers.ApiCredentials.Raw {
+    interface ApiCredentials extends ApiCredentials.Raw {
         type: "apiCredentials";
     }
 }

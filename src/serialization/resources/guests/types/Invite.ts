@@ -5,19 +5,21 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { GuestId } from "../../commons/types/GuestId";
+import { SpaceId } from "../../commons/types/SpaceId";
 
 export const Invite: core.serialization.ObjectSchema<serializers.Invite.Raw, Flatfile.Invite> =
     core.serialization.object({
-        guestId: core.serialization.lazy(async () => (await import("../../..")).GuestId),
-        spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId),
+        guestId: GuestId,
+        spaceId: SpaceId,
         fromName: core.serialization.string().optional(),
         message: core.serialization.string().optional(),
     });
 
 export declare namespace Invite {
     interface Raw {
-        guestId: serializers.GuestId.Raw;
-        spaceId: serializers.SpaceId.Raw;
+        guestId: GuestId.Raw;
+        spaceId: SpaceId.Raw;
         fromName?: string | null;
         message?: string | null;
     }

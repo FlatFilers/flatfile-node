@@ -5,13 +5,15 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { UniqueConstraint } from "./UniqueConstraint";
+import { ExternalConstraint } from "./ExternalConstraint";
 
 export const Constraint: core.serialization.Schema<serializers.Constraint.Raw, Flatfile.Constraint> = core.serialization
     .union("type", {
         required: core.serialization.object({}),
-        unique: core.serialization.lazyObject(async () => (await import("../../..")).UniqueConstraint),
+        unique: UniqueConstraint,
         computed: core.serialization.object({}),
-        external: core.serialization.lazyObject(async () => (await import("../../..")).ExternalConstraint),
+        external: ExternalConstraint,
     })
     .transform<Flatfile.Constraint>({
         transform: (value) => value,
@@ -25,7 +27,7 @@ export declare namespace Constraint {
         type: "required";
     }
 
-    interface Unique extends serializers.UniqueConstraint.Raw {
+    interface Unique extends UniqueConstraint.Raw {
         type: "unique";
     }
 
@@ -33,7 +35,7 @@ export declare namespace Constraint {
         type: "computed";
     }
 
-    interface External extends serializers.ExternalConstraint.Raw {
+    interface External extends ExternalConstraint.Raw {
         type: "external";
     }
 }

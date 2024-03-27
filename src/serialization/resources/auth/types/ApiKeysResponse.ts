@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { ApiKey } from "./ApiKey";
 
 export const ApiKeysResponse: core.serialization.ObjectSchema<
     serializers.ApiKeysResponse.Raw,
     Flatfile.ApiKeysResponse
 > = core.serialization.object({
-    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).ApiKey)),
+    data: core.serialization.list(ApiKey),
 });
 
 export declare namespace ApiKeysResponse {
     interface Raw {
-        data: serializers.ApiKey.Raw[];
+        data: ApiKey.Raw[];
     }
 }

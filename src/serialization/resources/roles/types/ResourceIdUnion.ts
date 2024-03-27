@@ -5,14 +5,13 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { AccountId } from "../../commons/types/AccountId";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
+import { SpaceId } from "../../commons/types/SpaceId";
 
 export const ResourceIdUnion: core.serialization.Schema<serializers.ResourceIdUnion.Raw, Flatfile.ResourceIdUnion> =
-    core.serialization.undiscriminatedUnion([
-        core.serialization.lazy(async () => (await import("../../..")).AccountId),
-        core.serialization.lazy(async () => (await import("../../..")).EnvironmentId),
-        core.serialization.lazy(async () => (await import("../../..")).SpaceId),
-    ]);
+    core.serialization.undiscriminatedUnion([AccountId, EnvironmentId, SpaceId]);
 
 export declare namespace ResourceIdUnion {
-    type Raw = serializers.AccountId.Raw | serializers.EnvironmentId.Raw | serializers.SpaceId.Raw;
+    type Raw = AccountId.Raw | EnvironmentId.Raw | SpaceId.Raw;
 }

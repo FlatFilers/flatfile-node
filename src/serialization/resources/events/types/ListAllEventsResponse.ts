@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Event } from "./Event";
 
 export const ListAllEventsResponse: core.serialization.ObjectSchema<
     serializers.ListAllEventsResponse.Raw,
     Flatfile.ListAllEventsResponse
 > = core.serialization.object({
-    data: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).Event)),
+    data: core.serialization.list(Event),
 });
 
 export declare namespace ListAllEventsResponse {
     interface Raw {
-        data: serializers.Event.Raw[];
+        data: Event.Raw[];
     }
 }

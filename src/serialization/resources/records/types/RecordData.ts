@@ -5,13 +5,11 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { CellValue } from "./CellValue";
 
 export const RecordData: core.serialization.Schema<serializers.RecordData.Raw, Flatfile.RecordData> =
-    core.serialization.record(
-        core.serialization.string(),
-        core.serialization.lazyObject(async () => (await import("../../..")).CellValue)
-    );
+    core.serialization.record(core.serialization.string(), CellValue);
 
 export declare namespace RecordData {
-    type Raw = Record<string, serializers.CellValue.Raw>;
+    type Raw = Record<string, CellValue.Raw>;
 }

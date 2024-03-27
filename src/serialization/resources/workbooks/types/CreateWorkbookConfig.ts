@@ -5,6 +5,11 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SpaceId } from "../../commons/types/SpaceId";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
+import { SheetConfig } from "../../sheets/types/SheetConfig";
+import { Action } from "../../commons/types/Action";
+import { WorkbookConfigSettings } from "./WorkbookConfigSettings";
 
 export const CreateWorkbookConfig: core.serialization.ObjectSchema<
     serializers.CreateWorkbookConfig.Raw,
@@ -12,16 +17,12 @@ export const CreateWorkbookConfig: core.serialization.ObjectSchema<
 > = core.serialization.object({
     name: core.serialization.string(),
     labels: core.serialization.list(core.serialization.string()).optional(),
-    spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId).optional(),
-    environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
+    spaceId: SpaceId.optional(),
+    environmentId: EnvironmentId.optional(),
     namespace: core.serialization.string().optional(),
-    sheets: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("../../..")).SheetConfig))
-        .optional(),
-    actions: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
-        .optional(),
-    settings: core.serialization.lazyObject(async () => (await import("../../..")).WorkbookConfigSettings).optional(),
+    sheets: core.serialization.list(SheetConfig).optional(),
+    actions: core.serialization.list(Action).optional(),
+    settings: WorkbookConfigSettings.optional(),
     metadata: core.serialization.any().optional(),
 });
 
@@ -29,12 +30,12 @@ export declare namespace CreateWorkbookConfig {
     interface Raw {
         name: string;
         labels?: string[] | null;
-        spaceId?: serializers.SpaceId.Raw | null;
-        environmentId?: serializers.EnvironmentId.Raw | null;
+        spaceId?: SpaceId.Raw | null;
+        environmentId?: EnvironmentId.Raw | null;
         namespace?: string | null;
-        sheets?: serializers.SheetConfig.Raw[] | null;
-        actions?: serializers.Action.Raw[] | null;
-        settings?: serializers.WorkbookConfigSettings.Raw | null;
+        sheets?: SheetConfig.Raw[] | null;
+        actions?: Action.Raw[] | null;
+        settings?: WorkbookConfigSettings.Raw | null;
         metadata?: any | null;
     }
 }

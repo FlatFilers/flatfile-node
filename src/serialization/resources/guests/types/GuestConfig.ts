@@ -5,22 +5,22 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
+import { GuestSpace } from "./GuestSpace";
 
 export const GuestConfig: core.serialization.ObjectSchema<serializers.GuestConfig.Raw, Flatfile.GuestConfig> =
     core.serialization.object({
-        environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId),
+        environmentId: EnvironmentId,
         email: core.serialization.string(),
         name: core.serialization.string(),
-        spaces: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).GuestSpace)
-        ),
+        spaces: core.serialization.list(GuestSpace),
     });
 
 export declare namespace GuestConfig {
     interface Raw {
-        environmentId: serializers.EnvironmentId.Raw;
+        environmentId: EnvironmentId.Raw;
         email: string;
         name: string;
-        spaces: serializers.GuestSpace.Raw[];
+        spaces: GuestSpace.Raw[];
     }
 }

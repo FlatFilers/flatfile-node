@@ -5,14 +5,15 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SuccessData } from "./SuccessData";
 
 export const Success: core.serialization.ObjectSchema<serializers.Success.Raw, Flatfile.Success> =
     core.serialization.object({
-        data: core.serialization.lazyObject(async () => (await import("../../..")).SuccessData).optional(),
+        data: SuccessData.optional(),
     });
 
 export declare namespace Success {
     interface Raw {
-        data?: serializers.SuccessData.Raw | null;
+        data?: SuccessData.Raw | null;
     }
 }

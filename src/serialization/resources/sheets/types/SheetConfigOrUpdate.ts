@@ -5,15 +5,14 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SheetConfigUpdate } from "./SheetConfigUpdate";
+import { SheetUpdate } from "./SheetUpdate";
 
 export const SheetConfigOrUpdate: core.serialization.ObjectSchema<
     serializers.SheetConfigOrUpdate.Raw,
     Flatfile.SheetConfigOrUpdate
-> = core.serialization
-    .object({})
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).SheetConfigUpdate))
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).SheetUpdate));
+> = core.serialization.object({}).extend(SheetConfigUpdate).extend(SheetUpdate);
 
 export declare namespace SheetConfigOrUpdate {
-    interface Raw extends serializers.SheetConfigUpdate.Raw, serializers.SheetUpdate.Raw {}
+    interface Raw extends SheetConfigUpdate.Raw, SheetUpdate.Raw {}
 }

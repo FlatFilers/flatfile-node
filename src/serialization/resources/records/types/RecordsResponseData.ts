@@ -5,24 +5,30 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { RecordsWithLinks } from "./RecordsWithLinks";
+import { RecordCounts } from "./RecordCounts";
+import { VersionId } from "../../commons/types/VersionId";
+import { CommitId } from "../../commons/types/CommitId";
+import { SuccessData } from "../../commons/types/SuccessData";
+import { RecordWithLinks } from "./RecordWithLinks";
 
 export const RecordsResponseData: core.serialization.ObjectSchema<
     serializers.RecordsResponseData.Raw,
     Flatfile.RecordsResponseData
 > = core.serialization
     .object({
-        records: core.serialization.lazy(async () => (await import("../../..")).RecordsWithLinks).optional(),
-        counts: core.serialization.lazyObject(async () => (await import("../../..")).RecordCounts).optional(),
-        versionId: core.serialization.lazy(async () => (await import("../../..")).VersionId).optional(),
-        commitId: core.serialization.lazy(async () => (await import("../../..")).CommitId).optional(),
+        records: RecordsWithLinks.optional(),
+        counts: RecordCounts.optional(),
+        versionId: VersionId.optional(),
+        commitId: CommitId.optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).SuccessData));
+    .extend(SuccessData);
 
 export declare namespace RecordsResponseData {
-    interface Raw extends serializers.SuccessData.Raw {
-        records?: serializers.RecordsWithLinks.Raw | null;
-        counts?: serializers.RecordCounts.Raw | null;
-        versionId?: serializers.VersionId.Raw | null;
-        commitId?: serializers.CommitId.Raw | null;
+    interface Raw extends SuccessData.Raw {
+        records?: RecordsWithLinks.Raw | null;
+        counts?: RecordCounts.Raw | null;
+        versionId?: VersionId.Raw | null;
+        commitId?: CommitId.Raw | null;
     }
 }

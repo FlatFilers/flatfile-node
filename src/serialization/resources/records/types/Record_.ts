@@ -5,15 +5,18 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { RecordData } from "./RecordData";
+import { RecordBase } from "./RecordBase";
+import { CellValue } from "./CellValue";
 
 export const Record_: core.serialization.ObjectSchema<serializers.Record_.Raw, Flatfile.Record_> = core.serialization
     .object({
-        values: core.serialization.lazy(async () => (await import("../../..")).RecordData),
+        values: RecordData,
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).RecordBase));
+    .extend(RecordBase);
 
 export declare namespace Record_ {
-    interface Raw extends serializers.RecordBase.Raw {
-        values: serializers.RecordData.Raw;
+    interface Raw extends RecordBase.Raw {
+        values: RecordData.Raw;
     }
 }

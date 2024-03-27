@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { DataRetentionPolicy } from "./DataRetentionPolicy";
 
 export const DataRetentionPolicyResponse: core.serialization.ObjectSchema<
     serializers.DataRetentionPolicyResponse.Raw,
     Flatfile.DataRetentionPolicyResponse
 > = core.serialization.object({
-    data: core.serialization.lazyObject(async () => (await import("../../..")).DataRetentionPolicy),
+    data: DataRetentionPolicy,
 });
 
 export declare namespace DataRetentionPolicyResponse {
     interface Raw {
-        data: serializers.DataRetentionPolicy.Raw;
+        data: DataRetentionPolicy.Raw;
     }
 }

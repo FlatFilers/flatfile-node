@@ -5,13 +5,14 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SheetId } from "../../commons/types/SheetId";
 
 export const MappingProgramJobConfig: core.serialization.ObjectSchema<
     serializers.MappingProgramJobConfig.Raw,
     Flatfile.MappingProgramJobConfig
 > = core.serialization.object({
-    sourceSheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId),
-    destinationSheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId),
+    sourceSheetId: SheetId,
+    destinationSheetId: SheetId,
     mappingRules: core.serialization.list(
         core.serialization.record(core.serialization.string(), core.serialization.any())
     ),
@@ -19,8 +20,8 @@ export const MappingProgramJobConfig: core.serialization.ObjectSchema<
 
 export declare namespace MappingProgramJobConfig {
     interface Raw {
-        sourceSheetId: serializers.SheetId.Raw;
-        destinationSheetId: serializers.SheetId.Raw;
+        sourceSheetId: SheetId.Raw;
+        destinationSheetId: SheetId.Raw;
         mappingRules: Record<string, any>[];
     }
 }

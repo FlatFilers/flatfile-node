@@ -14,8 +14,6 @@ export interface SheetUpdate {
     workbookId?: Flatfile.WorkbookId;
     /** Describes shape of data as well as behavior. */
     config?: Flatfile.SheetConfig;
-    /** The amount of records in the Sheet. */
-    countRecords?: Flatfile.RecordCounts;
     /** The scoped namespace of the Sheet. */
     namespace?: string;
     /** Date the sheet was last updated */

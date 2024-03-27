@@ -78,4 +78,6 @@ export interface Space extends Flatfile.InternalSpaceConfigBase {
     upgradedAt?: Date;
     /** Type of guest authentication */
     guestAuthentication: Flatfile.GuestAuthenticationEnum[];
+    /** The ID of the App that space is associated with */
+    appId?: Flatfile.AppId;
 }

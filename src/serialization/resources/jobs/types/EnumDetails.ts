@@ -5,24 +5,20 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { CategoryMapping } from "./CategoryMapping";
+import { EnumValue } from "./EnumValue";
 
 export const EnumDetails: core.serialization.ObjectSchema<serializers.EnumDetails.Raw, Flatfile.EnumDetails> =
     core.serialization.object({
-        mapping: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).CategoryMapping)
-        ),
-        unusedSourceValues: core.serialization
-            .list(core.serialization.lazy(async () => (await import("../../..")).EnumValue))
-            .optional(),
-        unusedDestinationValues: core.serialization
-            .list(core.serialization.lazy(async () => (await import("../../..")).EnumValue))
-            .optional(),
+        mapping: core.serialization.list(CategoryMapping),
+        unusedSourceValues: core.serialization.list(EnumValue).optional(),
+        unusedDestinationValues: core.serialization.list(EnumValue).optional(),
     });
 
 export declare namespace EnumDetails {
     interface Raw {
-        mapping: serializers.CategoryMapping.Raw[];
-        unusedSourceValues?: serializers.EnumValue.Raw[] | null;
-        unusedDestinationValues?: serializers.EnumValue.Raw[] | null;
+        mapping: CategoryMapping.Raw[];
+        unusedSourceValues?: EnumValue.Raw[] | null;
+        unusedDestinationValues?: EnumValue.Raw[] | null;
     }
 }

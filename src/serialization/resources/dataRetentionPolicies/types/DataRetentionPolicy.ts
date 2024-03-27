@@ -5,21 +5,23 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { DataRetentionPolicyId } from "../../commons/types/DataRetentionPolicyId";
+import { DataRetentionPolicyConfig } from "./DataRetentionPolicyConfig";
 
 export const DataRetentionPolicy: core.serialization.ObjectSchema<
     serializers.DataRetentionPolicy.Raw,
     Flatfile.DataRetentionPolicy
 > = core.serialization
     .object({
-        id: core.serialization.lazy(async () => (await import("../../..")).DataRetentionPolicyId),
+        id: DataRetentionPolicyId,
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).DataRetentionPolicyConfig));
+    .extend(DataRetentionPolicyConfig);
 
 export declare namespace DataRetentionPolicy {
-    interface Raw extends serializers.DataRetentionPolicyConfig.Raw {
-        id: serializers.DataRetentionPolicyId.Raw;
+    interface Raw extends DataRetentionPolicyConfig.Raw {
+        id: DataRetentionPolicyId.Raw;
         createdAt: string;
         updatedAt: string;
     }

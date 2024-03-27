@@ -5,16 +5,22 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { JobOutcomeNextId } from "./JobOutcomeNextId";
+import { JobOutcomeNextUrl } from "./JobOutcomeNextUrl";
+import { JobOutcomeNextDownload } from "./JobOutcomeNextDownload";
+import { JobOutcomeNextWait } from "./JobOutcomeNextWait";
+import { JobOutcomeNextSnapshot } from "./JobOutcomeNextSnapshot";
+import { JobOutcomeNextRetry } from "./JobOutcomeNextRetry";
 
 export const JobOutcomeNext: core.serialization.Schema<serializers.JobOutcomeNext.Raw, Flatfile.JobOutcomeNext> =
     core.serialization
         .union("type", {
-            id: core.serialization.lazyObject(async () => (await import("../../..")).JobOutcomeNextId),
-            url: core.serialization.lazyObject(async () => (await import("../../..")).JobOutcomeNextUrl),
-            download: core.serialization.lazyObject(async () => (await import("../../..")).JobOutcomeNextDownload),
-            wait: core.serialization.lazyObject(async () => (await import("../../..")).JobOutcomeNextWait),
-            snapshot: core.serialization.lazyObject(async () => (await import("../../..")).JobOutcomeNextSnapshot),
-            retry: core.serialization.lazyObject(async () => (await import("../../..")).JobOutcomeNextRetry),
+            id: JobOutcomeNextId,
+            url: JobOutcomeNextUrl,
+            download: JobOutcomeNextDownload,
+            wait: JobOutcomeNextWait,
+            snapshot: JobOutcomeNextSnapshot,
+            retry: JobOutcomeNextRetry,
         })
         .transform<Flatfile.JobOutcomeNext>({
             transform: (value) => value,
@@ -30,27 +36,27 @@ export declare namespace JobOutcomeNext {
         | JobOutcomeNext.Snapshot
         | JobOutcomeNext.Retry;
 
-    interface Id extends serializers.JobOutcomeNextId.Raw {
+    interface Id extends JobOutcomeNextId.Raw {
         type: "id";
     }
 
-    interface Url extends serializers.JobOutcomeNextUrl.Raw {
+    interface Url extends JobOutcomeNextUrl.Raw {
         type: "url";
     }
 
-    interface Download extends serializers.JobOutcomeNextDownload.Raw {
+    interface Download extends JobOutcomeNextDownload.Raw {
         type: "download";
     }
 
-    interface Wait extends serializers.JobOutcomeNextWait.Raw {
+    interface Wait extends JobOutcomeNextWait.Raw {
         type: "wait";
     }
 
-    interface Snapshot extends serializers.JobOutcomeNextSnapshot.Raw {
+    interface Snapshot extends JobOutcomeNextSnapshot.Raw {
         type: "snapshot";
     }
 
-    interface Retry extends serializers.JobOutcomeNextRetry.Raw {
+    interface Retry extends JobOutcomeNextRetry.Raw {
         type: "retry";
     }
 }

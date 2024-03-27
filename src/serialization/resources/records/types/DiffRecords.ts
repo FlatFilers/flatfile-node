@@ -5,10 +5,11 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { DiffRecord } from "./DiffRecord";
 
 export const DiffRecords: core.serialization.Schema<serializers.DiffRecords.Raw, Flatfile.DiffRecords> =
-    core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).DiffRecord));
+    core.serialization.list(DiffRecord);
 
 export declare namespace DiffRecords {
-    type Raw = serializers.DiffRecord.Raw[];
+    type Raw = DiffRecord.Raw[];
 }

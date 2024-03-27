@@ -19,7 +19,7 @@ import * as Flatfile from "../../..";
  *         operation: "submitAction",
  *         source: "us_wb_YOUR_ID",
  *         destination: "us_wb_YOUR_ID",
- *         config: undefined,
+ *         config: {},
  *         trigger: Flatfile.Trigger.Immediate,
  *         status: Flatfile.JobStatus.Complete,
  *         progress: 100,

@@ -9,7 +9,7 @@ import * as Flatfile from "../../..";
  *
  * @example
  *     {
- *         name: "My First Worbook",
+ *         name: "My First Workbook",
  *         displayOrder: 1,
  *         environmentId: "us_env_YOUR_ID",
  *         primaryWorkbookId: "us_wb_YOUR_ID"

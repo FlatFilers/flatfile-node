@@ -5,11 +5,13 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { JobUpdateConfig } from "./JobUpdateConfig";
+import { JobStatus } from "./JobStatus";
 
 export const JobUpdate: core.serialization.ObjectSchema<serializers.JobUpdate.Raw, Flatfile.JobUpdate> =
     core.serialization.object({
-        config: core.serialization.lazy(async () => (await import("../../..")).JobUpdateConfig).optional(),
-        status: core.serialization.lazy(async () => (await import("../../..")).JobStatus).optional(),
+        config: JobUpdateConfig.optional(),
+        status: JobStatus.optional(),
         progress: core.serialization.number().optional(),
         outcomeAcknowledgedAt: core.serialization.date().optional(),
         info: core.serialization.string().optional(),
@@ -17,8 +19,8 @@ export const JobUpdate: core.serialization.ObjectSchema<serializers.JobUpdate.Ra
 
 export declare namespace JobUpdate {
     interface Raw {
-        config?: serializers.JobUpdateConfig.Raw | null;
-        status?: serializers.JobStatus.Raw | null;
+        config?: JobUpdateConfig.Raw | null;
+        status?: JobStatus.Raw | null;
         progress?: number | null;
         outcomeAcknowledgedAt?: string | null;
         info?: string | null;

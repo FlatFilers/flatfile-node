@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Pagination } from "../../commons/types/Pagination";
+import { Execution } from "./Execution";
 
 export const GetExecutionsResponse: core.serialization.ObjectSchema<
     serializers.GetExecutionsResponse.Raw,
     Flatfile.GetExecutionsResponse
 > = core.serialization.object({
-    pagination: core.serialization.lazyObject(async () => (await import("../../..")).Pagination).optional(),
-    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Execution)),
+    pagination: Pagination.optional(),
+    data: core.serialization.list(Execution),
 });
 
 export declare namespace GetExecutionsResponse {
     interface Raw {
-        pagination?: serializers.Pagination.Raw | null;
-        data: serializers.Execution.Raw[];
+        pagination?: Pagination.Raw | null;
+        data: Execution.Raw[];
     }
 }

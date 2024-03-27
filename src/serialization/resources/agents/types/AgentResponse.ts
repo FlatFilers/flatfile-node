@@ -5,14 +5,15 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Agent } from "./Agent";
 
 export const AgentResponse: core.serialization.ObjectSchema<serializers.AgentResponse.Raw, Flatfile.AgentResponse> =
     core.serialization.object({
-        data: core.serialization.lazyObject(async () => (await import("../../..")).Agent).optional(),
+        data: Agent.optional(),
     });
 
 export declare namespace AgentResponse {
     interface Raw {
-        data?: serializers.Agent.Raw | null;
+        data?: Agent.Raw | null;
     }
 }

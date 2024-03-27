@@ -31,8 +31,7 @@ export class Workbooks {
      *
      * @example
      *     await flatfile.workbooks.list({
-     *         spaceId: "us_sp_YOUR_ID",
-     *         includeCounts: true
+     *         spaceId: "us_sp_YOUR_ID"
      *     })
      */
     public async list(
@@ -60,7 +59,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -167,7 +166,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -244,7 +243,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -330,7 +329,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -427,7 +426,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -495,7 +494,7 @@ export class Workbooks {
      * Returns the commits for a workbook
      *
      * @example
-     *     await flatfile.workbooks.getWorkbookCommits("us_wb_YOUR_ID", {})
+     *     await flatfile.workbooks.getWorkbookCommits("us_wb_YOUR_ID")
      */
     public async getWorkbookCommits(
         workbookId: Flatfile.WorkbookId,
@@ -519,7 +518,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -580,7 +579,7 @@ export class Workbooks {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.7.8",
+                "X-Fern-SDK-Version": "1.7.10",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

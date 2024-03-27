@@ -5,26 +5,25 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Edge } from "./Edge";
+import { SourceField } from "./SourceField";
+import { DestinationField } from "./DestinationField";
 
 export const JobExecutionPlan: core.serialization.ObjectSchema<
     serializers.JobExecutionPlan.Raw,
     Flatfile.JobExecutionPlan
 > = core.serialization.object({
-    fieldMapping: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Edge)),
-    unmappedSourceFields: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../..")).SourceField)
-    ),
-    unmappedDestinationFields: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../..")).DestinationField)
-    ),
+    fieldMapping: core.serialization.list(Edge),
+    unmappedSourceFields: core.serialization.list(SourceField),
+    unmappedDestinationFields: core.serialization.list(DestinationField),
     programId: core.serialization.string().optional(),
 });
 
 export declare namespace JobExecutionPlan {
     interface Raw {
-        fieldMapping: serializers.Edge.Raw[];
-        unmappedSourceFields: serializers.SourceField.Raw[];
-        unmappedDestinationFields: serializers.DestinationField.Raw[];
+        fieldMapping: Edge.Raw[];
+        unmappedSourceFields: SourceField.Raw[];
+        unmappedDestinationFields: DestinationField.Raw[];
         programId?: string | null;
     }
 }

@@ -5,14 +5,15 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Guest } from "./Guest";
 
 export const GuestResponse: core.serialization.ObjectSchema<serializers.GuestResponse.Raw, Flatfile.GuestResponse> =
     core.serialization.object({
-        data: core.serialization.lazyObject(async () => (await import("../../..")).Guest),
+        data: Guest,
     });
 
 export declare namespace GuestResponse {
     interface Raw {
-        data: serializers.Guest.Raw;
+        data: Guest.Raw;
     }
 }

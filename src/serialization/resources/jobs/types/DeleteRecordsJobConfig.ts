@@ -5,30 +5,34 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Filter } from "../../commons/types/Filter";
+import { FilterField } from "../../commons/types/FilterField";
+import { SearchValue } from "../../commons/types/SearchValue";
+import { SearchField } from "../../commons/types/SearchField";
+import { SheetId } from "../../commons/types/SheetId";
+import { RecordId } from "../../commons/types/RecordId";
 
 export const DeleteRecordsJobConfig: core.serialization.ObjectSchema<
     serializers.DeleteRecordsJobConfig.Raw,
     Flatfile.DeleteRecordsJobConfig
 > = core.serialization.object({
-    filter: core.serialization.lazy(async () => (await import("../../..")).Filter).optional(),
-    filterField: core.serialization.lazy(async () => (await import("../../..")).FilterField).optional(),
-    searchValue: core.serialization.lazy(async () => (await import("../../..")).SearchValue).optional(),
-    searchField: core.serialization.lazy(async () => (await import("../../..")).SearchField).optional(),
+    filter: Filter.optional(),
+    filterField: FilterField.optional(),
+    searchValue: SearchValue.optional(),
+    searchField: SearchField.optional(),
     q: core.serialization.string().optional(),
-    sheet: core.serialization.lazy(async () => (await import("../../..")).SheetId),
-    exceptions: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../..")).RecordId))
-        .optional(),
+    sheet: SheetId,
+    exceptions: core.serialization.list(RecordId).optional(),
 });
 
 export declare namespace DeleteRecordsJobConfig {
     interface Raw {
-        filter?: serializers.Filter.Raw | null;
-        filterField?: serializers.FilterField.Raw | null;
-        searchValue?: serializers.SearchValue.Raw | null;
-        searchField?: serializers.SearchField.Raw | null;
+        filter?: Filter.Raw | null;
+        filterField?: FilterField.Raw | null;
+        searchValue?: SearchValue.Raw | null;
+        searchField?: SearchField.Raw | null;
         q?: string | null;
-        sheet: serializers.SheetId.Raw;
-        exceptions?: serializers.RecordId.Raw[] | null;
+        sheet: SheetId.Raw;
+        exceptions?: RecordId.Raw[] | null;
     }
 }

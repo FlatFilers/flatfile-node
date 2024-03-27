@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { EnumValue } from "./EnumValue";
 
 export const CategoryMapping: core.serialization.ObjectSchema<
     serializers.CategoryMapping.Raw,
     Flatfile.CategoryMapping
 > = core.serialization.object({
-    sourceValue: core.serialization.lazy(async () => (await import("../../..")).EnumValue).optional(),
-    destinationValue: core.serialization.lazy(async () => (await import("../../..")).EnumValue).optional(),
+    sourceValue: EnumValue.optional(),
+    destinationValue: EnumValue.optional(),
 });
 
 export declare namespace CategoryMapping {
     interface Raw {
-        sourceValue?: serializers.EnumValue.Raw | null;
-        destinationValue?: serializers.EnumValue.Raw | null;
+        sourceValue?: EnumValue.Raw | null;
+        destinationValue?: EnumValue.Raw | null;
     }
 }

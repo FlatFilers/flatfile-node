@@ -5,26 +5,28 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { RecordId } from "../../commons/types/RecordId";
+import { VersionId } from "../../commons/types/VersionId";
+import { CommitId } from "../../commons/types/CommitId";
+import { ValidationMessage } from "./ValidationMessage";
 
 export const RecordBase: core.serialization.ObjectSchema<serializers.RecordBase.Raw, Flatfile.RecordBase> =
     core.serialization.object({
-        id: core.serialization.lazy(async () => (await import("../../..")).RecordId),
-        versionId: core.serialization.lazy(async () => (await import("../../..")).VersionId).optional(),
-        commitId: core.serialization.lazy(async () => (await import("../../..")).CommitId).optional(),
+        id: RecordId,
+        versionId: VersionId.optional(),
+        commitId: CommitId.optional(),
         valid: core.serialization.boolean().optional(),
-        messages: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).ValidationMessage))
-            .optional(),
+        messages: core.serialization.list(ValidationMessage).optional(),
         metadata: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
     });
 
 export declare namespace RecordBase {
     interface Raw {
-        id: serializers.RecordId.Raw;
-        versionId?: serializers.VersionId.Raw | null;
-        commitId?: serializers.CommitId.Raw | null;
+        id: RecordId.Raw;
+        versionId?: VersionId.Raw | null;
+        commitId?: CommitId.Raw | null;
         valid?: boolean | null;
-        messages?: serializers.ValidationMessage.Raw[] | null;
+        messages?: ValidationMessage.Raw[] | null;
         metadata?: Record<string, any> | null;
     }
 }

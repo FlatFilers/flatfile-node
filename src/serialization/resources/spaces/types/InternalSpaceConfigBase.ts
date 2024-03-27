@@ -5,21 +5,22 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SpaceConfigId } from "../../commons/types/SpaceConfigId";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
+import { WorkbookId } from "../../commons/types/WorkbookId";
+import { Action } from "../../commons/types/Action";
+import { SpaceAccess } from "./SpaceAccess";
 
 export const InternalSpaceConfigBase: core.serialization.ObjectSchema<
     serializers.InternalSpaceConfigBase.Raw,
     Flatfile.InternalSpaceConfigBase
 > = core.serialization.object({
-    spaceConfigId: core.serialization.lazy(async () => (await import("../../..")).SpaceConfigId).optional(),
-    environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
-    primaryWorkbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId).optional(),
+    spaceConfigId: SpaceConfigId.optional(),
+    environmentId: EnvironmentId.optional(),
+    primaryWorkbookId: WorkbookId.optional(),
     metadata: core.serialization.any().optional(),
-    actions: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
-        .optional(),
-    access: core.serialization
-        .list(core.serialization.lazy(async () => (await import("../../..")).SpaceAccess))
-        .optional(),
+    actions: core.serialization.list(Action).optional(),
+    access: core.serialization.list(SpaceAccess).optional(),
     autoConfigure: core.serialization.boolean().optional(),
     namespace: core.serialization.string().optional(),
     labels: core.serialization.list(core.serialization.string()).optional(),
@@ -30,12 +31,12 @@ export const InternalSpaceConfigBase: core.serialization.ObjectSchema<
 
 export declare namespace InternalSpaceConfigBase {
     interface Raw {
-        spaceConfigId?: serializers.SpaceConfigId.Raw | null;
-        environmentId?: serializers.EnvironmentId.Raw | null;
-        primaryWorkbookId?: serializers.WorkbookId.Raw | null;
+        spaceConfigId?: SpaceConfigId.Raw | null;
+        environmentId?: EnvironmentId.Raw | null;
+        primaryWorkbookId?: WorkbookId.Raw | null;
         metadata?: any | null;
-        actions?: serializers.Action.Raw[] | null;
-        access?: serializers.SpaceAccess.Raw[] | null;
+        actions?: Action.Raw[] | null;
+        access?: SpaceAccess.Raw[] | null;
         autoConfigure?: boolean | null;
         namespace?: string | null;
         labels?: string[] | null;

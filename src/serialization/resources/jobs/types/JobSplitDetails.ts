@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { JobParts } from "./JobParts";
 
 export const JobSplitDetails: core.serialization.ObjectSchema<
     serializers.JobSplitDetails.Raw,
     Flatfile.JobSplitDetails
 > = core.serialization.object({
-    parts: core.serialization.lazy(async () => (await import("../../..")).JobParts),
+    parts: JobParts,
     runInParallel: core.serialization.boolean().optional(),
 });
 
 export declare namespace JobSplitDetails {
     interface Raw {
-        parts: serializers.JobParts.Raw;
+        parts: JobParts.Raw;
         runInParallel?: boolean | null;
     }
 }

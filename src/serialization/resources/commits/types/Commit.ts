@@ -5,11 +5,13 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { CommitId } from "../../commons/types/CommitId";
+import { SheetId } from "../../commons/types/SheetId";
 
 export const Commit: core.serialization.ObjectSchema<serializers.Commit.Raw, Flatfile.Commit> =
     core.serialization.object({
-        id: core.serialization.lazy(async () => (await import("../../..")).CommitId),
-        sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId),
+        id: CommitId,
+        sheetId: SheetId,
         createdBy: core.serialization.string(),
         completedBy: core.serialization.string().optional(),
         createdAt: core.serialization.date(),
@@ -18,8 +20,8 @@ export const Commit: core.serialization.ObjectSchema<serializers.Commit.Raw, Fla
 
 export declare namespace Commit {
     interface Raw {
-        id: serializers.CommitId.Raw;
-        sheetId: serializers.SheetId.Raw;
+        id: CommitId.Raw;
+        sheetId: SheetId.Raw;
         createdBy: string;
         completedBy?: string | null;
         createdAt: string;

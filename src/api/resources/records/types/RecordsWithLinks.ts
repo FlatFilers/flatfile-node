@@ -12,19 +12,19 @@ import * as Flatfile from "../../..";
  *             id: "us_rc_YOUR_ID",
  *             values: {
  *                 "firstName": {
- *                     value: undefined,
+ *                     value: "John",
  *                     messages: [],
  *                     valid: true,
  *                     updatedAt: new Date("2023-11-20T16:59:40.286Z")
  *                 },
  *                 "lastName": {
- *                     value: undefined,
+ *                     value: "Smith",
  *                     messages: [],
  *                     valid: true,
  *                     updatedAt: new Date("2023-11-20T16:59:40.286Z")
  *                 },
  *                 "email": {
- *                     value: undefined,
+ *                     value: "john.smith@example.com",
  *                     messages: [],
  *                     valid: true,
  *                     updatedAt: new Date("2023-11-20T16:59:40.286Z")

@@ -5,32 +5,38 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SheetId } from "../../commons/types/SheetId";
+import { Filter } from "../../commons/types/Filter";
+import { FilterField } from "../../commons/types/FilterField";
+import { SearchValue } from "../../commons/types/SearchValue";
+import { SearchField } from "../../commons/types/SearchField";
+import { RecordId } from "../../commons/types/RecordId";
 
 export const MutateJobConfig: core.serialization.ObjectSchema<
     serializers.MutateJobConfig.Raw,
     Flatfile.MutateJobConfig
 > = core.serialization.object({
-    sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId),
+    sheetId: SheetId,
     mutateRecord: core.serialization.string(),
     mutationId: core.serialization.string().optional(),
-    filter: core.serialization.lazy(async () => (await import("../../..")).Filter).optional(),
-    filterField: core.serialization.lazy(async () => (await import("../../..")).FilterField).optional(),
-    searchValue: core.serialization.lazy(async () => (await import("../../..")).SearchValue).optional(),
-    searchField: core.serialization.lazy(async () => (await import("../../..")).SearchField).optional(),
+    filter: Filter.optional(),
+    filterField: FilterField.optional(),
+    searchValue: SearchValue.optional(),
+    searchField: SearchField.optional(),
     q: core.serialization.string().optional(),
-    ids: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).RecordId)).optional(),
+    ids: core.serialization.list(RecordId).optional(),
 });
 
 export declare namespace MutateJobConfig {
     interface Raw {
-        sheetId: serializers.SheetId.Raw;
+        sheetId: SheetId.Raw;
         mutateRecord: string;
         mutationId?: string | null;
-        filter?: serializers.Filter.Raw | null;
-        filterField?: serializers.FilterField.Raw | null;
-        searchValue?: serializers.SearchValue.Raw | null;
-        searchField?: serializers.SearchField.Raw | null;
+        filter?: Filter.Raw | null;
+        filterField?: FilterField.Raw | null;
+        searchValue?: SearchValue.Raw | null;
+        searchField?: SearchField.Raw | null;
         q?: string | null;
-        ids?: serializers.RecordId.Raw[] | null;
+        ids?: RecordId.Raw[] | null;
     }
 }

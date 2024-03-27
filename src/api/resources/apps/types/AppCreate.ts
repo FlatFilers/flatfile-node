@@ -28,4 +28,5 @@ export interface AppCreate {
     entityPlural?: string;
     icon?: string;
     metadata?: any;
+    environmentFilters?: any;
 }

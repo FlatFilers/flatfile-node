@@ -52,6 +52,7 @@ export type Event =
     | Flatfile.Event.SheetCreated
     | Flatfile.Event.SheetUpdated
     | Flatfile.Event.SheetDeleted
+    | Flatfile.Event.SheetCountsUpdated
     | Flatfile.Event.SnapshotCreated
     | Flatfile.Event.RecordsCreated
     | Flatfile.Event.RecordsUpdated
@@ -158,6 +159,10 @@ export declare namespace Event {
 
     interface SheetDeleted extends Flatfile.GenericEvent {
         topic: "sheet:deleted";
+    }
+
+    interface SheetCountsUpdated extends Flatfile.GenericEvent {
+        topic: "sheet:counts-updated";
     }
 
     interface SnapshotCreated extends Flatfile.GenericEvent {

@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { BooleanPropertyConfig } from "./BooleanPropertyConfig";
+import { BaseProperty } from "./BaseProperty";
 
 export const BooleanProperty: core.serialization.ObjectSchema<
     serializers.BooleanProperty.Raw,
     Flatfile.BooleanProperty
 > = core.serialization
     .object({
-        config: core.serialization.lazyObject(async () => (await import("../../..")).BooleanPropertyConfig).optional(),
+        config: BooleanPropertyConfig.optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseProperty));
+    .extend(BaseProperty);
 
 export declare namespace BooleanProperty {
-    interface Raw extends serializers.BaseProperty.Raw {
-        config?: serializers.BooleanPropertyConfig.Raw | null;
+    interface Raw extends BaseProperty.Raw {
+        config?: BooleanPropertyConfig.Raw | null;
     }
 }

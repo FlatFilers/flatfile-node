@@ -5,6 +5,10 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SheetAccess } from "./SheetAccess";
+import { Property } from "../../property/types/Property";
+import { Action } from "../../commons/types/Action";
+import { SheetConstraint } from "./SheetConstraint";
 
 export const SheetConfig: core.serialization.ObjectSchema<serializers.SheetConfig.Raw, Flatfile.SheetConfig> =
     core.serialization.object({
@@ -14,17 +18,11 @@ export const SheetConfig: core.serialization.ObjectSchema<serializers.SheetConfi
         readonly: core.serialization.boolean().optional(),
         allowAdditionalFields: core.serialization.boolean().optional(),
         mappingConfidenceThreshold: core.serialization.number().optional(),
-        access: core.serialization
-            .list(core.serialization.lazy(async () => (await import("../../..")).SheetAccess))
-            .optional(),
-        fields: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).Property)),
-        actions: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
-            .optional(),
+        access: core.serialization.list(SheetAccess).optional(),
+        fields: core.serialization.list(Property),
+        actions: core.serialization.list(Action).optional(),
         metadata: core.serialization.any().optional(),
-        constraints: core.serialization
-            .list(core.serialization.lazy(async () => (await import("../../..")).SheetConstraint))
-            .optional(),
+        constraints: core.serialization.list(SheetConstraint).optional(),
     });
 
 export declare namespace SheetConfig {
@@ -35,10 +33,10 @@ export declare namespace SheetConfig {
         readonly?: boolean | null;
         allowAdditionalFields?: boolean | null;
         mappingConfidenceThreshold?: number | null;
-        access?: serializers.SheetAccess.Raw[] | null;
-        fields: serializers.Property.Raw[];
-        actions?: serializers.Action.Raw[] | null;
+        access?: SheetAccess.Raw[] | null;
+        fields: Property.Raw[];
+        actions?: Action.Raw[] | null;
         metadata?: any | null;
-        constraints?: serializers.SheetConstraint.Raw[] | null;
+        constraints?: SheetConstraint.Raw[] | null;
     }
 }

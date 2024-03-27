@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { RecordCounts } from "../../records/types/RecordCounts";
+import { CellValue } from "../../records/types/CellValue";
 
 export const CellValueWithCountsDeprecated: core.serialization.ObjectSchema<
     serializers.CellValueWithCountsDeprecated.Raw,
     Flatfile.CellValueWithCountsDeprecated
 > = core.serialization
     .object({
-        counts: core.serialization.lazyObject(async () => (await import("../../..")).RecordCounts).optional(),
+        counts: RecordCounts.optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).CellValue));
+    .extend(CellValue);
 
 export declare namespace CellValueWithCountsDeprecated {
-    interface Raw extends serializers.CellValue.Raw {
-        counts?: serializers.RecordCounts.Raw | null;
+    interface Raw extends CellValue.Raw {
+        counts?: RecordCounts.Raw | null;
     }
 }

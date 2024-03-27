@@ -4,4 +4,14 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     "us_acc_YOUR_ID"
+ *
+ * @example
+ *     "us_env_YOUR_ID"
+ *
+ * @example
+ *     "us_sp_YOUR_ID"
+ */
 export type ResourceIdUnion = Flatfile.AccountId | Flatfile.EnvironmentId | Flatfile.SpaceId;

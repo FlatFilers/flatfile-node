@@ -5,45 +5,50 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { FileId } from "../../commons/types/FileId";
+import { ModelFileStatusEnum } from "./ModelFileStatusEnum";
+import { Mode } from "./Mode";
+import { SpaceId } from "../../commons/types/SpaceId";
+import { WorkbookId } from "../../commons/types/WorkbookId";
+import { SheetId } from "../../commons/types/SheetId";
+import { Action } from "../../commons/types/Action";
 
 export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, Flatfile.File_> = core.serialization.object({
-    id: core.serialization.lazy(async () => (await import("../../..")).FileId),
+    id: FileId,
     name: core.serialization.string(),
     ext: core.serialization.string(),
     mimetype: core.serialization.string(),
     encoding: core.serialization.string(),
-    status: core.serialization.lazy(async () => (await import("../../..")).ModelFileStatusEnum),
-    mode: core.serialization.lazy(async () => (await import("../../..")).Mode).optional(),
+    status: ModelFileStatusEnum,
+    mode: Mode.optional(),
     size: core.serialization.number(),
     bytesReceived: core.serialization.number(),
     createdAt: core.serialization.date(),
     updatedAt: core.serialization.date(),
     expiredAt: core.serialization.date().optional(),
-    spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId),
-    workbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId).optional(),
-    sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId).optional(),
-    actions: core.serialization
-        .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
-        .optional(),
+    spaceId: SpaceId,
+    workbookId: WorkbookId.optional(),
+    sheetId: SheetId.optional(),
+    actions: core.serialization.list(Action).optional(),
 });
 
 export declare namespace File_ {
     interface Raw {
-        id: serializers.FileId.Raw;
+        id: FileId.Raw;
         name: string;
         ext: string;
         mimetype: string;
         encoding: string;
-        status: serializers.ModelFileStatusEnum.Raw;
-        mode?: serializers.Mode.Raw | null;
+        status: ModelFileStatusEnum.Raw;
+        mode?: Mode.Raw | null;
         size: number;
         bytesReceived: number;
         createdAt: string;
         updatedAt: string;
         expiredAt?: string | null;
-        spaceId: serializers.SpaceId.Raw;
-        workbookId?: serializers.WorkbookId.Raw | null;
-        sheetId?: serializers.SheetId.Raw | null;
-        actions?: serializers.Action.Raw[] | null;
+        spaceId: SpaceId.Raw;
+        workbookId?: WorkbookId.Raw | null;
+        sheetId?: SheetId.Raw | null;
+        actions?: Action.Raw[] | null;
     }
 }

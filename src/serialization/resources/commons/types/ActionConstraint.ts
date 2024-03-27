@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { ActionConstraintType } from "./ActionConstraintType";
 
 export const ActionConstraint: core.serialization.ObjectSchema<
     serializers.ActionConstraint.Raw,
     Flatfile.ActionConstraint
 > = core.serialization.object({
-    type: core.serialization.lazy(async () => (await import("../../..")).ActionConstraintType),
+    type: ActionConstraintType,
 });
 
 export declare namespace ActionConstraint {
     interface Raw {
-        type: serializers.ActionConstraintType.Raw;
+        type: ActionConstraintType.Raw;
     }
 }

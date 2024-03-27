@@ -5,19 +5,22 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { ReferencePropertyConfig } from "./ReferencePropertyConfig";
+import { BaseProperty } from "./BaseProperty";
+import { ArrayableProperty } from "./ArrayableProperty";
 
 export const ReferenceProperty: core.serialization.ObjectSchema<
     serializers.ReferenceProperty.Raw,
     Flatfile.ReferenceProperty
 > = core.serialization
     .object({
-        config: core.serialization.lazyObject(async () => (await import("../../..")).ReferencePropertyConfig),
+        config: ReferencePropertyConfig,
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseProperty))
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).ArrayableProperty));
+    .extend(BaseProperty)
+    .extend(ArrayableProperty);
 
 export declare namespace ReferenceProperty {
-    interface Raw extends serializers.BaseProperty.Raw, serializers.ArrayableProperty.Raw {
-        config: serializers.ReferencePropertyConfig.Raw;
+    interface Raw extends BaseProperty.Raw, ArrayableProperty.Raw {
+        config: ReferencePropertyConfig.Raw;
     }
 }

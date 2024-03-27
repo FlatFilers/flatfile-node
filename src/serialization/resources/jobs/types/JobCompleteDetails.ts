@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { JobOutcome } from "./JobOutcome";
 
 export const JobCompleteDetails: core.serialization.ObjectSchema<
     serializers.JobCompleteDetails.Raw,
     Flatfile.JobCompleteDetails
 > = core.serialization.object({
-    outcome: core.serialization.lazyObject(async () => (await import("../../..")).JobOutcome).optional(),
+    outcome: JobOutcome.optional(),
     info: core.serialization.string().optional(),
 });
 
 export declare namespace JobCompleteDetails {
     interface Raw {
-        outcome?: serializers.JobOutcome.Raw | null;
+        outcome?: JobOutcome.Raw | null;
         info?: string | null;
     }
 }

@@ -5,17 +5,21 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { ApiKeyId } from "./ApiKeyId";
+import { RawKey } from "./RawKey";
+import { ApiKeyType } from "./ApiKeyType";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
+import { AccountId } from "../../commons/types/AccountId";
+import { ApiKeyOperation } from "./ApiKeyOperation";
 
 export const ApiKey: core.serialization.ObjectSchema<serializers.ApiKey.Raw, Flatfile.ApiKey> =
     core.serialization.object({
-        id: core.serialization.lazy(async () => (await import("../../..")).ApiKeyId),
-        rawKey: core.serialization.lazy(async () => (await import("../../..")).RawKey).optional(),
-        type: core.serialization.lazy(async () => (await import("../../..")).ApiKeyType),
-        environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
-        accountId: core.serialization.lazy(async () => (await import("../../..")).AccountId).optional(),
-        operations: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).ApiKeyOperation)
-        ),
+        id: ApiKeyId,
+        rawKey: RawKey.optional(),
+        type: ApiKeyType,
+        environmentId: EnvironmentId.optional(),
+        accountId: AccountId.optional(),
+        operations: core.serialization.list(ApiKeyOperation),
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date().optional(),
         deletedAt: core.serialization.date().optional(),
@@ -24,12 +28,12 @@ export const ApiKey: core.serialization.ObjectSchema<serializers.ApiKey.Raw, Fla
 
 export declare namespace ApiKey {
     interface Raw {
-        id: serializers.ApiKeyId.Raw;
-        rawKey?: serializers.RawKey.Raw | null;
-        type: serializers.ApiKeyType.Raw;
-        environmentId?: serializers.EnvironmentId.Raw | null;
-        accountId?: serializers.AccountId.Raw | null;
-        operations: serializers.ApiKeyOperation.Raw[];
+        id: ApiKeyId.Raw;
+        rawKey?: RawKey.Raw | null;
+        type: ApiKeyType.Raw;
+        environmentId?: EnvironmentId.Raw | null;
+        accountId?: AccountId.Raw | null;
+        operations: ApiKeyOperation.Raw[];
         createdAt: string;
         updatedAt?: string | null;
         deletedAt?: string | null;

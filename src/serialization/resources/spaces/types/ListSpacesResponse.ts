@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Pagination } from "../../commons/types/Pagination";
+import { Space } from "./Space";
 
 export const ListSpacesResponse: core.serialization.ObjectSchema<
     serializers.ListSpacesResponse.Raw,
     Flatfile.ListSpacesResponse
 > = core.serialization.object({
-    pagination: core.serialization.lazyObject(async () => (await import("../../..")).Pagination).optional(),
-    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Space)),
+    pagination: Pagination.optional(),
+    data: core.serialization.list(Space),
 });
 
 export declare namespace ListSpacesResponse {
     interface Raw {
-        pagination?: serializers.Pagination.Raw | null;
-        data: serializers.Space.Raw[];
+        pagination?: Pagination.Raw | null;
+        data: Space.Raw[];
     }
 }

@@ -5,20 +5,22 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { ValidationType } from "./ValidationType";
+import { ValidationSource } from "./ValidationSource";
 
 export const ValidationMessage: core.serialization.ObjectSchema<
     serializers.ValidationMessage.Raw,
     Flatfile.ValidationMessage
 > = core.serialization.object({
-    type: core.serialization.lazy(async () => (await import("../../..")).ValidationType).optional(),
-    source: core.serialization.lazy(async () => (await import("../../..")).ValidationSource).optional(),
+    type: ValidationType.optional(),
+    source: ValidationSource.optional(),
     message: core.serialization.string().optional(),
 });
 
 export declare namespace ValidationMessage {
     interface Raw {
-        type?: serializers.ValidationType.Raw | null;
-        source?: serializers.ValidationSource.Raw | null;
+        type?: ValidationType.Raw | null;
+        source?: ValidationSource.Raw | null;
         message?: string | null;
     }
 }

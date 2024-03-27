@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { MappingRule } from "./MappingRule";
 
 export const MappingRulesResponse: core.serialization.ObjectSchema<
     serializers.MappingRulesResponse.Raw,
     Flatfile.MappingRulesResponse
 > = core.serialization.object({
-    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).MappingRule)),
+    data: core.serialization.list(MappingRule),
 });
 
 export declare namespace MappingRulesResponse {
     interface Raw {
-        data: serializers.MappingRule.Raw[];
+        data: MappingRule.Raw[];
     }
 }

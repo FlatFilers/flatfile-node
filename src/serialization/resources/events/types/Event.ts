@@ -5,55 +5,57 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { GenericEvent } from "./GenericEvent";
 
 export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Event> = core.serialization
     .union("topic", {
-        "agent:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "agent:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "agent:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "space:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "space:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "space:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "space:archived": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "space:expired": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "space:guestAdded": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "space:guestRemoved": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "document:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "document:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "document:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "workbook:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "workbook:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "workbook:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "workbook:expired": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "sheet:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "sheet:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "sheet:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "snapshot:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "records:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "records:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "records:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "file:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "file:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "file:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "file:expired": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "job:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "job:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "job:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "job:failed": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "job:completed": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "job:ready": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "job:scheduled": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "job:outcome-acknowledged": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "job:parts-completed": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "program:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "program:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "commit:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "commit:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "commit:completed": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "secret:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "secret:updated": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "secret:deleted": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
-        "layer:created": core.serialization.lazyObject(async () => (await import("../../..")).GenericEvent),
+        "agent:created": GenericEvent,
+        "agent:updated": GenericEvent,
+        "agent:deleted": GenericEvent,
+        "space:created": GenericEvent,
+        "space:updated": GenericEvent,
+        "space:deleted": GenericEvent,
+        "space:archived": GenericEvent,
+        "space:expired": GenericEvent,
+        "space:guestAdded": GenericEvent,
+        "space:guestRemoved": GenericEvent,
+        "document:created": GenericEvent,
+        "document:updated": GenericEvent,
+        "document:deleted": GenericEvent,
+        "workbook:created": GenericEvent,
+        "workbook:updated": GenericEvent,
+        "workbook:deleted": GenericEvent,
+        "workbook:expired": GenericEvent,
+        "sheet:created": GenericEvent,
+        "sheet:updated": GenericEvent,
+        "sheet:deleted": GenericEvent,
+        "sheet:counts-updated": GenericEvent,
+        "snapshot:created": GenericEvent,
+        "records:created": GenericEvent,
+        "records:updated": GenericEvent,
+        "records:deleted": GenericEvent,
+        "file:created": GenericEvent,
+        "file:updated": GenericEvent,
+        "file:deleted": GenericEvent,
+        "file:expired": GenericEvent,
+        "job:created": GenericEvent,
+        "job:updated": GenericEvent,
+        "job:deleted": GenericEvent,
+        "job:failed": GenericEvent,
+        "job:completed": GenericEvent,
+        "job:ready": GenericEvent,
+        "job:scheduled": GenericEvent,
+        "job:outcome-acknowledged": GenericEvent,
+        "job:parts-completed": GenericEvent,
+        "program:created": GenericEvent,
+        "program:updated": GenericEvent,
+        "commit:created": GenericEvent,
+        "commit:updated": GenericEvent,
+        "commit:completed": GenericEvent,
+        "secret:created": GenericEvent,
+        "secret:updated": GenericEvent,
+        "secret:deleted": GenericEvent,
+        "layer:created": GenericEvent,
     })
     .transform<Flatfile.Event>({
         transform: (value) => value,
@@ -82,6 +84,7 @@ export declare namespace Event {
         | Event.SheetCreated
         | Event.SheetUpdated
         | Event.SheetDeleted
+        | Event.SheetCountsUpdated
         | Event.SnapshotCreated
         | Event.RecordsCreated
         | Event.RecordsUpdated
@@ -109,187 +112,191 @@ export declare namespace Event {
         | Event.SecretDeleted
         | Event.LayerCreated;
 
-    interface AgentCreated extends serializers.GenericEvent.Raw {
+    interface AgentCreated extends GenericEvent.Raw {
         topic: "agent:created";
     }
 
-    interface AgentUpdated extends serializers.GenericEvent.Raw {
+    interface AgentUpdated extends GenericEvent.Raw {
         topic: "agent:updated";
     }
 
-    interface AgentDeleted extends serializers.GenericEvent.Raw {
+    interface AgentDeleted extends GenericEvent.Raw {
         topic: "agent:deleted";
     }
 
-    interface SpaceCreated extends serializers.GenericEvent.Raw {
+    interface SpaceCreated extends GenericEvent.Raw {
         topic: "space:created";
     }
 
-    interface SpaceUpdated extends serializers.GenericEvent.Raw {
+    interface SpaceUpdated extends GenericEvent.Raw {
         topic: "space:updated";
     }
 
-    interface SpaceDeleted extends serializers.GenericEvent.Raw {
+    interface SpaceDeleted extends GenericEvent.Raw {
         topic: "space:deleted";
     }
 
-    interface SpaceArchived extends serializers.GenericEvent.Raw {
+    interface SpaceArchived extends GenericEvent.Raw {
         topic: "space:archived";
     }
 
-    interface SpaceExpired extends serializers.GenericEvent.Raw {
+    interface SpaceExpired extends GenericEvent.Raw {
         topic: "space:expired";
     }
 
-    interface SpaceGuestAdded extends serializers.GenericEvent.Raw {
+    interface SpaceGuestAdded extends GenericEvent.Raw {
         topic: "space:guestAdded";
     }
 
-    interface SpaceGuestRemoved extends serializers.GenericEvent.Raw {
+    interface SpaceGuestRemoved extends GenericEvent.Raw {
         topic: "space:guestRemoved";
     }
 
-    interface DocumentCreated extends serializers.GenericEvent.Raw {
+    interface DocumentCreated extends GenericEvent.Raw {
         topic: "document:created";
     }
 
-    interface DocumentUpdated extends serializers.GenericEvent.Raw {
+    interface DocumentUpdated extends GenericEvent.Raw {
         topic: "document:updated";
     }
 
-    interface DocumentDeleted extends serializers.GenericEvent.Raw {
+    interface DocumentDeleted extends GenericEvent.Raw {
         topic: "document:deleted";
     }
 
-    interface WorkbookCreated extends serializers.GenericEvent.Raw {
+    interface WorkbookCreated extends GenericEvent.Raw {
         topic: "workbook:created";
     }
 
-    interface WorkbookUpdated extends serializers.GenericEvent.Raw {
+    interface WorkbookUpdated extends GenericEvent.Raw {
         topic: "workbook:updated";
     }
 
-    interface WorkbookDeleted extends serializers.GenericEvent.Raw {
+    interface WorkbookDeleted extends GenericEvent.Raw {
         topic: "workbook:deleted";
     }
 
-    interface WorkbookExpired extends serializers.GenericEvent.Raw {
+    interface WorkbookExpired extends GenericEvent.Raw {
         topic: "workbook:expired";
     }
 
-    interface SheetCreated extends serializers.GenericEvent.Raw {
+    interface SheetCreated extends GenericEvent.Raw {
         topic: "sheet:created";
     }
 
-    interface SheetUpdated extends serializers.GenericEvent.Raw {
+    interface SheetUpdated extends GenericEvent.Raw {
         topic: "sheet:updated";
     }
 
-    interface SheetDeleted extends serializers.GenericEvent.Raw {
+    interface SheetDeleted extends GenericEvent.Raw {
         topic: "sheet:deleted";
     }
 
-    interface SnapshotCreated extends serializers.GenericEvent.Raw {
+    interface SheetCountsUpdated extends GenericEvent.Raw {
+        topic: "sheet:counts-updated";
+    }
+
+    interface SnapshotCreated extends GenericEvent.Raw {
         topic: "snapshot:created";
     }
 
-    interface RecordsCreated extends serializers.GenericEvent.Raw {
+    interface RecordsCreated extends GenericEvent.Raw {
         topic: "records:created";
     }
 
-    interface RecordsUpdated extends serializers.GenericEvent.Raw {
+    interface RecordsUpdated extends GenericEvent.Raw {
         topic: "records:updated";
     }
 
-    interface RecordsDeleted extends serializers.GenericEvent.Raw {
+    interface RecordsDeleted extends GenericEvent.Raw {
         topic: "records:deleted";
     }
 
-    interface FileCreated extends serializers.GenericEvent.Raw {
+    interface FileCreated extends GenericEvent.Raw {
         topic: "file:created";
     }
 
-    interface FileUpdated extends serializers.GenericEvent.Raw {
+    interface FileUpdated extends GenericEvent.Raw {
         topic: "file:updated";
     }
 
-    interface FileDeleted extends serializers.GenericEvent.Raw {
+    interface FileDeleted extends GenericEvent.Raw {
         topic: "file:deleted";
     }
 
-    interface FileExpired extends serializers.GenericEvent.Raw {
+    interface FileExpired extends GenericEvent.Raw {
         topic: "file:expired";
     }
 
-    interface JobCreated extends serializers.GenericEvent.Raw {
+    interface JobCreated extends GenericEvent.Raw {
         topic: "job:created";
     }
 
-    interface JobUpdated extends serializers.GenericEvent.Raw {
+    interface JobUpdated extends GenericEvent.Raw {
         topic: "job:updated";
     }
 
-    interface JobDeleted extends serializers.GenericEvent.Raw {
+    interface JobDeleted extends GenericEvent.Raw {
         topic: "job:deleted";
     }
 
-    interface JobFailed extends serializers.GenericEvent.Raw {
+    interface JobFailed extends GenericEvent.Raw {
         topic: "job:failed";
     }
 
-    interface JobCompleted extends serializers.GenericEvent.Raw {
+    interface JobCompleted extends GenericEvent.Raw {
         topic: "job:completed";
     }
 
-    interface JobReady extends serializers.GenericEvent.Raw {
+    interface JobReady extends GenericEvent.Raw {
         topic: "job:ready";
     }
 
-    interface JobScheduled extends serializers.GenericEvent.Raw {
+    interface JobScheduled extends GenericEvent.Raw {
         topic: "job:scheduled";
     }
 
-    interface JobOutcomeAcknowledged extends serializers.GenericEvent.Raw {
+    interface JobOutcomeAcknowledged extends GenericEvent.Raw {
         topic: "job:outcome-acknowledged";
     }
 
-    interface JobPartsCompleted extends serializers.GenericEvent.Raw {
+    interface JobPartsCompleted extends GenericEvent.Raw {
         topic: "job:parts-completed";
     }
 
-    interface ProgramCreated extends serializers.GenericEvent.Raw {
+    interface ProgramCreated extends GenericEvent.Raw {
         topic: "program:created";
     }
 
-    interface ProgramUpdated extends serializers.GenericEvent.Raw {
+    interface ProgramUpdated extends GenericEvent.Raw {
         topic: "program:updated";
     }
 
-    interface CommitCreated extends serializers.GenericEvent.Raw {
+    interface CommitCreated extends GenericEvent.Raw {
         topic: "commit:created";
     }
 
-    interface CommitUpdated extends serializers.GenericEvent.Raw {
+    interface CommitUpdated extends GenericEvent.Raw {
         topic: "commit:updated";
     }
 
-    interface CommitCompleted extends serializers.GenericEvent.Raw {
+    interface CommitCompleted extends GenericEvent.Raw {
         topic: "commit:completed";
     }
 
-    interface SecretCreated extends serializers.GenericEvent.Raw {
+    interface SecretCreated extends GenericEvent.Raw {
         topic: "secret:created";
     }
 
-    interface SecretUpdated extends serializers.GenericEvent.Raw {
+    interface SecretUpdated extends GenericEvent.Raw {
         topic: "secret:updated";
     }
 
-    interface SecretDeleted extends serializers.GenericEvent.Raw {
+    interface SecretDeleted extends GenericEvent.Raw {
         topic: "secret:deleted";
     }
 
-    interface LayerCreated extends serializers.GenericEvent.Raw {
+    interface LayerCreated extends GenericEvent.Raw {
         topic: "layer:created";
     }
 }

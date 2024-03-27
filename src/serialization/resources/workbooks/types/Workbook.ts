@@ -5,23 +5,23 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { WorkbookId } from "../../commons/types/WorkbookId";
+import { SpaceId } from "../../commons/types/SpaceId";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
+import { Sheet } from "../../sheets/types/Sheet";
+import { Action } from "../../commons/types/Action";
+import { WorkbookConfigSettings } from "./WorkbookConfigSettings";
 
 export const Workbook: core.serialization.ObjectSchema<serializers.Workbook.Raw, Flatfile.Workbook> =
     core.serialization.object({
-        id: core.serialization.lazy(async () => (await import("../../..")).WorkbookId),
+        id: WorkbookId,
         name: core.serialization.string().optional(),
-        spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId),
-        environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId),
-        sheets: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).Sheet))
-            .optional(),
+        spaceId: SpaceId,
+        environmentId: EnvironmentId,
+        sheets: core.serialization.list(Sheet).optional(),
         labels: core.serialization.list(core.serialization.string()).optional(),
-        actions: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
-            .optional(),
-        settings: core.serialization
-            .lazyObject(async () => (await import("../../..")).WorkbookConfigSettings)
-            .optional(),
+        actions: core.serialization.list(Action).optional(),
+        settings: WorkbookConfigSettings.optional(),
         metadata: core.serialization.any().optional(),
         namespace: core.serialization.string().optional(),
         updatedAt: core.serialization.date(),
@@ -31,14 +31,14 @@ export const Workbook: core.serialization.ObjectSchema<serializers.Workbook.Raw,
 
 export declare namespace Workbook {
     interface Raw {
-        id: serializers.WorkbookId.Raw;
+        id: WorkbookId.Raw;
         name?: string | null;
-        spaceId: serializers.SpaceId.Raw;
-        environmentId: serializers.EnvironmentId.Raw;
-        sheets?: serializers.Sheet.Raw[] | null;
+        spaceId: SpaceId.Raw;
+        environmentId: EnvironmentId.Raw;
+        sheets?: Sheet.Raw[] | null;
         labels?: string[] | null;
-        actions?: serializers.Action.Raw[] | null;
-        settings?: serializers.WorkbookConfigSettings.Raw | null;
+        actions?: Action.Raw[] | null;
+        settings?: WorkbookConfigSettings.Raw | null;
         metadata?: any | null;
         namespace?: string | null;
         updatedAt: string;

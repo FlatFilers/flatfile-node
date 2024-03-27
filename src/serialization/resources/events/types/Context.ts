@@ -5,48 +5,67 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { EventContextSlugs } from "./EventContextSlugs";
+import { ActionName } from "./ActionName";
+import { AccountId } from "../../commons/types/AccountId";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
+import { SpaceId } from "../../commons/types/SpaceId";
+import { WorkbookId } from "../../commons/types/WorkbookId";
+import { SheetId } from "../../commons/types/SheetId";
+import { SheetSlug } from "./SheetSlug";
+import { SnapshotId } from "../../commons/types/SnapshotId";
+import { VersionId } from "../../commons/types/VersionId";
+import { CommitId } from "../../commons/types/CommitId";
+import { JobId } from "../../commons/types/JobId";
+import { ProgramId } from "../../commons/types/ProgramId";
+import { FileId } from "../../commons/types/FileId";
+import { DocumentId } from "../../commons/types/DocumentId";
+import { EventId } from "../../commons/types/EventId";
+import { AppId } from "../../commons/types/AppId";
 
 export const Context: core.serialization.ObjectSchema<serializers.Context.Raw, Flatfile.Context> =
     core.serialization.object({
         namespaces: core.serialization.list(core.serialization.string()).optional(),
-        slugs: core.serialization.lazyObject(async () => (await import("../../..")).EventContextSlugs).optional(),
-        actionName: core.serialization.lazy(async () => (await import("../../..")).ActionName).optional(),
-        accountId: core.serialization.lazy(async () => (await import("../../..")).AccountId),
-        environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId),
-        spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId).optional(),
-        workbookId: core.serialization.lazy(async () => (await import("../../..")).WorkbookId).optional(),
-        sheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId).optional(),
-        sheetSlug: core.serialization.lazy(async () => (await import("../../..")).SheetSlug).optional(),
-        snapshotId: core.serialization.lazy(async () => (await import("../../..")).SnapshotId).optional(),
-        versionId: core.serialization.lazy(async () => (await import("../../..")).VersionId).optional(),
-        commitId: core.serialization.lazy(async () => (await import("../../..")).CommitId).optional(),
-        jobId: core.serialization.lazy(async () => (await import("../../..")).JobId).optional(),
-        programId: core.serialization.lazy(async () => (await import("../../..")).ProgramId).optional(),
-        fileId: core.serialization.lazy(async () => (await import("../../..")).FileId).optional(),
-        documentId: core.serialization.lazy(async () => (await import("../../..")).DocumentId).optional(),
-        precedingEventId: core.serialization.lazy(async () => (await import("../../..")).EventId).optional(),
+        slugs: EventContextSlugs.optional(),
+        actionName: ActionName.optional(),
+        accountId: AccountId,
+        environmentId: EnvironmentId,
+        spaceId: SpaceId.optional(),
+        workbookId: WorkbookId.optional(),
+        sheetId: SheetId.optional(),
+        sheetSlug: SheetSlug.optional(),
+        snapshotId: SnapshotId.optional(),
+        versionId: VersionId.optional(),
+        commitId: CommitId.optional(),
+        jobId: JobId.optional(),
+        programId: ProgramId.optional(),
+        fileId: FileId.optional(),
+        documentId: DocumentId.optional(),
+        precedingEventId: EventId.optional(),
         actorId: core.serialization.string().optional(),
+        appId: AppId.optional(),
     });
 
 export declare namespace Context {
     interface Raw {
         namespaces?: string[] | null;
-        slugs?: serializers.EventContextSlugs.Raw | null;
-        actionName?: serializers.ActionName.Raw | null;
-        accountId: serializers.AccountId.Raw;
-        environmentId: serializers.EnvironmentId.Raw;
-        spaceId?: serializers.SpaceId.Raw | null;
-        workbookId?: serializers.WorkbookId.Raw | null;
-        sheetId?: serializers.SheetId.Raw | null;
-        sheetSlug?: serializers.SheetSlug.Raw | null;
-        snapshotId?: serializers.SnapshotId.Raw | null;
-        versionId?: serializers.VersionId.Raw | null;
-        commitId?: serializers.CommitId.Raw | null;
-        jobId?: serializers.JobId.Raw | null;
-        programId?: serializers.ProgramId.Raw | null;
-        fileId?: serializers.FileId.Raw | null;
-        documentId?: serializers.DocumentId.Raw | null;
-        precedingEventId?: serializers.EventId.Raw | null;
+        slugs?: EventContextSlugs.Raw | null;
+        actionName?: ActionName.Raw | null;
+        accountId: AccountId.Raw;
+        environmentId: EnvironmentId.Raw;
+        spaceId?: SpaceId.Raw | null;
+        workbookId?: WorkbookId.Raw | null;
+        sheetId?: SheetId.Raw | null;
+        sheetSlug?: SheetSlug.Raw | null;
+        snapshotId?: SnapshotId.Raw | null;
+        versionId?: VersionId.Raw | null;
+        commitId?: CommitId.Raw | null;
+        jobId?: JobId.Raw | null;
+        programId?: ProgramId.Raw | null;
+        fileId?: FileId.Raw | null;
+        documentId?: DocumentId.Raw | null;
+        precedingEventId?: EventId.Raw | null;
         actorId?: string | null;
+        appId?: AppId.Raw | null;
     }
 }

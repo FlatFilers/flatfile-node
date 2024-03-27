@@ -5,10 +5,11 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { WorkbookId } from "../../commons/types/WorkbookId";
 
 export const JobDestination: core.serialization.Schema<serializers.JobDestination.Raw, Flatfile.JobDestination> =
-    core.serialization.lazy(async () => (await import("../../..")).WorkbookId);
+    WorkbookId;
 
 export declare namespace JobDestination {
-    type Raw = serializers.WorkbookId.Raw;
+    type Raw = WorkbookId.Raw;
 }

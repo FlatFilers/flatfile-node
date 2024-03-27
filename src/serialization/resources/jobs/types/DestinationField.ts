@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Property } from "../../property/types/Property";
 
 export const DestinationField: core.serialization.ObjectSchema<
     serializers.DestinationField.Raw,
     Flatfile.DestinationField
 > = core.serialization.object({
-    destinationField: core.serialization.lazy(async () => (await import("../../..")).Property),
+    destinationField: Property,
     preview: core.serialization.list(core.serialization.string()).optional(),
 });
 
 export declare namespace DestinationField {
     interface Raw {
-        destinationField: serializers.Property.Raw;
+        destinationField: Property.Raw;
         preview?: string[] | null;
     }
 }

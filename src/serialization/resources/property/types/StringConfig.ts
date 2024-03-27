@@ -5,14 +5,15 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { StringConfigOptions } from "./StringConfigOptions";
 
 export const StringConfig: core.serialization.ObjectSchema<serializers.StringConfig.Raw, Flatfile.StringConfig> =
     core.serialization.object({
-        size: core.serialization.lazy(async () => (await import("../../..")).StringConfigOptions),
+        size: StringConfigOptions,
     });
 
 export declare namespace StringConfig {
     interface Raw {
-        size: serializers.StringConfigOptions.Raw;
+        size: StringConfigOptions.Raw;
     }
 }

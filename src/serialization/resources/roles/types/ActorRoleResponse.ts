@@ -5,25 +5,29 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { ActorRoleId } from "../../commons/types/ActorRoleId";
+import { RoleId } from "../../commons/types/RoleId";
+import { ActorIdUnion } from "./ActorIdUnion";
+import { ResourceIdUnion } from "./ResourceIdUnion";
 
 export const ActorRoleResponse: core.serialization.ObjectSchema<
     serializers.ActorRoleResponse.Raw,
     Flatfile.ActorRoleResponse
 > = core.serialization.object({
-    id: core.serialization.lazy(async () => (await import("../../..")).ActorRoleId),
-    roleId: core.serialization.lazy(async () => (await import("../../..")).RoleId),
-    actorId: core.serialization.lazy(async () => (await import("../../..")).ActorIdUnion),
-    resourceId: core.serialization.lazy(async () => (await import("../../..")).ResourceIdUnion),
+    id: ActorRoleId,
+    roleId: RoleId,
+    actorId: ActorIdUnion,
+    resourceId: ResourceIdUnion,
     createdAt: core.serialization.date(),
     updatedAt: core.serialization.date(),
 });
 
 export declare namespace ActorRoleResponse {
     interface Raw {
-        id: serializers.ActorRoleId.Raw;
-        roleId: serializers.RoleId.Raw;
-        actorId: serializers.ActorIdUnion.Raw;
-        resourceId: serializers.ResourceIdUnion.Raw;
+        id: ActorRoleId.Raw;
+        roleId: RoleId.Raw;
+        actorId: ActorIdUnion.Raw;
+        resourceId: ResourceIdUnion.Raw;
         createdAt: string;
         updatedAt: string;
     }

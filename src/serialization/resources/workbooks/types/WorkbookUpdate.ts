@@ -5,20 +5,20 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SpaceId } from "../../commons/types/SpaceId";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
+import { SheetConfigOrUpdate } from "../../sheets/types/SheetConfigOrUpdate";
+import { Action } from "../../commons/types/Action";
 
 export const WorkbookUpdate: core.serialization.ObjectSchema<serializers.WorkbookUpdate.Raw, Flatfile.WorkbookUpdate> =
     core.serialization.object({
         name: core.serialization.string().optional(),
         labels: core.serialization.list(core.serialization.string()).optional(),
-        spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId).optional(),
-        environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
+        spaceId: SpaceId.optional(),
+        environmentId: EnvironmentId.optional(),
         namespace: core.serialization.string().optional(),
-        sheets: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).SheetConfigOrUpdate))
-            .optional(),
-        actions: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).Action))
-            .optional(),
+        sheets: core.serialization.list(SheetConfigOrUpdate).optional(),
+        actions: core.serialization.list(Action).optional(),
         metadata: core.serialization.any().optional(),
     });
 
@@ -26,11 +26,11 @@ export declare namespace WorkbookUpdate {
     interface Raw {
         name?: string | null;
         labels?: string[] | null;
-        spaceId?: serializers.SpaceId.Raw | null;
-        environmentId?: serializers.EnvironmentId.Raw | null;
+        spaceId?: SpaceId.Raw | null;
+        environmentId?: EnvironmentId.Raw | null;
         namespace?: string | null;
-        sheets?: serializers.SheetConfigOrUpdate.Raw[] | null;
-        actions?: serializers.Action.Raw[] | null;
+        sheets?: SheetConfigOrUpdate.Raw[] | null;
+        actions?: Action.Raw[] | null;
         metadata?: any | null;
     }
 }

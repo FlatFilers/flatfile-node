@@ -5,20 +5,24 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SecretName } from "./SecretName";
+import { SecretValue } from "./SecretValue";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
+import { SpaceId } from "../../commons/types/SpaceId";
 
 export const WriteSecret: core.serialization.ObjectSchema<serializers.WriteSecret.Raw, Flatfile.WriteSecret> =
     core.serialization.object({
-        name: core.serialization.lazy(async () => (await import("../../..")).SecretName),
-        value: core.serialization.lazy(async () => (await import("../../..")).SecretValue),
-        environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId).optional(),
-        spaceId: core.serialization.lazy(async () => (await import("../../..")).SpaceId).optional(),
+        name: SecretName,
+        value: SecretValue,
+        environmentId: EnvironmentId.optional(),
+        spaceId: SpaceId.optional(),
     });
 
 export declare namespace WriteSecret {
     interface Raw {
-        name: serializers.SecretName.Raw;
-        value: serializers.SecretValue.Raw;
-        environmentId?: serializers.EnvironmentId.Raw | null;
-        spaceId?: serializers.SpaceId.Raw | null;
+        name: SecretName.Raw;
+        value: SecretValue.Raw;
+        environmentId?: EnvironmentId.Raw | null;
+        spaceId?: SpaceId.Raw | null;
     }
 }

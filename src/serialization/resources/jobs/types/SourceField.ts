@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Property } from "../../property/types/Property";
 
 export const SourceField: core.serialization.ObjectSchema<serializers.SourceField.Raw, Flatfile.SourceField> =
     core.serialization.object({
-        sourceField: core.serialization.lazy(async () => (await import("../../..")).Property),
+        sourceField: Property,
         preview: core.serialization.list(core.serialization.string()).optional(),
     });
 
 export declare namespace SourceField {
     interface Raw {
-        sourceField: serializers.Property.Raw;
+        sourceField: Property.Raw;
         preview?: string[] | null;
     }
 }

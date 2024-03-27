@@ -10,16 +10,16 @@ import * as Flatfile from "../../..";
  *         id: "us_rc_YOUR_ID",
  *         values: {
  *             "firstName": {
- *                 snapshotValue: undefined,
- *                 value: undefined
+ *                 snapshotValue: "John",
+ *                 value: "Johns"
  *             },
  *             "lastName": {
- *                 snapshotValue: undefined,
- *                 value: undefined
+ *                 snapshotValue: "Doe",
+ *                 value: "Does"
  *             },
  *             "email": {
- *                 snapshotValue: undefined,
- *                 value: undefined
+ *                 snapshotValue: "john.doe@example.com",
+ *                 value: "john.doe@example.com"
  *             }
  *         }
  *     }

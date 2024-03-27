@@ -5,16 +5,18 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { CellsResponseDataDeprecated } from "./CellsResponseDataDeprecated";
+import { CellValueWithCountsDeprecated } from "./CellValueWithCountsDeprecated";
 
 export const CellsResponseDeprecated: core.serialization.ObjectSchema<
     serializers.CellsResponseDeprecated.Raw,
     Flatfile.CellsResponseDeprecated
 > = core.serialization.object({
-    data: core.serialization.lazy(async () => (await import("../../..")).CellsResponseDataDeprecated),
+    data: CellsResponseDataDeprecated,
 });
 
 export declare namespace CellsResponseDeprecated {
     interface Raw {
-        data: serializers.CellsResponseDataDeprecated.Raw;
+        data: CellsResponseDataDeprecated.Raw;
     }
 }

@@ -5,6 +5,7 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { FieldRecordCounts } from "./FieldRecordCounts";
 
 export const RecordCounts: core.serialization.ObjectSchema<serializers.RecordCounts.Raw, Flatfile.RecordCounts> =
     core.serialization.object({
@@ -12,12 +13,7 @@ export const RecordCounts: core.serialization.ObjectSchema<serializers.RecordCou
         valid: core.serialization.number(),
         error: core.serialization.number(),
         errorsByField: core.serialization.record(core.serialization.string(), core.serialization.number()).optional(),
-        byField: core.serialization
-            .record(
-                core.serialization.string(),
-                core.serialization.lazyObject(async () => (await import("../../..")).FieldRecordCounts)
-            )
-            .optional(),
+        byField: core.serialization.record(core.serialization.string(), FieldRecordCounts).optional(),
     });
 
 export declare namespace RecordCounts {
@@ -26,6 +22,6 @@ export declare namespace RecordCounts {
         valid: number;
         error: number;
         errorsByField?: Record<string, number> | null;
-        byField?: Record<string, serializers.FieldRecordCounts.Raw> | null;
+        byField?: Record<string, FieldRecordCounts.Raw> | null;
     }
 }

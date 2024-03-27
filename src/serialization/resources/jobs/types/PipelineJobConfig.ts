@@ -5,18 +5,19 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SheetId } from "../../commons/types/SheetId";
 
 export const PipelineJobConfig: core.serialization.ObjectSchema<
     serializers.PipelineJobConfig.Raw,
     Flatfile.PipelineJobConfig
 > = core.serialization.object({
-    sourceSheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId),
-    destinationSheetId: core.serialization.lazy(async () => (await import("../../..")).SheetId),
+    sourceSheetId: SheetId,
+    destinationSheetId: SheetId,
 });
 
 export declare namespace PipelineJobConfig {
     interface Raw {
-        sourceSheetId: serializers.SheetId.Raw;
-        destinationSheetId: serializers.SheetId.Raw;
+        sourceSheetId: SheetId.Raw;
+        destinationSheetId: SheetId.Raw;
     }
 }

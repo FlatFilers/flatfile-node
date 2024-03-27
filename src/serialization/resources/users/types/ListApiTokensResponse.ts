@@ -5,18 +5,20 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { Pagination } from "../../commons/types/Pagination";
+import { ApiToken } from "./ApiToken";
 
 export const ListApiTokensResponse: core.serialization.ObjectSchema<
     serializers.ListApiTokensResponse.Raw,
     Flatfile.ListApiTokensResponse
 > = core.serialization.object({
-    pagination: core.serialization.lazyObject(async () => (await import("../../..")).Pagination).optional(),
-    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).ApiToken)),
+    pagination: Pagination.optional(),
+    data: core.serialization.list(ApiToken),
 });
 
 export declare namespace ListApiTokensResponse {
     interface Raw {
-        pagination?: serializers.Pagination.Raw | null;
-        data: serializers.ApiToken.Raw[];
+        pagination?: Pagination.Raw | null;
+        data: ApiToken.Raw[];
     }
 }

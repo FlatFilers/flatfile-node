@@ -5,16 +5,19 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { DiffData } from "./DiffData";
+import { RecordBase } from "./RecordBase";
+import { DiffValue } from "./DiffValue";
 
 export const DiffRecord: core.serialization.ObjectSchema<serializers.DiffRecord.Raw, Flatfile.DiffRecord> =
     core.serialization
         .object({
-            values: core.serialization.lazy(async () => (await import("../../..")).DiffData),
+            values: DiffData,
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).RecordBase));
+        .extend(RecordBase);
 
 export declare namespace DiffRecord {
-    interface Raw extends serializers.RecordBase.Raw {
-        values: serializers.DiffData.Raw;
+    interface Raw extends RecordBase.Raw {
+        values: DiffData.Raw;
     }
 }

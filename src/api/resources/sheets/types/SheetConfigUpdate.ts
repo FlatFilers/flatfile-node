@@ -12,7 +12,7 @@ export interface SheetConfigUpdate {
     name?: string;
     /** A sentence or two describing the purpose of your Sheet. */
     description?: string;
-    /** A unique identifier for your Sheet. */
+    /** A unique identifier for your Sheet. **Required when updating a Workbook.** */
     slug?: string;
     /** A boolean specifying whether or not this sheet is read only. Read only sheets are not editable by end users. */
     readonly?: boolean;

@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { RoleResponse } from "./RoleResponse";
 
 export const ListRolesResponse: core.serialization.ObjectSchema<
     serializers.ListRolesResponse.Raw,
     Flatfile.ListRolesResponse
 > = core.serialization.object({
-    data: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).RoleResponse)),
+    data: core.serialization.list(RoleResponse),
 });
 
 export declare namespace ListRolesResponse {
     interface Raw {
-        data: serializers.RoleResponse.Raw[];
+        data: RoleResponse.Raw[];
     }
 }

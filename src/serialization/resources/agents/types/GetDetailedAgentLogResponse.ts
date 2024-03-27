@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { DetailedAgentLog } from "./DetailedAgentLog";
 
 export const GetDetailedAgentLogResponse: core.serialization.ObjectSchema<
     serializers.GetDetailedAgentLogResponse.Raw,
     Flatfile.GetDetailedAgentLogResponse
 > = core.serialization.object({
-    data: core.serialization.lazyObject(async () => (await import("../../..")).DetailedAgentLog),
+    data: DetailedAgentLog,
 });
 
 export declare namespace GetDetailedAgentLogResponse {
     interface Raw {
-        data: serializers.DetailedAgentLog.Raw;
+        data: DetailedAgentLog.Raw;
     }
 }

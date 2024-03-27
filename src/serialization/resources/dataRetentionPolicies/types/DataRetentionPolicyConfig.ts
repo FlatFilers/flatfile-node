@@ -5,20 +5,22 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { DataRetentionPolicyEnum } from "./DataRetentionPolicyEnum";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
 
 export const DataRetentionPolicyConfig: core.serialization.ObjectSchema<
     serializers.DataRetentionPolicyConfig.Raw,
     Flatfile.DataRetentionPolicyConfig
 > = core.serialization.object({
-    type: core.serialization.lazy(async () => (await import("../../..")).DataRetentionPolicyEnum),
+    type: DataRetentionPolicyEnum,
     period: core.serialization.number(),
-    environmentId: core.serialization.lazy(async () => (await import("../../..")).EnvironmentId),
+    environmentId: EnvironmentId,
 });
 
 export declare namespace DataRetentionPolicyConfig {
     interface Raw {
-        type: serializers.DataRetentionPolicyEnum.Raw;
+        type: DataRetentionPolicyEnum.Raw;
         period: number;
-        environmentId: serializers.EnvironmentId.Raw;
+        environmentId: EnvironmentId.Raw;
     }
 }

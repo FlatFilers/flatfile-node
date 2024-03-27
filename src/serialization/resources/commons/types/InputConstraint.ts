@@ -5,16 +5,17 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { InputConstraintType } from "./InputConstraintType";
 
 export const InputConstraint: core.serialization.ObjectSchema<
     serializers.InputConstraint.Raw,
     Flatfile.InputConstraint
 > = core.serialization.object({
-    type: core.serialization.lazy(async () => (await import("../../..")).InputConstraintType),
+    type: InputConstraintType,
 });
 
 export declare namespace InputConstraint {
     interface Raw {
-        type: serializers.InputConstraintType.Raw;
+        type: InputConstraintType.Raw;
     }
 }
