@@ -57,4 +57,6 @@ export interface Sheet {
     createdAt: Date;
     /** The time the Sheet was locked. */
     lockedAt?: Date;
+    /** The precomputed counts of records in the Sheet (may not exist). */
+    recordCounts?: Flatfile.RecordCounts;
 }

@@ -11,10 +11,12 @@ export const UpdateUserRequest: core.serialization.Schema<
     Flatfile.UpdateUserRequest
 > = core.serialization.object({
     name: core.serialization.string().optional(),
+    dashboard: core.serialization.number().optional(),
 });
 
 export declare namespace UpdateUserRequest {
     interface Raw {
         name?: string | null;
+        dashboard?: number | null;
     }
 }

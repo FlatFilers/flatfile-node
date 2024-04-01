@@ -4,4 +4,5 @@
 
 export interface UpdateUserRequest {
     name?: string;
+    dashboard?: number;
 }

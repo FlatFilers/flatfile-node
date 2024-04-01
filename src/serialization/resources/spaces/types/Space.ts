@@ -9,7 +9,6 @@ import { SpaceId } from "../../commons/types/SpaceId";
 import { UserId } from "../../commons/types/UserId";
 import { SpaceSize } from "./SpaceSize";
 import { GuestAuthenticationEnum } from "../../environments/types/GuestAuthenticationEnum";
-import { AppId } from "../../commons/types/AppId";
 import { InternalSpaceConfigBase } from "./InternalSpaceConfigBase";
 
 export const Space: core.serialization.ObjectSchema<serializers.Space.Raw, Flatfile.Space> = core.serialization
@@ -31,7 +30,6 @@ export const Space: core.serialization.ObjectSchema<serializers.Space.Raw, Flatf
         size: SpaceSize.optional(),
         upgradedAt: core.serialization.date().optional(),
         guestAuthentication: core.serialization.list(GuestAuthenticationEnum),
-        appId: AppId.optional(),
     })
     .extend(InternalSpaceConfigBase);
 
@@ -54,6 +52,5 @@ export declare namespace Space {
         size?: SpaceSize.Raw | null;
         upgradedAt?: string | null;
         guestAuthentication: GuestAuthenticationEnum.Raw[];
-        appId?: AppId.Raw | null;
     }
 }

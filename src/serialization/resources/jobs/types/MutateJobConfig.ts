@@ -19,6 +19,7 @@ export const MutateJobConfig: core.serialization.ObjectSchema<
     sheetId: SheetId,
     mutateRecord: core.serialization.string(),
     mutationId: core.serialization.string().optional(),
+    snapshotLabel: core.serialization.string().optional(),
     filter: Filter.optional(),
     filterField: FilterField.optional(),
     searchValue: SearchValue.optional(),
@@ -32,6 +33,7 @@ export declare namespace MutateJobConfig {
         sheetId: SheetId.Raw;
         mutateRecord: string;
         mutationId?: string | null;
+        snapshotLabel?: string | null;
         filter?: Filter.Raw | null;
         filterField?: FilterField.Raw | null;
         searchValue?: SearchValue.Raw | null;

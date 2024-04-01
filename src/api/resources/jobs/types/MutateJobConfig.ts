@@ -10,6 +10,8 @@ export interface MutateJobConfig {
     mutateRecord: string;
     /** If the mutation was generated through some sort of id-ed process, this links this job and that process. */
     mutationId?: string;
+    /** If specified, a snapshot will be generated with this label */
+    snapshotLabel?: string;
     filter?: Flatfile.Filter;
     filterField?: Flatfile.FilterField;
     searchValue?: Flatfile.SearchValue;

@@ -4,6 +4,8 @@ export * as agents from "./agents";
 export * from "./agents/types";
 export * as apps from "./apps";
 export * from "./apps/types";
+export * as assistant from "./assistant";
+export * from "./assistant/types";
 export * as auth from "./auth";
 export * from "./auth/types";
 export * as cells from "./cells";

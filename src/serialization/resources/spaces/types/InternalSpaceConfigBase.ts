@@ -10,6 +10,7 @@ import { EnvironmentId } from "../../commons/types/EnvironmentId";
 import { WorkbookId } from "../../commons/types/WorkbookId";
 import { Action } from "../../commons/types/Action";
 import { SpaceAccess } from "./SpaceAccess";
+import { AppId } from "../../commons/types/AppId";
 
 export const InternalSpaceConfigBase: core.serialization.ObjectSchema<
     serializers.InternalSpaceConfigBase.Raw,
@@ -27,6 +28,7 @@ export const InternalSpaceConfigBase: core.serialization.ObjectSchema<
     translationsPath: core.serialization.string().optional(),
     languageOverride: core.serialization.string().optional(),
     archivedAt: core.serialization.date().optional(),
+    appId: AppId.optional(),
 });
 
 export declare namespace InternalSpaceConfigBase {
@@ -43,5 +45,6 @@ export declare namespace InternalSpaceConfigBase {
         translationsPath?: string | null;
         languageOverride?: string | null;
         archivedAt?: string | null;
+        appId?: AppId.Raw | null;
     }
 }

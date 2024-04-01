@@ -37,7 +37,7 @@ export interface GetRecordsRequest {
      */
     pageSize?: number;
     /**
-     * Based on pageSize, which page of records to return
+     * Based on pageSize, which page of records to return (Note - numbers start at 1)
      */
     pageNumber?: number;
     /**

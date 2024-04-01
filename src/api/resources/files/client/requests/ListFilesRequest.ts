@@ -11,11 +11,11 @@ import * as Flatfile from "../../../..";
 export interface ListFilesRequest {
     spaceId?: string;
     /**
-     * Number of jobs to return in a page (default 20)
+     * Number of files to return in a page (default 20)
      */
     pageSize?: number;
     /**
-     * Based on pageSize, which page of jobs to return
+     * Based on pageSize, which page of files to return
      */
     pageNumber?: number;
     /**

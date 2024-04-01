@@ -19,4 +19,6 @@ export interface InternalSpaceConfigBase {
     languageOverride?: string;
     /** Date when space was archived */
     archivedAt?: Date;
+    /** The ID of the App that space is associated with */
+    appId?: Flatfile.AppId;
 }

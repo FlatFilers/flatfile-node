@@ -60,7 +60,7 @@ export interface Space extends Flatfile.InternalSpaceConfigBase {
     updatedAt: Date;
     /** Date when space was expired */
     expiredAt?: Date;
-    /** Date that the last activity in the space occurred. This could include any create or update activity in the space like adding a record to a sheet, uploading a new file, or updating the configuration of a workbook. This date is only tracked to the precision of a day. */
+    /** This date marks the most recent activity within the space, tracking actions to the second. Activities include creating or updating records in a sheet, uploading files, or modifying a workbook's configuration. */
     lastActivityAt?: Date;
     /** Guest link to the space */
     guestLink?: string;
@@ -78,6 +78,4 @@ export interface Space extends Flatfile.InternalSpaceConfigBase {
     upgradedAt?: Date;
     /** Type of guest authentication */
     guestAuthentication: Flatfile.GuestAuthenticationEnum[];
-    /** The ID of the App that space is associated with */
-    appId?: Flatfile.AppId;
 }
