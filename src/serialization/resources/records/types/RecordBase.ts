@@ -9,6 +9,7 @@ import { RecordId } from "../../commons/types/RecordId";
 import { VersionId } from "../../commons/types/VersionId";
 import { CommitId } from "../../commons/types/CommitId";
 import { ValidationMessage } from "./ValidationMessage";
+import { RecordConfig } from "./RecordConfig";
 
 export const RecordBase: core.serialization.ObjectSchema<serializers.RecordBase.Raw, Flatfile.RecordBase> =
     core.serialization.object({
@@ -18,6 +19,7 @@ export const RecordBase: core.serialization.ObjectSchema<serializers.RecordBase.
         valid: core.serialization.boolean().optional(),
         messages: core.serialization.list(ValidationMessage).optional(),
         metadata: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
+        config: RecordConfig.optional(),
     });
 
 export declare namespace RecordBase {
@@ -28,5 +30,6 @@ export declare namespace RecordBase {
         valid?: boolean | null;
         messages?: ValidationMessage.Raw[] | null;
         metadata?: Record<string, any> | null;
+        config?: RecordConfig.Raw | null;
     }
 }

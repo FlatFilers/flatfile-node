@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { RecordId } from "../../commons/types/RecordId";
 import { RecordDataWithLinks } from "./RecordDataWithLinks";
 import { ValidationMessage } from "./ValidationMessage";
+import { RecordConfig } from "./RecordConfig";
 import { CellValueWithLinks } from "./CellValueWithLinks";
 
 export const RecordWithLinks: core.serialization.ObjectSchema<
@@ -19,6 +20,7 @@ export const RecordWithLinks: core.serialization.ObjectSchema<
     valid: core.serialization.boolean().optional(),
     messages: core.serialization.list(ValidationMessage).optional(),
     metadata: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
+    config: RecordConfig.optional(),
 });
 
 export declare namespace RecordWithLinks {
@@ -28,5 +30,6 @@ export declare namespace RecordWithLinks {
         valid?: boolean | null;
         messages?: ValidationMessage.Raw[] | null;
         metadata?: Record<string, any> | null;
+        config?: RecordConfig.Raw | null;
     }
 }

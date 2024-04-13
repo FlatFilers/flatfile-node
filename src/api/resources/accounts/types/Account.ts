@@ -29,4 +29,5 @@ export interface Account {
     createdAt: Date;
     updatedAt: Date;
     defaultAppId?: Flatfile.AppId;
+    dashboard?: number;
 }

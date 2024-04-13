@@ -30,7 +30,8 @@ import * as Flatfile from "../../..";
  *             }
  *         },
  *         valid: true,
- *         metadata: {}
+ *         metadata: {},
+ *         config: {}
  *     }
  */
 export interface Record_ extends Flatfile.RecordBase {

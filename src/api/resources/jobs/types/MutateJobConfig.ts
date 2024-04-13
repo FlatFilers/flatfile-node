@@ -12,6 +12,8 @@ export interface MutateJobConfig {
     mutationId?: string;
     /** If specified, a snapshot will be generated with this label */
     snapshotLabel?: string;
+    /** The generated snapshotId will be stored here */
+    snapshotId?: string;
     filter?: Flatfile.Filter;
     filterField?: Flatfile.FilterField;
     searchValue?: Flatfile.SearchValue;

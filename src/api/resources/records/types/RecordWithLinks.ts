@@ -31,7 +31,8 @@ import * as Flatfile from "../../..";
  *             }
  *         },
  *         valid: true,
- *         metadata: {}
+ *         metadata: {},
+ *         config: {}
  *     }
  *
  * @example
@@ -58,7 +59,8 @@ import * as Flatfile from "../../..";
  *             }
  *         },
  *         valid: true,
- *         metadata: {}
+ *         metadata: {},
+ *         config: {}
  *     }
  */
 export interface RecordWithLinks {
@@ -67,4 +69,5 @@ export interface RecordWithLinks {
     valid?: boolean;
     messages?: Flatfile.ValidationMessage[];
     metadata?: Record<string, any>;
+    config?: Flatfile.RecordConfig;
 }

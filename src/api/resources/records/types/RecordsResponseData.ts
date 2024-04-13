@@ -30,7 +30,8 @@ import * as Flatfile from "../../..";
  *                     }
  *                 },
  *                 valid: true,
- *                 metadata: {}
+ *                 metadata: {},
+ *                 config: {}
  *             }],
  *         counts: {
  *             valid: 1000,

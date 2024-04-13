@@ -4,4 +4,14 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     "us_usr_YOUR_ID"
+ *
+ * @example
+ *     "us_ag_YOUR_ID"
+ *
+ * @example
+ *     "us_g_YOUR_ID"
+ */
 export type ActorIdUnion = Flatfile.UserId | Flatfile.AgentId | Flatfile.GuestId;

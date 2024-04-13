@@ -16,6 +16,8 @@ export * from "./CellValue";
 export * from "./CellValueUnion";
 export * from "./DiffRecordsResponse";
 export * from "./DiffRecords";
+export * from "./RecordConfig";
+export * from "./CellConfig";
 export * from "./DiffRecord";
 export * from "./DiffData";
 export * from "./DiffValue";

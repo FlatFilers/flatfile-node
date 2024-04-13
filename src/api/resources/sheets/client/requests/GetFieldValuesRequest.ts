@@ -7,6 +7,7 @@ import * as Flatfile from "../../../..";
 /**
  * @example
  *     {
+ *         distinct: true,
  *         fieldKey: "firstName",
  *         sortField: "firstName",
  *         sortDirection: Flatfile.SortDirection.Asc,
@@ -30,7 +31,10 @@ export interface GetFieldValuesRequest {
      * Based on pageSize, which page of records to return
      */
     pageNumber?: Flatfile.PageNumber;
-    distinct?: Flatfile.Distinct;
+    /**
+     * Must be set to true
+     */
+    distinct: Flatfile.Distinct;
     includeCounts?: Flatfile.IncludeCounts;
     /**
      * A value to find for a given field in a sheet. Wrap the value in "" for exact match

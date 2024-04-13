@@ -24,4 +24,5 @@ export interface RecordBase {
     /** This record level `messages` property is deprecated and no longer stored or used. Use the `messages` property on the individual cell values instead. This property will be removed in a future release. */
     messages?: Flatfile.ValidationMessage[];
     metadata?: Record<string, any>;
+    config?: Flatfile.RecordConfig;
 }

@@ -1,5 +1,7 @@
 export * from "./ListUsersResponse";
 export * from "./UserResponse";
+export * from "./UserWithRolesResponse";
+export * from "./UserWithRoles";
 export * from "./User";
 export * from "./UserConfig";
 export * from "./UserCreateAndInviteRequest";

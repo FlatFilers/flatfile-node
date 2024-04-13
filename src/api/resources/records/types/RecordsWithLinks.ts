@@ -31,7 +31,8 @@ import * as Flatfile from "../../..";
  *                 }
  *             },
  *             valid: true,
- *             metadata: {}
+ *             metadata: {},
+ *             config: {}
  *         }]
  */
 export type RecordsWithLinks = Flatfile.RecordWithLinks[];

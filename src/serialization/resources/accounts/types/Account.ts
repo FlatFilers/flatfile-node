@@ -22,6 +22,7 @@ export const Account: core.serialization.ObjectSchema<serializers.Account.Raw, F
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
         defaultAppId: AppId.optional(),
+        dashboard: core.serialization.number().optional(),
     });
 
 export declare namespace Account {
@@ -38,5 +39,6 @@ export declare namespace Account {
         createdAt: string;
         updatedAt: string;
         defaultAppId?: AppId.Raw | null;
+        dashboard?: number | null;
     }
 }
