@@ -12,6 +12,7 @@ export interface BaseProperty {
     description?: string;
     constraints?: Flatfile.Constraint[];
     readonly?: boolean;
+    appearance?: Flatfile.FieldAppearance;
     /** Useful for any contextual metadata regarding the schema. Store any valid json here. */
     metadata?: any;
     /** A unique presentation for a field in the UI. */

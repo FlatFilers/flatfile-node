@@ -19,3 +19,5 @@ export * from "./ExternalConstraint";
 export * from "./UniqueConstraintConfig";
 export * from "./StringConfig";
 export * from "./StringConfigOptions";
+export * from "./FieldAppearance";
+export * from "./FieldSize";
