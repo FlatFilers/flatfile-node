@@ -9,7 +9,7 @@ import urlJoin from "url-join";
 import * as serializers from "../../../../serialization";
 import * as errors from "../../../../errors";
 
-export declare namespace Assistant {
+export declare namespace Views {
     interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
@@ -22,33 +22,30 @@ export declare namespace Assistant {
     }
 }
 
-export class Assistant {
-    constructor(protected readonly _options: Assistant.Options = {}) {}
+export class Views {
+    constructor(protected readonly _options: Views.Options = {}) {}
 
     /**
-     * Returns prompts created by user
+     * Returns all views for user and sheet
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.assistant.list()
+     *     await flatfile.views.list({
+     *         sheetId: "us_sh_YOUR_ID"
+     *     })
      */
     public async list(
-        request: Flatfile.ListPromptsRequest = {},
-        requestOptions?: Assistant.RequestOptions
-    ): Promise<Flatfile.PromptsResponse> {
-        const { pageSize, pageNumber } = request;
+        request: Flatfile.ListViewsRequest,
+        requestOptions?: Views.RequestOptions
+    ): Promise<Flatfile.ListViewsResponse> {
+        const { sheetId } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
-        if (pageSize != null) {
-            _queryParams["pageSize"] = pageSize.toString();
-        }
-
-        if (pageNumber != null) {
-            _queryParams["pageNumber"] = pageNumber.toString();
-        }
-
+        _queryParams["sheetId"] = sheetId;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/prompts"
+                "/views"
             ),
             method: "GET",
             headers: {
@@ -66,7 +63,7 @@ export class Assistant {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.PromptsResponse.parseOrThrow(_response.body, {
+            return await serializers.ListViewsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -76,10 +73,33 @@ export class Assistant {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.FlatfileError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -98,19 +118,115 @@ export class Assistant {
     }
 
     /**
-     * Returns a prompt
+     * Add a new view to the space
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.assistant.get("us_pr_YOUR_ID")
+     *     await flatfile.views.create({
+     *         sheetId: "us_sh_YOUR_ID",
+     *         name: "My View",
+     *         config: {
+     *             filter: Flatfile.Filter.Error,
+     *             filterField: "email",
+     *             q: "firstname like %John%",
+     *             sortField: "email",
+     *             sortDirection: Flatfile.SortDirection.Asc
+     *         }
+     *     })
      */
-    public async get(
-        promptId: Flatfile.PromptId,
-        requestOptions?: Assistant.RequestOptions
-    ): Promise<Flatfile.PromptResponse> {
+    public async create(
+        request: Flatfile.ViewCreate,
+        requestOptions?: Views.RequestOptions
+    ): Promise<Flatfile.ViewResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/prompts/${await serializers.PromptId.jsonOrThrow(promptId)}`
+                "/views"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.8.4",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            body: await serializers.ViewCreate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.ViewResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Returns a single view
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await flatfile.views.get("us_vi_YOUR_ID")
+     */
+    public async get(viewId: Flatfile.ViewId, requestOptions?: Views.RequestOptions): Promise<Flatfile.ViewResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `/views/${await serializers.ViewId.jsonOrThrow(viewId)}`
             ),
             method: "GET",
             headers: {
@@ -127,7 +243,7 @@ export class Assistant {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.PromptResponse.parseOrThrow(_response.body, {
+            return await serializers.ViewResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -137,10 +253,33 @@ export class Assistant {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.FlatfileError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -159,22 +298,31 @@ export class Assistant {
     }
 
     /**
-     * Updates a prompt
+     * Updates a single view
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.assistant.update("us_pr_YOUR_ID", {
-     *         prompt: "Combine first name and last name into a new column called Full Name"
+     *     await flatfile.views.update("us_vi_YOUR_ID", {
+     *         name: "My View",
+     *         config: {
+     *             filter: Flatfile.Filter.Error,
+     *             filterField: "email",
+     *             q: "firstname like %John%",
+     *             sortField: "email",
+     *             sortDirection: Flatfile.SortDirection.Asc
+     *         }
      *     })
      */
     public async update(
-        promptId: Flatfile.PromptId,
-        request: Flatfile.PromptPatch,
-        requestOptions?: Assistant.RequestOptions
-    ): Promise<Flatfile.PromptResponse> {
+        viewId: Flatfile.ViewId,
+        request: Flatfile.ViewUpdate,
+        requestOptions?: Views.RequestOptions
+    ): Promise<Flatfile.ViewResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/prompts/${await serializers.PromptId.jsonOrThrow(promptId)}`
+                `/views/${await serializers.ViewId.jsonOrThrow(viewId)}`
             ),
             method: "PATCH",
             headers: {
@@ -187,12 +335,12 @@ export class Assistant {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.PromptPatch.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: await serializers.ViewUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.PromptResponse.parseOrThrow(_response.body, {
+            return await serializers.ViewResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -202,10 +350,33 @@ export class Assistant {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.FlatfileError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        })
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
         }
 
         switch (_response.error.reason) {
@@ -224,83 +395,16 @@ export class Assistant {
     }
 
     /**
-     * Creates a prompt
+     * Deletes a single view
      *
      * @example
-     *     await flatfile.assistant.create({
-     *         prompt: "Combine first name and last name into a new column called Full Name"
-     *     })
+     *     await flatfile.views.delete("us_vi_YOUR_ID")
      */
-    public async create(
-        request: Flatfile.PromptCreate,
-        requestOptions?: Assistant.RequestOptions
-    ): Promise<Flatfile.PromptResponse> {
+    public async delete(viewId: Flatfile.ViewId, requestOptions?: Views.RequestOptions): Promise<Flatfile.Success> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/prompts"
-            ),
-            method: "POST",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.8.4",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-            },
-            contentType: "application/json",
-            body: await serializers.PromptCreate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-        });
-        if (_response.ok) {
-            return await serializers.PromptResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.FlatfileError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-            });
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.FlatfileError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.FlatfileTimeoutError();
-            case "unknown":
-                throw new errors.FlatfileError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
-     * Deletes a prompts
-     *
-     * @example
-     *     await flatfile.assistant.delete("us_pr_YOUR_ID")
-     */
-    public async delete(
-        promptId: Flatfile.PromptId,
-        requestOptions?: Assistant.RequestOptions
-    ): Promise<Flatfile.Success> {
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/prompts/${await serializers.PromptId.jsonOrThrow(promptId)}`
+                `/views/${await serializers.ViewId.jsonOrThrow(viewId)}`
             ),
             method: "DELETE",
             headers: {

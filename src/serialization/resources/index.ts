@@ -52,6 +52,8 @@ export * as users from "./users";
 export * from "./users/types";
 export * as versions from "./versions";
 export * from "./versions/types";
+export * as views from "./views";
+export * from "./views/types";
 export * as workbooks from "./workbooks";
 export * from "./workbooks/types";
 export * from "./files/client/requests";

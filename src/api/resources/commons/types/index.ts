@@ -23,6 +23,7 @@ export * from "./MappingId";
 export * from "./ProgramId";
 export * from "./FamilyId";
 export * from "./PromptId";
+export * from "./ViewId";
 export * from "./DataRetentionPolicyId";
 export * from "./Pagination";
 export * from "./PageSize";

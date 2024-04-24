@@ -29,6 +29,7 @@ import { Snapshots } from "./api/resources/snapshots/client/Client";
 import { Spaces } from "./api/resources/spaces/client/Client";
 import { Users } from "./api/resources/users/client/Client";
 import { Versions } from "./api/resources/versions/client/Client";
+import { Views } from "./api/resources/views/client/Client";
 import { Workbooks } from "./api/resources/workbooks/client/Client";
 
 export declare namespace FlatfileClient {
@@ -195,6 +196,12 @@ export class FlatfileClient {
 
     public get versions(): Versions {
         return (this._versions ??= new Versions(this._options));
+    }
+
+    protected _views: Views | undefined;
+
+    public get views(): Views {
+        return (this._views ??= new Views(this._options));
     }
 
     protected _workbooks: Workbooks | undefined;
