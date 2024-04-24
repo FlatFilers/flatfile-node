@@ -4,6 +4,8 @@ export * from "./Space";
 export * from "./SpaceSize";
 export * from "./SpaceConfig";
 export * from "./InternalSpaceConfigBase";
+export * from "./SpaceSettings";
+export * from "./SpaceSidebarConfig";
 export * from "./UpgradeSpaceConfig";
 export * from "./EventTokenResponse";
 export * from "./EventToken";

@@ -10,6 +10,8 @@ export interface InternalSpaceConfigBase {
     primaryWorkbookId?: Flatfile.WorkbookId;
     /** Metadata for the space */
     metadata?: any;
+    /** The Space settings. */
+    settings?: Flatfile.SpaceSettings;
     actions?: Flatfile.Action[];
     access?: Flatfile.SpaceAccess[];
     autoConfigure?: boolean;

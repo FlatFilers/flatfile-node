@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { SpaceConfigId } from "../../commons/types/SpaceConfigId";
 import { EnvironmentId } from "../../commons/types/EnvironmentId";
 import { WorkbookId } from "../../commons/types/WorkbookId";
+import { SpaceSettings } from "./SpaceSettings";
 import { Action } from "../../commons/types/Action";
 import { SpaceAccess } from "./SpaceAccess";
 import { AppId } from "../../commons/types/AppId";
@@ -20,6 +21,7 @@ export const InternalSpaceConfigBase: core.serialization.ObjectSchema<
     environmentId: EnvironmentId.optional(),
     primaryWorkbookId: WorkbookId.optional(),
     metadata: core.serialization.any().optional(),
+    settings: SpaceSettings.optional(),
     actions: core.serialization.list(Action).optional(),
     access: core.serialization.list(SpaceAccess).optional(),
     autoConfigure: core.serialization.boolean().optional(),
@@ -37,6 +39,7 @@ export declare namespace InternalSpaceConfigBase {
         environmentId?: EnvironmentId.Raw | null;
         primaryWorkbookId?: WorkbookId.Raw | null;
         metadata?: any | null;
+        settings?: SpaceSettings.Raw | null;
         actions?: Action.Raw[] | null;
         access?: SpaceAccess.Raw[] | null;
         autoConfigure?: boolean | null;

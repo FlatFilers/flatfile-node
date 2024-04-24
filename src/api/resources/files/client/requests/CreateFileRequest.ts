@@ -11,4 +11,6 @@ export interface CreateFileRequest {
     mode?: Flatfile.Mode;
     /** The actions attached to the file */
     actions?: Flatfile.Action[];
+    /** The origin of the file, ie filesystem */
+    origin?: Flatfile.FileOrigin;
 }

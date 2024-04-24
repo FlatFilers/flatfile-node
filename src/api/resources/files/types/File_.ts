@@ -67,4 +67,5 @@ export interface File_ {
     workbookId?: Flatfile.WorkbookId;
     sheetId?: Flatfile.SheetId;
     actions?: Flatfile.Action[];
+    origin?: Flatfile.FileOrigin;
 }
