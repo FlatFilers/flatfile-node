@@ -11,6 +11,8 @@ import { BooleanProperty } from "./BooleanProperty";
 import { DateProperty } from "./DateProperty";
 import { EnumProperty } from "./EnumProperty";
 import { ReferenceProperty } from "./ReferenceProperty";
+import { StringListProperty } from "./StringListProperty";
+import { EnumListProperty } from "./EnumListProperty";
 
 export const Property: core.serialization.Schema<serializers.Property.Raw, Flatfile.Property> = core.serialization
     .union("type", {
@@ -20,6 +22,8 @@ export const Property: core.serialization.Schema<serializers.Property.Raw, Flatf
         date: DateProperty,
         enum: EnumProperty,
         reference: ReferenceProperty,
+        "string-list": StringListProperty,
+        "enum-list": EnumListProperty,
     })
     .transform<Flatfile.Property>({
         transform: (value) => value,
@@ -33,7 +37,9 @@ export declare namespace Property {
         | Property.Boolean
         | Property.Date
         | Property.Enum
-        | Property.Reference;
+        | Property.Reference
+        | Property.StringList
+        | Property.EnumList;
 
     interface String extends StringProperty.Raw {
         type: "string";
@@ -57,5 +63,13 @@ export declare namespace Property {
 
     interface Reference extends ReferenceProperty.Raw {
         type: "reference";
+    }
+
+    interface StringList extends StringListProperty.Raw {
+        type: "string-list";
+    }
+
+    interface EnumList extends EnumListProperty.Raw {
+        type: "enum-list";
     }
 }

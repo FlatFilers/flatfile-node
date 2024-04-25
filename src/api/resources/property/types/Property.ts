@@ -128,7 +128,9 @@ export type Property =
     | Flatfile.Property.Boolean
     | Flatfile.Property.Date_
     | Flatfile.Property.Enum
-    | Flatfile.Property.Reference;
+    | Flatfile.Property.Reference
+    | Flatfile.Property.StringList
+    | Flatfile.Property.EnumList;
 
 export declare namespace Property {
     interface String extends Flatfile.StringProperty {
@@ -153,5 +155,13 @@ export declare namespace Property {
 
     interface Reference extends Flatfile.ReferenceProperty {
         type: "reference";
+    }
+
+    interface StringList extends Flatfile.StringListProperty {
+        type: "string-list";
+    }
+
+    interface EnumList extends Flatfile.EnumListProperty {
+        type: "enum-list";
     }
 }
