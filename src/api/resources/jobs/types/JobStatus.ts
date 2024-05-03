@@ -28,7 +28,8 @@ export type JobStatus =
     | "executing"
     | "complete"
     | "failed"
-    | "canceled";
+    | "canceled"
+    | "waiting";
 
 export const JobStatus = {
     Created: "created",
@@ -39,4 +40,5 @@ export const JobStatus = {
     Complete: "complete",
     Failed: "failed",
     Canceled: "canceled",
+    Waiting: "waiting",
 } as const;

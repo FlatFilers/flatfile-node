@@ -31,6 +31,8 @@ export * from "./JobOutcomeNext";
 export * from "./JobOutcomeNextId";
 export * from "./JobOutcomeNextUrl";
 export * from "./JobOutcomeNextDownload";
+export * from "./JobOutcomeNextFileObject";
+export * from "./JobOutcomeNextFiles";
 export * from "./JobOutcomeNextWait";
 export * from "./JobOutcomeNextRetry";
 export * from "./JobOutcomeNextSnapshot";

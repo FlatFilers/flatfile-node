@@ -40,6 +40,7 @@ export const JobConfig: core.serialization.ObjectSchema<serializers.JobConfig.Ra
         partData: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
         partExecution: JobPartExecution.optional(),
         parentId: JobId.optional(),
+        predecessorIds: core.serialization.list(JobId).optional(),
     });
 
 export declare namespace JobConfig {
@@ -64,5 +65,6 @@ export declare namespace JobConfig {
         partData?: Record<string, any> | null;
         partExecution?: JobPartExecution.Raw | null;
         parentId?: JobId.Raw | null;
+        predecessorIds?: JobId.Raw[] | null;
     }
 }

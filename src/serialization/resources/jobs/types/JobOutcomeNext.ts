@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { JobOutcomeNextId } from "./JobOutcomeNextId";
 import { JobOutcomeNextUrl } from "./JobOutcomeNextUrl";
 import { JobOutcomeNextDownload } from "./JobOutcomeNextDownload";
+import { JobOutcomeNextFiles } from "./JobOutcomeNextFiles";
 import { JobOutcomeNextWait } from "./JobOutcomeNextWait";
 import { JobOutcomeNextSnapshot } from "./JobOutcomeNextSnapshot";
 import { JobOutcomeNextRetry } from "./JobOutcomeNextRetry";
@@ -18,6 +19,7 @@ export const JobOutcomeNext: core.serialization.Schema<serializers.JobOutcomeNex
             id: JobOutcomeNextId,
             url: JobOutcomeNextUrl,
             download: JobOutcomeNextDownload,
+            files: JobOutcomeNextFiles,
             wait: JobOutcomeNextWait,
             snapshot: JobOutcomeNextSnapshot,
             retry: JobOutcomeNextRetry,
@@ -32,6 +34,7 @@ export declare namespace JobOutcomeNext {
         | JobOutcomeNext.Id
         | JobOutcomeNext.Url
         | JobOutcomeNext.Download
+        | JobOutcomeNext.Files
         | JobOutcomeNext.Wait
         | JobOutcomeNext.Snapshot
         | JobOutcomeNext.Retry;
@@ -46,6 +49,10 @@ export declare namespace JobOutcomeNext {
 
     interface Download extends JobOutcomeNextDownload.Raw {
         type: "download";
+    }
+
+    interface Files extends JobOutcomeNextFiles.Raw {
+        type: "files";
     }
 
     interface Wait extends JobOutcomeNextWait.Raw {

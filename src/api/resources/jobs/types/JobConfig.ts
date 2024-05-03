@@ -51,4 +51,6 @@ export interface JobConfig {
     partExecution?: Flatfile.JobPartExecution;
     /** The id of the parent job */
     parentId?: Flatfile.JobId;
+    /** The ids of the jobs that must complete before this job can start */
+    predecessorIds?: Flatfile.JobId[];
 }

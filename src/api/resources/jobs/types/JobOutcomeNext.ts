@@ -15,6 +15,7 @@ export type JobOutcomeNext =
     | Flatfile.JobOutcomeNext.Id
     | Flatfile.JobOutcomeNext.Url
     | Flatfile.JobOutcomeNext.Download
+    | Flatfile.JobOutcomeNext.Files
     | Flatfile.JobOutcomeNext.Wait
     | Flatfile.JobOutcomeNext.Snapshot
     | Flatfile.JobOutcomeNext.Retry;
@@ -30,6 +31,10 @@ export declare namespace JobOutcomeNext {
 
     interface Download extends Flatfile.JobOutcomeNextDownload {
         type: "download";
+    }
+
+    interface Files extends Flatfile.JobOutcomeNextFiles {
+        type: "files";
     }
 
     interface Wait extends Flatfile.JobOutcomeNextWait {

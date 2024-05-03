@@ -15,4 +15,12 @@ export interface ListViewsRequest {
      * The associated sheet ID of the view.
      */
     sheetId: Flatfile.SheetId;
+    /**
+     * Number of prompts to return in a page (default 10)
+     */
+    pageSize?: number;
+    /**
+     * Based on pageSize, which page of prompts to return
+     */
+    pageNumber?: number;
 }

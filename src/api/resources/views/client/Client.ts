@@ -26,7 +26,7 @@ export class Views {
     constructor(protected readonly _options: Views.Options = {}) {}
 
     /**
-     * Returns all views for user and sheet
+     * Returns all views for the sheet
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      *
@@ -39,9 +39,17 @@ export class Views {
         request: Flatfile.ListViewsRequest,
         requestOptions?: Views.RequestOptions
     ): Promise<Flatfile.ListViewsResponse> {
-        const { sheetId } = request;
+        const { sheetId, pageSize, pageNumber } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["sheetId"] = sheetId;
+        if (pageSize != null) {
+            _queryParams["pageSize"] = pageSize.toString();
+        }
+
+        if (pageNumber != null) {
+            _queryParams["pageNumber"] = pageNumber.toString();
+        }
+
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -53,7 +61,7 @@ export class Views {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.8.5",
+                "X-Fern-SDK-Version": "1.8.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -150,7 +158,7 @@ export class Views {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.8.5",
+                "X-Fern-SDK-Version": "1.8.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -234,7 +242,7 @@ export class Views {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.8.5",
+                "X-Fern-SDK-Version": "1.8.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -330,7 +338,7 @@ export class Views {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.8.5",
+                "X-Fern-SDK-Version": "1.8.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -412,7 +420,7 @@ export class Views {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.8.5",
+                "X-Fern-SDK-Version": "1.8.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

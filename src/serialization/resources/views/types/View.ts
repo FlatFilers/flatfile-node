@@ -14,6 +14,7 @@ export const View: core.serialization.ObjectSchema<serializers.View.Raw, Flatfil
     sheetId: SheetId,
     name: core.serialization.string(),
     config: ViewConfig,
+    createdBy: core.serialization.string(),
 });
 
 export declare namespace View {
@@ -22,5 +23,6 @@ export declare namespace View {
         sheetId: SheetId.Raw;
         name: string;
         config: ViewConfig.Raw;
+        createdBy: string;
     }
 }

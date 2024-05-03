@@ -18,7 +18,8 @@ import * as Flatfile from "../../..";
  *             q: "firstname like %John%",
  *             sortField: "email",
  *             sortDirection: Flatfile.SortDirection.Asc
- *         }
+ *         },
+ *         createdBy: "us_usr_YOUR_ID"
  *     }
  */
 export interface View {
@@ -30,4 +31,6 @@ export interface View {
     name: string;
     /** The view filters of the view */
     config: Flatfile.ViewConfig;
+    /** ID of the actor who created the view */
+    createdBy: string;
 }

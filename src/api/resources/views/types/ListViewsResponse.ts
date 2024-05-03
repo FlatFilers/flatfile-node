@@ -17,7 +17,8 @@ import * as Flatfile from "../../..";
  *                     q: "firstname like %John%",
  *                     sortField: "email",
  *                     sortDirection: Flatfile.SortDirection.Asc
- *                 }
+ *                 },
+ *                 createdBy: "us_usr_YOUR_ID"
  *             }],
  *         pagination: {
  *             currentPage: 3,

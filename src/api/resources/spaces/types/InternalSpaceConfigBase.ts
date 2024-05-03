@@ -7,6 +7,7 @@ import * as Flatfile from "../../..";
 export interface InternalSpaceConfigBase {
     spaceConfigId?: Flatfile.SpaceConfigId;
     environmentId?: Flatfile.EnvironmentId;
+    /** The ID of the primary workbook for the space. This should not be included in create space requests. */
     primaryWorkbookId?: Flatfile.WorkbookId;
     /** Metadata for the space */
     metadata?: any;

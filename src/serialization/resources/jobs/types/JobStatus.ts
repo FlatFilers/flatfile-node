@@ -16,8 +16,18 @@ export const JobStatus: core.serialization.Schema<serializers.JobStatus.Raw, Fla
         "complete",
         "failed",
         "canceled",
+        "waiting",
     ]);
 
 export declare namespace JobStatus {
-    type Raw = "created" | "planning" | "scheduled" | "ready" | "executing" | "complete" | "failed" | "canceled";
+    type Raw =
+        | "created"
+        | "planning"
+        | "scheduled"
+        | "ready"
+        | "executing"
+        | "complete"
+        | "failed"
+        | "canceled"
+        | "waiting";
 }
