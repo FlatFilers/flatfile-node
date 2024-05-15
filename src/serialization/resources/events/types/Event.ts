@@ -56,6 +56,9 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "secret:updated": GenericEvent,
         "secret:deleted": GenericEvent,
         "layer:created": GenericEvent,
+        "environment:created": GenericEvent,
+        "environment:updated": GenericEvent,
+        "environment:deleted": GenericEvent,
     })
     .transform<Flatfile.Event>({
         transform: (value) => value,
@@ -110,7 +113,10 @@ export declare namespace Event {
         | Event.SecretCreated
         | Event.SecretUpdated
         | Event.SecretDeleted
-        | Event.LayerCreated;
+        | Event.LayerCreated
+        | Event.EnvironmentCreated
+        | Event.EnvironmentUpdated
+        | Event.EnvironmentDeleted;
 
     interface AgentCreated extends GenericEvent.Raw {
         topic: "agent:created";
@@ -298,5 +304,17 @@ export declare namespace Event {
 
     interface LayerCreated extends GenericEvent.Raw {
         topic: "layer:created";
+    }
+
+    interface EnvironmentCreated extends GenericEvent.Raw {
+        topic: "environment:created";
+    }
+
+    interface EnvironmentUpdated extends GenericEvent.Raw {
+        topic: "environment:updated";
+    }
+
+    interface EnvironmentDeleted extends GenericEvent.Raw {
+        topic: "environment:deleted";
     }
 }

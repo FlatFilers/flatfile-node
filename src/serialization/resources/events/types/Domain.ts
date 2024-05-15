@@ -16,8 +16,19 @@ export const Domain: core.serialization.Schema<serializers.Domain.Raw, Flatfile.
     "program",
     "secret",
     "cron",
+    "environment",
 ]);
 
 export declare namespace Domain {
-    type Raw = "file" | "space" | "workbook" | "job" | "document" | "sheet" | "program" | "secret" | "cron";
+    type Raw =
+        | "file"
+        | "space"
+        | "workbook"
+        | "job"
+        | "document"
+        | "sheet"
+        | "program"
+        | "secret"
+        | "cron"
+        | "environment";
 }

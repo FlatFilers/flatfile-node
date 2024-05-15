@@ -78,7 +78,10 @@ export type Event =
     | Flatfile.Event.SecretCreated
     | Flatfile.Event.SecretUpdated
     | Flatfile.Event.SecretDeleted
-    | Flatfile.Event.LayerCreated;
+    | Flatfile.Event.LayerCreated
+    | Flatfile.Event.EnvironmentCreated
+    | Flatfile.Event.EnvironmentUpdated
+    | Flatfile.Event.EnvironmentDeleted;
 
 export declare namespace Event {
     interface AgentCreated extends Flatfile.GenericEvent {
@@ -267,5 +270,17 @@ export declare namespace Event {
 
     interface LayerCreated extends Flatfile.GenericEvent {
         topic: "layer:created";
+    }
+
+    interface EnvironmentCreated extends Flatfile.GenericEvent {
+        topic: "environment:created";
+    }
+
+    interface EnvironmentUpdated extends Flatfile.GenericEvent {
+        topic: "environment:updated";
+    }
+
+    interface EnvironmentDeleted extends Flatfile.GenericEvent {
+        topic: "environment:deleted";
     }
 }

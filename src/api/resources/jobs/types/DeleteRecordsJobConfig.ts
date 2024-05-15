@@ -8,7 +8,9 @@ import * as Flatfile from "../../..";
  * The configuration for a delete job
  */
 export interface DeleteRecordsJobConfig {
+    /** Options to filter records (default=none) */
     filter?: Flatfile.Filter;
+    /** Use this to narrow the valid/error filter results to a specific field (Requires filter to be set) */
     filterField?: Flatfile.FilterField;
     searchValue?: Flatfile.SearchValue;
     searchField?: Flatfile.SearchField;

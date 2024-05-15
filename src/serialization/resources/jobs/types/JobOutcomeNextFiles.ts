@@ -11,13 +11,13 @@ export const JobOutcomeNextFiles: core.serialization.ObjectSchema<
     serializers.JobOutcomeNextFiles.Raw,
     Flatfile.JobOutcomeNextFiles
 > = core.serialization.object({
-    file: core.serialization.list(JobOutcomeNextFileObject),
+    files: core.serialization.list(JobOutcomeNextFileObject),
     label: core.serialization.string().optional(),
 });
 
 export declare namespace JobOutcomeNextFiles {
     interface Raw {
-        file: JobOutcomeNextFileObject.Raw[];
+        files: JobOutcomeNextFileObject.Raw[];
         label?: string | null;
     }
 }

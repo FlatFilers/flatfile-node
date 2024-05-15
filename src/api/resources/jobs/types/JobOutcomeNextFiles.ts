@@ -5,6 +5,6 @@
 import * as Flatfile from "../../..";
 
 export interface JobOutcomeNextFiles {
-    file: Flatfile.JobOutcomeNextFileObject[];
+    files: Flatfile.JobOutcomeNextFileObject[];
     label?: string;
 }
