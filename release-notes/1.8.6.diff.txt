@@ -1,0 +1,636 @@
+diff --git a/package.json b/package.json
+index 61ac2fc..e604a3a 100644
+--- a/package.json
++++ b/package.json
+@@ -2,3 +2,3 @@
+     "name": "@flatfile/api",
+-    "version": "1.8.5",
++    "version": "1.8.6",
+     "private": false,
+diff --git a/src/api/resources/accounts/client/Client.ts b/src/api/resources/accounts/client/Client.ts
+index b32a5d2..c313257 100644
+--- a/src/api/resources/accounts/client/Client.ts
++++ b/src/api/resources/accounts/client/Client.ts
+@@ -45,3 +45,3 @@ export class Accounts {
+@@ -108,3 +108,3 @@ export class Accounts {
+diff --git a/src/api/resources/agents/client/Client.ts b/src/api/resources/agents/client/Client.ts
+index e883196..88f0903 100644
+--- a/src/api/resources/agents/client/Client.ts
++++ b/src/api/resources/agents/client/Client.ts
+@@ -45,3 +45,3 @@ export class Agents {
+diff --git a/src/api/resources/apps/client/Client.ts b/src/api/resources/apps/client/Client.ts
+index d35087e..b982b95 100644
+--- a/src/api/resources/apps/client/Client.ts
++++ b/src/api/resources/apps/client/Client.ts
+@@ -42,3 +42,3 @@ export class Apps {
+@@ -100,3 +100,3 @@ export class Apps {
+@@ -171,3 +171,3 @@ export class Apps {
+@@ -243,3 +243,3 @@ export class Apps {
+diff --git a/src/api/resources/assistant/client/Client.ts b/src/api/resources/assistant/client/Client.ts
+index 577e66d..995785f 100644
+--- a/src/api/resources/assistant/client/Client.ts
++++ b/src/api/resources/assistant/client/Client.ts
+@@ -58,3 +58,3 @@ export class Assistant {
+@@ -120,3 +120,3 @@ export class Assistant {
+@@ -184,3 +184,3 @@ export class Assistant {
+@@ -248,3 +248,3 @@ export class Assistant {
+@@ -310,3 +310,3 @@ export class Assistant {
+diff --git a/src/api/resources/auth/client/Client.ts b/src/api/resources/auth/client/Client.ts
+index 7b1f9af..57136cc 100644
+--- a/src/api/resources/auth/client/Client.ts
++++ b/src/api/resources/auth/client/Client.ts
+@@ -54,3 +54,3 @@ export class Auth {
+@@ -145,3 +145,3 @@ export class Auth {
+@@ -238,3 +238,3 @@ export class Auth {
+@@ -331,3 +331,3 @@ export class Auth {
+diff --git a/src/api/resources/cells/client/Client.ts b/src/api/resources/cells/client/Client.ts
+index 8663f69..20c64e3 100644
+--- a/src/api/resources/cells/client/Client.ts
++++ b/src/api/resources/cells/client/Client.ts
+@@ -107,3 +107,3 @@ export class Cells {
+diff --git a/src/api/resources/commits/client/Client.ts b/src/api/resources/commits/client/Client.ts
+index 32a5667..d3dc976 100644
+--- a/src/api/resources/commits/client/Client.ts
++++ b/src/api/resources/commits/client/Client.ts
+@@ -50,3 +50,3 @@ export class Commits {
+@@ -133,3 +133,3 @@ export class Commits {
+@@ -216,3 +216,3 @@ export class Commits {
+diff --git a/src/api/resources/dataRetentionPolicies/client/Client.ts b/src/api/resources/dataRetentionPolicies/client/Client.ts
+index c108c10..2550605 100644
+--- a/src/api/resources/dataRetentionPolicies/client/Client.ts
++++ b/src/api/resources/dataRetentionPolicies/client/Client.ts
+@@ -58,3 +58,3 @@ export class DataRetentionPolicies {
+@@ -149,3 +149,3 @@ export class DataRetentionPolicies {
+@@ -236,3 +236,3 @@ export class DataRetentionPolicies {
+@@ -327,3 +327,3 @@ export class DataRetentionPolicies {
+@@ -411,3 +411,3 @@ export class DataRetentionPolicies {
+diff --git a/src/api/resources/documents/client/Client.ts b/src/api/resources/documents/client/Client.ts
+index bdeac39..b4ee9a0 100644
+--- a/src/api/resources/documents/client/Client.ts
++++ b/src/api/resources/documents/client/Client.ts
+@@ -50,3 +50,3 @@ export class Documents {
+@@ -147,3 +147,3 @@ export class Documents {
+@@ -237,3 +237,3 @@ export class Documents {
+@@ -330,3 +330,3 @@ export class Documents {
+@@ -417,3 +417,3 @@ export class Documents {
+diff --git a/src/api/resources/documents/types/ListDocumentsResponse.ts b/src/api/resources/documents/types/ListDocumentsResponse.ts
+index 677fda3..9a5b949 100644
+--- a/src/api/resources/documents/types/ListDocumentsResponse.ts
++++ b/src/api/resources/documents/types/ListDocumentsResponse.ts
+@@ -10,19 +10,33 @@ import * as Flatfile from "../../..";
+  *         data: [{
+- *                 data: {
+- *                     id: "us_dc_YOUR_ID",
+- *                     spaceId: "us_sp_YOUR_ID",
+- *                     environmentId: "us_env_YOUR_ID",
+- *                     title: "My Document 1",
+- *                     body: "My information",
+- *                     treatments: [],
+- *                     actions: [{
+- *                             operation: "submitAction",
+- *                             mode: Flatfile.ActionMode.Foreground,
+- *                             label: "Submit",
+- *                             description: "Submit data to webhook.site",
+- *                             primary: true
+- *                         }],
+- *                     createdAt: new Date("2022-09-18T00:19:57.007Z"),
+- *                     updatedAt: new Date("2022-09-18T00:19:57.007Z")
+- *                 }
++ *                 id: "us_dc_YOUR_ID",
++ *                 spaceId: "us_sp_YOUR_ID",
++ *                 environmentId: "us_env_YOUR_ID",
++ *                 title: "My Document 1",
++ *                 body: "My information",
++ *                 treatments: [],
++ *                 actions: [{
++ *                         operation: "submitAction",
++ *                         mode: Flatfile.ActionMode.Foreground,
++ *                         label: "Submit",
++ *                         description: "Submit data to webhook.site",
++ *                         primary: true
++ *                     }],
++ *                 createdAt: new Date("2022-09-18T00:19:57.007Z"),
++ *                 updatedAt: new Date("2022-09-18T00:19:57.007Z")
++ *             }, {
++ *                 id: "us_dc_YOUR_ID",
++ *                 spaceId: "us_sp_YOUR_ID",
++ *                 environmentId: "us_env_YOUR_ID",
++ *                 title: "Updated Title",
++ *                 body: "Updated My information",
++ *                 treatments: [],
++ *                 actions: [{
++ *                         operation: "submitAction",
++ *                         mode: Flatfile.ActionMode.Foreground,
++ *                         label: "Submit",
++ *                         description: "Submit data to webhook.site",
++ *                         primary: true
++ *                     }],
++ *                 createdAt: new Date("2022-09-18T00:19:57.007Z"),
++ *                 updatedAt: new Date("2022-09-18T00:19:57.007Z")
+  *             }]
+@@ -31,3 +45,3 @@ import * as Flatfile from "../../..";
+ export interface ListDocumentsResponse {
+-    data: Flatfile.DocumentResponse[];
++    data: Flatfile.Document[];
+ }
+diff --git a/src/api/resources/entitlements/client/Client.ts b/src/api/resources/entitlements/client/Client.ts
+index d4cb9ac..7bd0d4b 100644
+--- a/src/api/resources/entitlements/client/Client.ts
++++ b/src/api/resources/entitlements/client/Client.ts
+@@ -55,3 +55,3 @@ export class Entitlements {
+diff --git a/src/api/resources/environments/client/Client.ts b/src/api/resources/environments/client/Client.ts
+index 09fc1f0..aba51e9 100644
+--- a/src/api/resources/environments/client/Client.ts
++++ b/src/api/resources/environments/client/Client.ts
+@@ -58,3 +58,3 @@ export class Environments {
+@@ -128,3 +128,3 @@ export class Environments {
+@@ -197,3 +197,3 @@ export class Environments {
+@@ -284,3 +284,3 @@ export class Environments {
+@@ -377,3 +377,3 @@ export class Environments {
+@@ -438,3 +438,3 @@ export class Environments {
+diff --git a/src/api/resources/events/client/Client.ts b/src/api/resources/events/client/Client.ts
+index c8697b0..b1b0a03 100644
+--- a/src/api/resources/events/client/Client.ts
++++ b/src/api/resources/events/client/Client.ts
+@@ -82,3 +82,3 @@ export class Events {
+@@ -158,3 +158,3 @@ export class Events {
+@@ -237,3 +237,3 @@ export class Events {
+@@ -289,3 +289,3 @@ export class Events {
+@@ -362,3 +362,3 @@ export class Events {
+diff --git a/src/api/resources/files/client/Client.ts b/src/api/resources/files/client/Client.ts
+index 658a5bc..5c2491f 100644
+--- a/src/api/resources/files/client/Client.ts
++++ b/src/api/resources/files/client/Client.ts
+@@ -63,3 +63,3 @@ export class Files {
+@@ -141,3 +141,3 @@ export class Files {
+@@ -214,3 +214,3 @@ export class Files {
+@@ -293,3 +293,3 @@ export class Files {
+@@ -382,3 +382,3 @@ export class Files {
+@@ -462,3 +462,3 @@ export class Files {
+diff --git a/src/api/resources/foreigndb/client/Client.ts b/src/api/resources/foreigndb/client/Client.ts
+index f2893b7..6dcfeb5 100644
+--- a/src/api/resources/foreigndb/client/Client.ts
++++ b/src/api/resources/foreigndb/client/Client.ts
+@@ -48,3 +48,3 @@ export class Foreigndb {
+@@ -132,3 +132,3 @@ export class Foreigndb {
+@@ -215,3 +215,3 @@ export class Foreigndb {
+@@ -298,3 +298,3 @@ export class Foreigndb {
+@@ -382,3 +382,3 @@ export class Foreigndb {
+diff --git a/src/api/resources/guests/client/Client.ts b/src/api/resources/guests/client/Client.ts
+index 68f909b..d83d989 100644
+--- a/src/api/resources/guests/client/Client.ts
++++ b/src/api/resources/guests/client/Client.ts
+@@ -57,3 +57,3 @@ export class Guests {
+@@ -130,3 +130,3 @@ export class Guests {
+@@ -192,3 +192,3 @@ export class Guests {
+@@ -250,3 +250,3 @@ export class Guests {
+@@ -315,3 +315,3 @@ export class Guests {
+@@ -384,3 +384,3 @@ export class Guests {
+@@ -446,3 +446,3 @@ export class Guests {
+@@ -541,3 +541,3 @@ export class Guests {
+@@ -639,3 +639,3 @@ export class Guests {
+@@ -735,3 +735,3 @@ export class Guests {
+diff --git a/src/api/resources/jobs/client/Client.ts b/src/api/resources/jobs/client/Client.ts
+index d671d44..b61606d 100644
+--- a/src/api/resources/jobs/client/Client.ts
++++ b/src/api/resources/jobs/client/Client.ts
+@@ -76,3 +76,3 @@ export class Jobs {
+@@ -132,3 +132,3 @@ export class Jobs {
+@@ -185,3 +185,3 @@ export class Jobs {
+@@ -241,3 +241,3 @@ export class Jobs {
+@@ -294,3 +294,3 @@ export class Jobs {
+@@ -352,3 +352,3 @@ export class Jobs {
+@@ -413,3 +413,3 @@ export class Jobs {
+@@ -512,3 +512,3 @@ export class Jobs {
+@@ -572,3 +572,3 @@ export class Jobs {
+@@ -641,3 +641,3 @@ export class Jobs {
+@@ -706,3 +706,3 @@ export class Jobs {
+@@ -780,3 +780,3 @@ export class Jobs {
+@@ -858,3 +858,3 @@ export class Jobs {
+@@ -926,3 +926,3 @@ export class Jobs {
+@@ -985,3 +985,3 @@ export class Jobs {
+@@ -1043,3 +1043,3 @@ export class Jobs {
+@@ -1109,3 +1109,3 @@ export class Jobs {
+diff --git a/src/api/resources/jobs/types/JobConfig.ts b/src/api/resources/jobs/types/JobConfig.ts
+index 76e0fbd..42bdc80 100644
+--- a/src/api/resources/jobs/types/JobConfig.ts
++++ b/src/api/resources/jobs/types/JobConfig.ts
+@@ -53,2 +53,4 @@ export interface JobConfig {
+     parentId?: Flatfile.JobId;
++    /** The ids of the jobs that must complete before this job can start */
++    predecessorIds?: Flatfile.JobId[];
+ }
+diff --git a/src/api/resources/jobs/types/JobOutcomeNext.ts b/src/api/resources/jobs/types/JobOutcomeNext.ts
+index 4a7b2f0..0e21039 100644
+--- a/src/api/resources/jobs/types/JobOutcomeNext.ts
++++ b/src/api/resources/jobs/types/JobOutcomeNext.ts
+@@ -17,2 +17,3 @@ export type JobOutcomeNext =
+     | Flatfile.JobOutcomeNext.Download
++    | Flatfile.JobOutcomeNext.Files
+     | Flatfile.JobOutcomeNext.Wait
+@@ -34,2 +35,6 @@ export declare namespace JobOutcomeNext {
+ 
++    interface Files extends Flatfile.JobOutcomeNextFiles {
++        type: "files";
++    }
++
+     interface Wait extends Flatfile.JobOutcomeNextWait {
+diff --git a/src/api/resources/jobs/types/JobOutcomeNextFileObject.ts b/src/api/resources/jobs/types/JobOutcomeNextFileObject.ts
+new file mode 100644
+index 0000000..2f4a79b
+--- /dev/null
++++ b/src/api/resources/jobs/types/JobOutcomeNextFileObject.ts
+@@ -0,0 +1,8 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++export interface JobOutcomeNextFileObject {
++    fileId: string;
++    label?: string;
++}
+diff --git a/src/api/resources/jobs/types/JobOutcomeNextFiles.ts b/src/api/resources/jobs/types/JobOutcomeNextFiles.ts
+new file mode 100644
+index 0000000..3c90bcd
+--- /dev/null
++++ b/src/api/resources/jobs/types/JobOutcomeNextFiles.ts
+@@ -0,0 +1,10 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++import * as Flatfile from "../../..";
++
++export interface JobOutcomeNextFiles {
++    file: Flatfile.JobOutcomeNextFileObject[];
++    label?: string;
++}
+diff --git a/src/api/resources/jobs/types/JobStatus.ts b/src/api/resources/jobs/types/JobStatus.ts
+index db749df..0243ee2 100644
+--- a/src/api/resources/jobs/types/JobStatus.ts
++++ b/src/api/resources/jobs/types/JobStatus.ts
+@@ -30,3 +30,4 @@ export type JobStatus =
+     | "failed"
+-    | "canceled";
++    | "canceled"
++    | "waiting";
+ 
+@@ -41,2 +42,3 @@ export const JobStatus = {
+     Canceled: "canceled",
++    Waiting: "waiting",
+ } as const;
+diff --git a/src/api/resources/jobs/types/index.ts b/src/api/resources/jobs/types/index.ts
+index 1d5f9ea..be67446 100644
+--- a/src/api/resources/jobs/types/index.ts
++++ b/src/api/resources/jobs/types/index.ts
+@@ -33,2 +33,4 @@ export * from "./JobOutcomeNextUrl";
+ export * from "./JobOutcomeNextDownload";
++export * from "./JobOutcomeNextFileObject";
++export * from "./JobOutcomeNextFiles";
+ export * from "./JobOutcomeNextWait";
+diff --git a/src/api/resources/mapping/client/Client.ts b/src/api/resources/mapping/client/Client.ts
+index 2ab9850..8a1def7 100644
+--- a/src/api/resources/mapping/client/Client.ts
++++ b/src/api/resources/mapping/client/Client.ts
+@@ -47,3 +47,3 @@ export class Mapping {
+@@ -131,3 +131,3 @@ export class Mapping {
+@@ -269,3 +269,3 @@ export class Mapping {
+@@ -343,3 +343,3 @@ export class Mapping {
+@@ -427,3 +427,3 @@ export class Mapping {
+@@ -511,3 +511,3 @@ export class Mapping {
+@@ -595,3 +595,3 @@ export class Mapping {
+@@ -682,3 +682,3 @@ export class Mapping {
+@@ -771,3 +771,3 @@ export class Mapping {
+@@ -865,3 +865,3 @@ export class Mapping {
+@@ -950,3 +950,3 @@ export class Mapping {
+@@ -1040,3 +1040,3 @@ export class Mapping {
+diff --git a/src/api/resources/records/client/Client.ts b/src/api/resources/records/client/Client.ts
+index ab5cd3c..f8f4994 100644
+--- a/src/api/resources/records/client/Client.ts
++++ b/src/api/resources/records/client/Client.ts
+@@ -153,3 +153,3 @@ export class Records {
+@@ -265,3 +265,3 @@ export class Records {
+@@ -369,3 +369,3 @@ export class Records {
+@@ -467,3 +467,3 @@ export class Records {
+@@ -585,3 +585,3 @@ export class Records {
+diff --git a/src/api/resources/roles/client/Client.ts b/src/api/resources/roles/client/Client.ts
+index 1f1f584..613eb29 100644
+--- a/src/api/resources/roles/client/Client.ts
++++ b/src/api/resources/roles/client/Client.ts
+@@ -42,3 +42,3 @@ export class Roles {
+diff --git a/src/api/resources/secrets/client/Client.ts b/src/api/resources/secrets/client/Client.ts
+index 0c8dce9..c2ef562 100644
+--- a/src/api/resources/secrets/client/Client.ts
++++ b/src/api/resources/secrets/client/Client.ts
+@@ -62,3 +62,3 @@ export class Secrets {
+@@ -154,3 +154,3 @@ export class Secrets {
+@@ -241,3 +241,3 @@ export class Secrets {
+diff --git a/src/api/resources/sheets/client/Client.ts b/src/api/resources/sheets/client/Client.ts
+index af79595..e368501 100644
+--- a/src/api/resources/sheets/client/Client.ts
++++ b/src/api/resources/sheets/client/Client.ts
+@@ -54,3 +54,3 @@ export class Sheets {
+@@ -116,3 +116,3 @@ export class Sheets {
+@@ -176,3 +176,3 @@ export class Sheets {
+@@ -262,3 +262,3 @@ export class Sheets {
+@@ -406,3 +406,3 @@ export class Sheets {
+@@ -519,3 +519,3 @@ export class Sheets {
+@@ -581,3 +581,3 @@ export class Sheets {
+@@ -673,3 +673,3 @@ export class Sheets {
+@@ -737,3 +737,3 @@ export class Sheets {
+@@ -823,3 +823,3 @@ export class Sheets {
+@@ -964,3 +964,3 @@ export class Sheets {
+diff --git a/src/api/resources/snapshots/client/Client.ts b/src/api/resources/snapshots/client/Client.ts
+index 56da28b..e2e0549 100644
+--- a/src/api/resources/snapshots/client/Client.ts
++++ b/src/api/resources/snapshots/client/Client.ts
+@@ -53,3 +53,3 @@ export class Snapshots {
+@@ -145,3 +145,3 @@ export class Snapshots {
+@@ -238,3 +238,3 @@ export class Snapshots {
+@@ -325,3 +325,3 @@ export class Snapshots {
+@@ -416,3 +416,3 @@ export class Snapshots {
+@@ -527,3 +527,3 @@ export class Snapshots {
+diff --git a/src/api/resources/spaces/client/Client.ts b/src/api/resources/spaces/client/Client.ts
+index a1e714c..ad833e9 100644
+--- a/src/api/resources/spaces/client/Client.ts
++++ b/src/api/resources/spaces/client/Client.ts
+@@ -99,3 +99,3 @@ export class Spaces {
+@@ -181,3 +181,3 @@ export class Spaces {
+@@ -268,3 +268,3 @@ export class Spaces {
+@@ -351,3 +351,3 @@ export class Spaces {
+@@ -447,3 +447,3 @@ export class Spaces {
+@@ -537,3 +537,3 @@ export class Spaces {
+@@ -624,3 +624,3 @@ export class Spaces {
+@@ -707,3 +707,3 @@ export class Spaces {
+diff --git a/src/api/resources/spaces/types/InternalSpaceConfigBase.ts b/src/api/resources/spaces/types/InternalSpaceConfigBase.ts
+index 2fd85c3..6139373 100644
+--- a/src/api/resources/spaces/types/InternalSpaceConfigBase.ts
++++ b/src/api/resources/spaces/types/InternalSpaceConfigBase.ts
+@@ -9,2 +9,3 @@ export interface InternalSpaceConfigBase {
+     environmentId?: Flatfile.EnvironmentId;
++    /** The ID of the primary workbook for the space. This should not be included in create space requests. */
+     primaryWorkbookId?: Flatfile.WorkbookId;
+diff --git a/src/api/resources/users/client/Client.ts b/src/api/resources/users/client/Client.ts
+index 6ffde26..1a1e55f 100644
+--- a/src/api/resources/users/client/Client.ts
++++ b/src/api/resources/users/client/Client.ts
+@@ -56,3 +56,3 @@ export class Users {
+@@ -128,3 +128,3 @@ export class Users {
+@@ -190,3 +190,3 @@ export class Users {
+@@ -249,3 +249,3 @@ export class Users {
+@@ -304,3 +304,3 @@ export class Users {
+@@ -365,3 +365,3 @@ export class Users {
+@@ -460,3 +460,3 @@ export class Users {
+@@ -558,3 +558,3 @@ export class Users {
+@@ -661,3 +661,3 @@ export class Users {
+@@ -724,3 +724,3 @@ export class Users {
+@@ -783,3 +783,3 @@ export class Users {
+diff --git a/src/api/resources/versions/client/Client.ts b/src/api/resources/versions/client/Client.ts
+index 05c5e08..405f58a 100644
+--- a/src/api/resources/versions/client/Client.ts
++++ b/src/api/resources/versions/client/Client.ts
+@@ -42,3 +42,3 @@ export class Versions {
+diff --git a/src/api/resources/views/client/Client.ts b/src/api/resources/views/client/Client.ts
+index e3765e8..0b8bf1e 100644
+--- a/src/api/resources/views/client/Client.ts
++++ b/src/api/resources/views/client/Client.ts
+@@ -28,3 +28,3 @@ export class Views {
+     /**
+-     * Returns all views for user and sheet
++     * Returns all views for the sheet
+      * @throws {@link Flatfile.BadRequestError}
+@@ -41,5 +41,13 @@ export class Views {
+     ): Promise<Flatfile.ListViewsResponse> {
+-        const { sheetId } = request;
++        const { sheetId, pageSize, pageNumber } = request;
+         const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["sheetId"] = sheetId;
++        if (pageSize != null) {
++            _queryParams["pageSize"] = pageSize.toString();
++        }
++
++        if (pageNumber != null) {
++            _queryParams["pageNumber"] = pageNumber.toString();
++        }
++
+         const _response = await (this._options.fetcher ?? core.fetcher)({
+@@ -55,3 +63,3 @@ export class Views {
+@@ -152,3 +160,3 @@ export class Views {
+@@ -236,3 +244,3 @@ export class Views {
+@@ -332,3 +340,3 @@ export class Views {
+@@ -414,3 +422,3 @@ export class Views {
+diff --git a/src/api/resources/views/client/requests/ListViewsRequest.ts b/src/api/resources/views/client/requests/ListViewsRequest.ts
+index 87b0341..23bbd1a 100644
+--- a/src/api/resources/views/client/requests/ListViewsRequest.ts
++++ b/src/api/resources/views/client/requests/ListViewsRequest.ts
+@@ -17,2 +17,10 @@ export interface ListViewsRequest {
+     sheetId: Flatfile.SheetId;
++    /**
++     * Number of prompts to return in a page (default 10)
++     */
++    pageSize?: number;
++    /**
++     * Based on pageSize, which page of prompts to return
++     */
++    pageNumber?: number;
+ }
+diff --git a/src/api/resources/views/types/ListViewsResponse.ts b/src/api/resources/views/types/ListViewsResponse.ts
+index d04f9b7..aa58b08 100644
+--- a/src/api/resources/views/types/ListViewsResponse.ts
++++ b/src/api/resources/views/types/ListViewsResponse.ts
+@@ -19,3 +19,4 @@ import * as Flatfile from "../../..";
+  *                     sortDirection: Flatfile.SortDirection.Asc
+- *                 }
++ *                 },
++ *                 createdBy: "us_usr_YOUR_ID"
+  *             }],
+diff --git a/src/api/resources/views/types/View.ts b/src/api/resources/views/types/View.ts
+index acee5c6..540e7d5 100644
+--- a/src/api/resources/views/types/View.ts
++++ b/src/api/resources/views/types/View.ts
+@@ -20,3 +20,4 @@ import * as Flatfile from "../../..";
+  *             sortDirection: Flatfile.SortDirection.Asc
+- *         }
++ *         },
++ *         createdBy: "us_usr_YOUR_ID"
+  *     }
+@@ -32,2 +33,4 @@ export interface View {
+     config: Flatfile.ViewConfig;
++    /** ID of the actor who created the view */
++    createdBy: string;
+ }
+diff --git a/src/api/resources/views/types/ViewResponse.ts b/src/api/resources/views/types/ViewResponse.ts
+index 919cc07..5583fc9 100644
+--- a/src/api/resources/views/types/ViewResponse.ts
++++ b/src/api/resources/views/types/ViewResponse.ts
+@@ -19,3 +19,4 @@ import * as Flatfile from "../../..";
+  *                 sortDirection: Flatfile.SortDirection.Asc
+- *             }
++ *             },
++ *             createdBy: "us_usr_YOUR_ID"
+  *         }
+diff --git a/src/api/resources/workbooks/client/Client.ts b/src/api/resources/workbooks/client/Client.ts
+index f3a2c4b..fa558b3 100644
+--- a/src/api/resources/workbooks/client/Client.ts
++++ b/src/api/resources/workbooks/client/Client.ts
+@@ -61,3 +61,3 @@ export class Workbooks {
+@@ -168,3 +168,3 @@ export class Workbooks {
+@@ -245,3 +245,3 @@ export class Workbooks {
+@@ -331,3 +331,3 @@ export class Workbooks {
+@@ -428,3 +428,3 @@ export class Workbooks {
+@@ -520,3 +520,3 @@ export class Workbooks {
+@@ -581,3 +581,3 @@ export class Workbooks {
+diff --git a/src/serialization/resources/documents/types/ListDocumentsResponse.ts b/src/serialization/resources/documents/types/ListDocumentsResponse.ts
+index 6de1ff3..0d3e001 100644
+--- a/src/serialization/resources/documents/types/ListDocumentsResponse.ts
++++ b/src/serialization/resources/documents/types/ListDocumentsResponse.ts
+@@ -7,3 +7,3 @@ import * as Flatfile from "../../../../api";
+ import * as core from "../../../../core";
+-import { DocumentResponse } from "./DocumentResponse";
++import { Document } from "./Document";
+ 
+@@ -13,3 +13,3 @@ export const ListDocumentsResponse: core.serialization.ObjectSchema<
+ > = core.serialization.object({
+-    data: core.serialization.list(DocumentResponse),
++    data: core.serialization.list(Document),
+ });
+@@ -18,3 +18,3 @@ export declare namespace ListDocumentsResponse {
+     interface Raw {
+-        data: DocumentResponse.Raw[];
++        data: Document.Raw[];
+     }
+diff --git a/src/serialization/resources/jobs/types/JobConfig.ts b/src/serialization/resources/jobs/types/JobConfig.ts
+index 46c6384..e285aed 100644
+--- a/src/serialization/resources/jobs/types/JobConfig.ts
++++ b/src/serialization/resources/jobs/types/JobConfig.ts
+@@ -42,2 +42,3 @@ export const JobConfig: core.serialization.ObjectSchema<serializers.JobConfig.Ra
+         parentId: JobId.optional(),
++        predecessorIds: core.serialization.list(JobId).optional(),
+     });
+@@ -66,2 +67,3 @@ export declare namespace JobConfig {
+         parentId?: JobId.Raw | null;
++        predecessorIds?: JobId.Raw[] | null;
+     }
+diff --git a/src/serialization/resources/jobs/types/JobOutcomeNext.ts b/src/serialization/resources/jobs/types/JobOutcomeNext.ts
+index b7cddc0..cdac14e 100644
+--- a/src/serialization/resources/jobs/types/JobOutcomeNext.ts
++++ b/src/serialization/resources/jobs/types/JobOutcomeNext.ts
+@@ -10,2 +10,3 @@ import { JobOutcomeNextUrl } from "./JobOutcomeNextUrl";
+ import { JobOutcomeNextDownload } from "./JobOutcomeNextDownload";
++import { JobOutcomeNextFiles } from "./JobOutcomeNextFiles";
+ import { JobOutcomeNextWait } from "./JobOutcomeNextWait";
+@@ -20,2 +21,3 @@ export const JobOutcomeNext: core.serialization.Schema<serializers.JobOutcomeNex
+             download: JobOutcomeNextDownload,
++            files: JobOutcomeNextFiles,
+             wait: JobOutcomeNextWait,
+@@ -34,2 +36,3 @@ export declare namespace JobOutcomeNext {
+         | JobOutcomeNext.Download
++        | JobOutcomeNext.Files
+         | JobOutcomeNext.Wait
+@@ -50,2 +53,6 @@ export declare namespace JobOutcomeNext {
+ 
++    interface Files extends JobOutcomeNextFiles.Raw {
++        type: "files";
++    }
++
+     interface Wait extends JobOutcomeNextWait.Raw {
+diff --git a/src/serialization/resources/jobs/types/JobOutcomeNextFileObject.ts b/src/serialization/resources/jobs/types/JobOutcomeNextFileObject.ts
+new file mode 100644
+index 0000000..ea14a19
+--- /dev/null
++++ b/src/serialization/resources/jobs/types/JobOutcomeNextFileObject.ts
+@@ -0,0 +1,22 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++import * as serializers from "../../..";
++import * as Flatfile from "../../../../api";
++import * as core from "../../../../core";
++
++export const JobOutcomeNextFileObject: core.serialization.ObjectSchema<
++    serializers.JobOutcomeNextFileObject.Raw,
++    Flatfile.JobOutcomeNextFileObject
++> = core.serialization.object({
++    fileId: core.serialization.string(),
++    label: core.serialization.string().optional(),
++});
++
++export declare namespace JobOutcomeNextFileObject {
++    interface Raw {
++        fileId: string;
++        label?: string | null;
++    }
++}
+diff --git a/src/serialization/resources/jobs/types/JobOutcomeNextFiles.ts b/src/serialization/resources/jobs/types/JobOutcomeNextFiles.ts
+new file mode 100644
+index 0000000..081b1c1
+--- /dev/null
++++ b/src/serialization/resources/jobs/types/JobOutcomeNextFiles.ts
+@@ -0,0 +1,23 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++import * as serializers from "../../..";
++import * as Flatfile from "../../../../api";
++import * as core from "../../../../core";
++import { JobOutcomeNextFileObject } from "./JobOutcomeNextFileObject";
++
++export const JobOutcomeNextFiles: core.serialization.ObjectSchema<
++    serializers.JobOutcomeNextFiles.Raw,
++    Flatfile.JobOutcomeNextFiles
++> = core.serialization.object({
++    file: core.serialization.list(JobOutcomeNextFileObject),
++    label: core.serialization.string().optional(),
++});
++
++export declare namespace JobOutcomeNextFiles {
++    interface Raw {
++        file: JobOutcomeNextFileObject.Raw[];
++        label?: string | null;
++    }
++}
+diff --git a/src/serialization/resources/jobs/types/JobStatus.ts b/src/serialization/resources/jobs/types/JobStatus.ts
+index 88626f8..3ce8cfa 100644
+--- a/src/serialization/resources/jobs/types/JobStatus.ts
++++ b/src/serialization/resources/jobs/types/JobStatus.ts
+@@ -18,2 +18,3 @@ export const JobStatus: core.serialization.Schema<serializers.JobStatus.Raw, Fla
+         "canceled",
++        "waiting",
+     ]);
+@@ -21,3 +22,12 @@ export const JobStatus: core.serialization.Schema<serializers.JobStatus.Raw, Fla
+ export declare namespace JobStatus {
+-    type Raw = "created" | "planning" | "scheduled" | "ready" | "executing" | "complete" | "failed" | "canceled";
++    type Raw =
++        | "created"
++        | "planning"
++        | "scheduled"
++        | "ready"
++        | "executing"
++        | "complete"
++        | "failed"
++        | "canceled"
++        | "waiting";
+ }
+diff --git a/src/serialization/resources/jobs/types/index.ts b/src/serialization/resources/jobs/types/index.ts
+index 1d5f9ea..be67446 100644
+--- a/src/serialization/resources/jobs/types/index.ts
++++ b/src/serialization/resources/jobs/types/index.ts
+@@ -33,2 +33,4 @@ export * from "./JobOutcomeNextUrl";
+ export * from "./JobOutcomeNextDownload";
++export * from "./JobOutcomeNextFileObject";
++export * from "./JobOutcomeNextFiles";
+ export * from "./JobOutcomeNextWait";
+diff --git a/src/serialization/resources/views/types/View.ts b/src/serialization/resources/views/types/View.ts
+index c387b7f..40c7e2e 100644
+--- a/src/serialization/resources/views/types/View.ts
++++ b/src/serialization/resources/views/types/View.ts
+@@ -16,2 +16,3 @@ export const View: core.serialization.ObjectSchema<serializers.View.Raw, Flatfil
+     config: ViewConfig,
++    createdBy: core.serialization.string(),
+ });
+@@ -24,2 +25,3 @@ export declare namespace View {
+         config: ViewConfig.Raw;
++        createdBy: string;
+     }

@@ -1,0 +1,562 @@
+diff --git a/jest.config.js b/jest.config.js
+new file mode 100644
+index 0000000..3a09892
+--- /dev/null
++++ b/jest.config.js
+@@ -0,0 +1,5 @@
++/** @type {import('ts-jest').JestConfigWithTsJest} */
++module.exports = {
++    preset: "ts-jest",
++    testEnvironment: "node",
++};
+\ No newline at end of file
+diff --git a/package.json b/package.json
+index e4223d7..aeaf2a8 100644
+--- a/package.json
++++ b/package.json
+@@ -2,3 +2,3 @@
+     "name": "@flatfile/api",
+-    "version": "1.7.2",
++    "version": "1.7.3",
+     "private": false,
+@@ -10,3 +10,4 @@
+         "build": "tsc",
+-        "prepack": "cp -rv dist/. ."
++        "prepack": "cp -rv dist/. .",
++        "test": "jest"
+     },
+@@ -26,2 +27,5 @@
+         "@types/node-fetch": "2.6.9",
++        "jest": "^29.7.0",
++        "@types/jest": "^29.5.5",
++        "ts-jest": "^29.1.1",
+         "@types/node": "17.0.33",
+diff --git a/src/api/resources/agents/client/Client.ts b/src/api/resources/agents/client/Client.ts
+index f257d07..1ee2c2e 100644
+--- a/src/api/resources/agents/client/Client.ts
++++ b/src/api/resources/agents/client/Client.ts
+@@ -45,3 +45,5 @@ export class Agents {
+             },
+@@ -125,3 +127,5 @@ export class Agents {
+             },
+@@ -206,3 +210,5 @@ export class Agents {
+             },
+@@ -289,3 +295,5 @@ export class Agents {
+             },
+@@ -382,3 +390,5 @@ export class Agents {
+             },
+@@ -478,3 +488,5 @@ export class Agents {
+             },
+@@ -577,3 +589,5 @@ export class Agents {
+             },
+@@ -667,3 +681,5 @@ export class Agents {
+             },
+@@ -776,3 +792,5 @@ export class Agents {
+             },
+@@ -885,3 +903,5 @@ export class Agents {
+             },
+@@ -976,3 +996,5 @@ export class Agents {
+             },
+diff --git a/src/api/resources/apps/client/Client.ts b/src/api/resources/apps/client/Client.ts
+index a1cfe70..4a4ef4d 100644
+--- a/src/api/resources/apps/client/Client.ts
++++ b/src/api/resources/apps/client/Client.ts
+@@ -42,3 +42,5 @@ export class Apps {
+             },
+@@ -98,3 +100,5 @@ export class Apps {
+             },
+@@ -167,3 +171,5 @@ export class Apps {
+             },
+@@ -237,3 +243,5 @@ export class Apps {
+             },
+diff --git a/src/api/resources/auth/client/Client.ts b/src/api/resources/auth/client/Client.ts
+index d893556..475a173 100644
+--- a/src/api/resources/auth/client/Client.ts
++++ b/src/api/resources/auth/client/Client.ts
+@@ -54,3 +54,5 @@ export class Auth {
+             },
+@@ -143,3 +145,5 @@ export class Auth {
+             },
+@@ -234,3 +238,5 @@ export class Auth {
+             },
+@@ -325,3 +331,5 @@ export class Auth {
+             },
+diff --git a/src/api/resources/cells/client/Client.ts b/src/api/resources/cells/client/Client.ts
+index 76de1b3..60d4b6d 100644
+--- a/src/api/resources/cells/client/Client.ts
++++ b/src/api/resources/cells/client/Client.ts
+@@ -107,3 +107,5 @@ export class Cells {
+             },
+diff --git a/src/api/resources/commits/client/Client.ts b/src/api/resources/commits/client/Client.ts
+index 11191ab..e6332a4 100644
+--- a/src/api/resources/commits/client/Client.ts
++++ b/src/api/resources/commits/client/Client.ts
+@@ -50,3 +50,5 @@ export class Commits {
+             },
+@@ -131,3 +133,5 @@ export class Commits {
+             },
+@@ -212,3 +216,5 @@ export class Commits {
+             },
+diff --git a/src/api/resources/dataRetentionPolicies/client/Client.ts b/src/api/resources/dataRetentionPolicies/client/Client.ts
+index b4ec5c3..d473702 100644
+--- a/src/api/resources/dataRetentionPolicies/client/Client.ts
++++ b/src/api/resources/dataRetentionPolicies/client/Client.ts
+@@ -58,3 +58,5 @@ export class DataRetentionPolicies {
+             },
+@@ -147,3 +149,5 @@ export class DataRetentionPolicies {
+             },
+@@ -232,3 +236,5 @@ export class DataRetentionPolicies {
+             },
+@@ -321,3 +327,5 @@ export class DataRetentionPolicies {
+             },
+@@ -403,3 +411,5 @@ export class DataRetentionPolicies {
+             },
+diff --git a/src/api/resources/documents/client/Client.ts b/src/api/resources/documents/client/Client.ts
+index ee19ffc..836a9dd 100644
+--- a/src/api/resources/documents/client/Client.ts
++++ b/src/api/resources/documents/client/Client.ts
+@@ -50,3 +50,5 @@ export class Documents {
+             },
+@@ -145,3 +147,5 @@ export class Documents {
+             },
+@@ -233,3 +237,5 @@ export class Documents {
+             },
+@@ -324,3 +330,5 @@ export class Documents {
+             },
+@@ -409,3 +417,5 @@ export class Documents {
+             },
+diff --git a/src/api/resources/entitlements/client/Client.ts b/src/api/resources/entitlements/client/Client.ts
+index 009ccce..fbbf9da 100644
+--- a/src/api/resources/entitlements/client/Client.ts
++++ b/src/api/resources/entitlements/client/Client.ts
+@@ -55,3 +55,5 @@ export class Entitlements {
+             },
+diff --git a/src/api/resources/environments/client/Client.ts b/src/api/resources/environments/client/Client.ts
+index 3293119..07bf9ab 100644
+--- a/src/api/resources/environments/client/Client.ts
++++ b/src/api/resources/environments/client/Client.ts
+@@ -58,3 +58,5 @@ export class Environments {
+             },
+@@ -126,3 +128,5 @@ export class Environments {
+             },
+@@ -193,3 +197,5 @@ export class Environments {
+             },
+@@ -278,3 +284,5 @@ export class Environments {
+             },
+@@ -369,3 +377,5 @@ export class Environments {
+             },
+@@ -428,3 +438,5 @@ export class Environments {
+             },
+diff --git a/src/api/resources/events/client/Client.ts b/src/api/resources/events/client/Client.ts
+index 527cc76..fc72616 100644
+--- a/src/api/resources/events/client/Client.ts
++++ b/src/api/resources/events/client/Client.ts
+@@ -82,3 +82,5 @@ export class Events {
+             },
+@@ -156,3 +158,5 @@ export class Events {
+             },
+@@ -233,3 +237,5 @@ export class Events {
+             },
+@@ -283,3 +289,5 @@ export class Events {
+             },
+@@ -354,3 +362,5 @@ export class Events {
+             },
+diff --git a/src/api/resources/files/client/Client.ts b/src/api/resources/files/client/Client.ts
+index 56633e1..6331f19 100644
+--- a/src/api/resources/files/client/Client.ts
++++ b/src/api/resources/files/client/Client.ts
+@@ -63,3 +63,5 @@ export class Files {
+             },
+@@ -135,3 +137,5 @@ export class Files {
+             },
+@@ -206,3 +210,5 @@ export class Files {
+             },
+@@ -283,3 +289,5 @@ export class Files {
+             },
+@@ -370,3 +378,5 @@ export class Files {
+             },
+@@ -448,3 +458,5 @@ export class Files {
+             },
+diff --git a/src/api/resources/guests/client/Client.ts b/src/api/resources/guests/client/Client.ts
+index 08aedde..837eb87 100644
+--- a/src/api/resources/guests/client/Client.ts
++++ b/src/api/resources/guests/client/Client.ts
+@@ -57,3 +57,5 @@ export class Guests {
+             },
+@@ -128,3 +130,5 @@ export class Guests {
+             },
+@@ -188,3 +192,5 @@ export class Guests {
+             },
+@@ -244,3 +250,5 @@ export class Guests {
+             },
+@@ -307,3 +315,5 @@ export class Guests {
+             },
+@@ -374,3 +384,5 @@ export class Guests {
+             },
+@@ -434,3 +446,5 @@ export class Guests {
+             },
+@@ -527,3 +541,5 @@ export class Guests {
+             },
+@@ -623,3 +639,5 @@ export class Guests {
+             },
+@@ -717,3 +735,5 @@ export class Guests {
+             },
+diff --git a/src/api/resources/jobs/client/Client.ts b/src/api/resources/jobs/client/Client.ts
+index e06acc2..f611ca3 100644
+--- a/src/api/resources/jobs/client/Client.ts
++++ b/src/api/resources/jobs/client/Client.ts
+@@ -76,3 +76,5 @@ export class Jobs {
+             },
+@@ -130,3 +132,5 @@ export class Jobs {
+             },
+@@ -181,3 +185,5 @@ export class Jobs {
+             },
+@@ -235,3 +241,5 @@ export class Jobs {
+             },
+@@ -286,3 +294,5 @@ export class Jobs {
+             },
+@@ -342,3 +352,5 @@ export class Jobs {
+             },
+@@ -401,3 +413,5 @@ export class Jobs {
+             },
+@@ -498,3 +512,5 @@ export class Jobs {
+             },
+@@ -556,3 +572,5 @@ export class Jobs {
+             },
+@@ -623,3 +641,5 @@ export class Jobs {
+             },
+@@ -686,3 +706,5 @@ export class Jobs {
+             },
+@@ -758,3 +780,5 @@ export class Jobs {
+             },
+@@ -834,3 +858,5 @@ export class Jobs {
+             },
+@@ -900,3 +926,5 @@ export class Jobs {
+             },
+@@ -957,3 +985,5 @@ export class Jobs {
+             },
+@@ -1013,3 +1043,5 @@ export class Jobs {
+             },
+@@ -1076,3 +1108,5 @@ export class Jobs {
+             },
+diff --git a/src/api/resources/mapping/client/Client.ts b/src/api/resources/mapping/client/Client.ts
+index 3227841..a926592 100644
+--- a/src/api/resources/mapping/client/Client.ts
++++ b/src/api/resources/mapping/client/Client.ts
+@@ -47,3 +47,5 @@ export class Mapping {
+             },
+@@ -126,3 +128,5 @@ export class Mapping {
+             },
+@@ -259,3 +263,5 @@ export class Mapping {
+             },
+@@ -331,3 +337,5 @@ export class Mapping {
+             },
+@@ -413,3 +421,5 @@ export class Mapping {
+             },
+@@ -495,3 +505,5 @@ export class Mapping {
+             },
+@@ -577,3 +589,5 @@ export class Mapping {
+             },
+@@ -662,3 +676,5 @@ export class Mapping {
+             },
+@@ -749,3 +765,5 @@ export class Mapping {
+             },
+@@ -841,3 +859,5 @@ export class Mapping {
+             },
+@@ -924,3 +944,5 @@ export class Mapping {
+             },
+@@ -1012,3 +1034,5 @@ export class Mapping {
+             },
+diff --git a/src/api/resources/records/client/Client.ts b/src/api/resources/records/client/Client.ts
+index 6145d27..52d3a2b 100644
+--- a/src/api/resources/records/client/Client.ts
++++ b/src/api/resources/records/client/Client.ts
+@@ -153,3 +153,5 @@ export class Records {
+             },
+@@ -262,3 +264,5 @@ export class Records {
+             },
+@@ -364,3 +368,5 @@ export class Records {
+             },
+@@ -460,3 +466,5 @@ export class Records {
+             },
+@@ -572,3 +580,5 @@ export class Records {
+             },
+diff --git a/src/api/resources/roles/client/Client.ts b/src/api/resources/roles/client/Client.ts
+index 502f87e..51fc04d 100644
+--- a/src/api/resources/roles/client/Client.ts
++++ b/src/api/resources/roles/client/Client.ts
+@@ -42,3 +42,5 @@ export class Roles {
+             },
+diff --git a/src/api/resources/secrets/client/Client.ts b/src/api/resources/secrets/client/Client.ts
+index 42920a5..f563cdf 100644
+--- a/src/api/resources/secrets/client/Client.ts
++++ b/src/api/resources/secrets/client/Client.ts
+@@ -62,3 +62,5 @@ export class Secrets {
+             },
+@@ -152,3 +154,5 @@ export class Secrets {
+             },
+@@ -237,3 +241,5 @@ export class Secrets {
+             },
+diff --git a/src/api/resources/sheets/client/Client.ts b/src/api/resources/sheets/client/Client.ts
+index 1212443..bd660d2 100644
+--- a/src/api/resources/sheets/client/Client.ts
++++ b/src/api/resources/sheets/client/Client.ts
+@@ -54,3 +54,5 @@ export class Sheets {
+             },
+@@ -114,3 +116,5 @@ export class Sheets {
+             },
+@@ -172,3 +176,5 @@ export class Sheets {
+             },
+@@ -256,3 +262,5 @@ export class Sheets {
+             },
+@@ -398,3 +406,5 @@ export class Sheets {
+             },
+@@ -509,3 +519,5 @@ export class Sheets {
+             },
+@@ -569,3 +581,5 @@ export class Sheets {
+             },
+@@ -659,3 +673,5 @@ export class Sheets {
+             },
+@@ -721,3 +737,5 @@ export class Sheets {
+             },
+@@ -805,3 +823,5 @@ export class Sheets {
+             },
+@@ -946,3 +966,5 @@ export class Sheets {
+             },
+diff --git a/src/api/resources/snapshots/client/Client.ts b/src/api/resources/snapshots/client/Client.ts
+index b87be19..c461842 100644
+--- a/src/api/resources/snapshots/client/Client.ts
++++ b/src/api/resources/snapshots/client/Client.ts
+@@ -53,3 +53,5 @@ export class Snapshots {
+             },
+@@ -143,3 +145,5 @@ export class Snapshots {
+             },
+@@ -234,3 +238,5 @@ export class Snapshots {
+             },
+@@ -319,3 +325,5 @@ export class Snapshots {
+             },
+@@ -408,3 +416,5 @@ export class Snapshots {
+             },
+@@ -517,3 +527,5 @@ export class Snapshots {
+             },
+diff --git a/src/api/resources/spaces/client/Client.ts b/src/api/resources/spaces/client/Client.ts
+index 51922c8..a4f823a 100644
+--- a/src/api/resources/spaces/client/Client.ts
++++ b/src/api/resources/spaces/client/Client.ts
+@@ -99,3 +99,5 @@ export class Spaces {
+             },
+@@ -179,3 +181,5 @@ export class Spaces {
+             },
+@@ -264,3 +268,5 @@ export class Spaces {
+             },
+@@ -345,3 +351,5 @@ export class Spaces {
+             },
+@@ -439,3 +447,5 @@ export class Spaces {
+             },
+@@ -527,3 +537,5 @@ export class Spaces {
+             },
+@@ -612,3 +624,5 @@ export class Spaces {
+             },
+diff --git a/src/api/resources/users/client/Client.ts b/src/api/resources/users/client/Client.ts
+index beb23a2..e4faba2 100644
+--- a/src/api/resources/users/client/Client.ts
++++ b/src/api/resources/users/client/Client.ts
+@@ -56,3 +56,5 @@ export class Users {
+             },
+@@ -113,3 +115,5 @@ export class Users {
+             },
+@@ -172,3 +176,5 @@ export class Users {
+             },
+@@ -265,3 +271,5 @@ export class Users {
+             },
+@@ -361,3 +369,5 @@ export class Users {
+             },
+@@ -462,3 +472,5 @@ export class Users {
+             },
+@@ -523,3 +535,5 @@ export class Users {
+             },
+@@ -580,3 +594,5 @@ export class Users {
+             },
+diff --git a/src/api/resources/versions/client/Client.ts b/src/api/resources/versions/client/Client.ts
+index 7818f3a..8e08df0 100644
+--- a/src/api/resources/versions/client/Client.ts
++++ b/src/api/resources/versions/client/Client.ts
+@@ -42,3 +42,5 @@ export class Versions {
+             },
+diff --git a/src/api/resources/workbooks/client/Client.ts b/src/api/resources/workbooks/client/Client.ts
+index 71734fd..084dbf6 100644
+--- a/src/api/resources/workbooks/client/Client.ts
++++ b/src/api/resources/workbooks/client/Client.ts
+@@ -62,3 +62,5 @@ export class Workbooks {
+             },
+@@ -167,3 +169,5 @@ export class Workbooks {
+             },
+@@ -242,3 +246,5 @@ export class Workbooks {
+             },
+@@ -326,3 +332,5 @@ export class Workbooks {
+             },
+@@ -421,3 +429,5 @@ export class Workbooks {
+             },
+@@ -511,3 +521,5 @@ export class Workbooks {
+             },
+@@ -570,3 +582,5 @@ export class Workbooks {
+             },
+diff --git a/src/core/index.ts b/src/core/index.ts
+index e2eb66e..2d20c46 100644
+--- a/src/core/index.ts
++++ b/src/core/index.ts
+@@ -2,2 +2,3 @@ export * from "./fetcher";
+ export * from "./auth";
++export * from "./runtime";
+ export * as serialization from "./schemas";
+diff --git a/src/core/runtime/index.ts b/src/core/runtime/index.ts
+new file mode 100644
+index 0000000..5c76dbb
+--- /dev/null
++++ b/src/core/runtime/index.ts
+@@ -0,0 +1 @@
++export { RUNTIME } from "./runtime";
+diff --git a/src/core/runtime/runtime.ts b/src/core/runtime/runtime.ts
+new file mode 100644
+index 0000000..f0692ab
+--- /dev/null
++++ b/src/core/runtime/runtime.ts
+@@ -0,0 +1,112 @@
++interface DenoGlobal {
++    version: {
++        deno: string;
++    };
++}
++
++interface BunGlobal {
++    version: string;
++}
++
++declare const Deno: DenoGlobal;
++declare const Bun: BunGlobal;
++
++/**
++ * A constant that indicates whether the environment the code is running is a Web Browser.
++ */
++const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
++
++/**
++ * A constant that indicates whether the environment the code is running is a Web Worker.
++ */
++const isWebWorker =
++    typeof self === "object" &&
++    // @ts-ignore
++    typeof self?.importScripts === "function" &&
++    (self.constructor?.name === "DedicatedWorkerGlobalScope" ||
++        self.constructor?.name === "ServiceWorkerGlobalScope" ||
++        self.constructor?.name === "SharedWorkerGlobalScope");
++
++/**
++ * A constant that indicates whether the environment the code is running is Deno.
++ */
++const isDeno =
++    typeof Deno !== "undefined" && typeof Deno.version !== "undefined" && typeof Deno.version.deno !== "undefined";
++
++/**
++ * A constant that indicates whether the environment the code is running is Bun.sh.
++ */
++const isBun = typeof Bun !== "undefined" && typeof Bun.version !== "undefined";
++
++/**
++ * A constant that indicates whether the environment the code is running is Node.JS.
++ */
++const isNode =
++    typeof process !== "undefined" &&
++    Boolean(process.version) &&
++    Boolean(process.versions?.node) &&
++    // Deno spoofs process.versions.node, see https://deno.land/std@0.177.0/node/process.ts?s=versions
++    !isDeno &&
++    !isBun;
++
++/**
++ * A constant that indicates whether the environment the code is running is in React-Native.
++ * https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Core/setUpNavigator.js
++ */
++const isReactNative = typeof navigator !== "undefined" && navigator?.product === "ReactNative";
++
++/**
++ * A constant that indicates which environment and version the SDK is running in.
++ */
++export const RUNTIME: Runtime = evaluateRuntime();
++
++export interface Runtime {
++    type: "browser" | "web-worker" | "deno" | "bun" | "node" | "react-native" | "unknown";
++    version?: string;
++}
++
++function evaluateRuntime(): Runtime {
++    if (isBrowser) {
++        return {
++            type: "browser",
++            version: window.navigator.userAgent,
++        };
++    }
++
++    if (isWebWorker) {
++        return {
++            type: "web-worker",
++        };
++    }
++
++    if (isDeno) {
++        return {
++            type: "deno",
++            version: Deno.version.deno,
++        };
++    }
++
++    if (isBun) {
++        return {
++            type: "bun",
++            version: Bun.version,
++        };
++    }
++
++    if (isNode) {
++        return {
++            type: "node",
++            version: process.versions.node,
++        };
++    }
++
++    if (isReactNative) {
++        return {
++            type: "react-native",
++        };
++    }
++
++    return {
++        type: "unknown",
++    };
++}
+diff --git a/tests/client.test.ts b/tests/client.test.ts
+new file mode 100644
+index 0000000..62b373b
+--- /dev/null
++++ b/tests/client.test.ts
+@@ -0,0 +1,11 @@
++/**
++* This is a test file for the SDK.
++* 
++* Add any tests here and make sure to mark this file
++* in `.fernignore`. 
++*/
++describe("test", () => {
++    it("default", () => {
++        expect(true).toBe(true);
++    });
++});
+\ No newline at end of file
+diff --git a/tsconfig.json b/tsconfig.json
+index e65fa53..5a306b2 100644
+--- a/tsconfig.json
++++ b/tsconfig.json
+@@ -10,3 +10,2 @@
+         "declaration": true,
+-        "noUnusedParameters": true,
+         "outDir": "dist",

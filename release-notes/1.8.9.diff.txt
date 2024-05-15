@@ -1,0 +1,353 @@
+diff --git a/package.json b/package.json
+index e604a3a..54fb07f 100644
+--- a/package.json
++++ b/package.json
+@@ -2,3 +2,3 @@
+     "name": "@flatfile/api",
+-    "version": "1.8.6",
++    "version": "1.8.9",
+     "private": false,
+diff --git a/src/api/resources/accounts/client/Client.ts b/src/api/resources/accounts/client/Client.ts
+index c313257..8780d49 100644
+--- a/src/api/resources/accounts/client/Client.ts
++++ b/src/api/resources/accounts/client/Client.ts
+@@ -45,3 +45,3 @@ export class Accounts {
+@@ -108,3 +108,3 @@ export class Accounts {
+diff --git a/src/api/resources/agents/client/Client.ts b/src/api/resources/agents/client/Client.ts
+index 88f0903..ac85d12 100644
+--- a/src/api/resources/agents/client/Client.ts
++++ b/src/api/resources/agents/client/Client.ts
+@@ -45,3 +45,3 @@ export class Agents {
+diff --git a/src/api/resources/apps/client/Client.ts b/src/api/resources/apps/client/Client.ts
+index b982b95..902f8d2 100644
+--- a/src/api/resources/apps/client/Client.ts
++++ b/src/api/resources/apps/client/Client.ts
+@@ -42,3 +42,3 @@ export class Apps {
+diff --git a/src/api/resources/assistant/client/Client.ts b/src/api/resources/assistant/client/Client.ts
+index 995785f..c084461 100644
+--- a/src/api/resources/assistant/client/Client.ts
++++ b/src/api/resources/assistant/client/Client.ts
+@@ -58,3 +58,3 @@ export class Assistant {
+@@ -120,3 +120,3 @@ export class Assistant {
+@@ -184,3 +184,3 @@ export class Assistant {
+@@ -248,3 +248,3 @@ export class Assistant {
+@@ -310,3 +310,3 @@ export class Assistant {
+diff --git a/src/api/resources/auth/client/Client.ts b/src/api/resources/auth/client/Client.ts
+index 57136cc..39822e0 100644
+--- a/src/api/resources/auth/client/Client.ts
++++ b/src/api/resources/auth/client/Client.ts
+@@ -54,3 +54,3 @@ export class Auth {
+@@ -145,3 +145,3 @@ export class Auth {
+@@ -238,3 +238,3 @@ export class Auth {
+@@ -331,3 +331,3 @@ export class Auth {
+diff --git a/src/api/resources/cells/client/Client.ts b/src/api/resources/cells/client/Client.ts
+index 20c64e3..80f6170 100644
+--- a/src/api/resources/cells/client/Client.ts
++++ b/src/api/resources/cells/client/Client.ts
+@@ -107,3 +107,3 @@ export class Cells {
+diff --git a/src/api/resources/commits/client/Client.ts b/src/api/resources/commits/client/Client.ts
+index d3dc976..4360bf8 100644
+--- a/src/api/resources/commits/client/Client.ts
++++ b/src/api/resources/commits/client/Client.ts
+@@ -50,3 +50,3 @@ export class Commits {
+@@ -133,3 +133,3 @@ export class Commits {
+@@ -216,3 +216,3 @@ export class Commits {
+diff --git a/src/api/resources/dataRetentionPolicies/client/Client.ts b/src/api/resources/dataRetentionPolicies/client/Client.ts
+index 2550605..38ed051 100644
+--- a/src/api/resources/dataRetentionPolicies/client/Client.ts
++++ b/src/api/resources/dataRetentionPolicies/client/Client.ts
+@@ -58,3 +58,3 @@ export class DataRetentionPolicies {
+@@ -149,3 +149,3 @@ export class DataRetentionPolicies {
+@@ -236,3 +236,3 @@ export class DataRetentionPolicies {
+@@ -327,3 +327,3 @@ export class DataRetentionPolicies {
+@@ -411,3 +411,3 @@ export class DataRetentionPolicies {
+diff --git a/src/api/resources/documents/client/Client.ts b/src/api/resources/documents/client/Client.ts
+index b4ee9a0..90fb42b 100644
+--- a/src/api/resources/documents/client/Client.ts
++++ b/src/api/resources/documents/client/Client.ts
+@@ -50,3 +50,3 @@ export class Documents {
+@@ -147,3 +147,3 @@ export class Documents {
+@@ -237,3 +237,3 @@ export class Documents {
+@@ -330,3 +330,3 @@ export class Documents {
+@@ -417,3 +417,3 @@ export class Documents {
+diff --git a/src/api/resources/entitlements/client/Client.ts b/src/api/resources/entitlements/client/Client.ts
+index 7bd0d4b..8f1043e 100644
+--- a/src/api/resources/entitlements/client/Client.ts
++++ b/src/api/resources/entitlements/client/Client.ts
+@@ -55,3 +55,3 @@ export class Entitlements {
+diff --git a/src/api/resources/environments/client/Client.ts b/src/api/resources/environments/client/Client.ts
+index aba51e9..ba0ad29 100644
+--- a/src/api/resources/environments/client/Client.ts
++++ b/src/api/resources/environments/client/Client.ts
+@@ -58,3 +58,3 @@ export class Environments {
+@@ -128,3 +128,3 @@ export class Environments {
+@@ -197,3 +197,3 @@ export class Environments {
+@@ -284,3 +284,3 @@ export class Environments {
+@@ -377,3 +377,3 @@ export class Environments {
+@@ -438,3 +438,3 @@ export class Environments {
+diff --git a/src/api/resources/events/client/Client.ts b/src/api/resources/events/client/Client.ts
+index b1b0a03..5fd8d01 100644
+--- a/src/api/resources/events/client/Client.ts
++++ b/src/api/resources/events/client/Client.ts
+@@ -82,3 +82,3 @@ export class Events {
+@@ -158,3 +158,3 @@ export class Events {
+@@ -237,3 +237,3 @@ export class Events {
+@@ -289,3 +289,3 @@ export class Events {
+@@ -362,3 +362,3 @@ export class Events {
+diff --git a/src/api/resources/events/types/Domain.ts b/src/api/resources/events/types/Domain.ts
+index faf303e..2ff68ff 100644
+--- a/src/api/resources/events/types/Domain.ts
++++ b/src/api/resources/events/types/Domain.ts
+@@ -10,3 +10,13 @@
+  */
+-export type Domain = "file" | "space" | "workbook" | "job" | "document" | "sheet" | "program" | "secret" | "cron";
++export type Domain =
++    | "file"
++    | "space"
++    | "workbook"
++    | "job"
++    | "document"
++    | "sheet"
++    | "program"
++    | "secret"
++    | "cron"
++    | "environment";
+ 
+@@ -22,2 +32,3 @@ export const Domain = {
+     Cron: "cron",
++    Environment: "environment",
+ } as const;
+diff --git a/src/api/resources/events/types/Event.ts b/src/api/resources/events/types/Event.ts
+index 20f2d64..d3ad5b5 100644
+--- a/src/api/resources/events/types/Event.ts
++++ b/src/api/resources/events/types/Event.ts
+@@ -80,3 +80,6 @@ export type Event =
+     | Flatfile.Event.SecretDeleted
+-    | Flatfile.Event.LayerCreated;
++    | Flatfile.Event.LayerCreated
++    | Flatfile.Event.EnvironmentCreated
++    | Flatfile.Event.EnvironmentUpdated
++    | Flatfile.Event.EnvironmentDeleted;
+ 
+@@ -270,2 +273,14 @@ export declare namespace Event {
+     }
++
++    interface EnvironmentCreated extends Flatfile.GenericEvent {
++        topic: "environment:created";
++    }
++
++    interface EnvironmentUpdated extends Flatfile.GenericEvent {
++        topic: "environment:updated";
++    }
++
++    interface EnvironmentDeleted extends Flatfile.GenericEvent {
++        topic: "environment:deleted";
++    }
+ }
+diff --git a/src/api/resources/events/types/EventTopic.ts b/src/api/resources/events/types/EventTopic.ts
+index 589a8a2..a23b0eb 100644
+--- a/src/api/resources/events/types/EventTopic.ts
++++ b/src/api/resources/events/types/EventTopic.ts
+@@ -61,3 +61,6 @@ export type EventTopic =
+     | "cron:daily"
+-    | "cron:weekly";
++    | "cron:weekly"
++    | "environment:created"
++    | "environment:updated"
++    | "environment:deleted";
+ 
+@@ -115,2 +118,5 @@ export const EventTopic = {
+     CronWeekly: "cron:weekly",
++    EnvironmentCreated: "environment:created",
++    EnvironmentUpdated: "environment:updated",
++    EnvironmentDeleted: "environment:deleted",
+ } as const;
+diff --git a/src/api/resources/files/client/Client.ts b/src/api/resources/files/client/Client.ts
+index 5c2491f..423cb61 100644
+--- a/src/api/resources/files/client/Client.ts
++++ b/src/api/resources/files/client/Client.ts
+@@ -63,3 +63,3 @@ export class Files {
+@@ -141,3 +141,3 @@ export class Files {
+@@ -214,3 +214,3 @@ export class Files {
+@@ -293,3 +293,3 @@ export class Files {
+@@ -382,3 +382,3 @@ export class Files {
+@@ -462,3 +462,3 @@ export class Files {
+diff --git a/src/api/resources/foreigndb/client/Client.ts b/src/api/resources/foreigndb/client/Client.ts
+index 6dcfeb5..e1d2482 100644
+--- a/src/api/resources/foreigndb/client/Client.ts
++++ b/src/api/resources/foreigndb/client/Client.ts
+@@ -48,3 +48,3 @@ export class Foreigndb {
+diff --git a/src/api/resources/guests/client/Client.ts b/src/api/resources/guests/client/Client.ts
+index d83d989..9a1ea23 100644
+--- a/src/api/resources/guests/client/Client.ts
++++ b/src/api/resources/guests/client/Client.ts
+@@ -57,3 +57,3 @@ export class Guests {
+diff --git a/src/api/resources/jobs/client/Client.ts b/src/api/resources/jobs/client/Client.ts
+index b61606d..166fda9 100644
+--- a/src/api/resources/jobs/client/Client.ts
++++ b/src/api/resources/jobs/client/Client.ts
+@@ -76,3 +76,3 @@ export class Jobs {
+diff --git a/src/api/resources/jobs/types/DeleteRecordsJobConfig.ts b/src/api/resources/jobs/types/DeleteRecordsJobConfig.ts
+index 5b2cd39..3d120d2 100644
+--- a/src/api/resources/jobs/types/DeleteRecordsJobConfig.ts
++++ b/src/api/resources/jobs/types/DeleteRecordsJobConfig.ts
+@@ -10,3 +10,5 @@ import * as Flatfile from "../../..";
+ export interface DeleteRecordsJobConfig {
++    /** Options to filter records (default=none) */
+     filter?: Flatfile.Filter;
++    /** Use this to narrow the valid/error filter results to a specific field (Requires filter to be set) */
+     filterField?: Flatfile.FilterField;
+diff --git a/src/api/resources/jobs/types/JobOutcomeNextFiles.ts b/src/api/resources/jobs/types/JobOutcomeNextFiles.ts
+index 3c90bcd..5c92c3d 100644
+--- a/src/api/resources/jobs/types/JobOutcomeNextFiles.ts
++++ b/src/api/resources/jobs/types/JobOutcomeNextFiles.ts
+@@ -7,3 +7,3 @@ import * as Flatfile from "../../..";
+ export interface JobOutcomeNextFiles {
+-    file: Flatfile.JobOutcomeNextFileObject[];
++    files: Flatfile.JobOutcomeNextFileObject[];
+     label?: string;
+diff --git a/src/api/resources/mapping/client/Client.ts b/src/api/resources/mapping/client/Client.ts
+index 8a1def7..eccee8f 100644
+--- a/src/api/resources/mapping/client/Client.ts
++++ b/src/api/resources/mapping/client/Client.ts
+@@ -47,3 +47,3 @@ export class Mapping {
+diff --git a/src/api/resources/records/client/Client.ts b/src/api/resources/records/client/Client.ts
+index f8f4994..fe627e1 100644
+--- a/src/api/resources/records/client/Client.ts
++++ b/src/api/resources/records/client/Client.ts
+@@ -153,3 +153,3 @@ export class Records {
+diff --git a/src/api/resources/roles/client/Client.ts b/src/api/resources/roles/client/Client.ts
+index 613eb29..78cb8fa 100644
+--- a/src/api/resources/roles/client/Client.ts
++++ b/src/api/resources/roles/client/Client.ts
+@@ -42,3 +42,3 @@ export class Roles {
+diff --git a/src/api/resources/secrets/client/Client.ts b/src/api/resources/secrets/client/Client.ts
+index c2ef562..ff960e9 100644
+--- a/src/api/resources/secrets/client/Client.ts
++++ b/src/api/resources/secrets/client/Client.ts
+@@ -62,3 +62,3 @@ export class Secrets {
+@@ -154,3 +154,3 @@ export class Secrets {
+@@ -241,3 +241,3 @@ export class Secrets {
+diff --git a/src/api/resources/sheets/client/Client.ts b/src/api/resources/sheets/client/Client.ts
+index e368501..c489149 100644
+--- a/src/api/resources/sheets/client/Client.ts
++++ b/src/api/resources/sheets/client/Client.ts
+@@ -54,3 +54,3 @@ export class Sheets {
+diff --git a/src/api/resources/snapshots/client/Client.ts b/src/api/resources/snapshots/client/Client.ts
+index e2e0549..823cec8 100644
+--- a/src/api/resources/snapshots/client/Client.ts
++++ b/src/api/resources/snapshots/client/Client.ts
+@@ -53,3 +53,3 @@ export class Snapshots {
+diff --git a/src/api/resources/spaces/client/Client.ts b/src/api/resources/spaces/client/Client.ts
+index ad833e9..20f23ef 100644
+--- a/src/api/resources/spaces/client/Client.ts
++++ b/src/api/resources/spaces/client/Client.ts
+@@ -99,3 +99,3 @@ export class Spaces {
+diff --git a/src/api/resources/users/client/Client.ts b/src/api/resources/users/client/Client.ts
+index 1a1e55f..1f670c3 100644
+--- a/src/api/resources/users/client/Client.ts
++++ b/src/api/resources/users/client/Client.ts
+@@ -56,3 +56,3 @@ export class Users {
+diff --git a/src/api/resources/versions/client/Client.ts b/src/api/resources/versions/client/Client.ts
+index 405f58a..feafcbd 100644
+--- a/src/api/resources/versions/client/Client.ts
++++ b/src/api/resources/versions/client/Client.ts
+@@ -42,3 +42,3 @@ export class Versions {
+diff --git a/src/api/resources/views/client/Client.ts b/src/api/resources/views/client/Client.ts
+index 0b8bf1e..2d53700 100644
+--- a/src/api/resources/views/client/Client.ts
++++ b/src/api/resources/views/client/Client.ts
+@@ -63,3 +63,3 @@ export class Views {
+diff --git a/src/api/resources/workbooks/client/Client.ts b/src/api/resources/workbooks/client/Client.ts
+index fa558b3..f16b68c 100644
+--- a/src/api/resources/workbooks/client/Client.ts
++++ b/src/api/resources/workbooks/client/Client.ts
+@@ -61,3 +61,3 @@ export class Workbooks {
+diff --git a/src/serialization/resources/events/types/Domain.ts b/src/serialization/resources/events/types/Domain.ts
+index 25cf0c0..ec67301 100644
+--- a/src/serialization/resources/events/types/Domain.ts
++++ b/src/serialization/resources/events/types/Domain.ts
+@@ -18,2 +18,3 @@ export const Domain: core.serialization.Schema<serializers.Domain.Raw, Flatfile.
+     "cron",
++    "environment",
+ ]);
+@@ -21,3 +22,13 @@ export const Domain: core.serialization.Schema<serializers.Domain.Raw, Flatfile.
+ export declare namespace Domain {
+-    type Raw = "file" | "space" | "workbook" | "job" | "document" | "sheet" | "program" | "secret" | "cron";
++    type Raw =
++        | "file"
++        | "space"
++        | "workbook"
++        | "job"
++        | "document"
++        | "sheet"
++        | "program"
++        | "secret"
++        | "cron"
++        | "environment";
+ }
+diff --git a/src/serialization/resources/events/types/Event.ts b/src/serialization/resources/events/types/Event.ts
+index b8a6225..351c7d8 100644
+--- a/src/serialization/resources/events/types/Event.ts
++++ b/src/serialization/resources/events/types/Event.ts
+@@ -58,2 +58,5 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
+         "layer:created": GenericEvent,
++        "environment:created": GenericEvent,
++        "environment:updated": GenericEvent,
++        "environment:deleted": GenericEvent,
+     })
+@@ -112,3 +115,6 @@ export declare namespace Event {
+         | Event.SecretDeleted
+-        | Event.LayerCreated;
++        | Event.LayerCreated
++        | Event.EnvironmentCreated
++        | Event.EnvironmentUpdated
++        | Event.EnvironmentDeleted;
+ 
+@@ -301,2 +307,14 @@ export declare namespace Event {
+     }
++
++    interface EnvironmentCreated extends GenericEvent.Raw {
++        topic: "environment:created";
++    }
++
++    interface EnvironmentUpdated extends GenericEvent.Raw {
++        topic: "environment:updated";
++    }
++
++    interface EnvironmentDeleted extends GenericEvent.Raw {
++        topic: "environment:deleted";
++    }
+ }
+diff --git a/src/serialization/resources/events/types/EventTopic.ts b/src/serialization/resources/events/types/EventTopic.ts
+index 5805426..909a3cf 100644
+--- a/src/serialization/resources/events/types/EventTopic.ts
++++ b/src/serialization/resources/events/types/EventTopic.ts
+@@ -61,2 +61,5 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
+         "cron:weekly",
++        "environment:created",
++        "environment:updated",
++        "environment:deleted",
+     ]);
+@@ -115,3 +118,6 @@ export declare namespace EventTopic {
+         | "cron:daily"
+-        | "cron:weekly";
++        | "cron:weekly"
++        | "environment:created"
++        | "environment:updated"
++        | "environment:deleted";
+ }
+diff --git a/src/serialization/resources/jobs/types/JobOutcomeNextFiles.ts b/src/serialization/resources/jobs/types/JobOutcomeNextFiles.ts
+index 081b1c1..6275a6d 100644
+--- a/src/serialization/resources/jobs/types/JobOutcomeNextFiles.ts
++++ b/src/serialization/resources/jobs/types/JobOutcomeNextFiles.ts
+@@ -13,3 +13,3 @@ export const JobOutcomeNextFiles: core.serialization.ObjectSchema<
+ > = core.serialization.object({
+-    file: core.serialization.list(JobOutcomeNextFileObject),
++    files: core.serialization.list(JobOutcomeNextFileObject),
+     label: core.serialization.string().optional(),
+@@ -19,3 +19,3 @@ export declare namespace JobOutcomeNextFiles {
+     interface Raw {
+-        file: JobOutcomeNextFileObject.Raw[];
++        files: JobOutcomeNextFileObject.Raw[];
+         label?: string | null;

@@ -1,0 +1,547 @@
+diff --git a/package.json b/package.json
+index 90192f9..aa14b0c 100644
+--- a/package.json
++++ b/package.json
+@@ -2,3 +2,3 @@
+     "name": "@flatfile/api",
+-    "version": "1.6.4",
++    "version": "1.6.5",
+     "private": false,
+diff --git a/src/api/resources/agents/client/Client.ts b/src/api/resources/agents/client/Client.ts
+index 82f9028..3702d6d 100644
+--- a/src/api/resources/agents/client/Client.ts
++++ b/src/api/resources/agents/client/Client.ts
+@@ -46,3 +46,3 @@ export class Agents {
+             },
+@@ -126,3 +126,3 @@ export class Agents {
+             },
+@@ -207,3 +207,3 @@ export class Agents {
+             },
+@@ -297,3 +297,3 @@ export class Agents {
+             },
+@@ -387,3 +387,3 @@ export class Agents {
+             },
+@@ -496,3 +496,3 @@ export class Agents {
+             },
+@@ -605,3 +605,3 @@ export class Agents {
+             },
+@@ -696,3 +696,3 @@ export class Agents {
+             },
+diff --git a/src/api/resources/apps/client/Client.ts b/src/api/resources/apps/client/Client.ts
+index 047964b..ac36ef7 100644
+--- a/src/api/resources/apps/client/Client.ts
++++ b/src/api/resources/apps/client/Client.ts
+@@ -43,3 +43,3 @@ export class Apps {
+             },
+@@ -99,3 +99,3 @@ export class Apps {
+             },
+@@ -168,3 +168,3 @@ export class Apps {
+             },
+@@ -238,3 +238,3 @@ export class Apps {
+             },
+diff --git a/src/api/resources/auth/client/Client.ts b/src/api/resources/auth/client/Client.ts
+index b6c7d28..562d015 100644
+--- a/src/api/resources/auth/client/Client.ts
++++ b/src/api/resources/auth/client/Client.ts
+@@ -55,3 +55,3 @@ export class Auth {
+             },
+@@ -144,3 +144,3 @@ export class Auth {
+             },
+@@ -235,3 +235,3 @@ export class Auth {
+             },
+@@ -326,3 +326,3 @@ export class Auth {
+             },
+diff --git a/src/api/resources/cells/client/Client.ts b/src/api/resources/cells/client/Client.ts
+index 146afff..704290d 100644
+--- a/src/api/resources/cells/client/Client.ts
++++ b/src/api/resources/cells/client/Client.ts
+@@ -108,3 +108,3 @@ export class Cells {
+             },
+diff --git a/src/api/resources/commits/client/Client.ts b/src/api/resources/commits/client/Client.ts
+index c807ca7..d225390 100644
+--- a/src/api/resources/commits/client/Client.ts
++++ b/src/api/resources/commits/client/Client.ts
+@@ -51,3 +51,3 @@ export class Commits {
+             },
+@@ -132,3 +132,3 @@ export class Commits {
+             },
+@@ -213,3 +213,3 @@ export class Commits {
+             },
+diff --git a/src/api/resources/dataRetentionPolicies/client/Client.ts b/src/api/resources/dataRetentionPolicies/client/Client.ts
+index 71644a6..46806f2 100644
+--- a/src/api/resources/dataRetentionPolicies/client/Client.ts
++++ b/src/api/resources/dataRetentionPolicies/client/Client.ts
+@@ -59,3 +59,3 @@ export class DataRetentionPolicies {
+             },
+@@ -148,3 +148,3 @@ export class DataRetentionPolicies {
+             },
+@@ -233,3 +233,3 @@ export class DataRetentionPolicies {
+             },
+@@ -322,3 +322,3 @@ export class DataRetentionPolicies {
+             },
+@@ -404,3 +404,3 @@ export class DataRetentionPolicies {
+             },
+diff --git a/src/api/resources/documents/client/Client.ts b/src/api/resources/documents/client/Client.ts
+index 6db141e..70da491 100644
+--- a/src/api/resources/documents/client/Client.ts
++++ b/src/api/resources/documents/client/Client.ts
+@@ -51,3 +51,3 @@ export class Documents {
+             },
+@@ -146,3 +146,3 @@ export class Documents {
+             },
+@@ -234,3 +234,3 @@ export class Documents {
+             },
+@@ -325,3 +325,3 @@ export class Documents {
+             },
+@@ -410,3 +410,3 @@ export class Documents {
+             },
+diff --git a/src/api/resources/environments/client/Client.ts b/src/api/resources/environments/client/Client.ts
+index 0da9022..411d114 100644
+--- a/src/api/resources/environments/client/Client.ts
++++ b/src/api/resources/environments/client/Client.ts
+@@ -59,3 +59,3 @@ export class Environments {
+             },
+@@ -127,3 +127,3 @@ export class Environments {
+             },
+@@ -194,3 +194,3 @@ export class Environments {
+             },
+@@ -279,3 +279,3 @@ export class Environments {
+             },
+@@ -370,3 +370,3 @@ export class Environments {
+             },
+@@ -429,3 +429,3 @@ export class Environments {
+             },
+diff --git a/src/api/resources/events/client/Client.ts b/src/api/resources/events/client/Client.ts
+index 57e5cd0..32eac34 100644
+--- a/src/api/resources/events/client/Client.ts
++++ b/src/api/resources/events/client/Client.ts
+@@ -83,3 +83,3 @@ export class Events {
+             },
+@@ -157,3 +157,3 @@ export class Events {
+             },
+@@ -234,3 +234,3 @@ export class Events {
+             },
+@@ -284,3 +284,3 @@ export class Events {
+             },
+@@ -355,3 +355,3 @@ export class Events {
+             },
+diff --git a/src/api/resources/files/client/Client.ts b/src/api/resources/files/client/Client.ts
+index 3aa8787..be63f62 100644
+--- a/src/api/resources/files/client/Client.ts
++++ b/src/api/resources/files/client/Client.ts
+@@ -64,3 +64,3 @@ export class Files {
+             },
+@@ -136,3 +136,3 @@ export class Files {
+                 "Content-Length": (await core.getFormDataContentLength(_request)).toString(),
+@@ -208,3 +208,3 @@ export class Files {
+             },
+@@ -285,3 +285,3 @@ export class Files {
+             },
+@@ -372,3 +372,3 @@ export class Files {
+             },
+@@ -446,3 +446,3 @@ export class Files {
+             },
+diff --git a/src/api/resources/guests/client/Client.ts b/src/api/resources/guests/client/Client.ts
+index 0ef6980..46e7179 100644
+--- a/src/api/resources/guests/client/Client.ts
++++ b/src/api/resources/guests/client/Client.ts
+@@ -58,3 +58,3 @@ export class Guests {
+             },
+@@ -129,3 +129,3 @@ export class Guests {
+             },
+@@ -189,3 +189,3 @@ export class Guests {
+             },
+@@ -245,3 +245,3 @@ export class Guests {
+             },
+@@ -308,3 +308,3 @@ export class Guests {
+             },
+@@ -375,3 +375,3 @@ export class Guests {
+             },
+@@ -437,3 +437,3 @@ export class Guests {
+             },
+diff --git a/src/api/resources/jobs/client/Client.ts b/src/api/resources/jobs/client/Client.ts
+index 0dff983..5af900f 100644
+--- a/src/api/resources/jobs/client/Client.ts
++++ b/src/api/resources/jobs/client/Client.ts
+@@ -77,3 +77,3 @@ export class Jobs {
+             },
+@@ -131,3 +131,3 @@ export class Jobs {
+             },
+@@ -182,3 +182,3 @@ export class Jobs {
+             },
+@@ -236,3 +236,3 @@ export class Jobs {
+             },
+@@ -287,3 +287,3 @@ export class Jobs {
+             },
+@@ -343,3 +343,3 @@ export class Jobs {
+             },
+@@ -402,3 +402,3 @@ export class Jobs {
+             },
+@@ -499,3 +499,3 @@ export class Jobs {
+             },
+@@ -557,3 +557,3 @@ export class Jobs {
+             },
+@@ -624,3 +624,3 @@ export class Jobs {
+             },
+@@ -687,3 +687,3 @@ export class Jobs {
+             },
+@@ -759,3 +759,3 @@ export class Jobs {
+             },
+@@ -835,3 +835,3 @@ export class Jobs {
+             },
+@@ -901,3 +901,3 @@ export class Jobs {
+             },
+@@ -958,3 +958,3 @@ export class Jobs {
+             },
+@@ -1014,3 +1014,3 @@ export class Jobs {
+             },
+@@ -1077,3 +1077,3 @@ export class Jobs {
+             },
+diff --git a/src/api/resources/mapping/client/Client.ts b/src/api/resources/mapping/client/Client.ts
+index ea8ab8d..55d1488 100644
+--- a/src/api/resources/mapping/client/Client.ts
++++ b/src/api/resources/mapping/client/Client.ts
+@@ -48,3 +48,3 @@ export class Mapping {
+             },
+@@ -182,3 +182,3 @@ export class Mapping {
+             },
+@@ -254,3 +254,3 @@ export class Mapping {
+             },
+@@ -336,3 +336,3 @@ export class Mapping {
+             },
+@@ -418,3 +418,3 @@ export class Mapping {
+             },
+@@ -500,3 +500,3 @@ export class Mapping {
+             },
+@@ -585,3 +585,3 @@ export class Mapping {
+             },
+@@ -672,3 +672,3 @@ export class Mapping {
+             },
+@@ -764,3 +764,3 @@ export class Mapping {
+             },
+@@ -852,3 +852,3 @@ export class Mapping {
+             },
+diff --git a/src/api/resources/property/types/Constraint.ts b/src/api/resources/property/types/Constraint.ts
+index 5b3250b..e4e4044 100644
+--- a/src/api/resources/property/types/Constraint.ts
++++ b/src/api/resources/property/types/Constraint.ts
+@@ -6,3 +6,7 @@ import * as Flatfile from "../../..";
+ 
+-export type Constraint = Flatfile.Constraint.Required | Flatfile.Constraint.Unique | Flatfile.Constraint.Computed;
++export type Constraint =
++    | Flatfile.Constraint.Required
++    | Flatfile.Constraint.Unique
++    | Flatfile.Constraint.Computed
++    | Flatfile.Constraint.External;
+ 
+@@ -20,2 +24,6 @@ export declare namespace Constraint {
+     }
++
++    interface External extends Flatfile.ExternalConstraint {
++        type: "external";
++    }
+ }
+diff --git a/src/api/resources/property/types/ExternalConstraint.ts b/src/api/resources/property/types/ExternalConstraint.ts
+new file mode 100644
+index 0000000..2e4105b
+--- /dev/null
++++ b/src/api/resources/property/types/ExternalConstraint.ts
+@@ -0,0 +1,8 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++export interface ExternalConstraint {
++    validator: string;
++    config?: any;
++}
+diff --git a/src/api/resources/property/types/index.ts b/src/api/resources/property/types/index.ts
+index 63ebc32..2909edc 100644
+--- a/src/api/resources/property/types/index.ts
++++ b/src/api/resources/property/types/index.ts
+@@ -17,2 +17,3 @@ export * from "./Constraint";
+ export * from "./UniqueConstraint";
++export * from "./ExternalConstraint";
+ export * from "./UniqueConstraintConfig";
+diff --git a/src/api/resources/records/client/Client.ts b/src/api/resources/records/client/Client.ts
+index 241a408..c1534eb 100644
+--- a/src/api/resources/records/client/Client.ts
++++ b/src/api/resources/records/client/Client.ts
+@@ -154,3 +154,3 @@ export class Records {
+             },
+@@ -263,3 +263,3 @@ export class Records {
+             },
+@@ -365,3 +365,3 @@ export class Records {
+             },
+@@ -463,3 +463,3 @@ export class Records {
+             },
+@@ -575,3 +575,3 @@ export class Records {
+             },
+diff --git a/src/api/resources/roles/client/Client.ts b/src/api/resources/roles/client/Client.ts
+index 7b65cd1..8996d0c 100644
+--- a/src/api/resources/roles/client/Client.ts
++++ b/src/api/resources/roles/client/Client.ts
+@@ -49,3 +49,3 @@ export class Roles {
+             },
+diff --git a/src/api/resources/secrets/client/Client.ts b/src/api/resources/secrets/client/Client.ts
+index f1bddf1..704b1a2 100644
+--- a/src/api/resources/secrets/client/Client.ts
++++ b/src/api/resources/secrets/client/Client.ts
+@@ -60,3 +60,3 @@ export class Secrets {
+             },
+@@ -150,3 +150,3 @@ export class Secrets {
+             },
+@@ -235,3 +235,3 @@ export class Secrets {
+             },
+diff --git a/src/api/resources/sheets/client/Client.ts b/src/api/resources/sheets/client/Client.ts
+index 4b87592..ab5aba6 100644
+--- a/src/api/resources/sheets/client/Client.ts
++++ b/src/api/resources/sheets/client/Client.ts
+@@ -55,3 +55,3 @@ export class Sheets {
+             },
+@@ -115,3 +115,3 @@ export class Sheets {
+             },
+@@ -173,3 +173,3 @@ export class Sheets {
+             },
+@@ -257,3 +257,3 @@ export class Sheets {
+             },
+@@ -399,3 +399,3 @@ export class Sheets {
+             },
+@@ -484,3 +484,3 @@ export class Sheets {
+             },
+@@ -544,3 +544,3 @@ export class Sheets {
+             },
+@@ -634,3 +634,3 @@ export class Sheets {
+             },
+@@ -696,3 +696,3 @@ export class Sheets {
+             },
+@@ -780,3 +780,3 @@ export class Sheets {
+             },
+@@ -921,3 +921,3 @@ export class Sheets {
+             },
+diff --git a/src/api/resources/sheets/types/ExternalSheetConstraint.ts b/src/api/resources/sheets/types/ExternalSheetConstraint.ts
+new file mode 100644
+index 0000000..73fc079
+--- /dev/null
++++ b/src/api/resources/sheets/types/ExternalSheetConstraint.ts
+@@ -0,0 +1,10 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++export interface ExternalSheetConstraint {
++    validator: string;
++    /** The fields that must be unique together */
++    fields?: string[];
++    config?: any;
++}
+diff --git a/src/api/resources/sheets/types/SheetConstraint.ts b/src/api/resources/sheets/types/SheetConstraint.ts
+index b8aafea..1ceb8a4 100644
+--- a/src/api/resources/sheets/types/SheetConstraint.ts
++++ b/src/api/resources/sheets/types/SheetConstraint.ts
+@@ -6,3 +6,3 @@ import * as Flatfile from "../../..";
+ 
+-export type SheetConstraint = Flatfile.SheetConstraint.Unique;
++export type SheetConstraint = Flatfile.SheetConstraint.Unique | Flatfile.SheetConstraint.External;
+ 
+@@ -12,2 +12,6 @@ export declare namespace SheetConstraint {
+     }
++
++    interface External extends Flatfile.ExternalSheetConstraint {
++        type: "external";
++    }
+ }
+diff --git a/src/api/resources/sheets/types/index.ts b/src/api/resources/sheets/types/index.ts
+index 5012dec..a7e8e59 100644
+--- a/src/api/resources/sheets/types/index.ts
++++ b/src/api/resources/sheets/types/index.ts
+@@ -6,2 +6,3 @@ export * from "./SheetConfigUpdate";
+ export * from "./SheetConstraint";
++export * from "./ExternalSheetConstraint";
+ export * from "./CompositeUniqueConstraint";
+diff --git a/src/api/resources/snapshots/client/Client.ts b/src/api/resources/snapshots/client/Client.ts
+index 4860bfe..fdc31c0 100644
+--- a/src/api/resources/snapshots/client/Client.ts
++++ b/src/api/resources/snapshots/client/Client.ts
+@@ -54,3 +54,3 @@ export class Snapshots {
+             },
+@@ -144,3 +144,3 @@ export class Snapshots {
+             },
+@@ -235,3 +235,3 @@ export class Snapshots {
+             },
+@@ -320,3 +320,3 @@ export class Snapshots {
+             },
+@@ -409,3 +409,3 @@ export class Snapshots {
+             },
+@@ -518,3 +518,3 @@ export class Snapshots {
+             },
+diff --git a/src/api/resources/spaces/client/Client.ts b/src/api/resources/spaces/client/Client.ts
+index a8554de..d08e73f 100644
+--- a/src/api/resources/spaces/client/Client.ts
++++ b/src/api/resources/spaces/client/Client.ts
+@@ -100,3 +100,3 @@ export class Spaces {
+             },
+@@ -180,3 +180,3 @@ export class Spaces {
+             },
+@@ -265,3 +265,3 @@ export class Spaces {
+             },
+@@ -346,3 +346,3 @@ export class Spaces {
+             },
+@@ -440,3 +440,3 @@ export class Spaces {
+             },
+@@ -528,3 +528,3 @@ export class Spaces {
+             },
+@@ -613,3 +613,3 @@ export class Spaces {
+             },
+diff --git a/src/api/resources/users/client/Client.ts b/src/api/resources/users/client/Client.ts
+index 9b1226d..6e6c871 100644
+--- a/src/api/resources/users/client/Client.ts
++++ b/src/api/resources/users/client/Client.ts
+@@ -57,3 +57,3 @@ export class Users {
+             },
+@@ -114,3 +114,3 @@ export class Users {
+             },
+@@ -182,3 +182,3 @@ export class Users {
+             },
+@@ -243,3 +243,3 @@ export class Users {
+             },
+@@ -300,3 +300,3 @@ export class Users {
+             },
+diff --git a/src/api/resources/versions/client/Client.ts b/src/api/resources/versions/client/Client.ts
+index 55dde14..edd7848 100644
+--- a/src/api/resources/versions/client/Client.ts
++++ b/src/api/resources/versions/client/Client.ts
+@@ -43,3 +43,3 @@ export class Versions {
+             },
+diff --git a/src/api/resources/workbooks/client/Client.ts b/src/api/resources/workbooks/client/Client.ts
+index 125c639..c973339 100644
+--- a/src/api/resources/workbooks/client/Client.ts
++++ b/src/api/resources/workbooks/client/Client.ts
+@@ -63,3 +63,3 @@ export class Workbooks {
+             },
+@@ -168,3 +168,3 @@ export class Workbooks {
+             },
+@@ -243,3 +243,3 @@ export class Workbooks {
+             },
+@@ -327,3 +327,3 @@ export class Workbooks {
+             },
+@@ -422,3 +422,3 @@ export class Workbooks {
+             },
+@@ -512,3 +512,3 @@ export class Workbooks {
+             },
+@@ -571,3 +571,3 @@ export class Workbooks {
+             },
+diff --git a/src/serialization/resources/property/types/Constraint.ts b/src/serialization/resources/property/types/Constraint.ts
+index e213167..ae3a4ce 100644
+--- a/src/serialization/resources/property/types/Constraint.ts
++++ b/src/serialization/resources/property/types/Constraint.ts
+@@ -13,2 +13,3 @@ export const Constraint: core.serialization.Schema<serializers.Constraint.Raw, F
+         computed: core.serialization.object({}),
++        external: core.serialization.lazyObject(async () => (await import("../../..")).ExternalConstraint),
+     })
+@@ -20,3 +21,3 @@ export const Constraint: core.serialization.Schema<serializers.Constraint.Raw, F
+ export declare namespace Constraint {
+-    type Raw = Constraint.Required | Constraint.Unique | Constraint.Computed;
++    type Raw = Constraint.Required | Constraint.Unique | Constraint.Computed | Constraint.External;
+ 
+@@ -33,2 +34,6 @@ export declare namespace Constraint {
+     }
++
++    interface External extends serializers.ExternalConstraint.Raw {
++        type: "external";
++    }
+ }
+diff --git a/src/serialization/resources/property/types/ExternalConstraint.ts b/src/serialization/resources/property/types/ExternalConstraint.ts
+new file mode 100644
+index 0000000..896c92f
+--- /dev/null
++++ b/src/serialization/resources/property/types/ExternalConstraint.ts
+@@ -0,0 +1,22 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++import * as serializers from "../../..";
++import * as Flatfile from "../../../../api";
++import * as core from "../../../../core";
++
++export const ExternalConstraint: core.serialization.ObjectSchema<
++    serializers.ExternalConstraint.Raw,
++    Flatfile.ExternalConstraint
++> = core.serialization.object({
++    validator: core.serialization.string(),
++    config: core.serialization.any().optional(),
++});
++
++export declare namespace ExternalConstraint {
++    interface Raw {
++        validator: string;
++        config?: any | null;
++    }
++}
+diff --git a/src/serialization/resources/property/types/index.ts b/src/serialization/resources/property/types/index.ts
+index 63ebc32..2909edc 100644
+--- a/src/serialization/resources/property/types/index.ts
++++ b/src/serialization/resources/property/types/index.ts
+@@ -17,2 +17,3 @@ export * from "./Constraint";
+ export * from "./UniqueConstraint";
++export * from "./ExternalConstraint";
+ export * from "./UniqueConstraintConfig";
+diff --git a/src/serialization/resources/sheets/types/ExternalSheetConstraint.ts b/src/serialization/resources/sheets/types/ExternalSheetConstraint.ts
+new file mode 100644
+index 0000000..a7a83c7
+--- /dev/null
++++ b/src/serialization/resources/sheets/types/ExternalSheetConstraint.ts
+@@ -0,0 +1,24 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++import * as serializers from "../../..";
++import * as Flatfile from "../../../../api";
++import * as core from "../../../../core";
++
++export const ExternalSheetConstraint: core.serialization.ObjectSchema<
++    serializers.ExternalSheetConstraint.Raw,
++    Flatfile.ExternalSheetConstraint
++> = core.serialization.object({
++    validator: core.serialization.string(),
++    fields: core.serialization.list(core.serialization.string()).optional(),
++    config: core.serialization.any().optional(),
++});
++
++export declare namespace ExternalSheetConstraint {
++    interface Raw {
++        validator: string;
++        fields?: string[] | null;
++        config?: any | null;
++    }
++}
+diff --git a/src/serialization/resources/sheets/types/SheetConstraint.ts b/src/serialization/resources/sheets/types/SheetConstraint.ts
+index 49b19c0..a55e17d 100644
+--- a/src/serialization/resources/sheets/types/SheetConstraint.ts
++++ b/src/serialization/resources/sheets/types/SheetConstraint.ts
+@@ -12,2 +12,3 @@ export const SheetConstraint: core.serialization.Schema<serializers.SheetConstra
+             unique: core.serialization.lazyObject(async () => (await import("../../..")).CompositeUniqueConstraint),
++            external: core.serialization.lazyObject(async () => (await import("../../..")).ExternalSheetConstraint),
+         })
+@@ -19,3 +20,3 @@ export const SheetConstraint: core.serialization.Schema<serializers.SheetConstra
+ export declare namespace SheetConstraint {
+-    type Raw = SheetConstraint.Unique;
++    type Raw = SheetConstraint.Unique | SheetConstraint.External;
+ 
+@@ -24,2 +25,6 @@ export declare namespace SheetConstraint {
+     }
++
++    interface External extends serializers.ExternalSheetConstraint.Raw {
++        type: "external";
++    }
+ }
+diff --git a/src/serialization/resources/sheets/types/index.ts b/src/serialization/resources/sheets/types/index.ts
+index 5012dec..a7e8e59 100644
+--- a/src/serialization/resources/sheets/types/index.ts
++++ b/src/serialization/resources/sheets/types/index.ts
+@@ -6,2 +6,3 @@ export * from "./SheetConfigUpdate";
+ export * from "./SheetConstraint";
++export * from "./ExternalSheetConstraint";
+ export * from "./CompositeUniqueConstraint";

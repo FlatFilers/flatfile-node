@@ -11,3 +11,5 @@ node_modules
 /core
 /errors
 /serialization
+.claude_cache
+.env

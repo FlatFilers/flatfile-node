@@ -1,0 +1,434 @@
+diff --git a/package.json b/package.json
+index 499ab07..6b7d245 100644
+--- a/package.json
++++ b/package.json
+@@ -2,3 +2,3 @@
+     "name": "@flatfile/api",
+-    "version": "1.7.4",
++    "version": "1.7.5",
+     "private": false,
+diff --git a/src/api/resources/agents/client/Client.ts b/src/api/resources/agents/client/Client.ts
+index c66627d..0fcc6d5 100644
+--- a/src/api/resources/agents/client/Client.ts
++++ b/src/api/resources/agents/client/Client.ts
+@@ -45,3 +45,3 @@ export class Agents {
+@@ -127,3 +127,3 @@ export class Agents {
+@@ -210,3 +210,3 @@ export class Agents {
+@@ -295,3 +295,3 @@ export class Agents {
+@@ -390,3 +390,3 @@ export class Agents {
+@@ -488,3 +488,3 @@ export class Agents {
+@@ -589,3 +589,3 @@ export class Agents {
+@@ -681,3 +681,3 @@ export class Agents {
+@@ -792,3 +792,3 @@ export class Agents {
+@@ -903,3 +903,3 @@ export class Agents {
+@@ -996,3 +996,3 @@ export class Agents {
+diff --git a/src/api/resources/agents/types/Agent.ts b/src/api/resources/agents/types/Agent.ts
+index b360695..f33bf8f 100644
+--- a/src/api/resources/agents/types/Agent.ts
++++ b/src/api/resources/agents/types/Agent.ts
+@@ -12,3 +12,4 @@ import * as Flatfile from "../../..";
+  *         compiler: Flatfile.Compiler.Js,
+- *         source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
++ *         source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }",
++ *         slug: "default"
+  *     }
+diff --git a/src/api/resources/agents/types/AgentConfig.ts b/src/api/resources/agents/types/AgentConfig.ts
+index 1012f6e..7599efd 100644
+--- a/src/api/resources/agents/types/AgentConfig.ts
++++ b/src/api/resources/agents/types/AgentConfig.ts
+@@ -23,2 +23,4 @@ export interface AgentConfig {
+     source?: string;
++    /** The slug of the agent */
++    slug?: string;
+ }
+diff --git a/src/api/resources/agents/types/AgentResponse.ts b/src/api/resources/agents/types/AgentResponse.ts
+index 3e7ee60..ccb15b5 100644
+--- a/src/api/resources/agents/types/AgentResponse.ts
++++ b/src/api/resources/agents/types/AgentResponse.ts
+@@ -13,3 +13,4 @@ import * as Flatfile from "../../..";
+  *             compiler: Flatfile.Compiler.Js,
+- *             source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
++ *             source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }",
++ *             slug: "default"
+  *         }
+diff --git a/src/api/resources/agents/types/ListAgentsResponse.ts b/src/api/resources/agents/types/ListAgentsResponse.ts
+index f96e094..2cf0c7d 100644
+--- a/src/api/resources/agents/types/ListAgentsResponse.ts
++++ b/src/api/resources/agents/types/ListAgentsResponse.ts
+@@ -13,3 +13,4 @@ import * as Flatfile from "../../..";
+  *                 compiler: Flatfile.Compiler.Js,
+- *                 source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
++ *                 source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }",
++ *                 slug: "default"
+  *             }]
+diff --git a/src/api/resources/apps/client/Client.ts b/src/api/resources/apps/client/Client.ts
+index 221e88f..91a3ae1 100644
+--- a/src/api/resources/apps/client/Client.ts
++++ b/src/api/resources/apps/client/Client.ts
+@@ -42,3 +42,3 @@ export class Apps {
+@@ -100,3 +100,3 @@ export class Apps {
+@@ -171,3 +171,3 @@ export class Apps {
+@@ -243,3 +243,3 @@ export class Apps {
+diff --git a/src/api/resources/auth/client/Client.ts b/src/api/resources/auth/client/Client.ts
+index 25e5b4c..b631a73 100644
+--- a/src/api/resources/auth/client/Client.ts
++++ b/src/api/resources/auth/client/Client.ts
+@@ -54,3 +54,3 @@ export class Auth {
+@@ -145,3 +145,3 @@ export class Auth {
+@@ -238,3 +238,3 @@ export class Auth {
+@@ -331,3 +331,3 @@ export class Auth {
+diff --git a/src/api/resources/cells/client/Client.ts b/src/api/resources/cells/client/Client.ts
+index 9449b71..e4bde90 100644
+--- a/src/api/resources/cells/client/Client.ts
++++ b/src/api/resources/cells/client/Client.ts
+@@ -107,3 +107,3 @@ export class Cells {
+diff --git a/src/api/resources/commits/client/Client.ts b/src/api/resources/commits/client/Client.ts
+index 315b495..303d99d 100644
+--- a/src/api/resources/commits/client/Client.ts
++++ b/src/api/resources/commits/client/Client.ts
+@@ -50,3 +50,3 @@ export class Commits {
+@@ -133,3 +133,3 @@ export class Commits {
+@@ -216,3 +216,3 @@ export class Commits {
+diff --git a/src/api/resources/dataRetentionPolicies/client/Client.ts b/src/api/resources/dataRetentionPolicies/client/Client.ts
+index 38723d5..0822184 100644
+--- a/src/api/resources/dataRetentionPolicies/client/Client.ts
++++ b/src/api/resources/dataRetentionPolicies/client/Client.ts
+@@ -58,3 +58,3 @@ export class DataRetentionPolicies {
+@@ -149,3 +149,3 @@ export class DataRetentionPolicies {
+@@ -236,3 +236,3 @@ export class DataRetentionPolicies {
+@@ -327,3 +327,3 @@ export class DataRetentionPolicies {
+@@ -411,3 +411,3 @@ export class DataRetentionPolicies {
+diff --git a/src/api/resources/documents/client/Client.ts b/src/api/resources/documents/client/Client.ts
+index d9502f4..1aa4e1d 100644
+--- a/src/api/resources/documents/client/Client.ts
++++ b/src/api/resources/documents/client/Client.ts
+@@ -50,3 +50,3 @@ export class Documents {
+@@ -147,3 +147,3 @@ export class Documents {
+@@ -237,3 +237,3 @@ export class Documents {
+@@ -330,3 +330,3 @@ export class Documents {
+@@ -417,3 +417,3 @@ export class Documents {
+diff --git a/src/api/resources/entitlements/client/Client.ts b/src/api/resources/entitlements/client/Client.ts
+index d289fdd..af35be3 100644
+--- a/src/api/resources/entitlements/client/Client.ts
++++ b/src/api/resources/entitlements/client/Client.ts
+@@ -55,3 +55,3 @@ export class Entitlements {
+diff --git a/src/api/resources/environments/client/Client.ts b/src/api/resources/environments/client/Client.ts
+index 07ed3ae..05d369a 100644
+--- a/src/api/resources/environments/client/Client.ts
++++ b/src/api/resources/environments/client/Client.ts
+@@ -58,3 +58,3 @@ export class Environments {
+@@ -128,3 +128,3 @@ export class Environments {
+@@ -197,3 +197,3 @@ export class Environments {
+@@ -284,3 +284,3 @@ export class Environments {
+@@ -377,3 +377,3 @@ export class Environments {
+@@ -438,3 +438,3 @@ export class Environments {
+diff --git a/src/api/resources/events/client/Client.ts b/src/api/resources/events/client/Client.ts
+index 6bae1da..6613e36 100644
+--- a/src/api/resources/events/client/Client.ts
++++ b/src/api/resources/events/client/Client.ts
+@@ -82,3 +82,3 @@ export class Events {
+@@ -158,3 +158,3 @@ export class Events {
+@@ -237,3 +237,3 @@ export class Events {
+@@ -289,3 +289,3 @@ export class Events {
+@@ -362,3 +362,3 @@ export class Events {
+diff --git a/src/api/resources/files/client/Client.ts b/src/api/resources/files/client/Client.ts
+index 7f84a42..827068c 100644
+--- a/src/api/resources/files/client/Client.ts
++++ b/src/api/resources/files/client/Client.ts
+@@ -63,3 +63,3 @@ export class Files {
+@@ -137,3 +137,3 @@ export class Files {
+@@ -210,3 +210,3 @@ export class Files {
+@@ -289,3 +289,3 @@ export class Files {
+@@ -378,3 +378,3 @@ export class Files {
+@@ -458,3 +458,3 @@ export class Files {
+diff --git a/src/api/resources/guests/client/Client.ts b/src/api/resources/guests/client/Client.ts
+index cfd8415..62b1781 100644
+--- a/src/api/resources/guests/client/Client.ts
++++ b/src/api/resources/guests/client/Client.ts
+@@ -57,3 +57,3 @@ export class Guests {
+@@ -130,3 +130,3 @@ export class Guests {
+@@ -192,3 +192,3 @@ export class Guests {
+@@ -250,3 +250,3 @@ export class Guests {
+@@ -315,3 +315,3 @@ export class Guests {
+@@ -384,3 +384,3 @@ export class Guests {
+@@ -446,3 +446,3 @@ export class Guests {
+@@ -541,3 +541,3 @@ export class Guests {
+@@ -639,3 +639,3 @@ export class Guests {
+@@ -735,3 +735,3 @@ export class Guests {
+diff --git a/src/api/resources/jobs/client/Client.ts b/src/api/resources/jobs/client/Client.ts
+index 4b6dbe9..0e703cb 100644
+--- a/src/api/resources/jobs/client/Client.ts
++++ b/src/api/resources/jobs/client/Client.ts
+@@ -76,3 +76,3 @@ export class Jobs {
+@@ -132,3 +132,3 @@ export class Jobs {
+@@ -185,3 +185,3 @@ export class Jobs {
+@@ -241,3 +241,3 @@ export class Jobs {
+@@ -294,3 +294,3 @@ export class Jobs {
+@@ -352,3 +352,3 @@ export class Jobs {
+@@ -413,3 +413,3 @@ export class Jobs {
+@@ -512,3 +512,3 @@ export class Jobs {
+@@ -572,3 +572,3 @@ export class Jobs {
+@@ -641,3 +641,3 @@ export class Jobs {
+@@ -706,3 +706,3 @@ export class Jobs {
+@@ -780,3 +780,3 @@ export class Jobs {
+@@ -858,3 +858,3 @@ export class Jobs {
+@@ -926,3 +926,3 @@ export class Jobs {
+@@ -985,3 +985,3 @@ export class Jobs {
+@@ -1043,3 +1043,3 @@ export class Jobs {
+@@ -1108,3 +1108,3 @@ export class Jobs {
+diff --git a/src/api/resources/mapping/client/Client.ts b/src/api/resources/mapping/client/Client.ts
+index 0fe3f38..7061efa 100644
+--- a/src/api/resources/mapping/client/Client.ts
++++ b/src/api/resources/mapping/client/Client.ts
+@@ -47,3 +47,3 @@ export class Mapping {
+@@ -128,3 +128,3 @@ export class Mapping {
+@@ -263,3 +263,3 @@ export class Mapping {
+@@ -337,3 +337,3 @@ export class Mapping {
+@@ -421,3 +421,3 @@ export class Mapping {
+@@ -505,3 +505,3 @@ export class Mapping {
+@@ -589,3 +589,3 @@ export class Mapping {
+@@ -676,3 +676,3 @@ export class Mapping {
+@@ -765,3 +765,3 @@ export class Mapping {
+@@ -859,3 +859,3 @@ export class Mapping {
+@@ -944,3 +944,3 @@ export class Mapping {
+@@ -1034,3 +1034,3 @@ export class Mapping {
+diff --git a/src/api/resources/records/client/Client.ts b/src/api/resources/records/client/Client.ts
+index 5b211a2..fcc7157 100644
+--- a/src/api/resources/records/client/Client.ts
++++ b/src/api/resources/records/client/Client.ts
+@@ -153,3 +153,3 @@ export class Records {
+@@ -264,3 +264,3 @@ export class Records {
+@@ -368,3 +368,3 @@ export class Records {
+@@ -466,3 +466,3 @@ export class Records {
+@@ -543,3 +543,3 @@ export class Records {
+     ): Promise<Flatfile.VersionResponse> {
+-        const { filter, filterField, searchValue, searchField, ids, ..._body } = request;
++        const { filter, filterField, searchValue, searchField, ids, q, ..._body } = request;
+         const _queryParams: Record<string, string | string[]> = {};
+@@ -569,2 +569,6 @@ export class Records {
+ 
++        if (q != null) {
++            _queryParams["q"] = q;
++        }
++
+         const _response = await (this._options.fetcher ?? core.fetcher)({
+@@ -580,3 +584,3 @@ export class Records {
+diff --git a/src/api/resources/records/client/requests/FindAndReplaceRecordRequest.ts b/src/api/resources/records/client/requests/FindAndReplaceRecordRequest.ts
+index c8bc80f..ff492be 100644
+--- a/src/api/resources/records/client/requests/FindAndReplaceRecordRequest.ts
++++ b/src/api/resources/records/client/requests/FindAndReplaceRecordRequest.ts
+@@ -25,2 +25,6 @@ export interface FindAndReplaceRecordRequest {
+     ids?: Flatfile.RecordId | Flatfile.RecordId[];
++    /**
++     * An FFQL query used to filter the result set
++     */
++    q?: string;
+     /** A value to find for a given field in a sheet. For exact matches, wrap the value in double quotes ("Bob") */
+diff --git a/src/api/resources/roles/client/Client.ts b/src/api/resources/roles/client/Client.ts
+index f776fa9..3c89934 100644
+--- a/src/api/resources/roles/client/Client.ts
++++ b/src/api/resources/roles/client/Client.ts
+@@ -42,3 +42,3 @@ export class Roles {
+diff --git a/src/api/resources/secrets/client/Client.ts b/src/api/resources/secrets/client/Client.ts
+index 3d99fe9..d314e72 100644
+--- a/src/api/resources/secrets/client/Client.ts
++++ b/src/api/resources/secrets/client/Client.ts
+@@ -62,3 +62,3 @@ export class Secrets {
+@@ -154,3 +154,3 @@ export class Secrets {
+@@ -241,3 +241,3 @@ export class Secrets {
+diff --git a/src/api/resources/sheets/client/Client.ts b/src/api/resources/sheets/client/Client.ts
+index 8119f2d..e323e20 100644
+--- a/src/api/resources/sheets/client/Client.ts
++++ b/src/api/resources/sheets/client/Client.ts
+@@ -54,3 +54,3 @@ export class Sheets {
+@@ -116,3 +116,3 @@ export class Sheets {
+@@ -176,3 +176,3 @@ export class Sheets {
+@@ -262,3 +262,3 @@ export class Sheets {
+@@ -406,3 +406,3 @@ export class Sheets {
+@@ -519,3 +519,3 @@ export class Sheets {
+@@ -581,3 +581,3 @@ export class Sheets {
+@@ -673,3 +673,3 @@ export class Sheets {
+@@ -737,3 +737,3 @@ export class Sheets {
+@@ -823,3 +823,3 @@ export class Sheets {
+@@ -966,3 +966,3 @@ export class Sheets {
+diff --git a/src/api/resources/snapshots/client/Client.ts b/src/api/resources/snapshots/client/Client.ts
+index 8d96a7c..1ae32f0 100644
+--- a/src/api/resources/snapshots/client/Client.ts
++++ b/src/api/resources/snapshots/client/Client.ts
+@@ -53,3 +53,3 @@ export class Snapshots {
+@@ -145,3 +145,3 @@ export class Snapshots {
+@@ -238,3 +238,3 @@ export class Snapshots {
+@@ -325,3 +325,3 @@ export class Snapshots {
+@@ -416,3 +416,3 @@ export class Snapshots {
+@@ -527,3 +527,3 @@ export class Snapshots {
+diff --git a/src/api/resources/spaces/client/Client.ts b/src/api/resources/spaces/client/Client.ts
+index 449b1dd..c80283f 100644
+--- a/src/api/resources/spaces/client/Client.ts
++++ b/src/api/resources/spaces/client/Client.ts
+@@ -99,3 +99,3 @@ export class Spaces {
+@@ -181,3 +181,3 @@ export class Spaces {
+@@ -268,3 +268,3 @@ export class Spaces {
+@@ -351,3 +351,3 @@ export class Spaces {
+@@ -447,3 +447,3 @@ export class Spaces {
+@@ -537,3 +537,3 @@ export class Spaces {
+@@ -624,3 +624,3 @@ export class Spaces {
+diff --git a/src/api/resources/users/client/Client.ts b/src/api/resources/users/client/Client.ts
+index 9ee68e2..aaedc6f 100644
+--- a/src/api/resources/users/client/Client.ts
++++ b/src/api/resources/users/client/Client.ts
+@@ -56,3 +56,3 @@ export class Users {
+@@ -97,2 +97,62 @@ export class Users {
+ 
++    /**
++     * Updates a user
++     */
++    public async update(
++        userId: Flatfile.UserId,
++        request: Flatfile.UpdateUserRequest = {},
++        requestOptions?: Users.RequestOptions
++    ): Promise<Flatfile.UserResponse> {
++        const _response = await (this._options.fetcher ?? core.fetcher)({
++            url: urlJoin(
++                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
++                `users/${await serializers.UserId.jsonOrThrow(userId)}`
++            ),
++            method: "PATCH",
++            headers: {
++                Authorization: await this._getAuthorizationHeader(),
++            },
++            contentType: "application/json",
++            body: await serializers.UpdateUserRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
++            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
++            maxRetries: requestOptions?.maxRetries,
++        });
++        if (_response.ok) {
++            return await serializers.UserResponse.parseOrThrow(_response.body, {
++                unrecognizedObjectKeys: "passthrough",
++                allowUnrecognizedUnionMembers: true,
++                allowUnrecognizedEnumValues: true,
++                skipValidation: true,
++                breadcrumbsPrefix: ["response"],
++            });
++        }
++
++        if (_response.error.reason === "status-code") {
++            throw new errors.FlatfileError({
++                statusCode: _response.error.statusCode,
++                body: _response.error.body,
++            });
++        }
++
++        switch (_response.error.reason) {
++            case "non-json":
++                throw new errors.FlatfileError({
++                    statusCode: _response.error.statusCode,
++                    body: _response.error.rawBody,
++                });
++            case "timeout":
++                throw new errors.FlatfileTimeoutError();
++            case "unknown":
++                throw new errors.FlatfileError({
++                    message: _response.error.errorMessage,
++                });
++        }
++    }
++
+     /**
+@@ -115,3 +175,3 @@ export class Users {
+@@ -176,3 +236,3 @@ export class Users {
+@@ -271,3 +331,3 @@ export class Users {
+@@ -369,3 +429,3 @@ export class Users {
+@@ -472,3 +532,3 @@ export class Users {
+@@ -535,3 +595,3 @@ export class Users {
+@@ -594,3 +654,3 @@ export class Users {
+diff --git a/src/api/resources/users/client/requests/UpdateUserRequest.ts b/src/api/resources/users/client/requests/UpdateUserRequest.ts
+new file mode 100644
+index 0000000..d815834
+--- /dev/null
++++ b/src/api/resources/users/client/requests/UpdateUserRequest.ts
+@@ -0,0 +1,7 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++export interface UpdateUserRequest {
++    name?: string;
++}
+diff --git a/src/api/resources/users/client/requests/index.ts b/src/api/resources/users/client/requests/index.ts
+index b49c90b..bf566bf 100644
+--- a/src/api/resources/users/client/requests/index.ts
++++ b/src/api/resources/users/client/requests/index.ts
+@@ -1,2 +1,3 @@
+ export { ListUsersRequest } from "./ListUsersRequest";
++export { UpdateUserRequest } from "./UpdateUserRequest";
+ export { ListApiTokensRequest } from "./ListApiTokensRequest";
+diff --git a/src/api/resources/versions/client/Client.ts b/src/api/resources/versions/client/Client.ts
+index 87ca526..cd8d86d 100644
+--- a/src/api/resources/versions/client/Client.ts
++++ b/src/api/resources/versions/client/Client.ts
+@@ -42,3 +42,3 @@ export class Versions {
+diff --git a/src/api/resources/workbooks/client/Client.ts b/src/api/resources/workbooks/client/Client.ts
+index 6a4e51c..65da38c 100644
+--- a/src/api/resources/workbooks/client/Client.ts
++++ b/src/api/resources/workbooks/client/Client.ts
+@@ -62,3 +62,3 @@ export class Workbooks {
+@@ -169,3 +169,3 @@ export class Workbooks {
+@@ -246,3 +246,3 @@ export class Workbooks {
+@@ -332,3 +332,3 @@ export class Workbooks {
+@@ -429,3 +429,3 @@ export class Workbooks {
+@@ -521,3 +521,3 @@ export class Workbooks {
+@@ -582,3 +582,3 @@ export class Workbooks {
+diff --git a/src/serialization/resources/agents/types/AgentConfig.ts b/src/serialization/resources/agents/types/AgentConfig.ts
+index 9ebc197..38dce95 100644
+--- a/src/serialization/resources/agents/types/AgentConfig.ts
++++ b/src/serialization/resources/agents/types/AgentConfig.ts
+@@ -15,2 +15,3 @@ export const AgentConfig: core.serialization.ObjectSchema<serializers.AgentConfi
+         source: core.serialization.string().optional(),
++        slug: core.serialization.string().optional(),
+     });
+@@ -22,2 +23,3 @@ export declare namespace AgentConfig {
+         source?: string | null;
++        slug?: string | null;
+     }
+diff --git a/src/serialization/resources/records/client/requests/FindAndReplaceRecordRequest.ts b/src/serialization/resources/records/client/requests/FindAndReplaceRecordRequest.ts
+index 21b0aaf..54bb0d6 100644
+--- a/src/serialization/resources/records/client/requests/FindAndReplaceRecordRequest.ts
++++ b/src/serialization/resources/records/client/requests/FindAndReplaceRecordRequest.ts
+@@ -10,3 +10,3 @@ export const FindAndReplaceRecordRequest: core.serialization.Schema<
+     serializers.FindAndReplaceRecordRequest.Raw,
+-    Omit<Flatfile.FindAndReplaceRecordRequest, "filter" | "filterField" | "searchValue" | "searchField" | "ids">
++    Omit<Flatfile.FindAndReplaceRecordRequest, "filter" | "filterField" | "searchValue" | "searchField" | "ids" | "q">
+ > = core.serialization.object({
+diff --git a/src/serialization/resources/users/client/requests/UpdateUserRequest.ts b/src/serialization/resources/users/client/requests/UpdateUserRequest.ts
+new file mode 100644
+index 0000000..d9671ef
+--- /dev/null
++++ b/src/serialization/resources/users/client/requests/UpdateUserRequest.ts
+@@ -0,0 +1,20 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++import * as serializers from "../../../..";
++import * as Flatfile from "../../../../../api";
++import * as core from "../../../../../core";
++
++export const UpdateUserRequest: core.serialization.Schema<
++    serializers.UpdateUserRequest.Raw,
++    Flatfile.UpdateUserRequest
++> = core.serialization.object({
++    name: core.serialization.string().optional(),
++});
++
++export declare namespace UpdateUserRequest {
++    interface Raw {
++        name?: string | null;
++    }
++}
+diff --git a/src/serialization/resources/users/client/requests/index.ts b/src/serialization/resources/users/client/requests/index.ts
+index 96fc6d1..b8e6ca1 100644
+--- a/src/serialization/resources/users/client/requests/index.ts
++++ b/src/serialization/resources/users/client/requests/index.ts
+@@ -1 +1,2 @@
++export { UpdateUserRequest } from "./UpdateUserRequest";
+ export { ExchangeTokenRequest } from "./ExchangeTokenRequest";

@@ -1,0 +1,333 @@
+diff --git a/package.json b/package.json
+index 1ac2b24..61ac2fc 100644
+--- a/package.json
++++ b/package.json
+@@ -2,3 +2,3 @@
+     "name": "@flatfile/api",
+-    "version": "1.8.4",
++    "version": "1.8.5",
+     "private": false,
+diff --git a/src/api/resources/accounts/client/Client.ts b/src/api/resources/accounts/client/Client.ts
+index e60f6aa..b32a5d2 100644
+--- a/src/api/resources/accounts/client/Client.ts
++++ b/src/api/resources/accounts/client/Client.ts
+@@ -45,3 +45,3 @@ export class Accounts {
+@@ -108,3 +108,3 @@ export class Accounts {
+diff --git a/src/api/resources/agents/client/Client.ts b/src/api/resources/agents/client/Client.ts
+index 379907f..e883196 100644
+--- a/src/api/resources/agents/client/Client.ts
++++ b/src/api/resources/agents/client/Client.ts
+@@ -45,3 +45,3 @@ export class Agents {
+@@ -127,3 +127,3 @@ export class Agents {
+@@ -210,3 +210,3 @@ export class Agents {
+@@ -295,3 +295,3 @@ export class Agents {
+@@ -390,3 +390,3 @@ export class Agents {
+@@ -488,3 +488,3 @@ export class Agents {
+@@ -589,3 +589,3 @@ export class Agents {
+@@ -681,3 +681,3 @@ export class Agents {
+@@ -792,3 +792,3 @@ export class Agents {
+@@ -903,3 +903,3 @@ export class Agents {
+@@ -996,3 +996,3 @@ export class Agents {
+diff --git a/src/api/resources/apps/client/Client.ts b/src/api/resources/apps/client/Client.ts
+index 722d45d..d35087e 100644
+--- a/src/api/resources/apps/client/Client.ts
++++ b/src/api/resources/apps/client/Client.ts
+@@ -42,3 +42,3 @@ export class Apps {
+@@ -100,3 +100,3 @@ export class Apps {
+@@ -171,3 +171,3 @@ export class Apps {
+@@ -243,3 +243,3 @@ export class Apps {
+diff --git a/src/api/resources/assistant/client/Client.ts b/src/api/resources/assistant/client/Client.ts
+index 0042ebf..577e66d 100644
+--- a/src/api/resources/assistant/client/Client.ts
++++ b/src/api/resources/assistant/client/Client.ts
+@@ -58,3 +58,3 @@ export class Assistant {
+@@ -120,3 +120,3 @@ export class Assistant {
+@@ -184,3 +184,3 @@ export class Assistant {
+@@ -248,3 +248,3 @@ export class Assistant {
+@@ -310,3 +310,3 @@ export class Assistant {
+diff --git a/src/api/resources/auth/client/Client.ts b/src/api/resources/auth/client/Client.ts
+index 3641cfc..7b1f9af 100644
+--- a/src/api/resources/auth/client/Client.ts
++++ b/src/api/resources/auth/client/Client.ts
+@@ -54,3 +54,3 @@ export class Auth {
+@@ -145,3 +145,3 @@ export class Auth {
+@@ -238,3 +238,3 @@ export class Auth {
+@@ -331,3 +331,3 @@ export class Auth {
+diff --git a/src/api/resources/cells/client/Client.ts b/src/api/resources/cells/client/Client.ts
+index abf66dd..8663f69 100644
+--- a/src/api/resources/cells/client/Client.ts
++++ b/src/api/resources/cells/client/Client.ts
+@@ -107,3 +107,3 @@ export class Cells {
+diff --git a/src/api/resources/commits/client/Client.ts b/src/api/resources/commits/client/Client.ts
+index a86524d..32a5667 100644
+--- a/src/api/resources/commits/client/Client.ts
++++ b/src/api/resources/commits/client/Client.ts
+@@ -50,3 +50,3 @@ export class Commits {
+@@ -133,3 +133,3 @@ export class Commits {
+@@ -216,3 +216,3 @@ export class Commits {
+diff --git a/src/api/resources/dataRetentionPolicies/client/Client.ts b/src/api/resources/dataRetentionPolicies/client/Client.ts
+index ce92494..c108c10 100644
+--- a/src/api/resources/dataRetentionPolicies/client/Client.ts
++++ b/src/api/resources/dataRetentionPolicies/client/Client.ts
+@@ -58,3 +58,3 @@ export class DataRetentionPolicies {
+diff --git a/src/api/resources/documents/client/Client.ts b/src/api/resources/documents/client/Client.ts
+index b77b6aa..bdeac39 100644
+--- a/src/api/resources/documents/client/Client.ts
++++ b/src/api/resources/documents/client/Client.ts
+@@ -50,3 +50,3 @@ export class Documents {
+diff --git a/src/api/resources/entitlements/client/Client.ts b/src/api/resources/entitlements/client/Client.ts
+index a987c09..d4cb9ac 100644
+--- a/src/api/resources/entitlements/client/Client.ts
++++ b/src/api/resources/entitlements/client/Client.ts
+@@ -55,3 +55,3 @@ export class Entitlements {
+diff --git a/src/api/resources/environments/client/Client.ts b/src/api/resources/environments/client/Client.ts
+index a71f98a..09fc1f0 100644
+--- a/src/api/resources/environments/client/Client.ts
++++ b/src/api/resources/environments/client/Client.ts
+@@ -58,3 +58,3 @@ export class Environments {
+diff --git a/src/api/resources/events/client/Client.ts b/src/api/resources/events/client/Client.ts
+index 2976bd5..c8697b0 100644
+--- a/src/api/resources/events/client/Client.ts
++++ b/src/api/resources/events/client/Client.ts
+@@ -82,3 +82,3 @@ export class Events {
+diff --git a/src/api/resources/files/client/Client.ts b/src/api/resources/files/client/Client.ts
+index 8e7e83f..658a5bc 100644
+--- a/src/api/resources/files/client/Client.ts
++++ b/src/api/resources/files/client/Client.ts
+@@ -63,3 +63,3 @@ export class Files {
+diff --git a/src/api/resources/foreigndb/client/Client.ts b/src/api/resources/foreigndb/client/Client.ts
+index c5abb2b..f2893b7 100644
+--- a/src/api/resources/foreigndb/client/Client.ts
++++ b/src/api/resources/foreigndb/client/Client.ts
+@@ -48,3 +48,3 @@ export class Foreigndb {
+diff --git a/src/api/resources/guests/client/Client.ts b/src/api/resources/guests/client/Client.ts
+index d207820..68f909b 100644
+--- a/src/api/resources/guests/client/Client.ts
++++ b/src/api/resources/guests/client/Client.ts
+@@ -57,3 +57,3 @@ export class Guests {
+diff --git a/src/api/resources/jobs/client/Client.ts b/src/api/resources/jobs/client/Client.ts
+index 64c9a3e..d671d44 100644
+--- a/src/api/resources/jobs/client/Client.ts
++++ b/src/api/resources/jobs/client/Client.ts
+@@ -76,3 +76,3 @@ export class Jobs {
+diff --git a/src/api/resources/mapping/client/Client.ts b/src/api/resources/mapping/client/Client.ts
+index e2982a2..2ab9850 100644
+--- a/src/api/resources/mapping/client/Client.ts
++++ b/src/api/resources/mapping/client/Client.ts
+@@ -47,3 +47,3 @@ export class Mapping {
+@@ -1040,3 +1040,3 @@ export class Mapping {
+diff --git a/src/api/resources/property/types/EnumListProperty.ts b/src/api/resources/property/types/EnumListProperty.ts
+new file mode 100644
+index 0000000..2269ece
+--- /dev/null
++++ b/src/api/resources/property/types/EnumListProperty.ts
+@@ -0,0 +1,12 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++import * as Flatfile from "../../..";
++
++/**
++ * Defines an array of values selected from an enumerated list of options. Matching tooling attempts to resolve incoming data assigment to a valid option. The maximum number of items that can be in this list is `100`.
++ */
++export interface EnumListProperty extends Flatfile.BaseProperty {
++    config: Flatfile.EnumPropertyConfig;
++}
+diff --git a/src/api/resources/property/types/Property.ts b/src/api/resources/property/types/Property.ts
+index 71790b1..c7192b0 100644
+--- a/src/api/resources/property/types/Property.ts
++++ b/src/api/resources/property/types/Property.ts
+@@ -130,3 +130,5 @@ export type Property =
+     | Flatfile.Property.Enum
+-    | Flatfile.Property.Reference;
++    | Flatfile.Property.Reference
++    | Flatfile.Property.StringList
++    | Flatfile.Property.EnumList;
+ 
+@@ -156,2 +158,10 @@ export declare namespace Property {
+     }
++
++    interface StringList extends Flatfile.StringListProperty {
++        type: "string-list";
++    }
++
++    interface EnumList extends Flatfile.EnumListProperty {
++        type: "enum-list";
++    }
+ }
+diff --git a/src/api/resources/property/types/StringListProperty.ts b/src/api/resources/property/types/StringListProperty.ts
+new file mode 100644
+index 0000000..b78c377
+--- /dev/null
++++ b/src/api/resources/property/types/StringListProperty.ts
+@@ -0,0 +1,10 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++import * as Flatfile from "../../..";
++
++/**
++ * Defines a property that should be stored and read as an array of strings. Database engines should expect any number of items to be provided here. The maximum number of items that can be in this list is `100`.
++ */
++export interface StringListProperty extends Flatfile.BaseProperty {}
+diff --git a/src/api/resources/property/types/index.ts b/src/api/resources/property/types/index.ts
+index 3715be2..31f212c 100644
+--- a/src/api/resources/property/types/index.ts
++++ b/src/api/resources/property/types/index.ts
+@@ -4,2 +4,3 @@ export * from "./ArrayableProperty";
+ export * from "./StringProperty";
++export * from "./StringListProperty";
+ export * from "./NumberProperty";
+@@ -10,2 +11,3 @@ export * from "./DateProperty";
+ export * from "./EnumProperty";
++export * from "./EnumListProperty";
+ export * from "./EnumPropertyConfig";
+diff --git a/src/api/resources/records/client/Client.ts b/src/api/resources/records/client/Client.ts
+index 6ef5915..ab5cd3c 100644
+--- a/src/api/resources/records/client/Client.ts
++++ b/src/api/resources/records/client/Client.ts
+@@ -153,3 +153,3 @@ export class Records {
+diff --git a/src/api/resources/roles/client/Client.ts b/src/api/resources/roles/client/Client.ts
+index a0ce6a4..1f1f584 100644
+--- a/src/api/resources/roles/client/Client.ts
++++ b/src/api/resources/roles/client/Client.ts
+@@ -42,3 +42,3 @@ export class Roles {
+diff --git a/src/api/resources/secrets/client/Client.ts b/src/api/resources/secrets/client/Client.ts
+index f313a98..0c8dce9 100644
+--- a/src/api/resources/secrets/client/Client.ts
++++ b/src/api/resources/secrets/client/Client.ts
+@@ -62,3 +62,3 @@ export class Secrets {
+diff --git a/src/api/resources/sheets/client/Client.ts b/src/api/resources/sheets/client/Client.ts
+index 4663e4e..af79595 100644
+--- a/src/api/resources/sheets/client/Client.ts
++++ b/src/api/resources/sheets/client/Client.ts
+@@ -54,3 +54,3 @@ export class Sheets {
+diff --git a/src/api/resources/snapshots/client/Client.ts b/src/api/resources/snapshots/client/Client.ts
+index 27114b3..56da28b 100644
+--- a/src/api/resources/snapshots/client/Client.ts
++++ b/src/api/resources/snapshots/client/Client.ts
+@@ -53,3 +53,3 @@ export class Snapshots {
+diff --git a/src/api/resources/spaces/client/Client.ts b/src/api/resources/spaces/client/Client.ts
+index d13dbe8..a1e714c 100644
+--- a/src/api/resources/spaces/client/Client.ts
++++ b/src/api/resources/spaces/client/Client.ts
+@@ -99,3 +99,3 @@ export class Spaces {
+diff --git a/src/api/resources/users/client/Client.ts b/src/api/resources/users/client/Client.ts
+index b4163e6..6ffde26 100644
+--- a/src/api/resources/users/client/Client.ts
++++ b/src/api/resources/users/client/Client.ts
+@@ -56,3 +56,3 @@ export class Users {
+diff --git a/src/api/resources/versions/client/Client.ts b/src/api/resources/versions/client/Client.ts
+index a6f9aad..05c5e08 100644
+--- a/src/api/resources/versions/client/Client.ts
++++ b/src/api/resources/versions/client/Client.ts
+@@ -42,3 +42,3 @@ export class Versions {
+diff --git a/src/api/resources/views/client/Client.ts b/src/api/resources/views/client/Client.ts
+index 10e0582..e3765e8 100644
+--- a/src/api/resources/views/client/Client.ts
++++ b/src/api/resources/views/client/Client.ts
+@@ -55,3 +55,3 @@ export class Views {
+diff --git a/src/api/resources/workbooks/client/Client.ts b/src/api/resources/workbooks/client/Client.ts
+index 2b89420..f3a2c4b 100644
+--- a/src/api/resources/workbooks/client/Client.ts
++++ b/src/api/resources/workbooks/client/Client.ts
+@@ -61,3 +61,3 @@ export class Workbooks {
+diff --git a/src/serialization/resources/property/types/EnumListProperty.ts b/src/serialization/resources/property/types/EnumListProperty.ts
+new file mode 100644
+index 0000000..f210805
+--- /dev/null
++++ b/src/serialization/resources/property/types/EnumListProperty.ts
+@@ -0,0 +1,24 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++import * as serializers from "../../..";
++import * as Flatfile from "../../../../api";
++import * as core from "../../../../core";
++import { EnumPropertyConfig } from "./EnumPropertyConfig";
++import { BaseProperty } from "./BaseProperty";
++
++export const EnumListProperty: core.serialization.ObjectSchema<
++    serializers.EnumListProperty.Raw,
++    Flatfile.EnumListProperty
++> = core.serialization
++    .object({
++        config: EnumPropertyConfig,
++    })
++    .extend(BaseProperty);
++
++export declare namespace EnumListProperty {
++    interface Raw extends BaseProperty.Raw {
++        config: EnumPropertyConfig.Raw;
++    }
++}
+diff --git a/src/serialization/resources/property/types/Property.ts b/src/serialization/resources/property/types/Property.ts
+index fa7c2c0..105df47 100644
+--- a/src/serialization/resources/property/types/Property.ts
++++ b/src/serialization/resources/property/types/Property.ts
+@@ -13,2 +13,4 @@ import { EnumProperty } from "./EnumProperty";
+ import { ReferenceProperty } from "./ReferenceProperty";
++import { StringListProperty } from "./StringListProperty";
++import { EnumListProperty } from "./EnumListProperty";
+ 
+@@ -22,2 +24,4 @@ export const Property: core.serialization.Schema<serializers.Property.Raw, Flatf
+         reference: ReferenceProperty,
++        "string-list": StringListProperty,
++        "enum-list": EnumListProperty,
+     })
+@@ -35,3 +39,5 @@ export declare namespace Property {
+         | Property.Enum
+-        | Property.Reference;
++        | Property.Reference
++        | Property.StringList
++        | Property.EnumList;
+ 
+@@ -60,2 +66,10 @@ export declare namespace Property {
+     }
++
++    interface StringList extends StringListProperty.Raw {
++        type: "string-list";
++    }
++
++    interface EnumList extends EnumListProperty.Raw {
++        type: "enum-list";
++    }
+ }
+diff --git a/src/serialization/resources/property/types/StringListProperty.ts b/src/serialization/resources/property/types/StringListProperty.ts
+new file mode 100644
+index 0000000..27c032a
+--- /dev/null
++++ b/src/serialization/resources/property/types/StringListProperty.ts
+@@ -0,0 +1,17 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++import * as serializers from "../../..";
++import * as Flatfile from "../../../../api";
++import * as core from "../../../../core";
++import { BaseProperty } from "./BaseProperty";
++
++export const StringListProperty: core.serialization.ObjectSchema<
++    serializers.StringListProperty.Raw,
++    Flatfile.StringListProperty
++> = core.serialization.object({}).extend(BaseProperty);
++
++export declare namespace StringListProperty {
++    interface Raw extends BaseProperty.Raw {}
++}
+diff --git a/src/serialization/resources/property/types/index.ts b/src/serialization/resources/property/types/index.ts
+index 3715be2..31f212c 100644
+--- a/src/serialization/resources/property/types/index.ts
++++ b/src/serialization/resources/property/types/index.ts
+@@ -4,2 +4,3 @@ export * from "./ArrayableProperty";
+ export * from "./StringProperty";
++export * from "./StringListProperty";
+ export * from "./NumberProperty";
+@@ -10,2 +11,3 @@ export * from "./DateProperty";
+ export * from "./EnumProperty";
++export * from "./EnumListProperty";
+ export * from "./EnumPropertyConfig";

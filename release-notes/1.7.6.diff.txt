@@ -1,0 +1,736 @@
+diff --git a/package.json b/package.json
+index 6b7d245..410ffdb 100644
+--- a/package.json
++++ b/package.json
+@@ -2,3 +2,3 @@
+     "name": "@flatfile/api",
+-    "version": "1.7.5",
++    "version": "1.7.6",
+     "private": false,
+diff --git a/src/api/resources/agents/client/Client.ts b/src/api/resources/agents/client/Client.ts
+index 0fcc6d5..226fb6e 100644
+--- a/src/api/resources/agents/client/Client.ts
++++ b/src/api/resources/agents/client/Client.ts
+@@ -32,3 +32,3 @@ export class Agents {
+         const { environmentId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["environmentId"] = environmentId;
+@@ -45,3 +45,3 @@ export class Agents {
+@@ -114,3 +114,3 @@ export class Agents {
+         const { environmentId, body: _body } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["environmentId"] = environmentId;
+@@ -127,3 +127,3 @@ export class Agents {
+@@ -197,3 +197,3 @@ export class Agents {
+         const { environmentId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["environmentId"] = environmentId;
+@@ -210,3 +210,3 @@ export class Agents {
+@@ -295,3 +295,3 @@ export class Agents {
+@@ -390,3 +390,3 @@ export class Agents {
+@@ -488,3 +488,3 @@ export class Agents {
+@@ -576,3 +576,3 @@ export class Agents {
+         const { environmentId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["environmentId"] = environmentId;
+@@ -589,3 +589,3 @@ export class Agents {
+@@ -668,3 +668,3 @@ export class Agents {
+         const { environmentId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["environmentId"] = environmentId;
+@@ -681,3 +681,3 @@ export class Agents {
+@@ -763,3 +763,3 @@ export class Agents {
+         const { environmentId, spaceId, success, pageSize, pageNumber } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["environmentId"] = environmentId;
+@@ -792,3 +792,3 @@ export class Agents {
+@@ -874,3 +874,3 @@ export class Agents {
+         const { environmentId, spaceId, success, pageSize, pageNumber } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["environmentId"] = environmentId;
+@@ -903,3 +903,3 @@ export class Agents {
+@@ -983,3 +983,3 @@ export class Agents {
+         const { environmentId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["environmentId"] = environmentId;
+@@ -996,3 +996,3 @@ export class Agents {
+diff --git a/src/api/resources/apps/client/Client.ts b/src/api/resources/apps/client/Client.ts
+index 91a3ae1..f28f450 100644
+--- a/src/api/resources/apps/client/Client.ts
++++ b/src/api/resources/apps/client/Client.ts
+@@ -42,3 +42,3 @@ export class Apps {
+@@ -100,3 +100,3 @@ export class Apps {
+@@ -171,3 +171,3 @@ export class Apps {
+@@ -243,3 +243,3 @@ export class Apps {
+diff --git a/src/api/resources/apps/types/App.ts b/src/api/resources/apps/types/App.ts
+index 2cc545b..ab52d53 100644
+--- a/src/api/resources/apps/types/App.ts
++++ b/src/api/resources/apps/types/App.ts
+@@ -22,5 +22,3 @@ import * as Flatfile from "../../..";
+  *         createdAt: new Date("2023-10-30T16:59:45.735Z"),
+- *         updatedAt: new Date("2023-10-30T16:59:45.735Z"),
+- *         deletedAt: undefined,
+- *         activatedAt: undefined
++ *         updatedAt: new Date("2023-10-30T16:59:45.735Z")
+  *     }
+diff --git a/src/api/resources/apps/types/AppResponse.ts b/src/api/resources/apps/types/AppResponse.ts
+index 9e7f8a6..6ec2900 100644
+--- a/src/api/resources/apps/types/AppResponse.ts
++++ b/src/api/resources/apps/types/AppResponse.ts
+@@ -21,5 +21,3 @@ import * as Flatfile from "../../..";
+  *             createdAt: new Date("2023-10-30T16:59:45.735Z"),
+- *             updatedAt: new Date("2023-10-30T16:59:45.735Z"),
+- *             deletedAt: undefined,
+- *             activatedAt: undefined
++ *             updatedAt: new Date("2023-10-30T16:59:45.735Z")
+  *         }
+diff --git a/src/api/resources/apps/types/AppsResponse.ts b/src/api/resources/apps/types/AppsResponse.ts
+index 074c27e..1c6dad9 100644
+--- a/src/api/resources/apps/types/AppsResponse.ts
++++ b/src/api/resources/apps/types/AppsResponse.ts
+@@ -21,5 +21,3 @@ import * as Flatfile from "../../..";
+  *                 createdAt: new Date("2023-10-30T16:59:45.735Z"),
+- *                 updatedAt: new Date("2023-10-30T16:59:45.735Z"),
+- *                 deletedAt: undefined,
+- *                 activatedAt: undefined
++ *                 updatedAt: new Date("2023-10-30T16:59:45.735Z")
+  *             }]
+diff --git a/src/api/resources/auth/client/Client.ts b/src/api/resources/auth/client/Client.ts
+index b631a73..058f8b8 100644
+--- a/src/api/resources/auth/client/Client.ts
++++ b/src/api/resources/auth/client/Client.ts
+@@ -54,3 +54,3 @@ export class Auth {
+@@ -132,3 +132,3 @@ export class Auth {
+         const { environmentId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["environmentId"] = environmentId;
+@@ -145,3 +145,3 @@ export class Auth {
+@@ -224,3 +224,3 @@ export class Auth {
+         const { environmentId, type: type_ } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["environmentId"] = environmentId;
+@@ -238,3 +238,3 @@ export class Auth {
+@@ -317,3 +317,3 @@ export class Auth {
+         const { environmentId, key } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["environmentId"] = environmentId;
+@@ -331,3 +331,3 @@ export class Auth {
+diff --git a/src/api/resources/cells/client/Client.ts b/src/api/resources/cells/client/Client.ts
+index e4bde90..bb62b5d 100644
+--- a/src/api/resources/cells/client/Client.ts
++++ b/src/api/resources/cells/client/Client.ts
+@@ -55,3 +55,3 @@ export class Cells {
+         } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (fieldKey != null) {
+@@ -107,3 +107,3 @@ export class Cells {
+diff --git a/src/api/resources/commits/client/Client.ts b/src/api/resources/commits/client/Client.ts
+index 303d99d..0340d6b 100644
+--- a/src/api/resources/commits/client/Client.ts
++++ b/src/api/resources/commits/client/Client.ts
+@@ -50,3 +50,3 @@ export class Commits {
+@@ -133,3 +133,3 @@ export class Commits {
+@@ -216,3 +216,3 @@ export class Commits {
+diff --git a/src/api/resources/commons/types/Action.ts b/src/api/resources/commons/types/Action.ts
+index d3c651d..b853dae 100644
+--- a/src/api/resources/commons/types/Action.ts
++++ b/src/api/resources/commons/types/Action.ts
+@@ -26,6 +26,3 @@ import * as Flatfile from "../../..";
+ export interface Action {
+-    /**
+-     * **This is deprecated. Use `operation` instead.**
+-     *
+-     */
++    /** **This is deprecated. Use `operation` instead.** */
+     slug?: string;
+@@ -40,6 +37,3 @@ export interface Action {
+     messages?: Flatfile.ActionMessage[];
+-    /**
+-     * **This is deprecated.**
+-     *
+-     */
++    /** **This is deprecated.** */
+     type?: string;
+@@ -55,11 +49,5 @@ export interface Action {
+     icon?: string;
+-    /**
+-     * **This is deprecated. Use `constraints` instead.**
+-     *
+-     */
++    /** **This is deprecated. Use `constraints` instead.** */
+     requireAllValid?: boolean;
+-    /**
+-     * **This is deprecated. Use `constraints` instead.**
+-     *
+-     */
++    /** **This is deprecated. Use `constraints` instead.** */
+     requireSelection?: boolean;
+diff --git a/src/api/resources/commons/types/ActionMessageType.ts b/src/api/resources/commons/types/ActionMessageType.ts
+index 9af6b66..17cafd6 100644
+--- a/src/api/resources/commons/types/ActionMessageType.ts
++++ b/src/api/resources/commons/types/ActionMessageType.ts
+@@ -4,8 +4,6 @@
+ 
+-export type ActionMessageType = "success" | "error" | "warning" | "info";
++export type ActionMessageType = "error" | "info";
+ 
+ export const ActionMessageType = {
+-    Success: "success",
+     Error: "error",
+-    Warning: "warning",
+     Info: "info",
+diff --git a/src/api/resources/dataRetentionPolicies/client/Client.ts b/src/api/resources/dataRetentionPolicies/client/Client.ts
+index 0822184..09ece35 100644
+--- a/src/api/resources/dataRetentionPolicies/client/Client.ts
++++ b/src/api/resources/dataRetentionPolicies/client/Client.ts
+@@ -42,3 +42,3 @@ export class DataRetentionPolicies {
+         const { environmentId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (environmentId != null) {
+@@ -58,3 +58,3 @@ export class DataRetentionPolicies {
+@@ -149,3 +149,3 @@ export class DataRetentionPolicies {
+@@ -236,3 +236,3 @@ export class DataRetentionPolicies {
+@@ -327,3 +327,3 @@ export class DataRetentionPolicies {
+@@ -411,3 +411,3 @@ export class DataRetentionPolicies {
+diff --git a/src/api/resources/documents/client/Client.ts b/src/api/resources/documents/client/Client.ts
+index 1aa4e1d..3eb63f4 100644
+--- a/src/api/resources/documents/client/Client.ts
++++ b/src/api/resources/documents/client/Client.ts
+@@ -50,3 +50,3 @@ export class Documents {
+@@ -147,3 +147,3 @@ export class Documents {
+@@ -237,3 +237,3 @@ export class Documents {
+@@ -330,3 +330,3 @@ export class Documents {
+@@ -417,3 +417,3 @@ export class Documents {
+diff --git a/src/api/resources/entitlements/client/Client.ts b/src/api/resources/entitlements/client/Client.ts
+index af35be3..20d60fe 100644
+--- a/src/api/resources/entitlements/client/Client.ts
++++ b/src/api/resources/entitlements/client/Client.ts
+@@ -42,3 +42,3 @@ export class Entitlements {
+         const { resourceId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["resourceId"] = resourceId;
+@@ -55,3 +55,3 @@ export class Entitlements {
+diff --git a/src/api/resources/environments/client/Client.ts b/src/api/resources/environments/client/Client.ts
+index 05d369a..eb8bc49 100644
+--- a/src/api/resources/environments/client/Client.ts
++++ b/src/api/resources/environments/client/Client.ts
+@@ -38,3 +38,3 @@ export class Environments {
+         const { pageSize, pageNumber } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (pageSize != null) {
+@@ -58,3 +58,3 @@ export class Environments {
+@@ -128,3 +128,3 @@ export class Environments {
+@@ -184,3 +184,3 @@ export class Environments {
+         const { environmentId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["environmentId"] = environmentId;
+@@ -197,3 +197,3 @@ export class Environments {
+@@ -284,3 +284,3 @@ export class Environments {
+@@ -377,3 +377,3 @@ export class Environments {
+@@ -438,3 +438,3 @@ export class Environments {
+diff --git a/src/api/resources/events/client/Client.ts b/src/api/resources/events/client/Client.ts
+index 6613e36..6b17c2c 100644
+--- a/src/api/resources/events/client/Client.ts
++++ b/src/api/resources/events/client/Client.ts
+@@ -38,3 +38,3 @@ export class Events {
+         const { environmentId, spaceId, domain, topic, since, pageSize, pageNumber, includeAcknowledged } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (environmentId != null) {
+@@ -82,3 +82,3 @@ export class Events {
+@@ -158,3 +158,3 @@ export class Events {
+@@ -237,3 +237,3 @@ export class Events {
+@@ -289,3 +289,3 @@ export class Events {
+@@ -342,3 +342,3 @@ export class Events {
+         const { scope, spaceId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (scope != null) {
+@@ -362,3 +362,3 @@ export class Events {
+diff --git a/src/api/resources/events/types/Domain.ts b/src/api/resources/events/types/Domain.ts
+index 36b10c1..faf303e 100644
+--- a/src/api/resources/events/types/Domain.ts
++++ b/src/api/resources/events/types/Domain.ts
+@@ -10,3 +10,3 @@
+  */
+-export type Domain = "file" | "space" | "workbook" | "job" | "document" | "sheet" | "program" | "secret";
++export type Domain = "file" | "space" | "workbook" | "job" | "document" | "sheet" | "program" | "secret" | "cron";
+ 
+@@ -21,2 +21,3 @@ export const Domain = {
+     Secret: "secret",
++    Cron: "cron",
+ } as const;
+diff --git a/src/api/resources/events/types/EventTopic.ts b/src/api/resources/events/types/EventTopic.ts
+index 9fdb9a0..71bab5b 100644
+--- a/src/api/resources/events/types/EventTopic.ts
++++ b/src/api/resources/events/types/EventTopic.ts
+@@ -56,3 +56,7 @@ export type EventTopic =
+     | "secret:updated"
+-    | "secret:deleted";
++    | "secret:deleted"
++    | "cron:5-minutes"
++    | "cron:hourly"
++    | "cron:daily"
++    | "cron:weekly";
+ 
+@@ -105,2 +109,6 @@ export const EventTopic = {
+     SecretDeleted: "secret:deleted",
++    Cron5Minutes: "cron:5-minutes",
++    CronHourly: "cron:hourly",
++    CronDaily: "cron:daily",
++    CronWeekly: "cron:weekly",
+ } as const;
+diff --git a/src/api/resources/files/client/Client.ts b/src/api/resources/files/client/Client.ts
+index 827068c..3d976b8 100644
+--- a/src/api/resources/files/client/Client.ts
++++ b/src/api/resources/files/client/Client.ts
+@@ -35,3 +35,3 @@ export class Files {
+         const { spaceId, pageSize, pageNumber, mode } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (spaceId != null) {
+@@ -63,3 +63,3 @@ export class Files {
+@@ -137,3 +137,3 @@ export class Files {
+@@ -210,3 +210,3 @@ export class Files {
+@@ -289,3 +289,3 @@ export class Files {
+@@ -378,3 +378,3 @@ export class Files {
+@@ -458,3 +458,3 @@ export class Files {
+diff --git a/src/api/resources/guests/client/Client.ts b/src/api/resources/guests/client/Client.ts
+index 62b1781..11fb5dd 100644
+--- a/src/api/resources/guests/client/Client.ts
++++ b/src/api/resources/guests/client/Client.ts
+@@ -40,3 +40,3 @@ export class Guests {
+         const { spaceId, email } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["spaceId"] = spaceId;
+@@ -57,3 +57,3 @@ export class Guests {
+@@ -130,3 +130,3 @@ export class Guests {
+@@ -192,3 +192,3 @@ export class Guests {
+@@ -250,3 +250,3 @@ export class Guests {
+@@ -315,3 +315,3 @@ export class Guests {
+@@ -368,3 +368,3 @@ export class Guests {
+         const { spaceId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (spaceId != null) {
+@@ -384,3 +384,3 @@ export class Guests {
+@@ -446,3 +446,3 @@ export class Guests {
+@@ -541,3 +541,3 @@ export class Guests {
+@@ -639,3 +639,3 @@ export class Guests {
+@@ -735,3 +735,3 @@ export class Guests {
+diff --git a/src/api/resources/jobs/client/Client.ts b/src/api/resources/jobs/client/Client.ts
+index 0e703cb..7d51642 100644
+--- a/src/api/resources/jobs/client/Client.ts
++++ b/src/api/resources/jobs/client/Client.ts
+@@ -32,3 +32,3 @@ export class Jobs {
+         const { environmentId, spaceId, workbookId, fileId, parentId, pageSize, pageNumber, sortDirection } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (environmentId != null) {
+@@ -76,3 +76,3 @@ export class Jobs {
+@@ -132,3 +132,3 @@ export class Jobs {
+@@ -185,3 +185,3 @@ export class Jobs {
+@@ -241,3 +241,3 @@ export class Jobs {
+@@ -294,3 +294,3 @@ export class Jobs {
+@@ -352,3 +352,3 @@ export class Jobs {
+@@ -413,3 +413,3 @@ export class Jobs {
+@@ -512,3 +512,3 @@ export class Jobs {
+@@ -572,3 +572,3 @@ export class Jobs {
+@@ -641,3 +641,3 @@ export class Jobs {
+@@ -706,3 +706,3 @@ export class Jobs {
+@@ -780,3 +780,3 @@ export class Jobs {
+@@ -858,3 +858,3 @@ export class Jobs {
+@@ -926,3 +926,3 @@ export class Jobs {
+@@ -985,3 +985,3 @@ export class Jobs {
+@@ -1043,3 +1043,3 @@ export class Jobs {
+@@ -1108,3 +1108,3 @@ export class Jobs {
+diff --git a/src/api/resources/jobs/types/ExportOptions.ts b/src/api/resources/jobs/types/ExportOptions.ts
+index fb0af40..76b5ada 100644
+--- a/src/api/resources/jobs/types/ExportOptions.ts
++++ b/src/api/resources/jobs/types/ExportOptions.ts
+@@ -25,6 +25,3 @@ export interface ExportOptions {
+     q?: string;
+-    /**
+-     * The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records
+-     *
+-     */
++    /** The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records */
+     ids?: Flatfile.RecordId[];
+diff --git a/src/api/resources/jobs/types/FindAndReplaceJobConfig.ts b/src/api/resources/jobs/types/FindAndReplaceJobConfig.ts
+index ccd853a..21d5ec0 100644
+--- a/src/api/resources/jobs/types/FindAndReplaceJobConfig.ts
++++ b/src/api/resources/jobs/types/FindAndReplaceJobConfig.ts
+@@ -17,6 +17,3 @@ export interface FindAndReplaceJobConfig {
+     q?: string;
+-    /**
+-     * The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records
+-     *
+-     */
++    /** The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records */
+     ids?: Flatfile.RecordId[];
+diff --git a/src/api/resources/jobs/types/MutateJobConfig.ts b/src/api/resources/jobs/types/MutateJobConfig.ts
+index a95fa04..dd23cc9 100644
+--- a/src/api/resources/jobs/types/MutateJobConfig.ts
++++ b/src/api/resources/jobs/types/MutateJobConfig.ts
+@@ -17,6 +17,3 @@ export interface MutateJobConfig {
+     q?: string;
+-    /**
+-     * The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records
+-     *
+-     */
++    /** The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records */
+     ids?: Flatfile.RecordId[];
+diff --git a/src/api/resources/mapping/client/Client.ts b/src/api/resources/mapping/client/Client.ts
+index 7061efa..700e485 100644
+--- a/src/api/resources/mapping/client/Client.ts
++++ b/src/api/resources/mapping/client/Client.ts
+@@ -47,3 +47,3 @@ export class Mapping {
+@@ -128,3 +128,3 @@ export class Mapping {
+@@ -211,3 +211,3 @@ export class Mapping {
+         } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (pageSize != null) {
+@@ -263,3 +263,3 @@ export class Mapping {
+@@ -337,3 +337,3 @@ export class Mapping {
+@@ -421,3 +421,3 @@ export class Mapping {
+@@ -505,3 +505,3 @@ export class Mapping {
+@@ -589,3 +589,3 @@ export class Mapping {
+@@ -676,3 +676,3 @@ export class Mapping {
+@@ -765,3 +765,3 @@ export class Mapping {
+@@ -859,3 +859,3 @@ export class Mapping {
+@@ -944,3 +944,3 @@ export class Mapping {
+@@ -1034,3 +1034,3 @@ export class Mapping {
+diff --git a/src/api/resources/property/types/EnumPropertyOption.ts b/src/api/resources/property/types/EnumPropertyOption.ts
+index 8586459..632ac14 100644
+--- a/src/api/resources/property/types/EnumPropertyOption.ts
++++ b/src/api/resources/property/types/EnumPropertyOption.ts
+@@ -15,3 +15,3 @@ export interface EnumPropertyOption {
+     meta?: Record<string, any>;
+-    /** The value or ID of this option. This value will be sent in egress.  The type is a string | integer | boolean. */
++    /** The value or ID of this option. This value will be sent in egress. The type is a string | integer | boolean. */
+     value?: any;
+diff --git a/src/api/resources/records/client/Client.ts b/src/api/resources/records/client/Client.ts
+index fcc7157..873e424 100644
+--- a/src/api/resources/records/client/Client.ts
++++ b/src/api/resources/records/client/Client.ts
+@@ -61,3 +61,3 @@ export class Records {
+         } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (versionId != null) {
+@@ -153,3 +153,3 @@ export class Records {
+@@ -264,3 +264,3 @@ export class Records {
+@@ -368,3 +368,3 @@ export class Records {
+@@ -448,3 +448,3 @@ export class Records {
+         const { ids } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (Array.isArray(ids)) {
+@@ -466,3 +466,3 @@ export class Records {
+@@ -544,3 +544,3 @@ export class Records {
+         const { filter, filterField, searchValue, searchField, ids, q, ..._body } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (filter != null) {
+@@ -584,3 +584,3 @@ export class Records {
+diff --git a/src/api/resources/records/client/requests/FindAndReplaceRecordRequest.ts b/src/api/resources/records/client/requests/FindAndReplaceRecordRequest.ts
+index ff492be..768efa5 100644
+--- a/src/api/resources/records/client/requests/FindAndReplaceRecordRequest.ts
++++ b/src/api/resources/records/client/requests/FindAndReplaceRecordRequest.ts
+@@ -22,3 +22,2 @@ export interface FindAndReplaceRecordRequest {
+      * The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records
+-     *
+      */
+diff --git a/src/api/resources/records/client/requests/GetRecordsRequest.ts b/src/api/resources/records/client/requests/GetRecordsRequest.ts
+index b1cbba2..6feba96 100644
+--- a/src/api/resources/records/client/requests/GetRecordsRequest.ts
++++ b/src/api/resources/records/client/requests/GetRecordsRequest.ts
+@@ -32,3 +32,2 @@ export interface GetRecordsRequest {
+      * The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records. Maximum of 100 allowed.
+-     *
+      */
+diff --git a/src/api/resources/roles/client/Client.ts b/src/api/resources/roles/client/Client.ts
+index 3c89934..85728ad 100644
+--- a/src/api/resources/roles/client/Client.ts
++++ b/src/api/resources/roles/client/Client.ts
+@@ -42,3 +42,3 @@ export class Roles {
+diff --git a/src/api/resources/secrets/client/Client.ts b/src/api/resources/secrets/client/Client.ts
+index d314e72..01cd8c5 100644
+--- a/src/api/resources/secrets/client/Client.ts
++++ b/src/api/resources/secrets/client/Client.ts
+@@ -42,3 +42,3 @@ export class Secrets {
+         const { environmentId, spaceId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (environmentId != null) {
+@@ -62,3 +62,3 @@ export class Secrets {
+@@ -154,3 +154,3 @@ export class Secrets {
+@@ -241,3 +241,3 @@ export class Secrets {
+diff --git a/src/api/resources/sheets/client/Client.ts b/src/api/resources/sheets/client/Client.ts
+index e323e20..f05eaa4 100644
+--- a/src/api/resources/sheets/client/Client.ts
++++ b/src/api/resources/sheets/client/Client.ts
+@@ -41,3 +41,3 @@ export class Sheets {
+         const { workbookId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["workbookId"] = workbookId;
+@@ -54,3 +54,3 @@ export class Sheets {
+@@ -116,3 +116,3 @@ export class Sheets {
+@@ -176,3 +176,3 @@ export class Sheets {
+@@ -262,3 +262,3 @@ export class Sheets {
+@@ -346,3 +346,3 @@ export class Sheets {
+         } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (versionId != null) {
+@@ -406,3 +406,3 @@ export class Sheets {
+@@ -467,3 +467,3 @@ export class Sheets {
+         } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (versionId != null) {
+@@ -519,3 +519,3 @@ export class Sheets {
+@@ -581,3 +581,3 @@ export class Sheets {
+@@ -657,3 +657,3 @@ export class Sheets {
+         const { completed } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (completed != null) {
+@@ -673,3 +673,3 @@ export class Sheets {
+@@ -737,3 +737,3 @@ export class Sheets {
+@@ -823,3 +823,3 @@ export class Sheets {
+@@ -914,3 +914,3 @@ export class Sheets {
+         } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (fieldKey != null) {
+@@ -966,3 +966,3 @@ export class Sheets {
+diff --git a/src/api/resources/sheets/client/requests/GetRecordsCsvRequest.ts b/src/api/resources/sheets/client/requests/GetRecordsCsvRequest.ts
+index 7a0fc11..87868cc 100644
+--- a/src/api/resources/sheets/client/requests/GetRecordsCsvRequest.ts
++++ b/src/api/resources/sheets/client/requests/GetRecordsCsvRequest.ts
+@@ -12,3 +12,3 @@ export interface GetRecordsCsvRequest {
+     /**
+-     * Returns records that were changed in that version  in that version and only those records.
++     * Returns records that were changed in that version in that version and only those records.
+      */
+@@ -49,3 +49,2 @@ export interface GetRecordsCsvRequest {
+      * The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records
+-     *
+      */
+diff --git a/src/api/resources/snapshots/client/Client.ts b/src/api/resources/snapshots/client/Client.ts
+index 1ae32f0..8d8680a 100644
+--- a/src/api/resources/snapshots/client/Client.ts
++++ b/src/api/resources/snapshots/client/Client.ts
+@@ -53,3 +53,3 @@ export class Snapshots {
+@@ -132,3 +132,3 @@ export class Snapshots {
+         const { sheetId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["sheetId"] = sheetId;
+@@ -145,3 +145,3 @@ export class Snapshots {
+@@ -225,3 +225,3 @@ export class Snapshots {
+         const { includeSummary } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["includeSummary"] = includeSummary.toString();
+@@ -238,3 +238,3 @@ export class Snapshots {
+@@ -325,3 +325,3 @@ export class Snapshots {
+@@ -416,3 +416,3 @@ export class Snapshots {
+@@ -503,3 +503,3 @@ export class Snapshots {
+         const { pageSize, pageNumber, changeType } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (pageSize != null) {
+@@ -527,3 +527,3 @@ export class Snapshots {
+diff --git a/src/api/resources/spaces/client/Client.ts b/src/api/resources/spaces/client/Client.ts
+index c80283f..df0d5d8 100644
+--- a/src/api/resources/spaces/client/Client.ts
++++ b/src/api/resources/spaces/client/Client.ts
+@@ -51,3 +51,3 @@ export class Spaces {
+         } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (environmentId != null) {
+@@ -99,3 +99,3 @@ export class Spaces {
+@@ -181,3 +181,3 @@ export class Spaces {
+@@ -268,3 +268,3 @@ export class Spaces {
+@@ -351,3 +351,3 @@ export class Spaces {
+@@ -429,3 +429,3 @@ export class Spaces {
+         const { ids } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (Array.isArray(ids)) {
+@@ -447,3 +447,3 @@ export class Spaces {
+@@ -537,3 +537,3 @@ export class Spaces {
+@@ -624,3 +624,3 @@ export class Spaces {
+diff --git a/src/api/resources/spaces/types/ListSpacesResponse.ts b/src/api/resources/spaces/types/ListSpacesResponse.ts
+index 4b64c0c..e5054a0 100644
+--- a/src/api/resources/spaces/types/ListSpacesResponse.ts
++++ b/src/api/resources/spaces/types/ListSpacesResponse.ts
+@@ -31,4 +31,3 @@ import * as Flatfile from "../../..";
+  *                 primaryWorkbookId: "us_wb_YOUR_ID",
+- *                 labels: [],
+- *                 metadata: undefined
++ *                 labels: []
+  *             }]
+diff --git a/src/api/resources/spaces/types/Space.ts b/src/api/resources/spaces/types/Space.ts
+index fac6065..23bfb60 100644
+--- a/src/api/resources/spaces/types/Space.ts
++++ b/src/api/resources/spaces/types/Space.ts
+@@ -25,4 +25,3 @@ import * as Flatfile from "../../..";
+  *         primaryWorkbookId: "us_wb_YOUR_ID",
+- *         labels: [],
+- *         metadata: undefined
++ *         labels: []
+  *     }
+@@ -45,4 +44,3 @@ import * as Flatfile from "../../..";
+  *         primaryWorkbookId: "us_wb_YOUR_ID",
+- *         labels: [],
+- *         metadata: undefined
++ *         labels: []
+  *     }
+diff --git a/src/api/resources/spaces/types/SpaceResponse.ts b/src/api/resources/spaces/types/SpaceResponse.ts
+index 155e02c..b32fe6e 100644
+--- a/src/api/resources/spaces/types/SpaceResponse.ts
++++ b/src/api/resources/spaces/types/SpaceResponse.ts
+@@ -24,4 +24,3 @@ import * as Flatfile from "../../..";
+  *             primaryWorkbookId: "us_wb_YOUR_ID",
+- *             labels: [],
+- *             metadata: undefined
++ *             labels: []
+  *         }
+@@ -46,4 +45,3 @@ import * as Flatfile from "../../..";
+  *             primaryWorkbookId: "us_wb_YOUR_ID",
+- *             labels: [],
+- *             metadata: undefined
++ *             labels: []
+  *         }
+diff --git a/src/api/resources/users/client/Client.ts b/src/api/resources/users/client/Client.ts
+index aaedc6f..228c61a 100644
+--- a/src/api/resources/users/client/Client.ts
++++ b/src/api/resources/users/client/Client.ts
+@@ -40,3 +40,3 @@ export class Users {
+         const { email } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (email != null) {
+@@ -56,3 +56,3 @@ export class Users {
+@@ -116,3 +116,3 @@ export class Users {
+@@ -175,3 +175,3 @@ export class Users {
+@@ -236,3 +236,3 @@ export class Users {
+@@ -331,3 +331,3 @@ export class Users {
+@@ -429,3 +429,3 @@ export class Users {
+@@ -511,3 +511,3 @@ export class Users {
+         const { tenantId, pageSize, pageNumber } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["tenantId"] = tenantId;
+@@ -532,3 +532,3 @@ export class Users {
+@@ -582,3 +582,3 @@ export class Users {
+         const { tenantId } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         _queryParams["tenantId"] = tenantId;
+@@ -595,3 +595,3 @@ export class Users {
+@@ -654,3 +654,3 @@ export class Users {
+diff --git a/src/api/resources/versions/client/Client.ts b/src/api/resources/versions/client/Client.ts
+index cd8d86d..8811c9c 100644
+--- a/src/api/resources/versions/client/Client.ts
++++ b/src/api/resources/versions/client/Client.ts
+@@ -42,3 +42,3 @@ export class Versions {
+diff --git a/src/api/resources/workbooks/client/Client.ts b/src/api/resources/workbooks/client/Client.ts
+index 65da38c..c06a6cd 100644
+--- a/src/api/resources/workbooks/client/Client.ts
++++ b/src/api/resources/workbooks/client/Client.ts
+@@ -42,3 +42,3 @@ export class Workbooks {
+         const { spaceId, includeCounts } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (spaceId != null) {
+@@ -62,3 +62,3 @@ export class Workbooks {
+@@ -169,3 +169,3 @@ export class Workbooks {
+@@ -246,3 +246,3 @@ export class Workbooks {
+@@ -332,3 +332,3 @@ export class Workbooks {
+@@ -429,3 +429,3 @@ export class Workbooks {
+@@ -505,3 +505,3 @@ export class Workbooks {
+         const { completed } = request;
+-        const _queryParams: Record<string, string | string[]> = {};
++        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+         if (completed != null) {
+@@ -521,3 +521,3 @@ export class Workbooks {
+@@ -582,3 +582,3 @@ export class Workbooks {
+diff --git a/src/core/fetcher/Fetcher.ts b/src/core/fetcher/Fetcher.ts
+index eddba46..5348ac9 100644
+--- a/src/core/fetcher/Fetcher.ts
++++ b/src/core/fetcher/Fetcher.ts
+@@ -13,3 +13,3 @@ export declare namespace Fetcher {
+         headers?: Record<string, string | undefined>;
+-        queryParameters?: Record<string, string | string[]>;
++        queryParameters?: Record<string, string | string[] | object | object[]>;
+         body?: unknown;
+diff --git a/src/serialization/resources/commons/types/ActionMessageType.ts b/src/serialization/resources/commons/types/ActionMessageType.ts
+index 6cb1238..1114e5f 100644
+--- a/src/serialization/resources/commons/types/ActionMessageType.ts
++++ b/src/serialization/resources/commons/types/ActionMessageType.ts
+@@ -11,6 +11,6 @@ export const ActionMessageType: core.serialization.Schema<
+     Flatfile.ActionMessageType
+-> = core.serialization.enum_(["success", "error", "warning", "info"]);
++> = core.serialization.enum_(["error", "info"]);
+ 
+ export declare namespace ActionMessageType {
+-    type Raw = "success" | "error" | "warning" | "info";
++    type Raw = "error" | "info";
+ }
+diff --git a/src/serialization/resources/events/types/Domain.ts b/src/serialization/resources/events/types/Domain.ts
+index e35b638..25cf0c0 100644
+--- a/src/serialization/resources/events/types/Domain.ts
++++ b/src/serialization/resources/events/types/Domain.ts
+@@ -17,2 +17,3 @@ export const Domain: core.serialization.Schema<serializers.Domain.Raw, Flatfile.
+     "secret",
++    "cron",
+ ]);
+@@ -20,3 +21,3 @@ export const Domain: core.serialization.Schema<serializers.Domain.Raw, Flatfile.
+ export declare namespace Domain {
+-    type Raw = "file" | "space" | "workbook" | "job" | "document" | "sheet" | "program" | "secret";
++    type Raw = "file" | "space" | "workbook" | "job" | "document" | "sheet" | "program" | "secret" | "cron";
+ }
+diff --git a/src/serialization/resources/events/types/EventTopic.ts b/src/serialization/resources/events/types/EventTopic.ts
+index 8302ee9..4fd0d1d 100644
+--- a/src/serialization/resources/events/types/EventTopic.ts
++++ b/src/serialization/resources/events/types/EventTopic.ts
+@@ -56,2 +56,6 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
+         "secret:deleted",
++        "cron:5-minutes",
++        "cron:hourly",
++        "cron:daily",
++        "cron:weekly",
+     ]);
+@@ -105,3 +109,7 @@ export declare namespace EventTopic {
+         | "secret:updated"
+-        | "secret:deleted";
++        | "secret:deleted"
++        | "cron:5-minutes"
++        | "cron:hourly"
++        | "cron:daily"
++        | "cron:weekly";
+ }

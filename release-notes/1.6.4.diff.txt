@@ -1,0 +1,666 @@
+diff --git a/.fernignore b/.fernignore
+index 589017b..7e7bea6 100644
+--- a/.fernignore
++++ b/.fernignore
+@@ -8 +8,2 @@ src/index.ts
+ 
++.github/workflows/ci.yml
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index e2b82d1..6d8bed9 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -39,4 +39,9 @@ jobs:
+           npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+-          npm publish --access public
++          VERSION=$(cat package.json | jq -r '.version')
++          if [[ $VERSION == *"rc"* ]]; then
++            npm publish --access public --tag rc
++          else
++            npm publish --access public
++          fi
+         env:
+-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+\ No newline at end of file
++          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+diff --git a/README.md b/README.md
+index d74f93e..475f3f5 100644
+--- a/README.md
++++ b/README.md
+@@ -9,3 +9,3 @@ The Flatfile Node.js library provides convenient access to the Flatfile API from
+ 
+-API reference documentation is available [here](https://flatfile.stoplight.io/docs/api).
++API reference documentation is available [here](https://reference.flatfile.com).
+ 
+diff --git a/package.json b/package.json
+index 6a1e2d6..90192f9 100644
+--- a/package.json
++++ b/package.json
+@@ -2,3 +2,3 @@
+     "name": "@flatfile/api",
+-    "version": "1.6.3",
++    "version": "1.6.4",
+     "private": false,
+diff --git a/src/api/resources/agents/client/Client.ts b/src/api/resources/agents/client/Client.ts
+index 65635e2..82f9028 100644
+--- a/src/api/resources/agents/client/Client.ts
++++ b/src/api/resources/agents/client/Client.ts
+@@ -46,3 +46,3 @@ export class Agents {
+             },
+@@ -126,3 +126,3 @@ export class Agents {
+             },
+@@ -207,3 +207,3 @@ export class Agents {
+             },
+@@ -297,3 +297,3 @@ export class Agents {
+             },
+@@ -387,3 +387,3 @@ export class Agents {
+             },
+@@ -496,3 +496,3 @@ export class Agents {
+             },
+@@ -605,3 +605,3 @@ export class Agents {
+             },
+@@ -696,3 +696,3 @@ export class Agents {
+             },
+diff --git a/src/api/resources/apps/client/Client.ts b/src/api/resources/apps/client/Client.ts
+index 8d65d9d..047964b 100644
+--- a/src/api/resources/apps/client/Client.ts
++++ b/src/api/resources/apps/client/Client.ts
+@@ -43,3 +43,3 @@ export class Apps {
+             },
+@@ -99,3 +99,3 @@ export class Apps {
+             },
+@@ -168,3 +168,3 @@ export class Apps {
+             },
+@@ -238,3 +238,3 @@ export class Apps {
+             },
+diff --git a/src/api/resources/auth/client/Client.ts b/src/api/resources/auth/client/Client.ts
+index 891b70a..b6c7d28 100644
+--- a/src/api/resources/auth/client/Client.ts
++++ b/src/api/resources/auth/client/Client.ts
+@@ -55,3 +55,3 @@ export class Auth {
+             },
+@@ -144,3 +144,3 @@ export class Auth {
+             },
+@@ -235,3 +235,3 @@ export class Auth {
+             },
+@@ -326,3 +326,3 @@ export class Auth {
+             },
+diff --git a/src/api/resources/cells/client/Client.ts b/src/api/resources/cells/client/Client.ts
+index 0932ea5..146afff 100644
+--- a/src/api/resources/cells/client/Client.ts
++++ b/src/api/resources/cells/client/Client.ts
+@@ -108,3 +108,3 @@ export class Cells {
+             },
+diff --git a/src/api/resources/commits/client/Client.ts b/src/api/resources/commits/client/Client.ts
+index f2fecd5..c807ca7 100644
+--- a/src/api/resources/commits/client/Client.ts
++++ b/src/api/resources/commits/client/Client.ts
+@@ -51,3 +51,3 @@ export class Commits {
+             },
+@@ -132,3 +132,3 @@ export class Commits {
+             },
+@@ -213,3 +213,3 @@ export class Commits {
+             },
+diff --git a/src/api/resources/commons/types/Action.ts b/src/api/resources/commons/types/Action.ts
+index d1e690b..d3c651d 100644
+--- a/src/api/resources/commons/types/Action.ts
++++ b/src/api/resources/commons/types/Action.ts
+@@ -39,2 +39,3 @@ export interface Action {
+     tooltip?: string;
++    messages?: Flatfile.ActionMessage[];
+     /**
+diff --git a/src/api/resources/commons/types/ActionConstraintType.ts b/src/api/resources/commons/types/ActionConstraintType.ts
+index 69dc6c6..d5ff5aa 100644
+--- a/src/api/resources/commons/types/ActionConstraintType.ts
++++ b/src/api/resources/commons/types/ActionConstraintType.ts
+@@ -4,3 +4,3 @@
+ 
+-export type ActionConstraintType = "hasAllValid" | "hasSelection";
++export type ActionConstraintType = "hasAllValid" | "hasSelection" | "hasData";
+ 
+@@ -9,2 +9,3 @@ export const ActionConstraintType = {
+     HasSelection: "hasSelection",
++    HasData: "hasData",
+ } as const;
+diff --git a/src/api/resources/commons/types/ActionMessage.ts b/src/api/resources/commons/types/ActionMessage.ts
+new file mode 100644
+index 0000000..2786956
+--- /dev/null
++++ b/src/api/resources/commons/types/ActionMessage.ts
+@@ -0,0 +1,10 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++import * as Flatfile from "../../..";
++
++export interface ActionMessage {
++    type: Flatfile.ActionMessageType;
++    content: string;
++}
+diff --git a/src/api/resources/commons/types/ActionMessageType.ts b/src/api/resources/commons/types/ActionMessageType.ts
+new file mode 100644
+index 0000000..9af6b66
+--- /dev/null
++++ b/src/api/resources/commons/types/ActionMessageType.ts
+@@ -0,0 +1,12 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++export type ActionMessageType = "success" | "error" | "warning" | "info";
++
++export const ActionMessageType = {
++    Success: "success",
++    Error: "error",
++    Warning: "warning",
++    Info: "info",
++} as const;
+diff --git a/src/api/resources/commons/types/index.ts b/src/api/resources/commons/types/index.ts
+index dd3cab8..53f1ff7 100644
+--- a/src/api/resources/commons/types/index.ts
++++ b/src/api/resources/commons/types/index.ts
+@@ -39,2 +39,4 @@ export * from "./InputEnumPropertyOption";
+ export * from "./ActionMode";
++export * from "./ActionMessageType";
++export * from "./ActionMessage";
+ export * from "./ActionSchedule";
+diff --git a/src/api/resources/dataRetentionPolicies/client/Client.ts b/src/api/resources/dataRetentionPolicies/client/Client.ts
+index 0a06eba..71644a6 100644
+--- a/src/api/resources/dataRetentionPolicies/client/Client.ts
++++ b/src/api/resources/dataRetentionPolicies/client/Client.ts
+@@ -59,3 +59,3 @@ export class DataRetentionPolicies {
+             },
+@@ -148,3 +148,3 @@ export class DataRetentionPolicies {
+             },
+@@ -233,3 +233,3 @@ export class DataRetentionPolicies {
+             },
+@@ -322,3 +322,3 @@ export class DataRetentionPolicies {
+             },
+@@ -404,3 +404,3 @@ export class DataRetentionPolicies {
+             },
+diff --git a/src/api/resources/documents/client/Client.ts b/src/api/resources/documents/client/Client.ts
+index be2b4af..6db141e 100644
+--- a/src/api/resources/documents/client/Client.ts
++++ b/src/api/resources/documents/client/Client.ts
+@@ -51,3 +51,3 @@ export class Documents {
+             },
+@@ -146,3 +146,3 @@ export class Documents {
+             },
+@@ -234,3 +234,3 @@ export class Documents {
+             },
+@@ -325,3 +325,3 @@ export class Documents {
+             },
+@@ -410,3 +410,3 @@ export class Documents {
+             },
+diff --git a/src/api/resources/environments/client/Client.ts b/src/api/resources/environments/client/Client.ts
+index a0cffe3..0da9022 100644
+--- a/src/api/resources/environments/client/Client.ts
++++ b/src/api/resources/environments/client/Client.ts
+@@ -59,3 +59,3 @@ export class Environments {
+             },
+@@ -127,3 +127,3 @@ export class Environments {
+             },
+@@ -194,3 +194,3 @@ export class Environments {
+             },
+@@ -279,3 +279,3 @@ export class Environments {
+             },
+@@ -370,3 +370,3 @@ export class Environments {
+             },
+@@ -429,3 +429,3 @@ export class Environments {
+             },
+diff --git a/src/api/resources/events/client/Client.ts b/src/api/resources/events/client/Client.ts
+index 1f6a8fe..57e5cd0 100644
+--- a/src/api/resources/events/client/Client.ts
++++ b/src/api/resources/events/client/Client.ts
+@@ -83,3 +83,3 @@ export class Events {
+             },
+@@ -157,3 +157,3 @@ export class Events {
+             },
+@@ -234,3 +234,3 @@ export class Events {
+             },
+@@ -284,3 +284,3 @@ export class Events {
+             },
+@@ -355,3 +355,3 @@ export class Events {
+             },
+diff --git a/src/api/resources/files/client/Client.ts b/src/api/resources/files/client/Client.ts
+index b733f6a..3aa8787 100644
+--- a/src/api/resources/files/client/Client.ts
++++ b/src/api/resources/files/client/Client.ts
+@@ -64,3 +64,3 @@ export class Files {
+             },
+@@ -136,3 +136,3 @@ export class Files {
+                 "Content-Length": (await core.getFormDataContentLength(_request)).toString(),
+@@ -208,3 +208,3 @@ export class Files {
+             },
+@@ -285,3 +285,3 @@ export class Files {
+             },
+@@ -372,3 +372,3 @@ export class Files {
+             },
+@@ -446,3 +446,3 @@ export class Files {
+             },
+diff --git a/src/api/resources/guests/client/Client.ts b/src/api/resources/guests/client/Client.ts
+index 3a1ef4e..0ef6980 100644
+--- a/src/api/resources/guests/client/Client.ts
++++ b/src/api/resources/guests/client/Client.ts
+@@ -58,3 +58,3 @@ export class Guests {
+             },
+@@ -129,3 +129,3 @@ export class Guests {
+             },
+@@ -189,3 +189,3 @@ export class Guests {
+             },
+@@ -245,3 +245,3 @@ export class Guests {
+             },
+@@ -308,3 +308,3 @@ export class Guests {
+             },
+@@ -375,3 +375,3 @@ export class Guests {
+             },
+@@ -437,3 +437,3 @@ export class Guests {
+             },
+diff --git a/src/api/resources/jobs/client/Client.ts b/src/api/resources/jobs/client/Client.ts
+index 9aeeb14..0dff983 100644
+--- a/src/api/resources/jobs/client/Client.ts
++++ b/src/api/resources/jobs/client/Client.ts
+@@ -77,3 +77,3 @@ export class Jobs {
+             },
+@@ -131,3 +131,3 @@ export class Jobs {
+             },
+@@ -182,3 +182,3 @@ export class Jobs {
+             },
+@@ -236,3 +236,3 @@ export class Jobs {
+             },
+@@ -287,3 +287,3 @@ export class Jobs {
+             },
+@@ -343,3 +343,3 @@ export class Jobs {
+             },
+@@ -402,3 +402,3 @@ export class Jobs {
+             },
+@@ -499,3 +499,3 @@ export class Jobs {
+             },
+@@ -557,3 +557,3 @@ export class Jobs {
+             },
+@@ -624,3 +624,3 @@ export class Jobs {
+             },
+@@ -687,3 +687,3 @@ export class Jobs {
+             },
+@@ -759,3 +759,3 @@ export class Jobs {
+             },
+@@ -835,3 +835,3 @@ export class Jobs {
+             },
+@@ -901,3 +901,3 @@ export class Jobs {
+             },
+@@ -958,3 +958,3 @@ export class Jobs {
+             },
+@@ -1014,3 +1014,3 @@ export class Jobs {
+             },
+@@ -1077,3 +1077,3 @@ export class Jobs {
+             },
+diff --git a/src/api/resources/mapping/client/Client.ts b/src/api/resources/mapping/client/Client.ts
+index b208b2f..ea8ab8d 100644
+--- a/src/api/resources/mapping/client/Client.ts
++++ b/src/api/resources/mapping/client/Client.ts
+@@ -48,3 +48,3 @@ export class Mapping {
+             },
+@@ -125,2 +125,3 @@ export class Mapping {
+             environmentId,
++            familyId,
+             namespace,
+@@ -154,2 +155,6 @@ export class Mapping {
+ 
++        if (familyId != null) {
++            _queryParams["familyId"] = familyId;
++        }
++
+         if (namespace != null) {
+@@ -177,3 +182,3 @@ export class Mapping {
+             },
+@@ -249,3 +254,3 @@ export class Mapping {
+             },
+@@ -331,3 +336,3 @@ export class Mapping {
+             },
+@@ -413,3 +418,3 @@ export class Mapping {
+             },
+@@ -495,3 +500,3 @@ export class Mapping {
+             },
+@@ -580,3 +585,3 @@ export class Mapping {
+             },
+@@ -667,3 +672,3 @@ export class Mapping {
+             },
+@@ -759,3 +764,3 @@ export class Mapping {
+             },
+@@ -847,3 +852,3 @@ export class Mapping {
+             },
+diff --git a/src/api/resources/mapping/client/requests/ListProgramsRequest.ts b/src/api/resources/mapping/client/requests/ListProgramsRequest.ts
+index 215c8d0..4e7c7a9 100644
+--- a/src/api/resources/mapping/client/requests/ListProgramsRequest.ts
++++ b/src/api/resources/mapping/client/requests/ListProgramsRequest.ts
+@@ -31,2 +31,6 @@ export interface ListProgramsRequest {
+     environmentId?: Flatfile.EnvironmentId;
++    /**
++     * Filter by family
++     */
++    familyId?: Flatfile.FamilyId;
+     /**
+diff --git a/src/api/resources/mapping/types/MappingRuleConfig.ts b/src/api/resources/mapping/types/MappingRuleConfig.ts
+index 63346f8..8b23690 100644
+--- a/src/api/resources/mapping/types/MappingRuleConfig.ts
++++ b/src/api/resources/mapping/types/MappingRuleConfig.ts
+@@ -4,2 +4,4 @@
+ 
++import * as Flatfile from "../../..";
++
+ /**
+@@ -19,2 +21,4 @@ export interface MappingRuleConfig {
+     confidence?: number;
++    /** User ID of the contributor of the mapping rule */
++    contributor?: Flatfile.UserId;
+ }
+diff --git a/src/api/resources/records/client/Client.ts b/src/api/resources/records/client/Client.ts
+index 0d1bfc8..241a408 100644
+--- a/src/api/resources/records/client/Client.ts
++++ b/src/api/resources/records/client/Client.ts
+@@ -154,3 +154,3 @@ export class Records {
+             },
+@@ -263,3 +263,3 @@ export class Records {
+             },
+@@ -365,3 +365,3 @@ export class Records {
+             },
+@@ -463,3 +463,3 @@ export class Records {
+             },
+@@ -575,3 +575,3 @@ export class Records {
+             },
+diff --git a/src/api/resources/roles/client/Client.ts b/src/api/resources/roles/client/Client.ts
+index 868b958..7b65cd1 100644
+--- a/src/api/resources/roles/client/Client.ts
++++ b/src/api/resources/roles/client/Client.ts
+@@ -49,3 +49,3 @@ export class Roles {
+             },
+diff --git a/src/api/resources/secrets/client/Client.ts b/src/api/resources/secrets/client/Client.ts
+index d1d5b7e..f1bddf1 100644
+--- a/src/api/resources/secrets/client/Client.ts
++++ b/src/api/resources/secrets/client/Client.ts
+@@ -60,3 +60,3 @@ export class Secrets {
+             },
+@@ -150,3 +150,3 @@ export class Secrets {
+             },
+@@ -235,3 +235,3 @@ export class Secrets {
+             },
+diff --git a/src/api/resources/sheets/client/Client.ts b/src/api/resources/sheets/client/Client.ts
+index 0a9773c..4b87592 100644
+--- a/src/api/resources/sheets/client/Client.ts
++++ b/src/api/resources/sheets/client/Client.ts
+@@ -55,3 +55,3 @@ export class Sheets {
+             },
+@@ -115,3 +115,3 @@ export class Sheets {
+             },
+@@ -173,3 +173,3 @@ export class Sheets {
+             },
+@@ -257,3 +257,3 @@ export class Sheets {
+             },
+@@ -399,3 +399,3 @@ export class Sheets {
+             },
+@@ -484,3 +484,3 @@ export class Sheets {
+             },
+@@ -544,3 +544,3 @@ export class Sheets {
+             },
+@@ -634,3 +634,3 @@ export class Sheets {
+             },
+@@ -696,3 +696,3 @@ export class Sheets {
+             },
+@@ -780,3 +780,3 @@ export class Sheets {
+             },
+@@ -921,3 +921,3 @@ export class Sheets {
+             },
+diff --git a/src/api/resources/sheets/types/ListSheetsResponse.ts b/src/api/resources/sheets/types/ListSheetsResponse.ts
+index b5ed643..47b24a6 100644
+--- a/src/api/resources/sheets/types/ListSheetsResponse.ts
++++ b/src/api/resources/sheets/types/ListSheetsResponse.ts
+@@ -13,2 +13,3 @@ import * as Flatfile from "../../..";
+  *                 name: "Contacts",
++ *                 slug: "contacts",
+  *                 config: {
+diff --git a/src/api/resources/sheets/types/Sheet.ts b/src/api/resources/sheets/types/Sheet.ts
+index 01ea844..2b97e88 100644
+--- a/src/api/resources/sheets/types/Sheet.ts
++++ b/src/api/resources/sheets/types/Sheet.ts
+@@ -14,2 +14,3 @@ import * as Flatfile from "../../..";
+  *         name: "Contacts",
++ *         slug: "contacts",
+  *         config: {
+@@ -49,2 +50,4 @@ export interface Sheet {
+     name: string;
++    /** The slug of the Sheet. */
++    slug: string;
+     /** Describes shape of data as well as behavior */
+diff --git a/src/api/resources/sheets/types/SheetConfig.ts b/src/api/resources/sheets/types/SheetConfig.ts
+index 05bec40..6687358 100644
+--- a/src/api/resources/sheets/types/SheetConfig.ts
++++ b/src/api/resources/sheets/types/SheetConfig.ts
+@@ -48,2 +48,4 @@ export interface SheetConfig {
+     actions?: Flatfile.Action[];
++    /** Useful for any contextual metadata regarding the schema. Store any valid json */
++    metadata?: any;
+     /** An array of constraints that end users can perform on this Sheet. */
+diff --git a/src/api/resources/sheets/types/SheetResponse.ts b/src/api/resources/sheets/types/SheetResponse.ts
+index c665e2a..037d224 100644
+--- a/src/api/resources/sheets/types/SheetResponse.ts
++++ b/src/api/resources/sheets/types/SheetResponse.ts
+@@ -13,2 +13,3 @@ import * as Flatfile from "../../..";
+  *             name: "Contacts",
++ *             slug: "contacts",
+  *             config: {
+diff --git a/src/api/resources/snapshots/client/Client.ts b/src/api/resources/snapshots/client/Client.ts
+index 20b3847..4860bfe 100644
+--- a/src/api/resources/snapshots/client/Client.ts
++++ b/src/api/resources/snapshots/client/Client.ts
+@@ -54,3 +54,3 @@ export class Snapshots {
+             },
+@@ -144,3 +144,3 @@ export class Snapshots {
+             },
+@@ -235,3 +235,3 @@ export class Snapshots {
+             },
+@@ -320,3 +320,3 @@ export class Snapshots {
+             },
+@@ -409,3 +409,3 @@ export class Snapshots {
+             },
+@@ -518,3 +518,3 @@ export class Snapshots {
+             },
+diff --git a/src/api/resources/spaces/client/Client.ts b/src/api/resources/spaces/client/Client.ts
+index 9e373e1..a8554de 100644
+--- a/src/api/resources/spaces/client/Client.ts
++++ b/src/api/resources/spaces/client/Client.ts
+@@ -100,3 +100,3 @@ export class Spaces {
+             },
+@@ -180,3 +180,3 @@ export class Spaces {
+             },
+@@ -265,3 +265,3 @@ export class Spaces {
+             },
+@@ -346,3 +346,3 @@ export class Spaces {
+             },
+@@ -440,3 +440,3 @@ export class Spaces {
+             },
+@@ -528,3 +528,3 @@ export class Spaces {
+             },
+@@ -613,3 +613,3 @@ export class Spaces {
+             },
+diff --git a/src/api/resources/users/client/Client.ts b/src/api/resources/users/client/Client.ts
+index 181115b..9b1226d 100644
+--- a/src/api/resources/users/client/Client.ts
++++ b/src/api/resources/users/client/Client.ts
+@@ -57,3 +57,3 @@ export class Users {
+             },
+@@ -114,3 +114,3 @@ export class Users {
+             },
+@@ -182,3 +182,3 @@ export class Users {
+             },
+@@ -243,3 +243,3 @@ export class Users {
+             },
+@@ -300,3 +300,3 @@ export class Users {
+             },
+diff --git a/src/api/resources/versions/client/Client.ts b/src/api/resources/versions/client/Client.ts
+index f5429fe..55dde14 100644
+--- a/src/api/resources/versions/client/Client.ts
++++ b/src/api/resources/versions/client/Client.ts
+@@ -43,3 +43,3 @@ export class Versions {
+             },
+diff --git a/src/api/resources/workbooks/client/Client.ts b/src/api/resources/workbooks/client/Client.ts
+index e6e0abc..125c639 100644
+--- a/src/api/resources/workbooks/client/Client.ts
++++ b/src/api/resources/workbooks/client/Client.ts
+@@ -63,3 +63,3 @@ export class Workbooks {
+             },
+@@ -168,3 +168,3 @@ export class Workbooks {
+             },
+@@ -243,3 +243,3 @@ export class Workbooks {
+             },
+@@ -327,3 +327,3 @@ export class Workbooks {
+             },
+@@ -422,3 +422,3 @@ export class Workbooks {
+             },
+@@ -512,3 +512,3 @@ export class Workbooks {
+             },
+@@ -571,3 +571,3 @@ export class Workbooks {
+             },
+diff --git a/src/api/resources/workbooks/types/ListWorkbooksResponse.ts b/src/api/resources/workbooks/types/ListWorkbooksResponse.ts
+index e410d5a..34f96aa 100644
+--- a/src/api/resources/workbooks/types/ListWorkbooksResponse.ts
++++ b/src/api/resources/workbooks/types/ListWorkbooksResponse.ts
+@@ -18,2 +18,3 @@ import * as Flatfile from "../../..";
+  *                         name: "Contacts",
++ *                         slug: "contacts",
+  *                         config: {
+diff --git a/src/api/resources/workbooks/types/Workbook.ts b/src/api/resources/workbooks/types/Workbook.ts
+index 396277d..dea2d71 100644
+--- a/src/api/resources/workbooks/types/Workbook.ts
++++ b/src/api/resources/workbooks/types/Workbook.ts
+@@ -19,2 +19,3 @@ import * as Flatfile from "../../..";
+  *                 name: "Contacts",
++ *                 slug: "contacts",
+  *                 config: {
+diff --git a/src/api/resources/workbooks/types/WorkbookResponse.ts b/src/api/resources/workbooks/types/WorkbookResponse.ts
+index d457ddf..11e3afa 100644
+--- a/src/api/resources/workbooks/types/WorkbookResponse.ts
++++ b/src/api/resources/workbooks/types/WorkbookResponse.ts
+@@ -18,2 +18,3 @@ import * as Flatfile from "../../..";
+  *                     name: "Contacts",
++ *                     slug: "contacts",
+  *                     config: {
+diff --git a/src/serialization/resources/commons/types/Action.ts b/src/serialization/resources/commons/types/Action.ts
+index bb55f0e..3f40e77 100644
+--- a/src/serialization/resources/commons/types/Action.ts
++++ b/src/serialization/resources/commons/types/Action.ts
+@@ -15,2 +15,5 @@ export const Action: core.serialization.ObjectSchema<serializers.Action.Raw, Fla
+         tooltip: core.serialization.string().optional(),
++        messages: core.serialization
++            .list(core.serialization.lazyObject(async () => (await import("../../..")).ActionMessage))
++            .optional(),
+         type: core.serialization.string().optional(),
+@@ -36,2 +39,3 @@ export declare namespace Action {
+         tooltip?: string | null;
++        messages?: serializers.ActionMessage.Raw[] | null;
+         type?: string | null;
+diff --git a/src/serialization/resources/commons/types/ActionConstraintType.ts b/src/serialization/resources/commons/types/ActionConstraintType.ts
+index cd75ace..f0a7dbd 100644
+--- a/src/serialization/resources/commons/types/ActionConstraintType.ts
++++ b/src/serialization/resources/commons/types/ActionConstraintType.ts
+@@ -11,6 +11,6 @@ export const ActionConstraintType: core.serialization.Schema<
+     Flatfile.ActionConstraintType
+-> = core.serialization.enum_(["hasAllValid", "hasSelection"]);
++> = core.serialization.enum_(["hasAllValid", "hasSelection", "hasData"]);
+ 
+ export declare namespace ActionConstraintType {
+-    type Raw = "hasAllValid" | "hasSelection";
++    type Raw = "hasAllValid" | "hasSelection" | "hasData";
+ }
+diff --git a/src/serialization/resources/commons/types/ActionMessage.ts b/src/serialization/resources/commons/types/ActionMessage.ts
+new file mode 100644
+index 0000000..6fe3da8
+--- /dev/null
++++ b/src/serialization/resources/commons/types/ActionMessage.ts
+@@ -0,0 +1,20 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++import * as serializers from "../../..";
++import * as Flatfile from "../../../../api";
++import * as core from "../../../../core";
++
++export const ActionMessage: core.serialization.ObjectSchema<serializers.ActionMessage.Raw, Flatfile.ActionMessage> =
++    core.serialization.object({
++        type: core.serialization.lazy(async () => (await import("../../..")).ActionMessageType),
++        content: core.serialization.string(),
++    });
++
++export declare namespace ActionMessage {
++    interface Raw {
++        type: serializers.ActionMessageType.Raw;
++        content: string;
++    }
++}
+diff --git a/src/serialization/resources/commons/types/ActionMessageType.ts b/src/serialization/resources/commons/types/ActionMessageType.ts
+new file mode 100644
+index 0000000..6cb1238
+--- /dev/null
++++ b/src/serialization/resources/commons/types/ActionMessageType.ts
+@@ -0,0 +1,16 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++
++import * as serializers from "../../..";
++import * as Flatfile from "../../../../api";
++import * as core from "../../../../core";
++
++export const ActionMessageType: core.serialization.Schema<
++    serializers.ActionMessageType.Raw,
++    Flatfile.ActionMessageType
++> = core.serialization.enum_(["success", "error", "warning", "info"]);
++
++export declare namespace ActionMessageType {
++    type Raw = "success" | "error" | "warning" | "info";
++}
+diff --git a/src/serialization/resources/commons/types/index.ts b/src/serialization/resources/commons/types/index.ts
+index dd3cab8..53f1ff7 100644
+--- a/src/serialization/resources/commons/types/index.ts
++++ b/src/serialization/resources/commons/types/index.ts
+@@ -39,2 +39,4 @@ export * from "./InputEnumPropertyOption";
+ export * from "./ActionMode";
++export * from "./ActionMessageType";
++export * from "./ActionMessage";
+ export * from "./ActionSchedule";
+diff --git a/src/serialization/resources/mapping/types/MappingRuleConfig.ts b/src/serialization/resources/mapping/types/MappingRuleConfig.ts
+index 13f54ae..278bb13 100644
+--- a/src/serialization/resources/mapping/types/MappingRuleConfig.ts
++++ b/src/serialization/resources/mapping/types/MappingRuleConfig.ts
+@@ -16,2 +16,3 @@ export const MappingRuleConfig: core.serialization.ObjectSchema<
+     confidence: core.serialization.number().optional(),
++    contributor: core.serialization.lazy(async () => (await import("../../..")).UserId).optional(),
+ });
+@@ -24,2 +25,3 @@ export declare namespace MappingRuleConfig {
+         confidence?: number | null;
++        contributor?: serializers.UserId.Raw | null;
+     }
+diff --git a/src/serialization/resources/sheets/types/Sheet.ts b/src/serialization/resources/sheets/types/Sheet.ts
+index 4420603..4e3c704 100644
+--- a/src/serialization/resources/sheets/types/Sheet.ts
++++ b/src/serialization/resources/sheets/types/Sheet.ts
+@@ -12,2 +12,3 @@ export const Sheet: core.serialization.ObjectSchema<serializers.Sheet.Raw, Flatf
+     name: core.serialization.string(),
++    slug: core.serialization.string(),
+     config: core.serialization.lazyObject(async () => (await import("../../..")).SheetConfig),
+@@ -26,2 +27,3 @@ export declare namespace Sheet {
+         name: string;
++        slug: string;
+         config: serializers.SheetConfig.Raw;
+diff --git a/src/serialization/resources/sheets/types/SheetConfig.ts b/src/serialization/resources/sheets/types/SheetConfig.ts
+index 51aa641..fc648da 100644
+--- a/src/serialization/resources/sheets/types/SheetConfig.ts
++++ b/src/serialization/resources/sheets/types/SheetConfig.ts
+@@ -23,2 +23,3 @@ export const SheetConfig: core.serialization.ObjectSchema<serializers.SheetConfi
+             .optional(),
++        metadata: core.serialization.any().optional(),
+         constraints: core.serialization
+@@ -39,2 +40,3 @@ export declare namespace SheetConfig {
+         actions?: serializers.Action.Raw[] | null;
++        metadata?: any | null;
+         constraints?: serializers.SheetConstraint.Raw[] | null;

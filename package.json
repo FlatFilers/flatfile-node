@@ -12,24 +12,24 @@
         "test": "jest"
     },
     "dependencies": {
-        "url-join": "4.0.1",
-        "form-data": "4.0.0",
-        "node-fetch": "2.7.0",
-        "qs": "6.11.2",
-        "js-base64": "3.7.2",
         "@flatfile/cross-env-config": "0.0.4",
         "@types/pako": "2.0.1",
-        "pako": "2.0.1"
+        "form-data": "4.0.0",
+        "js-base64": "3.7.2",
+        "node-fetch": "2.7.0",
+        "pako": "2.0.1",
+        "qs": "6.11.2",
+        "url-join": "4.0.1"
     },
     "devDependencies": {
-        "@types/url-join": "4.0.1",
-        "@types/qs": "6.9.8",
-        "@types/node-fetch": "2.6.9",
-        "jest": "^29.7.0",
         "@types/jest": "^29.5.5",
-        "ts-jest": "^29.1.1",
-        "@types/node": "17.0.33",
+        "@types/node": "^17.0.33",
+        "@types/node-fetch": "2.6.9",
+        "@types/qs": "6.9.8",
+        "@types/url-join": "4.0.1",
+        "jest": "^29.7.0",
         "prettier": "2.7.1",
+        "ts-jest": "^29.1.1",
         "typescript": "4.6.4"
     }
 }
