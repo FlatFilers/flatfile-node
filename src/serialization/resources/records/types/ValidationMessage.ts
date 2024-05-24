@@ -7,20 +7,25 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { ValidationType } from "./ValidationType";
 import { ValidationSource } from "./ValidationSource";
+import { JsonPathString } from "../../commons/types/JsonPathString";
 
 export const ValidationMessage: core.serialization.ObjectSchema<
     serializers.ValidationMessage.Raw,
     Flatfile.ValidationMessage
 > = core.serialization.object({
+    field: core.serialization.string().optional(),
     type: ValidationType.optional(),
     source: ValidationSource.optional(),
     message: core.serialization.string().optional(),
+    path: JsonPathString.optional(),
 });
 
 export declare namespace ValidationMessage {
     interface Raw {
+        field?: string | null;
         type?: ValidationType.Raw | null;
         source?: ValidationSource.Raw | null;
         message?: string | null;
+        path?: JsonPathString.Raw | null;
     }
 }

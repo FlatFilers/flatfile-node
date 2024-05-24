@@ -54,3 +54,4 @@ export * from "./SearchField";
 export * from "./SearchValue";
 export * from "./SortField";
 export * from "./AccessToken";
+export * from "./JsonPathString";

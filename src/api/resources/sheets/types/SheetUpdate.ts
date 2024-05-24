@@ -14,6 +14,8 @@ export interface SheetUpdate {
     workbookId?: Flatfile.WorkbookId;
     /** Describes shape of data as well as behavior. */
     config?: Flatfile.SheetConfig;
+    /** Useful for any contextual metadata regarding the sheet. Store any valid json */
+    metadata?: any;
     /** The scoped namespace of the Sheet. */
     namespace?: string;
     /** Date the sheet was last updated */

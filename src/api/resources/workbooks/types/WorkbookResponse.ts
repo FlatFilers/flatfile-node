@@ -35,7 +35,11 @@ import * as Flatfile from "../../..";
  *                             }],
  *                         mappingConfidenceThreshold: 0.5
  *                     },
- *                     lockedBy: "Example0",
+ *                     metadata: {
+ *                         "rowHeaders": [
+ *                             4
+ *                         ]
+ *                     },
  *                     updatedAt: new Date("2021-08-31T18:00:00.000Z"),
  *                     createdAt: new Date("2021-08-31T18:00:00.000Z")
  *                 }],

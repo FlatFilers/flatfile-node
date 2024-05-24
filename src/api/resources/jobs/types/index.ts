@@ -36,6 +36,7 @@ export * from "./JobOutcomeNextFiles";
 export * from "./JobOutcomeNextWait";
 export * from "./JobOutcomeNextRetry";
 export * from "./JobOutcomeNextSnapshot";
+export * from "./JobOutcomeNextView";
 export * from "./JobCancelDetails";
 export * from "./JobSplitDetails";
 export * from "./JobParts";

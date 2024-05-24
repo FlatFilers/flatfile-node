@@ -8,7 +8,10 @@ import * as Flatfile from "../../..";
  * Record data validation messages
  */
 export interface ValidationMessage {
+    field?: string;
     type?: Flatfile.ValidationType;
     source?: Flatfile.ValidationSource;
     message?: string;
+    /** This JSONPath is based on the root of mapped cell object. */
+    path?: Flatfile.JsonPathString;
 }

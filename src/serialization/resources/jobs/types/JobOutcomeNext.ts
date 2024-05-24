@@ -12,6 +12,7 @@ import { JobOutcomeNextFiles } from "./JobOutcomeNextFiles";
 import { JobOutcomeNextWait } from "./JobOutcomeNextWait";
 import { JobOutcomeNextSnapshot } from "./JobOutcomeNextSnapshot";
 import { JobOutcomeNextRetry } from "./JobOutcomeNextRetry";
+import { JobOutcomeNextView } from "./JobOutcomeNextView";
 
 export const JobOutcomeNext: core.serialization.Schema<serializers.JobOutcomeNext.Raw, Flatfile.JobOutcomeNext> =
     core.serialization
@@ -23,6 +24,7 @@ export const JobOutcomeNext: core.serialization.Schema<serializers.JobOutcomeNex
             wait: JobOutcomeNextWait,
             snapshot: JobOutcomeNextSnapshot,
             retry: JobOutcomeNextRetry,
+            view: JobOutcomeNextView,
         })
         .transform<Flatfile.JobOutcomeNext>({
             transform: (value) => value,
@@ -37,7 +39,8 @@ export declare namespace JobOutcomeNext {
         | JobOutcomeNext.Files
         | JobOutcomeNext.Wait
         | JobOutcomeNext.Snapshot
-        | JobOutcomeNext.Retry;
+        | JobOutcomeNext.Retry
+        | JobOutcomeNext.View;
 
     interface Id extends JobOutcomeNextId.Raw {
         type: "id";
@@ -65,5 +68,9 @@ export declare namespace JobOutcomeNext {
 
     interface Retry extends JobOutcomeNextRetry.Raw {
         type: "retry";
+    }
+
+    interface View extends JobOutcomeNextView.Raw {
+        type: "view";
     }
 }

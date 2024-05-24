@@ -8,6 +8,7 @@ export * from "./ExternalSheetConstraint";
 export * from "./CompositeUniqueConstraint";
 export * from "./CompositeUniqueConstraintStrategy";
 export * from "./SheetUpdate";
+export * from "./SheetUpdateRequest";
 export * from "./SheetConfigOrUpdate";
 export * from "./RecordCountsResponse";
 export * from "./RecordCountsResponseData";

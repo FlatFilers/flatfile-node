@@ -14,6 +14,7 @@ export const SheetUpdate: core.serialization.ObjectSchema<serializers.SheetUpdat
         id: SheetId.optional(),
         workbookId: WorkbookId.optional(),
         config: SheetConfig.optional(),
+        metadata: core.serialization.any().optional(),
         namespace: core.serialization.string().optional(),
         updatedAt: core.serialization.date().optional(),
         createdAt: core.serialization.date().optional(),
@@ -24,6 +25,7 @@ export declare namespace SheetUpdate {
         id?: SheetId.Raw | null;
         workbookId?: WorkbookId.Raw | null;
         config?: SheetConfig.Raw | null;
+        metadata?: any | null;
         namespace?: string | null;
         updatedAt?: string | null;
         createdAt?: string | null;

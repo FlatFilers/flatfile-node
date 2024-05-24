@@ -16,6 +16,7 @@ export const Sheet: core.serialization.ObjectSchema<serializers.Sheet.Raw, Flatf
     name: core.serialization.string(),
     slug: core.serialization.string(),
     config: SheetConfig,
+    metadata: core.serialization.any().optional(),
     namespace: core.serialization.string().optional(),
     lockedBy: core.serialization.string().optional(),
     updatedAt: core.serialization.date(),
@@ -31,6 +32,7 @@ export declare namespace Sheet {
         name: string;
         slug: string;
         config: SheetConfig.Raw;
+        metadata?: any | null;
         namespace?: string | null;
         lockedBy?: string | null;
         updatedAt: string;

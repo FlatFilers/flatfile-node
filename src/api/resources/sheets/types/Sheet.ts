@@ -31,7 +31,44 @@ import * as Flatfile from "../../..";
  *                 }],
  *             mappingConfidenceThreshold: 0.5
  *         },
- *         lockedBy: "Example0",
+ *         metadata: {
+ *             "rowHeaders": [
+ *                 4
+ *             ]
+ *         },
+ *         updatedAt: new Date("2021-08-31T18:00:00.000Z"),
+ *         createdAt: new Date("2021-08-31T18:00:00.000Z")
+ *     }
+ *
+ * @example
+ *     {
+ *         id: "us_sh_YOUR_ID",
+ *         workbookId: "us_wb_YOUR_ID",
+ *         name: "New Sheet Name",
+ *         slug: "contacts",
+ *         config: {
+ *             name: "Contacts",
+ *             slug: "contacts",
+ *             fields: [{
+ *                     type: "string",
+ *                     key: "firstName",
+ *                     label: "First Name"
+ *                 }, {
+ *                     type: "string",
+ *                     key: "lastName",
+ *                     label: "Last Name"
+ *                 }, {
+ *                     type: "string",
+ *                     key: "email",
+ *                     label: "Email"
+ *                 }],
+ *             mappingConfidenceThreshold: 0.5
+ *         },
+ *         metadata: {
+ *             "rowHeaders": [
+ *                 6
+ *             ]
+ *         },
  *         updatedAt: new Date("2021-08-31T18:00:00.000Z"),
  *         createdAt: new Date("2021-08-31T18:00:00.000Z")
  *     }
@@ -47,6 +84,8 @@ export interface Sheet {
     slug: string;
     /** Describes shape of data as well as behavior */
     config: Flatfile.SheetConfig;
+    /** Useful for any contextual metadata regarding the sheet. Store any valid json */
+    metadata?: any;
     /** The scoped namespace of the Sheet. */
     namespace?: string;
     /** The actor who locked the Sheet. */
