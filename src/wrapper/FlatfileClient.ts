@@ -1,8 +1,8 @@
-import { FlatfileClient as FernClient } from "../Client";
-import * as environments from "../environments";
-import * as core from "../core";
-import urlJoin from "url-join";
 import { CrossEnvConfig } from "@flatfile/cross-env-config";
+import urlJoin from "url-join";
+import { FlatfileClient as FernClient } from "../Client";
+import * as core from "../core";
+import * as environments from "../environments";
 import { Records } from "./RecordsClient";
 
 CrossEnvConfig.alias("FLATFILE_API_URL", "AGENT_INTERNAL_URL");
@@ -24,7 +24,7 @@ export class FlatfileClient extends FernClient {
 
     constructor(options: FlatfileClient.Options = {}) {
         super({
-            environment: (options.environment || options.apiUrl) ?? environmentSupplier,
+            environment: resolveEnvironment(options),
             token: options.token ?? tokenSupplier,
         });
     }
@@ -35,6 +35,13 @@ export class FlatfileClient extends FernClient {
         return (this._records ??= new Records(this._options));
     }
 }
+
+const resolveEnvironment = (options: FlatfileClient.Options) => {
+    if (options.apiUrl && !options.apiUrl.endsWith("/v1")) {
+        return urlJoin(options.apiUrl, "v1");
+    }
+    return options.environment || options.apiUrl || environmentSupplier();
+};
 
 const environmentSupplier = () => {
     const url = CrossEnvConfig.get("FLATFILE_API_URL");
