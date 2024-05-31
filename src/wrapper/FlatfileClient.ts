@@ -54,7 +54,7 @@ const environmentSupplier = () => {
 const tokenSupplier = () => {
     const token = CrossEnvConfig.get("FLATFILE_BEARER_TOKEN");
     if (token == undefined) {
-        throw new Error("FLATFILE_BEARER_TOKEN is not undefined");
+        throw new Error("FLATFILE_BEARER_TOKEN is undefined");
     }
     return token;
 };
