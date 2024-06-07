@@ -101,7 +101,7 @@ The flatfile platform emits different events (e.g. `user:added`, `webhook:remove
 
 ```ts
 const event = eventResponse.data;
-if (event.type === 'job:started') {
+if (event.type === 'job:ready') {
   console.log(event.payload.operation); // FILE
   console.log(event.payload.type); // PIPELINE
 } else if (event.type === 'records:created') {
