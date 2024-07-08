@@ -7,12 +7,16 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { PromptId } from "../../commons/types/PromptId";
 import { AccountId } from "../../commons/types/AccountId";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
+import { SpaceId } from "../../commons/types/SpaceId";
 
 export const Prompt: core.serialization.ObjectSchema<serializers.Prompt.Raw, Flatfile.Prompt> =
     core.serialization.object({
         id: PromptId,
         createdById: core.serialization.string(),
         accountId: AccountId,
+        environmentId: EnvironmentId.optional(),
+        spaceId: SpaceId.optional(),
         prompt: core.serialization.string(),
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
@@ -24,6 +28,8 @@ export declare namespace Prompt {
         id: PromptId.Raw;
         createdById: string;
         accountId: AccountId.Raw;
+        environmentId?: EnvironmentId.Raw | null;
+        spaceId?: SpaceId.Raw | null;
         prompt: string;
         createdAt: string;
         updatedAt: string;

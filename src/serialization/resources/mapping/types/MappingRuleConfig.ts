@@ -16,6 +16,7 @@ export const MappingRuleConfig: core.serialization.ObjectSchema<
     config: core.serialization.any().optional(),
     acceptedAt: core.serialization.date().optional(),
     acceptedBy: UserId.optional(),
+    metadata: core.serialization.any().optional(),
 });
 
 export declare namespace MappingRuleConfig {
@@ -25,5 +26,6 @@ export declare namespace MappingRuleConfig {
         config?: any | null;
         acceptedAt?: string | null;
         acceptedBy?: UserId.Raw | null;
+        metadata?: any | null;
     }
 }

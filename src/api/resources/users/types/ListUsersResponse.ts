@@ -24,4 +24,5 @@ import * as Flatfile from "../../..";
  */
 export interface ListUsersResponse {
     data: Flatfile.User[];
+    pagination?: Flatfile.Pagination;
 }

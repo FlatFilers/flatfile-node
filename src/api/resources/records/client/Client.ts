@@ -56,6 +56,7 @@ export class Records {
             includeLength,
             includeLinks,
             includeMessages,
+            fields,
             for: for_,
             q,
         } = request;
@@ -132,6 +133,14 @@ export class Records {
             _queryParams["includeMessages"] = includeMessages.toString();
         }
 
+        if (fields != null) {
+            if (Array.isArray(fields)) {
+                _queryParams["fields"] = fields.map((item) => item);
+            } else {
+                _queryParams["fields"] = fields;
+            }
+        }
+
         if (for_ != null) {
             _queryParams["for"] = for_;
         }
@@ -151,7 +160,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.1",
+                "X-Fern-SDK-Version": "1.9.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -263,7 +272,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.1",
+                "X-Fern-SDK-Version": "1.9.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -367,7 +376,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.1",
+                "X-Fern-SDK-Version": "1.9.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -465,7 +474,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.1",
+                "X-Fern-SDK-Version": "1.9.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -583,7 +592,7 @@ export class Records {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.1",
+                "X-Fern-SDK-Version": "1.9.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

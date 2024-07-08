@@ -9,4 +9,6 @@ export interface FileJobConfig {
     driver: Flatfile.Driver;
     /** The options to use for extracting data from the file */
     options?: Record<string, any>;
+    /** The row number of the header row detected at extraction time */
+    detectedHeaderRow?: number;
 }

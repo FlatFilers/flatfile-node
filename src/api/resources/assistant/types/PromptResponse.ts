@@ -11,6 +11,8 @@ import * as Flatfile from "../../..";
  *             id: "us_pr_YOUR_ID",
  *             createdById: "us_usr_YOUR_ID",
  *             accountId: "us_acc_YOUR_ID",
+ *             environmentId: "us_env_YOUR_ID",
+ *             spaceId: "us_sp_YOUR_ID",
  *             prompt: "Combine first name and last name into a new column called Full Name",
  *             createdAt: new Date("2021-01-01T00:00:00.000Z"),
  *             updatedAt: new Date("2021-01-01T00:00:00.000Z")

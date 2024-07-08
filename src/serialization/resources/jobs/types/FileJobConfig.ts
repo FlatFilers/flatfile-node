@@ -11,11 +11,13 @@ export const FileJobConfig: core.serialization.ObjectSchema<serializers.FileJobC
     core.serialization.object({
         driver: Driver,
         options: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
+        detectedHeaderRow: core.serialization.number().optional(),
     });
 
 export declare namespace FileJobConfig {
     interface Raw {
         driver: Driver.Raw;
         options?: Record<string, any> | null;
+        detectedHeaderRow?: number | null;
     }
 }

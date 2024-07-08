@@ -5,14 +5,20 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
+import { SpaceId } from "../../commons/types/SpaceId";
 
 export const PromptCreate: core.serialization.ObjectSchema<serializers.PromptCreate.Raw, Flatfile.PromptCreate> =
     core.serialization.object({
         prompt: core.serialization.string(),
+        environmentId: EnvironmentId,
+        spaceId: SpaceId,
     });
 
 export declare namespace PromptCreate {
     interface Raw {
         prompt: string;
+        environmentId: EnvironmentId.Raw;
+        spaceId: SpaceId.Raw;
     }
 }

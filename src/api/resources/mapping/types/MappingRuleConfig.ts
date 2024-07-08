@@ -9,7 +9,8 @@ import * as Flatfile from "../../..";
  *     {
  *         name: "Assign mapping rule",
  *         type: "assign",
- *         config: {}
+ *         config: {},
+ *         metadata: {}
  *     }
  */
 export interface MappingRuleConfig {
@@ -21,4 +22,6 @@ export interface MappingRuleConfig {
     acceptedAt?: Date;
     /** User ID of the contributor of the mapping rule */
     acceptedBy?: Flatfile.UserId;
+    /** Metadata of the mapping rule */
+    metadata?: any;
 }

@@ -7,6 +7,7 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { Constraint } from "./Constraint";
 import { FieldAppearance } from "./FieldAppearance";
+import { Action } from "../../commons/types/Action";
 
 export const BaseProperty: core.serialization.ObjectSchema<serializers.BaseProperty.Raw, Flatfile.BaseProperty> =
     core.serialization.object({
@@ -16,6 +17,7 @@ export const BaseProperty: core.serialization.ObjectSchema<serializers.BasePrope
         constraints: core.serialization.list(Constraint).optional(),
         readonly: core.serialization.boolean().optional(),
         appearance: FieldAppearance.optional(),
+        actions: core.serialization.list(Action).optional(),
         metadata: core.serialization.any().optional(),
         treatments: core.serialization.list(core.serialization.string()).optional(),
         alternativeNames: core.serialization.list(core.serialization.string()).optional(),
@@ -29,6 +31,7 @@ export declare namespace BaseProperty {
         constraints?: Constraint.Raw[] | null;
         readonly?: boolean | null;
         appearance?: FieldAppearance.Raw | null;
+        actions?: Action.Raw[] | null;
         metadata?: any | null;
         treatments?: string[] | null;
         alternativeNames?: string[] | null;

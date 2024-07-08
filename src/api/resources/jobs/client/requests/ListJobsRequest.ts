@@ -44,4 +44,8 @@ export interface ListJobsRequest {
      * Sort direction - asc (ascending) or desc (descending)
      */
     sortDirection?: Flatfile.SortDirection;
+    /**
+     * When true, only top-level jobs will be returned unless a parentId is specified
+     */
+    excludeChildJobs?: boolean;
 }

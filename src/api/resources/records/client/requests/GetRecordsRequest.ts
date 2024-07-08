@@ -57,6 +57,10 @@ export interface GetRecordsRequest {
      */
     includeMessages?: boolean;
     /**
+     * A list of field keys to include in the response. If not provided, all fields will be included.
+     */
+    fields?: string | string[];
+    /**
      * if "for" is provided, the query parameters will be pulled from the event payload
      */
     for?: Flatfile.EventId;

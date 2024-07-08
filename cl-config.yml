@@ -1,7 +1,0 @@
-sourceDirectory: ''
-destinationRepo: 'flatfilers/guides'
-destinationDirectory: 'platform'
-packages:
-  - name: '@flatfile/api'
-    dir: ''
-    type: dataxp

@@ -56,7 +56,7 @@ export class Assistant {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.1",
+                "X-Fern-SDK-Version": "1.9.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -118,7 +118,7 @@ export class Assistant {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.1",
+                "X-Fern-SDK-Version": "1.9.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -182,7 +182,7 @@ export class Assistant {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.1",
+                "X-Fern-SDK-Version": "1.9.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -228,7 +228,9 @@ export class Assistant {
      *
      * @example
      *     await flatfile.assistant.create({
-     *         prompt: "Combine first name and last name into a new column called Full Name"
+     *         prompt: "Combine first name and last name into a new column called Full Name",
+     *         environmentId: "us_env_YOUR_ID",
+     *         spaceId: "us_sp_YOUR_ID"
      *     })
      */
     public async create(
@@ -246,7 +248,7 @@ export class Assistant {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.1",
+                "X-Fern-SDK-Version": "1.9.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -308,7 +310,7 @@ export class Assistant {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.1",
+                "X-Fern-SDK-Version": "1.9.2",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

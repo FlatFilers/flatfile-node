@@ -38,7 +38,7 @@ export interface Snapshot {
     sheetId: Flatfile.SheetId;
     /** The title of the Snapshot. */
     label?: string;
-    /** A summary of the Snapshot. */
+    /** A summary of the Snapshot. This field is only available on the single get snapshot endpoint. It is not available for the list snapshots endpoint. */
     summary?: Flatfile.SnapshotSummary;
     /** The time the Snapshot was created. */
     createdAt: Date;

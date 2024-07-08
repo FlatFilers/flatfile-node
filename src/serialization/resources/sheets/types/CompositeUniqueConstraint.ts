@@ -13,6 +13,7 @@ export const CompositeUniqueConstraint: core.serialization.ObjectSchema<
 > = core.serialization.object({
     name: core.serialization.string(),
     fields: core.serialization.list(core.serialization.string()),
+    requiredFields: core.serialization.list(core.serialization.string()).optional(),
     strategy: CompositeUniqueConstraintStrategy,
 });
 
@@ -20,6 +21,7 @@ export declare namespace CompositeUniqueConstraint {
     interface Raw {
         name: string;
         fields: string[];
+        requiredFields?: string[] | null;
         strategy: CompositeUniqueConstraintStrategy.Raw;
     }
 }

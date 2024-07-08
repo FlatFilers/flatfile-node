@@ -13,6 +13,8 @@ export interface BaseProperty {
     constraints?: Flatfile.Constraint[];
     readonly?: boolean;
     appearance?: Flatfile.FieldAppearance;
+    /** An array of actions that end users can perform on this Column. */
+    actions?: Flatfile.Action[];
     /** Useful for any contextual metadata regarding the schema. Store any valid json here. */
     metadata?: any;
     /** A unique presentation for a field in the UI. */

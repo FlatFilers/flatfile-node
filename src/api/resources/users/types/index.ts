@@ -4,6 +4,7 @@ export * from "./UserWithRolesResponse";
 export * from "./UserWithRoles";
 export * from "./User";
 export * from "./UserConfig";
+export * from "./ListUsersSortField";
 export * from "./UserCreateAndInviteRequest";
 export * from "./ListApiTokensResponse";
 export * from "./ApiTokenResponse";

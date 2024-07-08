@@ -6,16 +6,19 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { User } from "./User";
+import { Pagination } from "../../commons/types/Pagination";
 
 export const ListUsersResponse: core.serialization.ObjectSchema<
     serializers.ListUsersResponse.Raw,
     Flatfile.ListUsersResponse
 > = core.serialization.object({
     data: core.serialization.list(User),
+    pagination: Pagination.optional(),
 });
 
 export declare namespace ListUsersResponse {
     interface Raw {
         data: User.Raw[];
+        pagination?: Pagination.Raw | null;
     }
 }

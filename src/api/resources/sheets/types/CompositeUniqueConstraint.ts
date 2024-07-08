@@ -9,5 +9,7 @@ export interface CompositeUniqueConstraint {
     name: string;
     /** The fields that must be unique together */
     fields: string[];
+    /** Fields that, when empty, will cause this unique constraint to be ignored */
+    requiredFields?: string[];
     strategy: Flatfile.CompositeUniqueConstraintStrategy;
 }
