@@ -1,0 +1,58 @@
+name: Create a changelog update
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  changelog:
+    name: Changelog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+
+      - name: Authenticate with private NPM package
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
+        
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install changelog
+        run: npm i @flatfile/changelog --save-optional
+
+      - name: Set variables from cl-config.yml
+        run: |
+          destinationRepo=$(yq e '.destinationRepo' cl-config.yml)
+          destinationDirectory=$(yq e '.destinationDirectory' cl-config.yml)
+  
+          echo "DESTINATION_REPO=${destinationRepo}" >> $GITHUB_ENV
+          echo "DESTINATION_DIRECTORY=${destinationDirectory}" >> $GITHUB_ENV
+  
+      - name: Create a changelog update
+        run: npx changelog generate ${{ github.event.release.tag_name }}
+        env:
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+
+      - name: Get changelog update file name
+        run: |
+          FILE_NAME=$(ls temp)
+          echo "FILE_NAME=$FILE_NAME" >> $GITHUB_ENV
+
+      - name: Create branch in guides repo with changelog update
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.GH_TOKEN }}
+        with:
+          source_file: temp/${{ env.FILE_NAME}}
+          destination_repo: ${{ env.DESTINATION_REPO }}
+          destination_folder: changelog/src/${{ env.DESTINATION_DIRECTORY }}
+          destination_branch_create: changelog/${{ github.event.release.tag_name }}
+          user_email: ${{ github.actor }}
+          user_name: github-actions[bot]
+          commit_message: "Updating the changelog for ${{ github.event.release.tag_name }}"
