@@ -35,7 +35,7 @@ jobs:
           echo "DESTINATION_DIRECTORY=${destinationDirectory}" >> $GITHUB_ENV
   
       - name: Create a changelog update
-        run: npx changelog generate ${{ github.event.release.tag_name }}
+        run: npx changelog generate tag ${{ github.event.release.tag_name }}
         env:
           CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
 
