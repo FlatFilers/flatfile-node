@@ -1,6 +1,6 @@
 import pako from "pako";
 import urlJoin from "url-join";
-import { Flatfile } from "..";
+import * as Flatfile from "../api/index";
 import { Records as FernRecords } from "../api/resources/records/client/Client";
 import * as core from "../core";
 import * as environments from "../environments";
