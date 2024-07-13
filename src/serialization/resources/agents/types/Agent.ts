@@ -6,16 +6,26 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { AgentId } from "../../commons/types/AgentId";
+import { AccountId } from "../../commons/types/AccountId";
+import { EnvironmentId } from "../../commons/types/EnvironmentId";
 import { AgentConfig } from "./AgentConfig";
 
 export const Agent: core.serialization.ObjectSchema<serializers.Agent.Raw, Flatfile.Agent> = core.serialization
     .object({
         id: AgentId,
+        createdAt: core.serialization.date(),
+        updatedAt: core.serialization.date(),
+        accountId: AccountId,
+        environmentId: EnvironmentId,
     })
     .extend(AgentConfig);
 
 export declare namespace Agent {
     interface Raw extends AgentConfig.Raw {
         id: AgentId.Raw;
+        createdAt: string;
+        updatedAt: string;
+        accountId: AccountId.Raw;
+        environmentId: EnvironmentId.Raw;
     }
 }

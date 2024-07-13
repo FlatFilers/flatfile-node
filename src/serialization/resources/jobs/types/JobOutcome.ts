@@ -5,11 +5,13 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { JobOutcomeTrigger } from "./JobOutcomeTrigger";
 import { JobOutcomeNext } from "./JobOutcomeNext";
 
 export const JobOutcome: core.serialization.ObjectSchema<serializers.JobOutcome.Raw, Flatfile.JobOutcome> =
     core.serialization.object({
         acknowledge: core.serialization.boolean().optional(),
+        trigger: JobOutcomeTrigger.optional(),
         buttonText: core.serialization.string().optional(),
         next: JobOutcomeNext.optional(),
         heading: core.serialization.string().optional(),
@@ -20,6 +22,7 @@ export const JobOutcome: core.serialization.ObjectSchema<serializers.JobOutcome.
 export declare namespace JobOutcome {
     interface Raw {
         acknowledge?: boolean | null;
+        trigger?: JobOutcomeTrigger.Raw | null;
         buttonText?: string | null;
         next?: JobOutcomeNext.Raw | null;
         heading?: string | null;

@@ -21,6 +21,7 @@ import * as Flatfile from "../../..";
  */
 export interface JobOutcome {
     acknowledge?: boolean;
+    trigger?: Flatfile.JobOutcomeTrigger;
     buttonText?: string;
     next?: Flatfile.JobOutcomeNext;
     heading?: string;

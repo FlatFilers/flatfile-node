@@ -26,6 +26,7 @@ export * from "./JobExecutionPlanRequest";
 export * from "./JobExecutionPlanConfigRequest";
 export * from "./JobAckDetails";
 export * from "./JobCompleteDetails";
+export * from "./JobOutcomeTrigger";
 export * from "./JobOutcome";
 export * from "./JobOutcomeNext";
 export * from "./JobOutcomeNextId";

@@ -11,5 +11,5 @@ import * as Flatfile from "../../../..";
  *     }
  */
 export interface GetAgentRequest {
-    environmentId: Flatfile.EnvironmentId;
+    environmentId?: Flatfile.EnvironmentId;
 }
