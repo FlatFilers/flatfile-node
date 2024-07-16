@@ -60,4 +60,6 @@ export interface CreateWorkbookConfig {
     settings?: Flatfile.WorkbookConfigSettings;
     /** Metadata for the workbook */
     metadata?: any;
+    /** Treatments for the workbook */
+    treatments?: Flatfile.WorkbookTreatments[];
 }

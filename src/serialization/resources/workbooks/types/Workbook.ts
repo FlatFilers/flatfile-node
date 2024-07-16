@@ -11,6 +11,7 @@ import { EnvironmentId } from "../../commons/types/EnvironmentId";
 import { Sheet } from "../../sheets/types/Sheet";
 import { Action } from "../../commons/types/Action";
 import { WorkbookConfigSettings } from "./WorkbookConfigSettings";
+import { WorkbookTreatments } from "./WorkbookTreatments";
 
 export const Workbook: core.serialization.ObjectSchema<serializers.Workbook.Raw, Flatfile.Workbook> =
     core.serialization.object({
@@ -23,6 +24,7 @@ export const Workbook: core.serialization.ObjectSchema<serializers.Workbook.Raw,
         actions: core.serialization.list(Action).optional(),
         settings: WorkbookConfigSettings.optional(),
         metadata: core.serialization.any().optional(),
+        treatments: core.serialization.list(WorkbookTreatments).optional(),
         namespace: core.serialization.string().optional(),
         updatedAt: core.serialization.date(),
         createdAt: core.serialization.date(),
@@ -40,6 +42,7 @@ export declare namespace Workbook {
         actions?: Action.Raw[] | null;
         settings?: WorkbookConfigSettings.Raw | null;
         metadata?: any | null;
+        treatments?: WorkbookTreatments.Raw[] | null;
         namespace?: string | null;
         updatedAt: string;
         createdAt: string;

@@ -79,6 +79,8 @@ export interface Workbook {
     settings?: Flatfile.WorkbookConfigSettings;
     /** Metadata for the workbook */
     metadata?: any;
+    /** Treatments for the workbook */
+    treatments?: Flatfile.WorkbookTreatments[];
     namespace?: string;
     /** Date the workbook was last updated */
     updatedAt: Date;

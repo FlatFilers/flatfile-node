@@ -10,6 +10,7 @@ import { EnvironmentId } from "../../commons/types/EnvironmentId";
 import { SheetConfig } from "../../sheets/types/SheetConfig";
 import { Action } from "../../commons/types/Action";
 import { WorkbookConfigSettings } from "./WorkbookConfigSettings";
+import { WorkbookTreatments } from "./WorkbookTreatments";
 
 export const CreateWorkbookConfig: core.serialization.ObjectSchema<
     serializers.CreateWorkbookConfig.Raw,
@@ -24,6 +25,7 @@ export const CreateWorkbookConfig: core.serialization.ObjectSchema<
     actions: core.serialization.list(Action).optional(),
     settings: WorkbookConfigSettings.optional(),
     metadata: core.serialization.any().optional(),
+    treatments: core.serialization.list(WorkbookTreatments).optional(),
 });
 
 export declare namespace CreateWorkbookConfig {
@@ -37,5 +39,6 @@ export declare namespace CreateWorkbookConfig {
         actions?: Action.Raw[] | null;
         settings?: WorkbookConfigSettings.Raw | null;
         metadata?: any | null;
+        treatments?: WorkbookTreatments.Raw[] | null;
     }
 }
