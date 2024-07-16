@@ -16,8 +16,16 @@ export const GetSpacesSortField: core.serialization.Schema<
     "environmentId",
     "createdByUserName",
     "createdAt",
+    "lastActivityAt",
 ]);
 
 export declare namespace GetSpacesSortField {
-    type Raw = "name" | "workbooksCount" | "filesCount" | "environmentId" | "createdByUserName" | "createdAt";
+    type Raw =
+        | "name"
+        | "workbooksCount"
+        | "filesCount"
+        | "environmentId"
+        | "createdByUserName"
+        | "createdAt"
+        | "lastActivityAt";
 }

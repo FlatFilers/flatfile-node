@@ -8,7 +8,8 @@ export type GetSpacesSortField =
     | "filesCount"
     | "environmentId"
     | "createdByUserName"
-    | "createdAt";
+    | "createdAt"
+    | "lastActivityAt";
 
 export const GetSpacesSortField = {
     Name: "name",
@@ -17,4 +18,5 @@ export const GetSpacesSortField = {
     EnvironmentId: "environmentId",
     CreatedByUserName: "createdByUserName",
     CreatedAt: "createdAt",
+    LastActivityAt: "lastActivityAt",
 } as const;
