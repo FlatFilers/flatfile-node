@@ -13,6 +13,7 @@ export const AgentConfig: core.serialization.ObjectSchema<serializers.AgentConfi
         topics: core.serialization.list(EventTopic).optional(),
         compiler: Compiler.optional(),
         source: core.serialization.string().optional(),
+        sourceMap: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
     });
 
@@ -21,6 +22,7 @@ export declare namespace AgentConfig {
         topics?: EventTopic.Raw[] | null;
         compiler?: Compiler.Raw | null;
         source?: string | null;
+        sourceMap?: string | null;
         slug?: string | null;
     }
 }
