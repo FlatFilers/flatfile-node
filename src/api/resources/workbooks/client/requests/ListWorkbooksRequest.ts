@@ -16,6 +16,26 @@ export interface ListWorkbooksRequest {
      */
     spaceId?: Flatfile.SpaceId;
     /**
+     * Filter by name. Precede with - to negate the filter
+     */
+    name?: string;
+    /**
+     * Filter by namespace. Precede with - to negate the filter
+     */
+    namespace?: string;
+    /**
+     * Filter by label. Precede with - to negate the filter
+     */
+    label?: string;
+    /**
+     * Filter by treatment.
+     */
+    treatment?: string;
+    /**
+     * Include sheets for the workbook (default true)
+     */
+    includeSheets?: boolean;
+    /**
      * Include counts for the workbook. **DEPRECATED** Counts will return 0s. Use GET /sheets/:sheetId/counts
      */
     includeCounts?: boolean;
