@@ -1,11 +1,9 @@
-/**
-* This is a test file for the SDK.
-* 
-* Add any tests here and make sure to mark this file
-* in `.fernignore`. 
-*/
-describe("test", () => {
-    it("default", () => {
-        expect(true).toBe(true);
-    });
+import { FlatfileClient } from "../src/Client";
+
+describe("FlatfileClient", () => {
+  it("is instantiatable as a class", () => {
+    const client = new FlatfileClient();
+
+    expect(client).toBeInstanceOf(FlatfileClient);
+  });
 });

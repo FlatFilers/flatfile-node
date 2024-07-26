@@ -32,14 +32,14 @@ import { Versions } from "./api/resources/versions/client/Client";
 import { Views } from "./api/resources/views/client/Client";
 import { Workbooks } from "./api/resources/workbooks/client/Client";
 
-export declare namespace FlatfileClient {
-    interface Options {
+export namespace FlatfileClient {
+    export interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
     }
