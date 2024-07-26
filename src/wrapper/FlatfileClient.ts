@@ -8,8 +8,8 @@ import { Records } from "./RecordsClient";
 CrossEnvConfig.alias("FLATFILE_API_URL", "AGENT_INTERNAL_URL");
 CrossEnvConfig.alias("FLATFILE_BEARER_TOKEN", "FLATFILE_API_KEY");
 
-export declare namespace FlatfileClient {
-    interface Options {
+export namespace FlatfileClient {
+    export interface Options {
         /**
          * @deprecated use apiUrl instead
          */

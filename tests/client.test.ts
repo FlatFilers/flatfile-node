@@ -1,4 +1,4 @@
-import { FlatfileClient } from "../src/Client";
+import { FlatfileClient } from "../src/index";
 
 describe("FlatfileClient", () => {
   it("is instantiatable as a class", () => {
