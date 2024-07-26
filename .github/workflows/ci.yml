@@ -13,11 +13,11 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v3
 
-      - name: Run tests
-        uses: npm run test
-
       - name: Compile
         run: yarn && yarn build
+
+      - name: Run tests
+        run: yarn run test
   
   publish:
     needs: [ compile ]
