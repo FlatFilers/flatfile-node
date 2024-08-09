@@ -13,13 +13,13 @@ export const ReferencePropertyConfig: core.serialization.ObjectSchema<
 > = core.serialization.object({
     ref: core.serialization.string(),
     key: core.serialization.string(),
-    relationship: ReferencePropertyRelationship,
+    relationship: ReferencePropertyRelationship.optional(),
 });
 
 export declare namespace ReferencePropertyConfig {
     interface Raw {
         ref: string;
         key: string;
-        relationship: ReferencePropertyRelationship.Raw;
+        relationship?: ReferencePropertyRelationship.Raw | null;
     }
 }

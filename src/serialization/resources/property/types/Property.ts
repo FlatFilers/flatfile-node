@@ -11,6 +11,7 @@ import { BooleanProperty } from "./BooleanProperty";
 import { DateProperty } from "./DateProperty";
 import { EnumProperty } from "./EnumProperty";
 import { ReferenceProperty } from "./ReferenceProperty";
+import { ReferenceListProperty } from "./ReferenceListProperty";
 import { StringListProperty } from "./StringListProperty";
 import { EnumListProperty } from "./EnumListProperty";
 
@@ -22,6 +23,7 @@ export const Property: core.serialization.Schema<serializers.Property.Raw, Flatf
         date: DateProperty,
         enum: EnumProperty,
         reference: ReferenceProperty,
+        "reference-list": ReferenceListProperty,
         "string-list": StringListProperty,
         "enum-list": EnumListProperty,
     })
@@ -38,6 +40,7 @@ export declare namespace Property {
         | Property.Date
         | Property.Enum
         | Property.Reference
+        | Property.ReferenceList
         | Property.StringList
         | Property.EnumList;
 
@@ -63,6 +66,10 @@ export declare namespace Property {
 
     interface Reference extends ReferenceProperty.Raw {
         type: "reference";
+    }
+
+    interface ReferenceList extends ReferenceListProperty.Raw {
+        type: "reference-list";
     }
 
     interface StringList extends StringListProperty.Raw {

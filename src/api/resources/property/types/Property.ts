@@ -78,7 +78,6 @@ import * as Flatfile from "../../..";
  *         key: "user reference",
  *         config: {
  *             ref: "/sheet/users/3",
- *             relationship: Flatfile.ReferencePropertyRelationship.HasMany,
  *             key: "id"
  *         }
  *     }
@@ -129,6 +128,7 @@ export type Property =
     | Flatfile.Property.Date_
     | Flatfile.Property.Enum
     | Flatfile.Property.Reference
+    | Flatfile.Property.ReferenceList
     | Flatfile.Property.StringList
     | Flatfile.Property.EnumList;
 
@@ -155,6 +155,10 @@ export declare namespace Property {
 
     interface Reference extends Flatfile.ReferenceProperty {
         type: "reference";
+    }
+
+    interface ReferenceList extends Flatfile.ReferenceListProperty {
+        type: "reference-list";
     }
 
     interface StringList extends Flatfile.StringListProperty {
