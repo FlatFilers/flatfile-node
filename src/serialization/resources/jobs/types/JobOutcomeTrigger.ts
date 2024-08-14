@@ -5,12 +5,14 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { JobOutcomeTriggerType } from "./JobOutcomeTriggerType";
+import { JobOutcomeTriggerDetails } from "./JobOutcomeTriggerDetails";
 
 export const JobOutcomeTrigger: core.serialization.Schema<
     serializers.JobOutcomeTrigger.Raw,
     Flatfile.JobOutcomeTrigger
-> = core.serialization.enum_(["manual", "automatic", "automatic_silent"]);
+> = core.serialization.undiscriminatedUnion([JobOutcomeTriggerType, JobOutcomeTriggerDetails]);
 
 export declare namespace JobOutcomeTrigger {
-    type Raw = "manual" | "automatic" | "automatic_silent";
+    type Raw = JobOutcomeTriggerType.Raw | JobOutcomeTriggerDetails.Raw;
 }
