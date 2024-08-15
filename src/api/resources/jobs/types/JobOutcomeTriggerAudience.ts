@@ -5,9 +5,9 @@
 /**
  * For whom the job outcome's next effect should be triggered automatically
  */
-export type JobOutcomeTriggerAudience = "originator" | "space";
+export type JobOutcomeTriggerAudience = "originator" | "all";
 
 export const JobOutcomeTriggerAudience = {
     Originator: "originator",
-    Space: "space",
+    All: "all",
 } as const;
