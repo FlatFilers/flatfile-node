@@ -25,5 +25,6 @@ export interface AppPatch {
     icon?: string;
     metadata?: any;
     environmentFilters?: any;
+    blueprint?: any;
     activatedAt?: Date;
 }

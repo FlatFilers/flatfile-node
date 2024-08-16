@@ -42,6 +42,7 @@ export interface App {
     icon?: string;
     metadata?: any;
     environmentFilters?: any;
+    blueprint?: any;
     createdAt: Date;
     updatedAt: Date;
     deletedAt?: Date;

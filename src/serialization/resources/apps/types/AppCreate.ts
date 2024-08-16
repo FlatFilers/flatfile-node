@@ -17,6 +17,7 @@ export const AppCreate: core.serialization.ObjectSchema<serializers.AppCreate.Ra
         icon: core.serialization.string().optional(),
         metadata: core.serialization.any().optional(),
         environmentFilters: core.serialization.any().optional(),
+        blueprint: core.serialization.any().optional(),
     });
 
 export declare namespace AppCreate {
@@ -29,5 +30,6 @@ export declare namespace AppCreate {
         icon?: string | null;
         metadata?: any | null;
         environmentFilters?: any | null;
+        blueprint?: any | null;
     }
 }

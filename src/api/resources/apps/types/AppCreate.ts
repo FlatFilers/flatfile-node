@@ -29,4 +29,5 @@ export interface AppCreate {
     icon?: string;
     metadata?: any;
     environmentFilters?: any;
+    blueprint?: any;
 }

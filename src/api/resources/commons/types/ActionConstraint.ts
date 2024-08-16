@@ -4,6 +4,21 @@
 
 import * as Flatfile from "../../..";
 
-export interface ActionConstraint {
-    type: Flatfile.ActionConstraintType;
+export type ActionConstraint =
+    | Flatfile.ActionConstraint.HasAllValid
+    | Flatfile.ActionConstraint.HasSelection
+    | Flatfile.ActionConstraint.HasData;
+
+export declare namespace ActionConstraint {
+    interface HasAllValid extends Flatfile.ActionConstraintHasAllValid {
+        type: "hasAllValid";
+    }
+
+    interface HasSelection extends Flatfile.ActionConstraintHasSelection {
+        type: "hasSelection";
+    }
+
+    interface HasData extends Flatfile.ActionConstraintHasData {
+        type: "hasData";
+    }
 }

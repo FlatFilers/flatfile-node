@@ -18,6 +18,7 @@ export const App: core.serialization.ObjectSchema<serializers.App.Raw, Flatfile.
     icon: core.serialization.string().optional(),
     metadata: core.serialization.any(),
     environmentFilters: core.serialization.any(),
+    blueprint: core.serialization.any().optional(),
     createdAt: core.serialization.date(),
     updatedAt: core.serialization.date(),
     deletedAt: core.serialization.date().optional(),
@@ -35,6 +36,7 @@ export declare namespace App {
         icon?: string | null;
         metadata?: any;
         environmentFilters?: any;
+        blueprint?: any | null;
         createdAt: string;
         updatedAt: string;
         deletedAt?: string | null;
