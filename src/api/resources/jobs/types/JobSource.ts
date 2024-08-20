@@ -3,7 +3,7 @@
  */
 
 /**
- * The id of a file, workbook, or sheet
+ * The id of a file, workbook, sheet, or app
  *
  * @example
  *     "us_wb_YOUR_ID"

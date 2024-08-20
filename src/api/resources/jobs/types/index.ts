@@ -12,6 +12,7 @@ export * from "./DeleteRecordsJobConfig";
 export * from "./FileJobConfig";
 export * from "./MutateJobConfig";
 export * from "./MappingProgramJobConfig";
+export * from "./AiGenerateBlueprintJobConfig";
 export * from "./Driver";
 export * from "./Trigger";
 export * from "./PipelineJobConfig";

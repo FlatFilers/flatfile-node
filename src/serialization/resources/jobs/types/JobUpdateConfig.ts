@@ -12,6 +12,7 @@ import { ExportJobConfig } from "./ExportJobConfig";
 import { MutateJobConfig } from "./MutateJobConfig";
 import { FindAndReplaceJobConfig } from "./FindAndReplaceJobConfig";
 import { MappingProgramJobConfig } from "./MappingProgramJobConfig";
+import { AiGenerateBlueprintJobConfig } from "./AiGenerateBlueprintJobConfig";
 import { EmptyObject } from "./EmptyObject";
 
 export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateConfig.Raw, Flatfile.JobUpdateConfig> =
@@ -23,6 +24,7 @@ export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateCon
         MutateJobConfig,
         FindAndReplaceJobConfig,
         MappingProgramJobConfig,
+        AiGenerateBlueprintJobConfig,
         EmptyObject,
     ]);
 
@@ -35,5 +37,6 @@ export declare namespace JobUpdateConfig {
         | MutateJobConfig.Raw
         | FindAndReplaceJobConfig.Raw
         | MappingProgramJobConfig.Raw
+        | AiGenerateBlueprintJobConfig.Raw
         | EmptyObject.Raw;
 }

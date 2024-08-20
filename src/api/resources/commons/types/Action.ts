@@ -55,4 +55,6 @@ export interface Action {
     inputForm?: Flatfile.InputForm;
     /** A limitation or restriction on the action. */
     constraints?: Flatfile.ActionConstraint[];
+    guide?: Flatfile.Guide;
+    guardrail?: Flatfile.Guardrail;
 }

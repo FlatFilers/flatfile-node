@@ -10,6 +10,8 @@ import { ActionMessage } from "./ActionMessage";
 import { ActionSchedule } from "./ActionSchedule";
 import { InputForm } from "./InputForm";
 import { ActionConstraint } from "./ActionConstraint";
+import { Guide } from "./Guide";
+import { Guardrail } from "./Guardrail";
 
 export const Action: core.serialization.ObjectSchema<serializers.Action.Raw, Flatfile.Action> =
     core.serialization.object({
@@ -29,6 +31,8 @@ export const Action: core.serialization.ObjectSchema<serializers.Action.Raw, Fla
         requireSelection: core.serialization.boolean().optional(),
         inputForm: InputForm.optional(),
         constraints: core.serialization.list(ActionConstraint).optional(),
+        guide: Guide.optional(),
+        guardrail: Guardrail.optional(),
     });
 
 export declare namespace Action {
@@ -49,5 +53,7 @@ export declare namespace Action {
         requireSelection?: boolean | null;
         inputForm?: InputForm.Raw | null;
         constraints?: ActionConstraint.Raw[] | null;
+        guide?: Guide.Raw | null;
+        guardrail?: Guardrail.Raw | null;
     }
 }

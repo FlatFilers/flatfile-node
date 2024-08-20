@@ -29,6 +29,8 @@ export * from "./Pagination";
 export * from "./PageSize";
 export * from "./PageNumber";
 export * from "./SuccessQueryParameter";
+export * from "./Guide";
+export * from "./Guardrail";
 export * from "./Action";
 export * from "./ActionConstraint";
 export * from "./ActionConstraintHasAllValid";

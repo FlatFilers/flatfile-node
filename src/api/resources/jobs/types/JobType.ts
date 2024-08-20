@@ -14,7 +14,7 @@
  * @example
  *     Flatfile.JobType.Sheet
  */
-export type JobType = "file" | "workbook" | "sheet" | "space" | "document";
+export type JobType = "file" | "workbook" | "sheet" | "space" | "document" | "app";
 
 export const JobType = {
     File: "file",
@@ -22,4 +22,5 @@ export const JobType = {
     Sheet: "sheet",
     Space: "space",
     Document: "document",
+    App: "app",
 } as const;
