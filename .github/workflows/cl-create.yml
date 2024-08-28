@@ -1,9 +1,12 @@
 name: Changelog
 
 on:
-  release:
-    types: [published]
-
+  workflow_run:
+    workflows: ["ci"]
+    types:
+      - completed
+    branches:
+      - 'refs/tags/*'
 jobs:
   changelog:
     name: Changelog
@@ -34,8 +37,21 @@ jobs:
       - name: Print all git tags
         run: npm view @flatfile/api versions --json
 
+      - name: Get latest tag
+        run: |
+          git fetch --tags
+          TAG=$(git describe --tags --abbrev=0)
+          echo "RELEASE_TAG=$TAG" >> $GITHUB_ENV
+
+      - name: Get Changelog token
+        id: changelog_token
+        uses: peter-murray/workflow-application-token-action@v3
+        with:
+          application_id: ${{ secrets.CHANGELOG_APP_ID }}
+          application_private_key: ${{ secrets.CHANGELOG_APP_KEY }}   
+
       - name: Create a changelog update
-        run: npx changelog generate tag ${{ github.event.release.tag_name }}
+        run: npx changelog generate tag ${{ env.RELEASE_TAG }}
         env:
           CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
 
@@ -47,12 +63,29 @@ jobs:
       - name: Create branch in guides repo with changelog update
         uses: dmnemec/copy_file_to_another_repo_action@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.GH_TOKEN }}
+          API_TOKEN_GITHUB: ${{ steps.changelog_token.outputs.token }}
         with:
           source_file: temp/${{ env.FILE_NAME}}
           destination_repo: ${{ env.DESTINATION_REPO }}
           destination_folder: changelog/src/${{ env.DESTINATION_DIRECTORY }}
-          destination_branch_create: changelog/${{ github.event.release.tag_name }}
+          destination_branch_create: changelog/${{ env.RELEASE_TAG }}
           user_email: ${{ github.actor }}
           user_name: github-actions[bot]
-          commit_message: "Updating the changelog for ${{ github.event.release.tag_name }}"
+          commit_message: "Updating the changelog for ${{ env.RELEASE_TAG }}"
+
+      - name: Create pull request
+        id: create_pr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ steps.changelog_token.outputs.token }}
+          commit-message: "Open PR for changelog update"
+          branch: changelog/${{ env.RELEASE_TAG }}
+          base: main
+          title: "Changelog update changelog/${{ env.RELEASE_TAG }}"
+          reviewers:  ${{ secrets.REVIEWER }}
+          body:  |
+            @coderabbitai: ignore
+            This pull request has been automatically created to update the changelog.
+
+            Edit the YYMMDD.mdx file with any updates.
+            Committing your changes will trigger the update changelog workflow, which will pull your updates into the main changelog files.
