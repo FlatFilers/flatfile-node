@@ -74,18 +74,17 @@ jobs:
           commit_message: "Updating the changelog for ${{ env.RELEASE_TAG }}"
 
       - name: Create pull request
-        id: create_pr
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ steps.changelog_token.outputs.token }}
-          commit-message: "Open PR for changelog update"
-          branch: changelog/${{ env.RELEASE_TAG }}
-          base: main
-          title: "Changelog update changelog/${{ env.RELEASE_TAG }}"
-          reviewers:  ${{ secrets.REVIEWER }}
-          body:  |
-            @coderabbitai: ignore
+        run: |
+          gh pr create \
+            --repo ${{ env.DESTINATION_REPO }} \
+            --base main \
+            --head changelog/${{ env.RELEASE_TAG }} \
+            --title: "Changelog update changelog/${{ env.RELEASE_TAG }}" \
+            --reviewer ${{ secrets.REVIEWER }} \
+            --body "@coderabbitai: ignore
             This pull request has been automatically created to update the changelog.
-
+      
             Edit the YYMMDD.mdx file with any updates.
-            Committing your changes will trigger the update changelog workflow, which will pull your updates into the main changelog files.
+            Committing your changes will trigger the update changelog workflow, which will pull your updates into the main changelog files."
+        env:
+          GH_TOKEN: ${{ steps.changelog_token.outputs.token }}
