@@ -40,7 +40,7 @@ jobs:
       - name: Get latest tag
         run: |
           git fetch --tags
-          TAG=$(git describe --tags --abbrev=0)
+          TAG="$(git describe --tags --abbrev=0)"
           echo "RELEASE_TAG=$TAG" >> $GITHUB_ENV
 
       - name: Get Changelog token
