@@ -79,7 +79,7 @@ jobs:
             --repo ${{ env.DESTINATION_REPO }} \
             --base main \
             --head changelog/${{ env.RELEASE_TAG }} \
-            --title: "Changelog update changelog/${{ env.RELEASE_TAG }}" \
+            --title "Changelog update changelog/${{ env.RELEASE_TAG }}" \
             --reviewer ${{ secrets.REVIEWER }} \
             --body "@coderabbitai: ignore
             This pull request has been automatically created to update the changelog.
