@@ -62,6 +62,9 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "environment:created",
         "environment:updated",
         "environment:deleted",
+        "action:created",
+        "action:updated",
+        "action:deleted",
     ]);
 
 export declare namespace EventTopic {
@@ -119,5 +122,8 @@ export declare namespace EventTopic {
         | "cron:weekly"
         | "environment:created"
         | "environment:updated"
-        | "environment:deleted";
+        | "environment:deleted"
+        | "action:created"
+        | "action:updated"
+        | "action:deleted";
 }

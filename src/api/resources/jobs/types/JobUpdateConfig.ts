@@ -13,4 +13,6 @@ export type JobUpdateConfig =
     | Flatfile.FindAndReplaceJobConfig
     | Flatfile.MappingProgramJobConfig
     | Flatfile.AiGenerateBlueprintJobConfig
+    | Flatfile.AppAutobuildDeployJobConfig
+    | Flatfile.AiGenerateSampleDataJobConfig
     | Flatfile.EmptyObject;

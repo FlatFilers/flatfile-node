@@ -62,7 +62,10 @@ export type EventTopic =
     | "cron:weekly"
     | "environment:created"
     | "environment:updated"
-    | "environment:deleted";
+    | "environment:deleted"
+    | "action:created"
+    | "action:updated"
+    | "action:deleted";
 
 export const EventTopic = {
     AgentCreated: "agent:created",
@@ -119,4 +122,7 @@ export const EventTopic = {
     EnvironmentCreated: "environment:created",
     EnvironmentUpdated: "environment:updated",
     EnvironmentDeleted: "environment:deleted",
+    ActionCreated: "action:created",
+    ActionUpdated: "action:updated",
+    ActionDeleted: "action:deleted",
 } as const;

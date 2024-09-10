@@ -5,6 +5,7 @@
 import * as environments from "./environments";
 import * as core from "./core";
 import { Accounts } from "./api/resources/accounts/client/Client";
+import { Actions } from "./api/resources/actions/client/Client";
 import { Agents } from "./api/resources/agents/client/Client";
 import { Apps } from "./api/resources/apps/client/Client";
 import { Assistant } from "./api/resources/assistant/client/Client";
@@ -52,6 +53,12 @@ export class FlatfileClient {
 
     public get accounts(): Accounts {
         return (this._accounts ??= new Accounts(this._options));
+    }
+
+    protected _actions: Actions | undefined;
+
+    public get actions(): Actions {
+        return (this._actions ??= new Actions(this._options));
     }
 
     protected _agents: Agents | undefined;

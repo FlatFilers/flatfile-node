@@ -53,4 +53,6 @@ export interface JobConfig {
     parentId?: Flatfile.JobId;
     /** The ids of the jobs that must complete before this job can start */
     predecessorIds?: Flatfile.JobId[];
+    /** Additional metadata for the job */
+    metadata?: Record<string, any>;
 }

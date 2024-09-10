@@ -15,8 +15,9 @@ export const CellValueUnion: core.serialization.Schema<serializers.CellValueUnio
         core.serialization.boolean(),
         core.serialization.string(),
         core.serialization.date(),
+        core.serialization.list(core.serialization.string()),
     ]);
 
 export declare namespace CellValueUnion {
-    type Raw = string | number | number | number | boolean | string | string;
+    type Raw = string | number | number | number | boolean | string | string | string[];
 }
