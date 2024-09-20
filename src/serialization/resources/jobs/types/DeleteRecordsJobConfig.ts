@@ -23,6 +23,7 @@ export const DeleteRecordsJobConfig: core.serialization.ObjectSchema<
     q: core.serialization.string().optional(),
     sheet: SheetId,
     exceptions: core.serialization.list(RecordId).optional(),
+    snapshotLabel: core.serialization.string().optional(),
 });
 
 export declare namespace DeleteRecordsJobConfig {
@@ -34,5 +35,6 @@ export declare namespace DeleteRecordsJobConfig {
         q?: string | null;
         sheet: SheetId.Raw;
         exceptions?: RecordId.Raw[] | null;
+        snapshotLabel?: string | null;
     }
 }

@@ -25,6 +25,7 @@ export const FindAndReplaceJobConfig: core.serialization.ObjectSchema<
     find: CellValueUnion.optional(),
     replace: CellValueUnion.optional(),
     fieldKey: core.serialization.string(),
+    snapshotLabel: core.serialization.string().optional(),
 });
 
 export declare namespace FindAndReplaceJobConfig {
@@ -38,5 +39,6 @@ export declare namespace FindAndReplaceJobConfig {
         find?: CellValueUnion.Raw | null;
         replace?: CellValueUnion.Raw | null;
         fieldKey: string;
+        snapshotLabel?: string | null;
     }
 }

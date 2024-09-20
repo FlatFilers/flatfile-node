@@ -11,10 +11,12 @@ export const WorkbookConfigSettings: core.serialization.ObjectSchema<
     Flatfile.WorkbookConfigSettings
 > = core.serialization.object({
     trackChanges: core.serialization.boolean().optional(),
+    noMappingRedirect: core.serialization.boolean().optional(),
 });
 
 export declare namespace WorkbookConfigSettings {
     interface Raw {
         trackChanges?: boolean | null;
+        noMappingRedirect?: boolean | null;
     }
 }

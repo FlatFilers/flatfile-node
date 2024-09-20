@@ -16,6 +16,7 @@ export type EventTopic =
     | "space:updated"
     | "space:deleted"
     | "space:archived"
+    | "space:unarchived"
     | "space:expired"
     | "space:guestAdded"
     | "space:guestRemoved"
@@ -75,6 +76,7 @@ export const EventTopic = {
     SpaceUpdated: "space:updated",
     SpaceDeleted: "space:deleted",
     SpaceArchived: "space:archived",
+    SpaceUnarchived: "space:unarchived",
     SpaceExpired: "space:expired",
     SpaceGuestAdded: "space:guestAdded",
     SpaceGuestRemoved: "space:guestRemoved",

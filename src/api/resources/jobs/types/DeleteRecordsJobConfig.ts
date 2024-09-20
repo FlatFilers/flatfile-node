@@ -19,4 +19,6 @@ export interface DeleteRecordsJobConfig {
     sheet: Flatfile.SheetId;
     /** List of record ids to exclude from deletion */
     exceptions?: Flatfile.RecordId[];
+    /** If specified, a snapshot will be generated with this label */
+    snapshotLabel?: string;
 }

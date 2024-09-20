@@ -7,6 +7,7 @@ import * as Flatfile from "../../..";
 export interface CellValue {
     valid?: boolean;
     messages?: Flatfile.ValidationMessage[];
+    /** Deprecated, use record level metadata instead. */
     metadata?: Record<string, any>;
     value?: Flatfile.CellValueUnion;
     layer?: string;

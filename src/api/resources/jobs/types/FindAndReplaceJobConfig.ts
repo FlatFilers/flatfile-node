@@ -23,4 +23,6 @@ export interface FindAndReplaceJobConfig {
     replace?: Flatfile.CellValueUnion;
     /** A unique key used to identify a field in a sheet */
     fieldKey: string;
+    /** If specified, a snapshot will be generated with this label */
+    snapshotLabel?: string;
 }

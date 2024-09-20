@@ -6,6 +6,8 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { SummarySection } from "./SummarySection";
+import { SchemaDiffRecord } from "./SchemaDiffRecord";
+import { SchemaDiffEnum } from "./SchemaDiffEnum";
 
 export const SnapshotSummary: core.serialization.ObjectSchema<
     serializers.SnapshotSummary.Raw,
@@ -14,6 +16,7 @@ export const SnapshotSummary: core.serialization.ObjectSchema<
     createdSince: SummarySection,
     updatedSince: SummarySection,
     deletedSince: SummarySection,
+    schemaDiff: SchemaDiffRecord,
 });
 
 export declare namespace SnapshotSummary {
@@ -21,5 +24,6 @@ export declare namespace SnapshotSummary {
         createdSince: SummarySection.Raw;
         updatedSince: SummarySection.Raw;
         deletedSince: SummarySection.Raw;
+        schemaDiff: SchemaDiffRecord.Raw;
     }
 }

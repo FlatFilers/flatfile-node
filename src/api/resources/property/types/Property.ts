@@ -42,7 +42,8 @@ import * as Flatfile from "../../..";
  *
  * @example
  *     {
- *         type: "date"
+ *         type: "date",
+ *         key: "Start date"
  *     }
  *
  * @example

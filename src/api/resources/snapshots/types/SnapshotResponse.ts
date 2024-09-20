@@ -26,6 +26,11 @@ import * as Flatfile from "../../..";
  *                     byField: {
  *                         "firstName": 1
  *                     }
+ *                 },
+ *                 schemaDiff: {
+ *                     "firstName": Flatfile.SchemaDiffEnum.Added,
+ *                     "lastName": Flatfile.SchemaDiffEnum.Removed,
+ *                     "email": Flatfile.SchemaDiffEnum.Unchanged
  *                 }
  *             },
  *             createdAt: new Date("2023-01-01T00:00:00.000Z"),

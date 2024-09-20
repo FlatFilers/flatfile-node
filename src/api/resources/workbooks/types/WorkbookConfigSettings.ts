@@ -8,4 +8,6 @@
 export interface WorkbookConfigSettings {
     /** Whether to track changes for this workbook. Defaults to false. Tracking changes on a workbook allows for disabling workbook and sheet actions while data in the workbook is still being processed. You must run a recordHook listener if you enable this feature. */
     trackChanges?: boolean;
+    /** When noMappingRedirect is set to true, dragging a file into a sheet will not redirect to the mapping screen. Defaults to false. */
+    noMappingRedirect?: boolean;
 }
