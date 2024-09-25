@@ -60,6 +60,7 @@ export * as workbooks from "./workbooks";
 export * from "./workbooks/types";
 export * from "./commons/errors";
 export * from "./agents/client/requests";
+export * from "./apps/client/requests";
 export * from "./assistant/client/requests";
 export * from "./auth/client/requests";
 export * from "./cells/client/requests";

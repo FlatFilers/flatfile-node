@@ -7,6 +7,7 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { SummarySection } from "./SummarySection";
 import { SchemaDiffRecord } from "./SchemaDiffRecord";
+import { SheetConfig } from "../../sheets/types/SheetConfig";
 import { SchemaDiffEnum } from "./SchemaDiffEnum";
 
 export const SnapshotSummary: core.serialization.ObjectSchema<
@@ -17,6 +18,7 @@ export const SnapshotSummary: core.serialization.ObjectSchema<
     updatedSince: SummarySection,
     deletedSince: SummarySection,
     schemaDiff: SchemaDiffRecord,
+    config: SheetConfig,
 });
 
 export declare namespace SnapshotSummary {
@@ -25,5 +27,6 @@ export declare namespace SnapshotSummary {
         updatedSince: SummarySection.Raw;
         deletedSince: SummarySection.Raw;
         schemaDiff: SchemaDiffRecord.Raw;
+        config: SheetConfig.Raw;
     }
 }

@@ -40,7 +40,7 @@ export class Apps {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.15",
+                "X-Fern-SDK-Version": "1.9.16",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -98,7 +98,7 @@ export class Apps {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.15",
+                "X-Fern-SDK-Version": "1.9.16",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -169,7 +169,7 @@ export class Apps {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.15",
+                "X-Fern-SDK-Version": "1.9.16",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -241,7 +241,7 @@ export class Apps {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.15",
+                "X-Fern-SDK-Version": "1.9.16",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -303,7 +303,318 @@ export class Apps {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.15",
+                "X-Fern-SDK-Version": "1.9.16",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.SuccessResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Returns constraints for an autobuild
+     */
+    public async getConstraints(
+        appId: Flatfile.AppId,
+        request: Flatfile.GetConstraintsRequest = {},
+        requestOptions?: Apps.RequestOptions
+    ): Promise<Flatfile.ConstraintsResponse> {
+        const { includeBuiltins } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (includeBuiltins != null) {
+            _queryParams["includeBuiltins"] = includeBuiltins.toString();
+        }
+
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `/apps/${await serializers.AppId.jsonOrThrow(appId)}/constraints`
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.9.16",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.ConstraintsResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Creates a new constraint for an autobuild
+     */
+    public async createConstraint(
+        appId: Flatfile.AppId,
+        request: Flatfile.ConstraintCreate,
+        requestOptions?: Apps.RequestOptions
+    ): Promise<Flatfile.ConstraintResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `/apps/${await serializers.AppId.jsonOrThrow(appId)}/constraints`
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.9.16",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            body: await serializers.ConstraintCreate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.ConstraintResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Returns a specific constraint
+     */
+    public async getConstraintById(
+        appId: Flatfile.AppId,
+        constraintId: Flatfile.ConstraintId,
+        requestOptions?: Apps.RequestOptions
+    ): Promise<Flatfile.ConstraintResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `/apps/${await serializers.AppId.jsonOrThrow(
+                    appId
+                )}/constraints/${await serializers.ConstraintId.jsonOrThrow(constraintId)}`
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.9.16",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.ConstraintResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Updates a specific constraint
+     */
+    public async updateConstraint(
+        appId: Flatfile.AppId,
+        constraintId: Flatfile.ConstraintId,
+        request: Flatfile.ConstraintUpdate,
+        requestOptions?: Apps.RequestOptions
+    ): Promise<Flatfile.ConstraintResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `/apps/${await serializers.AppId.jsonOrThrow(
+                    appId
+                )}/constraints/${await serializers.ConstraintId.jsonOrThrow(constraintId)}`
+            ),
+            method: "PATCH",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.9.16",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            body: await serializers.ConstraintUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.ConstraintResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Deletes a specific constraint
+     */
+    public async deleteConstraint(
+        appId: Flatfile.AppId,
+        constraintId: Flatfile.ConstraintId,
+        requestOptions?: Apps.RequestOptions
+    ): Promise<Flatfile.SuccessResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                `/apps/${await serializers.AppId.jsonOrThrow(
+                    appId
+                )}/constraints/${await serializers.ConstraintId.jsonOrThrow(constraintId)}`
+            ),
+            method: "DELETE",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.9.16",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

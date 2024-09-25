@@ -10,4 +10,6 @@ export interface SnapshotSummary {
     deletedSince: Flatfile.SummarySection;
     /** The schema diff between the snapshot and the current sheet schema. */
     schemaDiff: Flatfile.SchemaDiffRecord;
+    /** The sheet configuration at the time of the snapshot. */
+    config: Flatfile.SheetConfig;
 }

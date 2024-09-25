@@ -30,6 +30,24 @@ import * as Flatfile from "../../..";
  *                 "firstName": Flatfile.SchemaDiffEnum.Added,
  *                 "lastName": Flatfile.SchemaDiffEnum.Removed,
  *                 "email": Flatfile.SchemaDiffEnum.Unchanged
+ *             },
+ *             config: {
+ *                 name: "Contacts",
+ *                 slug: "contacts",
+ *                 fields: [{
+ *                         type: "string",
+ *                         key: "firstName",
+ *                         label: "First Name"
+ *                     }, {
+ *                         type: "string",
+ *                         key: "lastName",
+ *                         label: "Last Name"
+ *                     }, {
+ *                         type: "string",
+ *                         key: "email",
+ *                         label: "Email"
+ *                     }],
+ *                 mappingConfidenceThreshold: 0.5
  *             }
  *         },
  *         createdAt: new Date("2023-01-01T00:00:00.000Z"),
