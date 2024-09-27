@@ -5,9 +5,9 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
-import { UserId } from "../../commons/types/UserId";
-import { AgentId } from "../../commons/types/AgentId";
-import { GuestId } from "../../commons/types/GuestId";
+import { UserId } from "./UserId";
+import { AgentId } from "./AgentId";
+import { GuestId } from "./GuestId";
 
 export const ActorIdUnion: core.serialization.Schema<serializers.ActorIdUnion.Raw, Flatfile.ActorIdUnion> =
     core.serialization.undiscriminatedUnion([UserId, AgentId, GuestId]);

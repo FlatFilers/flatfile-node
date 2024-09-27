@@ -16,6 +16,8 @@ export const ConstraintResource: core.serialization.ObjectSchema<
     appId: AppId,
     description: core.serialization.string().optional(),
     function: core.serialization.string().optional(),
+    options: core.serialization.any().optional(),
+    label: core.serialization.string().optional(),
     createdAt: core.serialization.date(),
     updatedAt: core.serialization.date(),
     deletedAt: core.serialization.date().optional(),
@@ -27,6 +29,8 @@ export declare namespace ConstraintResource {
         appId: AppId.Raw;
         description?: string | null;
         function?: string | null;
+        options?: any | null;
+        label?: string | null;
         createdAt: string;
         updatedAt: string;
         deletedAt?: string | null;

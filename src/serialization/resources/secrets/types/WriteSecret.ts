@@ -9,6 +9,7 @@ import { SecretName } from "./SecretName";
 import { SecretValue } from "./SecretValue";
 import { EnvironmentId } from "../../commons/types/EnvironmentId";
 import { SpaceId } from "../../commons/types/SpaceId";
+import { ActorIdUnion } from "../../commons/types/ActorIdUnion";
 
 export const WriteSecret: core.serialization.ObjectSchema<serializers.WriteSecret.Raw, Flatfile.WriteSecret> =
     core.serialization.object({
@@ -16,6 +17,7 @@ export const WriteSecret: core.serialization.ObjectSchema<serializers.WriteSecre
         value: SecretValue,
         environmentId: EnvironmentId.optional(),
         spaceId: SpaceId.optional(),
+        actorId: ActorIdUnion.optional(),
     });
 
 export declare namespace WriteSecret {
@@ -24,5 +26,6 @@ export declare namespace WriteSecret {
         value: SecretValue.Raw;
         environmentId?: EnvironmentId.Raw | null;
         spaceId?: SpaceId.Raw | null;
+        actorId?: ActorIdUnion.Raw | null;
     }
 }

@@ -9,6 +9,8 @@ export interface ConstraintResource {
     appId: Flatfile.AppId;
     description?: string;
     function?: string;
+    options?: any;
+    label?: string;
     createdAt: Date;
     updatedAt: Date;
     deletedAt?: Date;

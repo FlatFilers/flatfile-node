@@ -7,7 +7,7 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { ActorRoleId } from "../../commons/types/ActorRoleId";
 import { RoleId } from "../../commons/types/RoleId";
-import { ActorIdUnion } from "./ActorIdUnion";
+import { ActorIdUnion } from "../../commons/types/ActorIdUnion";
 import { ResourceIdUnion } from "./ResourceIdUnion";
 
 export const AssignRoleResponseData: core.serialization.ObjectSchema<

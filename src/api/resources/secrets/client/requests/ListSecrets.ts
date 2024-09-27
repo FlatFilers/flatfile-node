@@ -19,4 +19,8 @@ export interface ListSecrets {
      * The Space of the secret.
      */
     spaceId?: Flatfile.SpaceId;
+    /**
+     * The Actor of the secret.
+     */
+    actorId?: Flatfile.ActorIdUnion;
 }

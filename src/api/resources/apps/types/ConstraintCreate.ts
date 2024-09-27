@@ -5,4 +5,6 @@
 export interface ConstraintCreate {
     description?: string;
     function?: string;
+    options?: any;
+    label?: string;
 }

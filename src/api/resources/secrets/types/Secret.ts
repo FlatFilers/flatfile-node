@@ -13,7 +13,8 @@ import * as Flatfile from "../../..";
  *         name: "My Secret",
  *         value: "Sup3r$ecret\\/alue!",
  *         environmentId: "us_env_YOUR_ID",
- *         spaceId: "us_sp_YOUR_ID"
+ *         spaceId: "us_sp_YOUR_ID",
+ *         actorId: "us_usr_YOUR_ID"
  *     }
  */
 export interface Secret extends Flatfile.WriteSecret {

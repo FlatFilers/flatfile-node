@@ -39,7 +39,7 @@ export class Secrets {
         request: Flatfile.ListSecrets = {},
         requestOptions?: Secrets.RequestOptions
     ): Promise<Flatfile.SecretsResponse> {
-        const { environmentId, spaceId } = request;
+        const { environmentId, spaceId, actorId } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         if (environmentId != null) {
             _queryParams["environmentId"] = environmentId;
@@ -47,6 +47,10 @@ export class Secrets {
 
         if (spaceId != null) {
             _queryParams["spaceId"] = spaceId;
+        }
+
+        if (actorId != null) {
+            _queryParams["actorId"] = typeof actorId === "string" ? actorId : JSON.stringify(actorId);
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -60,7 +64,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.16",
+                "X-Fern-SDK-Version": "1.9.17",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -134,7 +138,8 @@ export class Secrets {
      *         name: "My Secret",
      *         value: "Sup3r$ecret\\/alue!",
      *         environmentId: "us_env_YOUR_ID",
-     *         spaceId: "us_sp_YOUR_ID"
+     *         spaceId: "us_sp_YOUR_ID",
+     *         actorId: "us_usr_YOUR_ID"
      *     })
      */
     public async upsert(
@@ -152,7 +157,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.16",
+                "X-Fern-SDK-Version": "1.9.17",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -239,7 +244,7 @@ export class Secrets {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.16",
+                "X-Fern-SDK-Version": "1.9.17",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

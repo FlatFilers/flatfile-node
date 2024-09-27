@@ -5,4 +5,6 @@
 export interface ConstraintUpdate {
     description?: string;
     function?: string;
+    options?: any;
+    label?: string;
 }
