@@ -1,6 +1,6 @@
 {
     "name": "@flatfile/api",
-    "version": "1.9.19-rc.0",
+    "version": "1.9.18",
     "private": false,
     "repository": "https://github.com/FlatFilers/flatfile-node",
     "main": "./index.js",
@@ -31,6 +31,5 @@
         "@types/node": "17.0.33",
         "prettier": "2.7.1",
         "typescript": "4.6.4"
-    },
-    "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+    }
 }
