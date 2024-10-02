@@ -15,6 +15,8 @@ export * from "./MappingProgramJobConfig";
 export * from "./AiGenerateBlueprintJobConfig";
 export * from "./AppAutobuildDeployJobConfig";
 export * from "./AiGenerateSampleDataJobConfig";
+export * from "./AiGenerateBlueprintConstraintsJobConfig";
+export * from "./AiGenerateConstraintJobConfig";
 export * from "./Driver";
 export * from "./Trigger";
 export * from "./PipelineJobConfig";

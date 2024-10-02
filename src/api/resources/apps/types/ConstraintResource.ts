@@ -7,6 +7,7 @@ import * as Flatfile from "../../..";
 export interface ConstraintResource {
     id: Flatfile.ConstraintId;
     appId: Flatfile.AppId;
+    validator: string;
     description?: string;
     function?: string;
     options?: any;

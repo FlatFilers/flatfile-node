@@ -26,4 +26,5 @@ import * as Flatfile from "../../..";
  */
 export interface DiffRecord extends Flatfile.RecordBase {
     values: Flatfile.DiffData;
+    resolves?: Flatfile.Resolve[];
 }

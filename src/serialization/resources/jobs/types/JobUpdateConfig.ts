@@ -15,6 +15,8 @@ import { MappingProgramJobConfig } from "./MappingProgramJobConfig";
 import { AiGenerateBlueprintJobConfig } from "./AiGenerateBlueprintJobConfig";
 import { AppAutobuildDeployJobConfig } from "./AppAutobuildDeployJobConfig";
 import { AiGenerateSampleDataJobConfig } from "./AiGenerateSampleDataJobConfig";
+import { AiGenerateBlueprintConstraintsJobConfig } from "./AiGenerateBlueprintConstraintsJobConfig";
+import { AiGenerateConstraintJobConfig } from "./AiGenerateConstraintJobConfig";
 import { EmptyObject } from "./EmptyObject";
 
 export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateConfig.Raw, Flatfile.JobUpdateConfig> =
@@ -29,6 +31,8 @@ export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateCon
         AiGenerateBlueprintJobConfig,
         AppAutobuildDeployJobConfig,
         AiGenerateSampleDataJobConfig,
+        AiGenerateBlueprintConstraintsJobConfig,
+        AiGenerateConstraintJobConfig,
         EmptyObject,
     ]);
 
@@ -44,5 +48,7 @@ export declare namespace JobUpdateConfig {
         | AiGenerateBlueprintJobConfig.Raw
         | AppAutobuildDeployJobConfig.Raw
         | AiGenerateSampleDataJobConfig.Raw
+        | AiGenerateBlueprintConstraintsJobConfig.Raw
+        | AiGenerateConstraintJobConfig.Raw
         | EmptyObject.Raw;
 }

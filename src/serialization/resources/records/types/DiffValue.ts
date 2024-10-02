@@ -12,11 +12,13 @@ export const DiffValue: core.serialization.ObjectSchema<serializers.DiffValue.Ra
     core.serialization
         .object({
             snapshotValue: CellValueUnion.optional(),
+            clipValue: CellValueUnion.optional(),
         })
         .extend(CellValue);
 
 export declare namespace DiffValue {
     interface Raw extends CellValue.Raw {
         snapshotValue?: CellValueUnion.Raw | null;
+        clipValue?: CellValueUnion.Raw | null;
     }
 }

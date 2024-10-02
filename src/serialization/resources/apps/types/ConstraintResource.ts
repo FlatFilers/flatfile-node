@@ -14,6 +14,7 @@ export const ConstraintResource: core.serialization.ObjectSchema<
 > = core.serialization.object({
     id: ConstraintId,
     appId: AppId,
+    validator: core.serialization.string(),
     description: core.serialization.string().optional(),
     function: core.serialization.string().optional(),
     options: core.serialization.any().optional(),
@@ -27,6 +28,7 @@ export declare namespace ConstraintResource {
     interface Raw {
         id: ConstraintId.Raw;
         appId: AppId.Raw;
+        validator: string;
         description?: string | null;
         function?: string | null;
         options?: any | null;

@@ -6,6 +6,7 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { DiffData } from "./DiffData";
+import { Resolve } from "./Resolve";
 import { RecordBase } from "./RecordBase";
 import { DiffValue } from "./DiffValue";
 
@@ -13,11 +14,13 @@ export const DiffRecord: core.serialization.ObjectSchema<serializers.DiffRecord.
     core.serialization
         .object({
             values: DiffData,
+            resolves: core.serialization.list(Resolve).optional(),
         })
         .extend(RecordBase);
 
 export declare namespace DiffRecord {
     interface Raw extends RecordBase.Raw {
         values: DiffData.Raw;
+        resolves?: Resolve.Raw[] | null;
     }
 }

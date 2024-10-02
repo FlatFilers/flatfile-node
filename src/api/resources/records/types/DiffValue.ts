@@ -6,4 +6,5 @@ import * as Flatfile from "../../..";
 
 export interface DiffValue extends Flatfile.CellValue {
     snapshotValue?: Flatfile.CellValueUnion;
+    clipValue?: Flatfile.CellValueUnion;
 }
