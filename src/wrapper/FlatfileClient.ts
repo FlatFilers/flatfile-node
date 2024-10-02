@@ -24,7 +24,7 @@ export class FlatfileClient extends FernClient {
 
     constructor(options: FlatfileClient.Options = {}) {
         super({
-            environment: resolveEnvironment(options),
+            environment: resolveEnvironment(options) ?? environmentSupplier,
             token: options.token ?? tokenSupplier,
         });
     }
@@ -40,7 +40,7 @@ const resolveEnvironment = (options: FlatfileClient.Options) => {
     if (options.apiUrl && !options.apiUrl.endsWith("/v1")) {
         return urlJoin(options.apiUrl, "v1");
     }
-    return options.environment || options.apiUrl || environmentSupplier();
+    return options.environment || options.apiUrl;
 };
 
 const environmentSupplier = () => {
