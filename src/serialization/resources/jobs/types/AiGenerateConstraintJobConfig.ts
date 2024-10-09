@@ -6,21 +6,21 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { SpaceId } from "../../commons/types/SpaceId";
-import { ExternalSheetConstraint } from "../../sheets/types/ExternalSheetConstraint";
+import { StoredConstraint } from "../../property/types/StoredConstraint";
 
 export const AiGenerateConstraintJobConfig: core.serialization.ObjectSchema<
     serializers.AiGenerateConstraintJobConfig.Raw,
     Flatfile.AiGenerateConstraintJobConfig
 > = core.serialization.object({
     spaceId: SpaceId,
-    constraints: core.serialization.list(ExternalSheetConstraint),
+    constraints: core.serialization.list(StoredConstraint),
     description: core.serialization.string().optional(),
 });
 
 export declare namespace AiGenerateConstraintJobConfig {
     interface Raw {
         spaceId: SpaceId.Raw;
-        constraints: ExternalSheetConstraint.Raw[];
+        constraints: StoredConstraint.Raw[];
         description?: string | null;
     }
 }

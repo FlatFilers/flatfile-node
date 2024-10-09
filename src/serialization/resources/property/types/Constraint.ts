@@ -7,6 +7,7 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { UniqueConstraint } from "./UniqueConstraint";
 import { ExternalConstraint } from "./ExternalConstraint";
+import { StoredConstraint } from "./StoredConstraint";
 
 export const Constraint: core.serialization.Schema<serializers.Constraint.Raw, Flatfile.Constraint> = core.serialization
     .union("type", {
@@ -14,6 +15,7 @@ export const Constraint: core.serialization.Schema<serializers.Constraint.Raw, F
         unique: UniqueConstraint,
         computed: core.serialization.object({}),
         external: ExternalConstraint,
+        stored: StoredConstraint,
     })
     .transform<Flatfile.Constraint>({
         transform: (value) => value,
@@ -21,7 +23,7 @@ export const Constraint: core.serialization.Schema<serializers.Constraint.Raw, F
     });
 
 export declare namespace Constraint {
-    type Raw = Constraint.Required | Constraint.Unique | Constraint.Computed | Constraint.External;
+    type Raw = Constraint.Required | Constraint.Unique | Constraint.Computed | Constraint.External | Constraint.Stored;
 
     interface Required {
         type: "required";
@@ -37,5 +39,9 @@ export declare namespace Constraint {
 
     interface External extends ExternalConstraint.Raw {
         type: "external";
+    }
+
+    interface Stored extends StoredConstraint.Raw {
+        type: "stored";
     }
 }

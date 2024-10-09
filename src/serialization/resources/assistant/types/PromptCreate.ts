@@ -5,11 +5,13 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { PromptTypeEnum } from "./PromptTypeEnum";
 import { EnvironmentId } from "../../commons/types/EnvironmentId";
 import { SpaceId } from "../../commons/types/SpaceId";
 
 export const PromptCreate: core.serialization.ObjectSchema<serializers.PromptCreate.Raw, Flatfile.PromptCreate> =
     core.serialization.object({
+        promptType: PromptTypeEnum.optional(),
         prompt: core.serialization.string(),
         environmentId: EnvironmentId,
         spaceId: SpaceId,
@@ -17,6 +19,7 @@ export const PromptCreate: core.serialization.ObjectSchema<serializers.PromptCre
 
 export declare namespace PromptCreate {
     interface Raw {
+        promptType?: PromptTypeEnum.Raw | null;
         prompt: string;
         environmentId: EnvironmentId.Raw;
         spaceId: SpaceId.Raw;

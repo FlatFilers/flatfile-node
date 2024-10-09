@@ -13,6 +13,7 @@ import * as Flatfile from "../../..";
  *                 accountId: "us_acc_YOUR_ID",
  *                 environmentId: "us_env_YOUR_ID",
  *                 spaceId: "us_sp_YOUR_ID",
+ *                 promptType: Flatfile.PromptTypeEnum.AiAssist,
  *                 prompt: "Combine first name and last name into a new column called Full Name",
  *                 createdAt: new Date("2021-01-01T00:00:00.000Z"),
  *                 updatedAt: new Date("2021-01-01T00:00:00.000Z")

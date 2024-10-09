@@ -8,11 +8,11 @@ import * as core from "../../../../core";
 
 export const PromptPatch: core.serialization.ObjectSchema<serializers.PromptPatch.Raw, Flatfile.PromptPatch> =
     core.serialization.object({
-        prompt: core.serialization.string().optional(),
+        prompt: core.serialization.string(),
     });
 
 export declare namespace PromptPatch {
     interface Raw {
-        prompt?: string | null;
+        prompt: string;
     }
 }

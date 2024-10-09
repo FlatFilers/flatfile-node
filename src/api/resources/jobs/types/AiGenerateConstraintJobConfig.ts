@@ -6,7 +6,7 @@ import * as Flatfile from "../../..";
 
 export interface AiGenerateConstraintJobConfig {
     spaceId: Flatfile.SpaceId;
-    constraints: Flatfile.ExternalSheetConstraint[];
+    constraints: Flatfile.StoredConstraint[];
     /** A description of what the constraint to be generated should do */
     description?: string;
 }

@@ -11,5 +11,5 @@
  *     }
  */
 export interface PromptPatch {
-    prompt?: string;
+    prompt: string;
 }

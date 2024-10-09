@@ -8,7 +8,8 @@ export type Constraint =
     | Flatfile.Constraint.Required
     | Flatfile.Constraint.Unique
     | Flatfile.Constraint.Computed
-    | Flatfile.Constraint.External;
+    | Flatfile.Constraint.External
+    | Flatfile.Constraint.Stored;
 
 export declare namespace Constraint {
     interface Required {
@@ -25,5 +26,9 @@ export declare namespace Constraint {
 
     interface External extends Flatfile.ExternalConstraint {
         type: "external";
+    }
+
+    interface Stored extends Flatfile.StoredConstraint {
+        type: "stored";
     }
 }

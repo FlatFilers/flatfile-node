@@ -35,8 +35,12 @@ export class Assistant {
         request: Flatfile.ListPromptsRequest = {},
         requestOptions?: Assistant.RequestOptions
     ): Promise<Flatfile.PromptsResponse> {
-        const { pageSize, pageNumber } = request;
+        const { promptType, pageSize, pageNumber } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        if (promptType != null) {
+            _queryParams["promptType"] = promptType;
+        }
+
         if (pageSize != null) {
             _queryParams["pageSize"] = pageSize.toString();
         }
@@ -56,7 +60,7 @@ export class Assistant {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.19",
+                "X-Fern-SDK-Version": "1.9.20",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -118,7 +122,7 @@ export class Assistant {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.19",
+                "X-Fern-SDK-Version": "1.9.20",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -182,7 +186,7 @@ export class Assistant {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.19",
+                "X-Fern-SDK-Version": "1.9.20",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -248,7 +252,7 @@ export class Assistant {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.19",
+                "X-Fern-SDK-Version": "1.9.20",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -310,7 +314,7 @@ export class Assistant {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.9.19",
+                "X-Fern-SDK-Version": "1.9.20",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

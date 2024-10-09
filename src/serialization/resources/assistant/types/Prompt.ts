@@ -9,6 +9,7 @@ import { PromptId } from "../../commons/types/PromptId";
 import { AccountId } from "../../commons/types/AccountId";
 import { EnvironmentId } from "../../commons/types/EnvironmentId";
 import { SpaceId } from "../../commons/types/SpaceId";
+import { PromptTypeEnum } from "./PromptTypeEnum";
 
 export const Prompt: core.serialization.ObjectSchema<serializers.Prompt.Raw, Flatfile.Prompt> =
     core.serialization.object({
@@ -17,6 +18,7 @@ export const Prompt: core.serialization.ObjectSchema<serializers.Prompt.Raw, Fla
         accountId: AccountId,
         environmentId: EnvironmentId.optional(),
         spaceId: SpaceId.optional(),
+        promptType: PromptTypeEnum,
         prompt: core.serialization.string(),
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
@@ -30,6 +32,7 @@ export declare namespace Prompt {
         accountId: AccountId.Raw;
         environmentId?: EnvironmentId.Raw | null;
         spaceId?: SpaceId.Raw | null;
+        promptType: PromptTypeEnum.Raw;
         prompt: string;
         createdAt: string;
         updatedAt: string;

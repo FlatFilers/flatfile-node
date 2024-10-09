@@ -5,6 +5,7 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { SheetId } from "../../commons/types/SheetId";
 
 export const WorkbookConfigSettings: core.serialization.ObjectSchema<
     serializers.WorkbookConfigSettings.Raw,
@@ -12,11 +13,13 @@ export const WorkbookConfigSettings: core.serialization.ObjectSchema<
 > = core.serialization.object({
     trackChanges: core.serialization.boolean().optional(),
     noMappingRedirect: core.serialization.boolean().optional(),
+    sheetSidebarOrder: core.serialization.list(SheetId).optional(),
 });
 
 export declare namespace WorkbookConfigSettings {
     interface Raw {
         trackChanges?: boolean | null;
         noMappingRedirect?: boolean | null;
+        sheetSidebarOrder?: SheetId.Raw[] | null;
     }
 }

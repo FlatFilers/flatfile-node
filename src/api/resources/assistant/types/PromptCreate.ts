@@ -15,6 +15,8 @@ import * as Flatfile from "../../..";
  *     }
  */
 export interface PromptCreate {
+    /** Type of prompt; Defaults to AI_ASSIST */
+    promptType?: Flatfile.PromptTypeEnum;
     prompt: string;
     environmentId: Flatfile.EnvironmentId;
     spaceId: Flatfile.SpaceId;
