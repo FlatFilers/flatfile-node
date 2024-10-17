@@ -23,7 +23,4 @@ export * from "./DiffData";
 export * from "./DiffValue";
 export * from "./ValidationMessage";
 export * from "./ValidationType";
-export * from "./Resolve";
-export * from "./ResolveType";
-export * from "./ResolveTo";
 export * from "./ValidationSource";

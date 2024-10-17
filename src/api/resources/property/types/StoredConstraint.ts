@@ -3,6 +3,8 @@
  */
 
 export interface StoredConstraint {
+    /** A short description of what this constraint configuration does, example - values between 1 and 100 */
+    description?: string;
     validator: string;
     config?: any;
 }

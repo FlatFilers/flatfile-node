@@ -6,7 +6,7 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { DiffData } from "./DiffData";
-import { Resolve } from "./Resolve";
+import { Resolve } from "../../dataClips/types/Resolve";
 import { RecordBase } from "./RecordBase";
 import { DiffValue } from "./DiffValue";
 

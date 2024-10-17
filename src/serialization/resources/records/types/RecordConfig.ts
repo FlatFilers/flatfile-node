@@ -11,11 +11,13 @@ export const RecordConfig: core.serialization.ObjectSchema<serializers.RecordCon
     core.serialization.object({
         readonly: core.serialization.boolean().optional(),
         fields: core.serialization.record(core.serialization.string(), CellConfig).optional(),
+        markedForDeletion: core.serialization.boolean().optional(),
     });
 
 export declare namespace RecordConfig {
     interface Raw {
         readonly?: boolean | null;
         fields?: Record<string, CellConfig.Raw> | null;
+        markedForDeletion?: boolean | null;
     }
 }

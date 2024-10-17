@@ -23,4 +23,5 @@ import * as Flatfile from "../../..";
 export interface RecordConfig {
     readonly?: boolean;
     fields?: Record<string, Flatfile.CellConfig>;
+    markedForDeletion?: boolean;
 }

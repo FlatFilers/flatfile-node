@@ -7,8 +7,8 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const ResolveType: core.serialization.Schema<serializers.ResolveType.Raw, Flatfile.ResolveType> =
-    core.serialization.enum_(["conflict", "override"]);
+    core.serialization.enum_(["conflict", "resolve"]);
 
 export declare namespace ResolveType {
-    type Raw = "conflict" | "override";
+    type Raw = "conflict" | "resolve";
 }
