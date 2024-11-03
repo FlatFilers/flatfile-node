@@ -8,6 +8,7 @@ import * as Flatfile from "../../..";
 import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
+import { version } from "package.json";
 
 export declare namespace Cells {
     interface Options {
@@ -105,7 +106,7 @@ export class Cells {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.11.0",
+                "X-Fern-SDK-Version": version,
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

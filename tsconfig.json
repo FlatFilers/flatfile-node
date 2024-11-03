@@ -10,7 +10,8 @@
         "declaration": true,
         "outDir": "dist",
         "rootDir": "src",
-        "baseUrl": "src"
+        "baseUrl": ".",
+        "resolveJsonModule": true
     },
     "include": [
         "src"
