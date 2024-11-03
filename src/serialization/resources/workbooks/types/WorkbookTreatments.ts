@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const WorkbookTreatments: core.serialization.Schema<
     serializers.WorkbookTreatments.Raw,
     Flatfile.WorkbookTreatments
-> = core.serialization.enum_(["EXTRACTED_FROM_SOURCE"]);
+> = core.serialization.enum_(["EXTRACTED_FROM_SOURCE", "SMALL_DATA"]);
 
 export declare namespace WorkbookTreatments {
-    type Raw = "EXTRACTED_FROM_SOURCE";
+    type Raw = "EXTRACTED_FROM_SOURCE" | "SMALL_DATA";
 }
