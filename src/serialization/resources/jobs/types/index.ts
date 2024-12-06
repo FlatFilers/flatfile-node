@@ -17,6 +17,7 @@ export * from "./AppAutobuildDeployJobConfig";
 export * from "./AiGenerateSampleDataJobConfig";
 export * from "./AiGenerateBlueprintConstraintsJobConfig";
 export * from "./AiGenerateConstraintJobConfig";
+export * from "./AiRuleCreationJobConfig";
 export * from "./Driver";
 export * from "./Trigger";
 export * from "./PipelineJobConfig";

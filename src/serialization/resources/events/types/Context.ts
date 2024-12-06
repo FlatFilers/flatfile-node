@@ -23,6 +23,7 @@ import { DocumentId } from "../../commons/types/DocumentId";
 import { EventId } from "../../commons/types/EventId";
 import { AppId } from "../../commons/types/AppId";
 import { ActionId } from "../../commons/types/ActionId";
+import { DataClipId } from "../../commons/types/DataClipId";
 
 export const Context: core.serialization.ObjectSchema<serializers.Context.Raw, Flatfile.Context> =
     core.serialization.object({
@@ -46,6 +47,7 @@ export const Context: core.serialization.ObjectSchema<serializers.Context.Raw, F
         actorId: core.serialization.string().optional(),
         appId: AppId.optional(),
         actionId: ActionId.optional(),
+        dataClipId: DataClipId.optional(),
     });
 
 export declare namespace Context {
@@ -70,5 +72,6 @@ export declare namespace Context {
         actorId?: string | null;
         appId?: AppId.Raw | null;
         actionId?: ActionId.Raw | null;
+        dataClipId?: DataClipId.Raw | null;
     }
 }

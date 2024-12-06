@@ -10,15 +10,17 @@ export const StoredConstraint: core.serialization.ObjectSchema<
     serializers.StoredConstraint.Raw,
     Flatfile.StoredConstraint
 > = core.serialization.object({
-    description: core.serialization.string().optional(),
     validator: core.serialization.string(),
+    version: core.serialization.number().optional(),
+    description: core.serialization.string().optional(),
     config: core.serialization.any().optional(),
 });
 
 export declare namespace StoredConstraint {
     interface Raw {
-        description?: string | null;
         validator: string;
+        version?: number | null;
+        description?: string | null;
         config?: any | null;
     }
 }

@@ -12,6 +12,7 @@ export const Metadata: core.serialization.ObjectSchema<serializers.Metadata.Raw,
         certainty: Certainty.optional(),
         confidence: core.serialization.number().optional(),
         source: core.serialization.string().optional(),
+        detectedDelimiter: core.serialization.string().optional(),
     });
 
 export declare namespace Metadata {
@@ -19,5 +20,6 @@ export declare namespace Metadata {
         certainty?: Certainty.Raw | null;
         confidence?: number | null;
         source?: string | null;
+        detectedDelimiter?: string | null;
     }
 }

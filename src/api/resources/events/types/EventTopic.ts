@@ -66,7 +66,10 @@ export type EventTopic =
     | "environment:deleted"
     | "action:created"
     | "action:updated"
-    | "action:deleted";
+    | "action:deleted"
+    | "data-clip:created"
+    | "data-clip:updated"
+    | "data-clip:deleted";
 
 export const EventTopic = {
     AgentCreated: "agent:created",
@@ -127,4 +130,7 @@ export const EventTopic = {
     ActionCreated: "action:created",
     ActionUpdated: "action:updated",
     ActionDeleted: "action:deleted",
+    DataClipCreated: "data-clip:created",
+    DataClipUpdated: "data-clip:updated",
+    DataClipDeleted: "data-clip:deleted",
 } as const;

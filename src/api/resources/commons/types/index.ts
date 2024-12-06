@@ -3,6 +3,7 @@ export * from "./AgentVersionId";
 export * from "./AccountId";
 export * from "./AppId";
 export * from "./ConstraintId";
+export * from "./DataClipId";
 export * from "./DocumentId";
 export * from "./GuestId";
 export * from "./EnvironmentId";

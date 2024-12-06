@@ -62,6 +62,9 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "action:created": GenericEvent,
         "action:updated": GenericEvent,
         "action:deleted": GenericEvent,
+        "data-clip:created": GenericEvent,
+        "data-clip:updated": GenericEvent,
+        "data-clip:deleted": GenericEvent,
     })
     .transform<Flatfile.Event>({
         transform: (value) => value,
@@ -122,7 +125,10 @@ export declare namespace Event {
         | Event.EnvironmentDeleted
         | Event.ActionCreated
         | Event.ActionUpdated
-        | Event.ActionDeleted;
+        | Event.ActionDeleted
+        | Event.DataClipCreated
+        | Event.DataClipUpdated
+        | Event.DataClipDeleted;
 
     interface AgentCreated extends GenericEvent.Raw {
         topic: "agent:created";
@@ -334,5 +340,17 @@ export declare namespace Event {
 
     interface ActionDeleted extends GenericEvent.Raw {
         topic: "action:deleted";
+    }
+
+    interface DataClipCreated extends GenericEvent.Raw {
+        topic: "data-clip:created";
+    }
+
+    interface DataClipUpdated extends GenericEvent.Raw {
+        topic: "data-clip:updated";
+    }
+
+    interface DataClipDeleted extends GenericEvent.Raw {
+        topic: "data-clip:deleted";
     }
 }

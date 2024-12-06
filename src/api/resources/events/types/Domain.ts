@@ -18,7 +18,8 @@ export type Domain =
     | "program"
     | "secret"
     | "cron"
-    | "environment";
+    | "environment"
+    | "data-clip";
 
 export const Domain = {
     File: "file",
@@ -31,4 +32,5 @@ export const Domain = {
     Secret: "secret",
     Cron: "cron",
     Environment: "environment",
+    DataClip: "data-clip",
 } as const;

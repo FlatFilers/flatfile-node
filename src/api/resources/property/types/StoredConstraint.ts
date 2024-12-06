@@ -3,8 +3,11 @@
  */
 
 export interface StoredConstraint {
+    /** Must match the constraint validator name. */
+    validator: string;
+    /** The version of the stored constraint to use. (Defaults to version 1.) */
+    version?: number;
     /** A short description of what this constraint configuration does, example - values between 1 and 100 */
     description?: string;
-    validator: string;
     config?: any;
 }

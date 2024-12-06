@@ -17,4 +17,5 @@ export type JobUpdateConfig =
     | Flatfile.AiGenerateSampleDataJobConfig
     | Flatfile.AiGenerateBlueprintConstraintsJobConfig
     | Flatfile.AiGenerateConstraintJobConfig
+    | Flatfile.AiRuleCreationJobConfig
     | Flatfile.EmptyObject;

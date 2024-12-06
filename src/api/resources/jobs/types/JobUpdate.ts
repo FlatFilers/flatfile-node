@@ -24,4 +24,6 @@ export interface JobUpdate {
     outcomeAcknowledgedAt?: Date;
     /** Current status of job in text */
     info?: string;
+    /** Additional metadata for the job */
+    metadata?: Record<string, any>;
 }

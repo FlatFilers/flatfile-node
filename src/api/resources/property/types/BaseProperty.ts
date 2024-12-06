@@ -10,6 +10,7 @@ export interface BaseProperty {
     label?: string;
     /** A short description of the field. Markdown syntax is supported. */
     description?: string;
+    /** A list of constraints that should be applied to this field. This is limited to a maximum of 10 constraints and all external and stored constraints must have unique validator values. */
     constraints?: Flatfile.Constraint[];
     readonly?: boolean;
     appearance?: Flatfile.FieldAppearance;

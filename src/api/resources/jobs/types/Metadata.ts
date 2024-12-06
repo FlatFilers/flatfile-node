@@ -8,4 +8,5 @@ export interface Metadata {
     certainty?: Flatfile.Certainty;
     confidence?: number;
     source?: string;
+    detectedDelimiter?: string;
 }

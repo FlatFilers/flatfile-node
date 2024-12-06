@@ -17,6 +17,7 @@ export const Domain: core.serialization.Schema<serializers.Domain.Raw, Flatfile.
     "secret",
     "cron",
     "environment",
+    "data-clip",
 ]);
 
 export declare namespace Domain {
@@ -30,5 +31,6 @@ export declare namespace Domain {
         | "program"
         | "secret"
         | "cron"
-        | "environment";
+        | "environment"
+        | "data-clip";
 }

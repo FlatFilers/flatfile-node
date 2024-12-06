@@ -15,6 +15,7 @@ export const JobUpdate: core.serialization.ObjectSchema<serializers.JobUpdate.Ra
         progress: core.serialization.number().optional(),
         outcomeAcknowledgedAt: core.serialization.date().optional(),
         info: core.serialization.string().optional(),
+        metadata: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
     });
 
 export declare namespace JobUpdate {
@@ -24,5 +25,6 @@ export declare namespace JobUpdate {
         progress?: number | null;
         outcomeAcknowledgedAt?: string | null;
         info?: string | null;
+        metadata?: Record<string, any> | null;
     }
 }

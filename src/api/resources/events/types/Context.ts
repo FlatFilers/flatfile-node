@@ -41,4 +41,5 @@ export interface Context {
     actorId?: string;
     appId?: Flatfile.AppId;
     actionId?: Flatfile.ActionId;
+    dataClipId?: Flatfile.DataClipId;
 }
