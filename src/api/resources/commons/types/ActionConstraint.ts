@@ -7,7 +7,8 @@ import * as Flatfile from "../../..";
 export type ActionConstraint =
     | Flatfile.ActionConstraint.HasAllValid
     | Flatfile.ActionConstraint.HasSelection
-    | Flatfile.ActionConstraint.HasData;
+    | Flatfile.ActionConstraint.HasData
+    | Flatfile.ActionConstraint.HasColumnEnabled;
 
 export declare namespace ActionConstraint {
     interface HasAllValid extends Flatfile.ActionConstraintHasAllValid {
@@ -20,5 +21,9 @@ export declare namespace ActionConstraint {
 
     interface HasData extends Flatfile.ActionConstraintHasData {
         type: "hasData";
+    }
+
+    interface HasColumnEnabled extends Flatfile.ActionConstraintHasColumnEnabled {
+        type: "hasColumnEnabled";
     }
 }

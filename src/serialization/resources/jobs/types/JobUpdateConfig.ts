@@ -19,6 +19,8 @@ import { AiGenerateBlueprintConstraintsJobConfig } from "./AiGenerateBlueprintCo
 import { AiGenerateConstraintJobConfig } from "./AiGenerateConstraintJobConfig";
 import { AiRuleCreationJobConfig } from "./AiRuleCreationJobConfig";
 import { EmptyObject } from "./EmptyObject";
+import { AddRecordsToDataClipJobConfig } from "./AddRecordsToDataClipJobConfig";
+import { UpdateDataClipResolutionsJobConfig } from "./UpdateDataClipResolutionsJobConfig";
 
 export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateConfig.Raw, Flatfile.JobUpdateConfig> =
     core.serialization.undiscriminatedUnion([
@@ -36,6 +38,8 @@ export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateCon
         AiGenerateConstraintJobConfig,
         AiRuleCreationJobConfig,
         EmptyObject,
+        AddRecordsToDataClipJobConfig,
+        UpdateDataClipResolutionsJobConfig,
     ]);
 
 export declare namespace JobUpdateConfig {
@@ -53,5 +57,7 @@ export declare namespace JobUpdateConfig {
         | AiGenerateBlueprintConstraintsJobConfig.Raw
         | AiGenerateConstraintJobConfig.Raw
         | AiRuleCreationJobConfig.Raw
-        | EmptyObject.Raw;
+        | EmptyObject.Raw
+        | AddRecordsToDataClipJobConfig.Raw
+        | UpdateDataClipResolutionsJobConfig.Raw;
 }

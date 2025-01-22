@@ -69,7 +69,11 @@ export type EventTopic =
     | "action:deleted"
     | "data-clip:created"
     | "data-clip:updated"
-    | "data-clip:deleted";
+    | "data-clip:deleted"
+    | "data-clip:collaborator-updated"
+    | "data-clip:resolutions-created"
+    | "data-clip:resolutions-updated"
+    | "data-clip:resolutions-refreshed";
 
 export const EventTopic = {
     AgentCreated: "agent:created",
@@ -133,4 +137,8 @@ export const EventTopic = {
     DataClipCreated: "data-clip:created",
     DataClipUpdated: "data-clip:updated",
     DataClipDeleted: "data-clip:deleted",
+    DataClipCollaboratorUpdated: "data-clip:collaborator-updated",
+    DataClipResolutionsCreated: "data-clip:resolutions-created",
+    DataClipResolutionsUpdated: "data-clip:resolutions-updated",
+    DataClipResolutionsRefreshed: "data-clip:resolutions-refreshed",
 } as const;

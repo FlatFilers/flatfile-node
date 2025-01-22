@@ -7,5 +7,11 @@
  *
  * @example
  *     "us_rc_YOUR_ID"
+ *
+ * @example
+ *     "us_rc_YOUR_ID_2"
+ *
+ * @example
+ *     "us_rc_YOUR_ID_3"
  */
 export type RecordId = string;

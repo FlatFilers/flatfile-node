@@ -8,6 +8,8 @@ import * as Flatfile from "../../..";
  * Configuration for AI-powered rule creation jobs that generate or replace field constraints
  */
 export interface AiRuleCreationJobConfig {
+    /** Display name for the rule to be created */
+    label?: string;
     /** The natural language description of the rule to be created */
     prompt: string;
     /** The ID of the sheet containing the field to create/update the rule for */

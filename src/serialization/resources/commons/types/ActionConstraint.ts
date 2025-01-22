@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { ActionConstraintHasAllValid } from "./ActionConstraintHasAllValid";
 import { ActionConstraintHasSelection } from "./ActionConstraintHasSelection";
 import { ActionConstraintHasData } from "./ActionConstraintHasData";
+import { ActionConstraintHasColumnEnabled } from "./ActionConstraintHasColumnEnabled";
 
 export const ActionConstraint: core.serialization.Schema<serializers.ActionConstraint.Raw, Flatfile.ActionConstraint> =
     core.serialization
@@ -15,6 +16,7 @@ export const ActionConstraint: core.serialization.Schema<serializers.ActionConst
             hasAllValid: ActionConstraintHasAllValid,
             hasSelection: ActionConstraintHasSelection,
             hasData: ActionConstraintHasData,
+            hasColumnEnabled: ActionConstraintHasColumnEnabled,
         })
         .transform<Flatfile.ActionConstraint>({
             transform: (value) => value,
@@ -22,7 +24,11 @@ export const ActionConstraint: core.serialization.Schema<serializers.ActionConst
         });
 
 export declare namespace ActionConstraint {
-    type Raw = ActionConstraint.HasAllValid | ActionConstraint.HasSelection | ActionConstraint.HasData;
+    type Raw =
+        | ActionConstraint.HasAllValid
+        | ActionConstraint.HasSelection
+        | ActionConstraint.HasData
+        | ActionConstraint.HasColumnEnabled;
 
     interface HasAllValid extends ActionConstraintHasAllValid.Raw {
         type: "hasAllValid";
@@ -34,5 +40,9 @@ export declare namespace ActionConstraint {
 
     interface HasData extends ActionConstraintHasData.Raw {
         type: "hasData";
+    }
+
+    interface HasColumnEnabled extends ActionConstraintHasColumnEnabled.Raw {
+        type: "hasColumnEnabled";
     }
 }

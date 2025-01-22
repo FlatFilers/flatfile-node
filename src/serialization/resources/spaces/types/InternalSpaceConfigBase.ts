@@ -31,6 +31,7 @@ export const InternalSpaceConfigBase: core.serialization.ObjectSchema<
     languageOverride: core.serialization.string().optional(),
     archivedAt: core.serialization.date().optional(),
     appId: AppId.optional(),
+    isAppTemplate: core.serialization.boolean().optional(),
 });
 
 export declare namespace InternalSpaceConfigBase {
@@ -49,5 +50,6 @@ export declare namespace InternalSpaceConfigBase {
         languageOverride?: string | null;
         archivedAt?: string | null;
         appId?: AppId.Raw | null;
+        isAppTemplate?: boolean | null;
     }
 }

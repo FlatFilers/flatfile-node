@@ -11,7 +11,10 @@ import * as Flatfile from "../../../..";
  *         body: {
  *             topics: [Flatfile.EventTopic.WorkbookUpdated],
  *             compiler: Flatfile.Compiler.Js,
- *             source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
+ *             source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }",
+ *             options: {
+ *                 "namespace": "space:blue"
+ *             }
  *         }
  *     }
  *
@@ -21,7 +24,10 @@ import * as Flatfile from "../../../..";
  *         body: {
  *             topics: [Flatfile.EventTopic.WorkbookUpdated],
  *             compiler: Flatfile.Compiler.Js,
- *             source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
+ *             source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }",
+ *             options: {
+ *                 "namespace": "space:blue"
+ *             }
  *         }
  *     }
  */

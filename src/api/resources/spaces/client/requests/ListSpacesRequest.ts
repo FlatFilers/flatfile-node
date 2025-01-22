@@ -47,4 +47,8 @@ export interface ListSpacesRequest {
      * Flag for collaborative (project) spaces
      */
     isCollaborative?: boolean;
+    /**
+     * Flag for app templates
+     */
+    isAppTemplate?: boolean;
 }

@@ -2,6 +2,8 @@ export * from "./RecordsResponse";
 export * from "./RecordsResponseData";
 export * from "./GetRecordsResponse";
 export * from "./GetRecordsResponseData";
+export * from "./GetRecordIndicesResponse";
+export * from "./RecordIndices";
 export * from "./FieldRecordCounts";
 export * from "./RecordCounts";
 export * from "./RecordsWithLinks";

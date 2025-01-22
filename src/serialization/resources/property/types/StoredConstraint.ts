@@ -13,6 +13,7 @@ export const StoredConstraint: core.serialization.ObjectSchema<
     validator: core.serialization.string(),
     version: core.serialization.number().optional(),
     description: core.serialization.string().optional(),
+    label: core.serialization.string().optional(),
     config: core.serialization.any().optional(),
 });
 
@@ -21,6 +22,7 @@ export declare namespace StoredConstraint {
         validator: string;
         version?: number | null;
         description?: string | null;
+        label?: string | null;
         config?: any | null;
     }
 }

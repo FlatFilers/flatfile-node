@@ -24,4 +24,6 @@ export interface InternalSpaceConfigBase {
     archivedAt?: Date;
     /** The ID of the App that space is associated with */
     appId?: Flatfile.AppId;
+    /** Whether the space is an app template. Only one space per app can be an app template. */
+    isAppTemplate?: boolean;
 }

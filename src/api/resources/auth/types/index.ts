@@ -7,3 +7,4 @@ export * from "./Credentials";
 export * from "./UserCredentials";
 export * from "./ApiKeyId";
 export * from "./RawKey";
+export * from "./SftpCredentials";

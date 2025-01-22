@@ -18,4 +18,6 @@ export type JobUpdateConfig =
     | Flatfile.AiGenerateBlueprintConstraintsJobConfig
     | Flatfile.AiGenerateConstraintJobConfig
     | Flatfile.AiRuleCreationJobConfig
-    | Flatfile.EmptyObject;
+    | Flatfile.EmptyObject
+    | Flatfile.AddRecordsToDataClipJobConfig
+    | Flatfile.UpdateDataClipResolutionsJobConfig;

@@ -18,6 +18,8 @@ export * from "./AiGenerateSampleDataJobConfig";
 export * from "./AiGenerateBlueprintConstraintsJobConfig";
 export * from "./AiGenerateConstraintJobConfig";
 export * from "./AiRuleCreationJobConfig";
+export * from "./AddRecordsToDataClipJobConfig";
+export * from "./UpdateDataClipResolutionsJobConfig";
 export * from "./Driver";
 export * from "./Trigger";
 export * from "./PipelineJobConfig";

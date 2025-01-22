@@ -87,7 +87,11 @@ export type Event =
     | Flatfile.Event.ActionDeleted
     | Flatfile.Event.DataClipCreated
     | Flatfile.Event.DataClipUpdated
-    | Flatfile.Event.DataClipDeleted;
+    | Flatfile.Event.DataClipDeleted
+    | Flatfile.Event.DataClipCollaboratorUpdated
+    | Flatfile.Event.DataClipResolutionsCreated
+    | Flatfile.Event.DataClipResolutionsUpdated
+    | Flatfile.Event.DataClipResolutionsRefreshed;
 
 export declare namespace Event {
     interface AgentCreated extends Flatfile.GenericEvent {
@@ -312,5 +316,21 @@ export declare namespace Event {
 
     interface DataClipDeleted extends Flatfile.GenericEvent {
         topic: "data-clip:deleted";
+    }
+
+    interface DataClipCollaboratorUpdated extends Flatfile.GenericEvent {
+        topic: "data-clip:collaborator-updated";
+    }
+
+    interface DataClipResolutionsCreated extends Flatfile.GenericEvent {
+        topic: "data-clip:resolutions-created";
+    }
+
+    interface DataClipResolutionsUpdated extends Flatfile.GenericEvent {
+        topic: "data-clip:resolutions-updated";
+    }
+
+    interface DataClipResolutionsRefreshed extends Flatfile.GenericEvent {
+        topic: "data-clip:resolutions-refreshed";
     }
 }

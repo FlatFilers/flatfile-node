@@ -10,7 +10,7 @@ export interface GetRecordsCsvRequest {
      */
     versionId?: string;
     /**
-     * Returns records that were changed in that version in that version and only those records.
+     * Returns records that were changed in that version  in that version and only those records.
      */
     commitId?: Flatfile.CommitId;
     /**

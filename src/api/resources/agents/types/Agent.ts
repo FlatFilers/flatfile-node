@@ -15,7 +15,10 @@ import * as Flatfile from "../../..";
  *         createdAt: new Date("2023-10-30T16:59:45.735Z"),
  *         updatedAt: new Date("2023-10-30T16:59:45.735Z"),
  *         accountId: "us_acc_YOUR_ID",
- *         environmentId: "us_env_YOUR_ID"
+ *         environmentId: "us_env_YOUR_ID",
+ *         options: {
+ *             "namespace": "space:blue"
+ *         }
  *     }
  */
 export interface Agent extends Flatfile.AgentConfig {

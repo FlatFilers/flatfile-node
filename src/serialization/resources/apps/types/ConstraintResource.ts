@@ -21,7 +21,6 @@ export const ConstraintResource: core.serialization.ObjectSchema<
     label: core.serialization.string().optional(),
     createdAt: core.serialization.date(),
     updatedAt: core.serialization.date(),
-    deletedAt: core.serialization.date().optional(),
 });
 
 export declare namespace ConstraintResource {
@@ -35,6 +34,5 @@ export declare namespace ConstraintResource {
         label?: string | null;
         createdAt: string;
         updatedAt: string;
-        deletedAt?: string | null;
     }
 }

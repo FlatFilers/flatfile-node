@@ -11,7 +11,10 @@ import * as Flatfile from "../../..";
  *     {
  *         topics: [Flatfile.EventTopic.WorkbookUpdated],
  *         compiler: Flatfile.Compiler.Js,
- *         source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }"
+ *         source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }",
+ *         options: {
+ *             "namespace": "space:blue"
+ *         }
  *     }
  */
 export interface AgentConfig {
@@ -25,4 +28,6 @@ export interface AgentConfig {
     sourceMap?: string;
     /** The slug of the agent */
     slug?: string;
+    /** Options for the agent */
+    options?: Record<string, any>;
 }

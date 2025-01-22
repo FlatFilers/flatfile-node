@@ -7,7 +7,9 @@ export interface StoredConstraint {
     validator: string;
     /** The version of the stored constraint to use. (Defaults to version 1.) */
     version?: number;
-    /** A short description of what this constraint configuration does, example - values between 1 and 100 */
+    /** A full description of what this constraint configuration does */
     description?: string;
+    /** A short description of what this constraint constraint should do, example - values between 1 and 100 */
+    label?: string;
     config?: any;
 }

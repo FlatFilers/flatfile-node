@@ -69,6 +69,10 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "data-clip:created",
         "data-clip:updated",
         "data-clip:deleted",
+        "data-clip:collaborator-updated",
+        "data-clip:resolutions-created",
+        "data-clip:resolutions-updated",
+        "data-clip:resolutions-refreshed",
     ]);
 
 export declare namespace EventTopic {
@@ -133,5 +137,9 @@ export declare namespace EventTopic {
         | "action:deleted"
         | "data-clip:created"
         | "data-clip:updated"
-        | "data-clip:deleted";
+        | "data-clip:deleted"
+        | "data-clip:collaborator-updated"
+        | "data-clip:resolutions-created"
+        | "data-clip:resolutions-updated"
+        | "data-clip:resolutions-refreshed";
 }

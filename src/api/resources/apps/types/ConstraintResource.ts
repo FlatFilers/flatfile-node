@@ -4,6 +4,23 @@
 
 import * as Flatfile from "../../..";
 
+/**
+ * @example
+ *     {
+ *         id: "us_cn_YOUR_ID",
+ *         appId: "us_app_YOUR_ID",
+ *         validator: "UsPhoneValidation",
+ *         description: "Validates that a phone number matches US format",
+ *         function: "function constraint(value, key, { config, record }) {\n  const phoneRegex = /^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;\n  if (!phoneRegex.test(value)) {\n    record.addError(key, \"Please enter a valid US phone number\");\n  }\n}\n",
+ *         label: "US Phone Number",
+ *         options: {
+ *             "errorMessage": "Invalid phone number format",
+ *             "allowEmpty": false
+ *         },
+ *         createdAt: new Date("2024-01-15T10:00:00.000Z"),
+ *         updatedAt: new Date("2024-01-15T10:00:00.000Z")
+ *     }
+ */
 export interface ConstraintResource {
     id: Flatfile.ConstraintId;
     appId: Flatfile.AppId;
@@ -14,5 +31,4 @@ export interface ConstraintResource {
     label?: string;
     createdAt: Date;
     updatedAt: Date;
-    deletedAt?: Date;
 }
