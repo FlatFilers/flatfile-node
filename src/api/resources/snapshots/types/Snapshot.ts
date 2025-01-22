@@ -67,4 +67,6 @@ export interface Snapshot {
     createdAt: Date;
     /** The actor who created the Snapshot. */
     createdBy: Flatfile.UserId;
+    /** The ID of the thread associated with the snapshot. */
+    threadId?: string;
 }

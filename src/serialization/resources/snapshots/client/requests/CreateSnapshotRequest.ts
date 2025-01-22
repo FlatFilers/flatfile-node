@@ -13,11 +13,13 @@ export const CreateSnapshotRequest: core.serialization.Schema<
 > = core.serialization.object({
     sheetId: SheetId,
     label: core.serialization.string().optional(),
+    threadId: core.serialization.string().optional(),
 });
 
 export declare namespace CreateSnapshotRequest {
     interface Raw {
         sheetId: SheetId.Raw;
         label?: string | null;
+        threadId?: string | null;
     }
 }

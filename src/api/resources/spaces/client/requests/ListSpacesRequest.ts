@@ -48,6 +48,10 @@ export interface ListSpacesRequest {
      */
     isCollaborative?: boolean;
     /**
+     * Filter by appId
+     */
+    appId?: Flatfile.AppId;
+    /**
      * Flag for app templates
      */
     isAppTemplate?: boolean;

@@ -51,7 +51,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.14.0",
+                "X-Fern-SDK-Version": "1.15.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -129,9 +129,13 @@ export class Snapshots {
         request: Flatfile.ListSnapshotRequest,
         requestOptions?: Snapshots.RequestOptions
     ): Promise<Flatfile.SnapshotsResponse> {
-        const { sheetId } = request;
+        const { sheetId, threadId } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["sheetId"] = sheetId;
+        if (threadId != null) {
+            _queryParams["threadId"] = threadId;
+        }
+
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -143,7 +147,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.14.0",
+                "X-Fern-SDK-Version": "1.15.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -236,7 +240,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.14.0",
+                "X-Fern-SDK-Version": "1.15.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -323,7 +327,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.14.0",
+                "X-Fern-SDK-Version": "1.15.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -414,7 +418,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.14.0",
+                "X-Fern-SDK-Version": "1.15.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -525,7 +529,7 @@ export class Snapshots {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.14.0",
+                "X-Fern-SDK-Version": "1.15.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

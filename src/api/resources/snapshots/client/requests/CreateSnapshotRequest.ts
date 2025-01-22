@@ -16,4 +16,6 @@ export interface CreateSnapshotRequest {
     sheetId: Flatfile.SheetId;
     /** Label for the snapshot */
     label?: string;
+    /** ThreadId for the snapshot */
+    threadId?: string;
 }
