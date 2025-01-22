@@ -3,7 +3,7 @@
  */
 
 export interface EnumPropertyOption {
-    /** A visual label for this option, defaults to value if not provided */
+    /** A visual label for this option */
     label?: string;
     /** A short description for this option */
     description?: string;
@@ -17,4 +17,6 @@ export interface EnumPropertyOption {
     value?: any;
     /** Alternative names to match this enum option to */
     alternativeNames?: string[];
+    /** The order of this option in the list. SortBy must be set to `ordinal` to use this. */
+    ordinal?: number;
 }

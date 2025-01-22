@@ -6,6 +6,7 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { EnumPropertyOption } from "./EnumPropertyOption";
+import { EnumPropertySortBy } from "./EnumPropertySortBy";
 
 export const EnumPropertyConfig: core.serialization.ObjectSchema<
     serializers.EnumPropertyConfig.Raw,
@@ -13,11 +14,13 @@ export const EnumPropertyConfig: core.serialization.ObjectSchema<
 > = core.serialization.object({
     allowCustom: core.serialization.boolean().optional(),
     options: core.serialization.list(EnumPropertyOption),
+    sortBy: EnumPropertySortBy.optional(),
 });
 
 export declare namespace EnumPropertyConfig {
     interface Raw {
         allowCustom?: boolean | null;
         options: EnumPropertyOption.Raw[];
+        sortBy?: EnumPropertySortBy.Raw | null;
     }
 }

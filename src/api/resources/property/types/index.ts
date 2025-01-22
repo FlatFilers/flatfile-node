@@ -11,6 +11,7 @@ export * from "./DateProperty";
 export * from "./EnumProperty";
 export * from "./EnumListProperty";
 export * from "./EnumPropertyConfig";
+export * from "./EnumPropertySortBy";
 export * from "./EnumPropertyOption";
 export * from "./ReferenceProperty";
 export * from "./ReferenceListProperty";
