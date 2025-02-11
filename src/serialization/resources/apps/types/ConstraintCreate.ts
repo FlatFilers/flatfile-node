@@ -5,6 +5,7 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { AppId } from "../../commons/types/AppId";
 
 export const ConstraintCreate: core.serialization.ObjectSchema<
     serializers.ConstraintCreate.Raw,
@@ -15,6 +16,7 @@ export const ConstraintCreate: core.serialization.ObjectSchema<
     options: core.serialization.any().optional(),
     label: core.serialization.string().optional(),
     validator: core.serialization.string().optional(),
+    appId: AppId.optional(),
 });
 
 export declare namespace ConstraintCreate {
@@ -24,5 +26,6 @@ export declare namespace ConstraintCreate {
         options?: any | null;
         label?: string | null;
         validator?: string | null;
+        appId?: AppId.Raw | null;
     }
 }
