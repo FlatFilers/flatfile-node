@@ -8,6 +8,7 @@ import * as Flatfile from "../../../..";
  * @example
  *     {
  *         environmentId: "us_env_YOUR_ID",
+ *         agentId: "us_ag_YOUR_ID",
  *         spaceId: "us_sp_YOUR_ID",
  *         success: true,
  *         pageSize: 20,
@@ -16,6 +17,7 @@ import * as Flatfile from "../../../..";
  */
 export interface GetEnvironmentAgentExecutionsRequest {
     environmentId: Flatfile.EnvironmentId;
+    agentId?: Flatfile.AgentId;
     spaceId?: Flatfile.SpaceId;
     success?: Flatfile.SuccessQueryParameter;
     pageSize?: Flatfile.PageSize;

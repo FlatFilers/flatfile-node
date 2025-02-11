@@ -13,6 +13,8 @@ export const Resolve: core.serialization.ObjectSchema<serializers.Resolve.Raw, F
         field: core.serialization.string().optional(),
         type: ResolveType.optional(),
         resolveTo: ResolveTo.optional(),
+        clipValueReference: core.serialization.property("clip_value_reference", core.serialization.string().optional()),
+        mainValueReference: core.serialization.property("main_value_reference", core.serialization.string().optional()),
     });
 
 export declare namespace Resolve {
@@ -20,5 +22,7 @@ export declare namespace Resolve {
         field?: string | null;
         type?: ResolveType.Raw | null;
         resolveTo?: ResolveTo.Raw | null;
+        clip_value_reference?: string | null;
+        main_value_reference?: string | null;
     }
 }

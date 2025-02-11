@@ -41,6 +41,7 @@ export * from "./Guardrail";
 export * from "./ActionWithoutLabel";
 export * from "./Action";
 export * from "./ApiAction";
+export * from "./ApiActionConfig";
 export * from "./ActionUpdate";
 export * from "./ActionConstraint";
 export * from "./ActionMount";

@@ -4,4 +4,4 @@
 
 import * as Flatfile from "../../..";
 
-export type Actions = Flatfile.Action[];
+export type ApiActionConfigs = Flatfile.ApiActionConfig[];

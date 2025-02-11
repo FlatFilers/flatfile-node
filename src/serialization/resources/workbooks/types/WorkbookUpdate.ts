@@ -9,6 +9,7 @@ import { SpaceId } from "../../commons/types/SpaceId";
 import { EnvironmentId } from "../../commons/types/EnvironmentId";
 import { SheetConfigOrUpdate } from "../../sheets/types/SheetConfigOrUpdate";
 import { Action } from "../../commons/types/Action";
+import { WorkbookConfigSettings } from "./WorkbookConfigSettings";
 
 export const WorkbookUpdate: core.serialization.ObjectSchema<serializers.WorkbookUpdate.Raw, Flatfile.WorkbookUpdate> =
     core.serialization.object({
@@ -20,6 +21,7 @@ export const WorkbookUpdate: core.serialization.ObjectSchema<serializers.Workboo
         sheets: core.serialization.list(SheetConfigOrUpdate).optional(),
         actions: core.serialization.list(Action).optional(),
         metadata: core.serialization.any().optional(),
+        settings: WorkbookConfigSettings.optional(),
     });
 
 export declare namespace WorkbookUpdate {
@@ -32,5 +34,6 @@ export declare namespace WorkbookUpdate {
         sheets?: SheetConfigOrUpdate.Raw[] | null;
         actions?: Action.Raw[] | null;
         metadata?: any | null;
+        settings?: WorkbookConfigSettings.Raw | null;
     }
 }

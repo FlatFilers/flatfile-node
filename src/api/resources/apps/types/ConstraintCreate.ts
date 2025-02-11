@@ -7,4 +7,5 @@ export interface ConstraintCreate {
     function?: string;
     options?: any;
     label?: string;
+    validator?: string;
 }

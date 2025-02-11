@@ -14,6 +14,7 @@ export const ConstraintCreate: core.serialization.ObjectSchema<
     function: core.serialization.string().optional(),
     options: core.serialization.any().optional(),
     label: core.serialization.string().optional(),
+    validator: core.serialization.string().optional(),
 });
 
 export declare namespace ConstraintCreate {
@@ -22,5 +23,6 @@ export declare namespace ConstraintCreate {
         function?: string | null;
         options?: any | null;
         label?: string | null;
+        validator?: string | null;
     }
 }

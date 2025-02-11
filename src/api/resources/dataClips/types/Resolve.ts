@@ -11,4 +11,6 @@ export interface Resolve {
     field?: string;
     type?: Flatfile.ResolveType;
     resolveTo?: Flatfile.ResolveTo;
+    clipValueReference?: string;
+    mainValueReference?: string;
 }

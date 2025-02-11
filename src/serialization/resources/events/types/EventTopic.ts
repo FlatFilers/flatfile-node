@@ -63,6 +63,7 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "environment:created",
         "environment:updated",
         "environment:deleted",
+        "environment:autobuild-created",
         "action:created",
         "action:updated",
         "action:deleted",
@@ -132,6 +133,7 @@ export declare namespace EventTopic {
         | "environment:created"
         | "environment:updated"
         | "environment:deleted"
+        | "environment:autobuild-created"
         | "action:created"
         | "action:updated"
         | "action:deleted"

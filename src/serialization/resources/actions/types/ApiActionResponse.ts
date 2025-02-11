@@ -7,9 +7,11 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { ApiAction } from "../../commons/types/ApiAction";
 
-export const ActionResponse: core.serialization.ObjectSchema<serializers.ActionResponse.Raw, Flatfile.ActionResponse> =
-    ApiAction;
+export const ApiActionResponse: core.serialization.ObjectSchema<
+    serializers.ApiActionResponse.Raw,
+    Flatfile.ApiActionResponse
+> = ApiAction;
 
-export declare namespace ActionResponse {
+export declare namespace ApiActionResponse {
     type Raw = ApiAction.Raw;
 }

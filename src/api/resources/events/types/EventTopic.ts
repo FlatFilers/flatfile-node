@@ -64,6 +64,7 @@ export type EventTopic =
     | "environment:created"
     | "environment:updated"
     | "environment:deleted"
+    | "environment:autobuild-created"
     | "action:created"
     | "action:updated"
     | "action:deleted"
@@ -131,6 +132,7 @@ export const EventTopic = {
     EnvironmentCreated: "environment:created",
     EnvironmentUpdated: "environment:updated",
     EnvironmentDeleted: "environment:deleted",
+    EnvironmentAutobuildCreated: "environment:autobuild-created",
     ActionCreated: "action:created",
     ActionUpdated: "action:updated",
     ActionDeleted: "action:deleted",

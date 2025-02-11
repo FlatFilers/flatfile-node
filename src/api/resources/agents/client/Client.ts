@@ -43,7 +43,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -131,7 +131,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -217,7 +217,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -300,7 +300,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -385,7 +385,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -469,7 +469,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -564,7 +564,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -662,7 +662,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -763,7 +763,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -855,7 +855,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -966,7 +966,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1037,6 +1037,7 @@ export class Agents {
      * @example
      *     await flatfile.agents.getEnvironmentAgentExecutions({
      *         environmentId: "us_env_YOUR_ID",
+     *         agentId: "us_ag_YOUR_ID",
      *         spaceId: "us_sp_YOUR_ID",
      *         success: true,
      *         pageSize: 20,
@@ -1047,9 +1048,13 @@ export class Agents {
         request: Flatfile.GetEnvironmentAgentExecutionsRequest,
         requestOptions?: Agents.RequestOptions
     ): Promise<Flatfile.GetExecutionsResponse> {
-        const { environmentId, spaceId, success, pageSize, pageNumber } = request;
+        const { environmentId, agentId, spaceId, success, pageSize, pageNumber } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["environmentId"] = environmentId;
+        if (agentId != null) {
+            _queryParams["agentId"] = agentId;
+        }
+
         if (spaceId != null) {
             _queryParams["spaceId"] = spaceId;
         }
@@ -1077,7 +1082,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -1170,7 +1175,7 @@ export class Agents {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

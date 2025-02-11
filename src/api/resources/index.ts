@@ -61,6 +61,7 @@ export * from "./views/types";
 export * as workbooks from "./workbooks";
 export * from "./workbooks/types";
 export * from "./commons/errors";
+export * from "./actions/client/requests";
 export * from "./agents/client/requests";
 export * from "./apps/client/requests";
 export * from "./assistant/client/requests";

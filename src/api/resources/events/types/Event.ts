@@ -82,6 +82,7 @@ export type Event =
     | Flatfile.Event.EnvironmentCreated
     | Flatfile.Event.EnvironmentUpdated
     | Flatfile.Event.EnvironmentDeleted
+    | Flatfile.Event.EnvironmentAutobuildCreated
     | Flatfile.Event.ActionCreated
     | Flatfile.Event.ActionUpdated
     | Flatfile.Event.ActionDeleted
@@ -292,6 +293,10 @@ export declare namespace Event {
 
     interface EnvironmentDeleted extends Flatfile.GenericEvent {
         topic: "environment:deleted";
+    }
+
+    interface EnvironmentAutobuildCreated extends Flatfile.GenericEvent {
+        topic: "environment:autobuild-created";
     }
 
     interface ActionCreated extends Flatfile.GenericEvent {

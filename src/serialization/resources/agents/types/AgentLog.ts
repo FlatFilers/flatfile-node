@@ -5,10 +5,12 @@
 import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
+import { AgentId } from "../../commons/types/AgentId";
 import { EventId } from "../../commons/types/EventId";
 
 export const AgentLog: core.serialization.ObjectSchema<serializers.AgentLog.Raw, Flatfile.AgentLog> =
     core.serialization.object({
+        agentId: AgentId,
         eventId: EventId,
         success: core.serialization.boolean(),
         createdAt: core.serialization.string(),
@@ -18,6 +20,7 @@ export const AgentLog: core.serialization.ObjectSchema<serializers.AgentLog.Raw,
 
 export declare namespace AgentLog {
     interface Raw {
+        agentId: AgentId.Raw;
         eventId: EventId.Raw;
         success: boolean;
         createdAt: string;

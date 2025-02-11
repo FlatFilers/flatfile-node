@@ -26,9 +26,12 @@ export class Actions {
     constructor(protected readonly _options: Actions.Options = {}) {}
 
     public async create(
-        request: Flatfile.Action,
+        request: Flatfile.ActionCreateRequest,
         requestOptions?: Actions.RequestOptions
-    ): Promise<Flatfile.ActionResponse> {
+    ): Promise<Flatfile.ApiActionResponse> {
+        const { spaceId, body: _body } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        _queryParams["spaceId"] = spaceId;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -40,17 +43,18 @@ export class Actions {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.Action.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            queryParameters: _queryParams,
+            body: await serializers.ApiActionConfig.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.ActionResponse.parseOrThrow(_response.body, {
+            return await serializers.ApiActionResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -82,9 +86,12 @@ export class Actions {
     }
 
     public async bulkCreate(
-        request: Flatfile.Actions,
+        request: Flatfile.ActionsBulkCreateRequest,
         requestOptions?: Actions.RequestOptions
-    ): Promise<Flatfile.ActionsResponse> {
+    ): Promise<Flatfile.ApiActionsResponse> {
+        const { spaceId, body: _body } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        _queryParams["spaceId"] = spaceId;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -96,17 +103,77 @@ export class Actions {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.Actions.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            queryParameters: _queryParams,
+            body: await serializers.ApiActionConfigs.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.ActionsResponse.parseOrThrow(_response.body, {
+            return await serializers.ApiActionsResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError();
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    public async getAll(
+        request: Flatfile.GetActionsRequest,
+        requestOptions?: Actions.RequestOptions
+    ): Promise<Flatfile.ApiActionsResponse> {
+        const { spaceId } = request;
+        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        _queryParams["spaceId"] = spaceId;
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
+                "/actions"
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.15.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return await serializers.ApiActionsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -140,7 +207,7 @@ export class Actions {
     public async get(
         actionId: Flatfile.ActionId,
         requestOptions?: Actions.RequestOptions
-    ): Promise<Flatfile.ActionResponse> {
+    ): Promise<Flatfile.ApiActionResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -152,7 +219,7 @@ export class Actions {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -161,7 +228,7 @@ export class Actions {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.ActionResponse.parseOrThrow(_response.body, {
+            return await serializers.ApiActionResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -196,7 +263,7 @@ export class Actions {
         actionId: Flatfile.ActionId,
         request: Flatfile.ActionUpdate,
         requestOptions?: Actions.RequestOptions
-    ): Promise<Flatfile.ActionResponse> {
+    ): Promise<Flatfile.ApiActionResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
@@ -208,7 +275,7 @@ export class Actions {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -218,7 +285,7 @@ export class Actions {
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return await serializers.ActionResponse.parseOrThrow(_response.body, {
+            return await serializers.ApiActionResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -264,7 +331,7 @@ export class Actions {
                 "X-Disable-Hooks": "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.0",
+                "X-Fern-SDK-Version": "1.15.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

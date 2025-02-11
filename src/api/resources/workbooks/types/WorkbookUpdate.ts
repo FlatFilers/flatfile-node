@@ -36,4 +36,6 @@ export interface WorkbookUpdate {
     actions?: Flatfile.Action[];
     /** Metadata for the workbook */
     metadata?: any;
+    /** The Workbook settings. */
+    settings?: Flatfile.WorkbookConfigSettings;
 }

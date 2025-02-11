@@ -4,4 +4,4 @@
 
 import * as Flatfile from "../../..";
 
-export type ActionsResponse = Flatfile.ApiAction[];
+export type ApiActionResponse = Flatfile.ApiAction;

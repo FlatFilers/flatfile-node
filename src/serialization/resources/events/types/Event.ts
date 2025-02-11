@@ -59,6 +59,7 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "environment:created": GenericEvent,
         "environment:updated": GenericEvent,
         "environment:deleted": GenericEvent,
+        "environment:autobuild-created": GenericEvent,
         "action:created": GenericEvent,
         "action:updated": GenericEvent,
         "action:deleted": GenericEvent,
@@ -127,6 +128,7 @@ export declare namespace Event {
         | Event.EnvironmentCreated
         | Event.EnvironmentUpdated
         | Event.EnvironmentDeleted
+        | Event.EnvironmentAutobuildCreated
         | Event.ActionCreated
         | Event.ActionUpdated
         | Event.ActionDeleted
@@ -336,6 +338,10 @@ export declare namespace Event {
 
     interface EnvironmentDeleted extends GenericEvent.Raw {
         topic: "environment:deleted";
+    }
+
+    interface EnvironmentAutobuildCreated extends GenericEvent.Raw {
+        topic: "environment:autobuild-created";
     }
 
     interface ActionCreated extends GenericEvent.Raw {
