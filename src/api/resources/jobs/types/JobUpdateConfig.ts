@@ -13,11 +13,11 @@ export type JobUpdateConfig =
     | Flatfile.FindAndReplaceJobConfig
     | Flatfile.MappingProgramJobConfig
     | Flatfile.AiGenerateBlueprintJobConfig
-    | Flatfile.AppAutobuildDeployJobConfig
     | Flatfile.AiGenerateSampleDataJobConfig
     | Flatfile.AiGenerateBlueprintConstraintsJobConfig
     | Flatfile.AiGenerateConstraintJobConfig
     | Flatfile.AiRuleCreationJobConfig
     | Flatfile.EmptyObject
     | Flatfile.AddRecordsToDataClipJobConfig
-    | Flatfile.UpdateDataClipResolutionsJobConfig;
+    | Flatfile.UpdateDataClipResolutionsJobConfig
+    | Flatfile.AgentExportJobConfig;

@@ -30,4 +30,6 @@ export interface AgentConfig {
     slug?: string;
     /** Options for the agent */
     options?: Record<string, any>;
+    /** Whether the agent is a system agent. This should be false for all agents created by users. */
+    isSystem?: boolean;
 }

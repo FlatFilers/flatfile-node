@@ -12,4 +12,5 @@ import * as Flatfile from "../../../..";
  */
 export interface ListAgentsRequest {
     environmentId: Flatfile.EnvironmentId;
+    isSystem?: boolean;
 }

@@ -7,6 +7,7 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { ResolveType } from "./ResolveType";
 import { ResolveTo } from "./ResolveTo";
+import { RemovedFromMainResolution } from "./RemovedFromMainResolution";
 
 export const Resolve: core.serialization.ObjectSchema<serializers.Resolve.Raw, Flatfile.Resolve> =
     core.serialization.object({
@@ -15,6 +16,7 @@ export const Resolve: core.serialization.ObjectSchema<serializers.Resolve.Raw, F
         resolveTo: ResolveTo.optional(),
         clipValueReference: core.serialization.property("clip_value_reference", core.serialization.string().optional()),
         mainValueReference: core.serialization.property("main_value_reference", core.serialization.string().optional()),
+        removedFromMainResolution: RemovedFromMainResolution.optional(),
     });
 
 export declare namespace Resolve {
@@ -24,5 +26,6 @@ export declare namespace Resolve {
         resolveTo?: ResolveTo.Raw | null;
         clip_value_reference?: string | null;
         main_value_reference?: string | null;
+        removedFromMainResolution?: RemovedFromMainResolution.Raw | null;
     }
 }

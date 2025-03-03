@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { DataClipId } from "../../commons/types/DataClipId";
 import { SheetId } from "../../commons/types/SheetId";
 import { ResolveTo } from "../../dataClips/types/ResolveTo";
+import { RemovedFromMainResolution } from "../../dataClips/types/RemovedFromMainResolution";
 
 export const UpdateDataClipResolutionsJobConfig: core.serialization.ObjectSchema<
     serializers.UpdateDataClipResolutionsJobConfig.Raw,
@@ -16,6 +17,7 @@ export const UpdateDataClipResolutionsJobConfig: core.serialization.ObjectSchema
     clipId: DataClipId,
     clippedSheetId: SheetId,
     resolveTo: ResolveTo,
+    removedFromMainResolution: RemovedFromMainResolution,
     columnField: core.serialization.string(),
     columnValue: core.serialization.string(),
 });
@@ -25,6 +27,7 @@ export declare namespace UpdateDataClipResolutionsJobConfig {
         clipId: DataClipId.Raw;
         clippedSheetId: SheetId.Raw;
         resolveTo: ResolveTo.Raw;
+        removedFromMainResolution: RemovedFromMainResolution.Raw;
         columnField: string;
         columnValue: string;
     }

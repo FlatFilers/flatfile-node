@@ -13,6 +13,7 @@ export interface UpdateDataClipResolutionsJobConfig {
     /** The ID of the sheet that contains the data clip */
     clippedSheetId: Flatfile.SheetId;
     resolveTo: Flatfile.ResolveTo;
+    removedFromMainResolution: Flatfile.RemovedFromMainResolution;
     /** Optional. If provided, only this column will be resolved. */
     columnField: string;
     /** Optional. If provided, this value in the column will be replaced with the resolution target. */

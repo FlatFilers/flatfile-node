@@ -16,6 +16,7 @@ export const AgentConfig: core.serialization.ObjectSchema<serializers.AgentConfi
         sourceMap: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
         options: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
+        isSystem: core.serialization.boolean().optional(),
     });
 
 export declare namespace AgentConfig {
@@ -26,5 +27,6 @@ export declare namespace AgentConfig {
         sourceMap?: string | null;
         slug?: string | null;
         options?: Record<string, any> | null;
+        isSystem?: boolean | null;
     }
 }

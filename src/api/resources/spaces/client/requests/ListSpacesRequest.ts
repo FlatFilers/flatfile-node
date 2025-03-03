@@ -24,6 +24,10 @@ export interface ListSpacesRequest {
      */
     pageNumber?: number;
     /**
+     * Filter by appId
+     */
+    app?: Flatfile.AppId;
+    /**
      * Search query for spaces
      */
     search?: string;
@@ -36,11 +40,11 @@ export interface ListSpacesRequest {
      */
     archived?: boolean;
     /**
-     * Field to sort spaces by
+     * Field to sort spaces by; requires `sortDirection` if provided.
      */
     sortField?: Flatfile.GetSpacesSortField;
     /**
-     * Direction of sorting
+     * Direction of sorting; requires `sortField` if provided.
      */
     sortDirection?: Flatfile.SortDirection;
     /**
@@ -48,7 +52,7 @@ export interface ListSpacesRequest {
      */
     isCollaborative?: boolean;
     /**
-     * Filter by appId
+     * (Deprecated!) Use `app` query parameter
      */
     appId?: Flatfile.AppId;
     /**
