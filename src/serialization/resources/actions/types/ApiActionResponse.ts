@@ -10,8 +10,12 @@ import { ApiAction } from "../../commons/types/ApiAction";
 export const ApiActionResponse: core.serialization.ObjectSchema<
     serializers.ApiActionResponse.Raw,
     Flatfile.ApiActionResponse
-> = ApiAction;
+> = core.serialization.object({
+    data: ApiAction,
+});
 
 export declare namespace ApiActionResponse {
-    type Raw = ApiAction.Raw;
+    interface Raw {
+        data: ApiAction.Raw;
+    }
 }

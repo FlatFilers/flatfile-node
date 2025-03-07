@@ -31,6 +31,7 @@ export type EventTopic =
     | "sheet:updated"
     | "sheet:deleted"
     | "sheet:counts-updated"
+    | "sheet:calculation-updated"
     | "snapshot:created"
     | "records:created"
     | "records:updated"
@@ -74,7 +75,13 @@ export type EventTopic =
     | "data-clip:collaborator-updated"
     | "data-clip:resolutions-created"
     | "data-clip:resolutions-updated"
-    | "data-clip:resolutions-refreshed";
+    | "data-clip:resolutions-refreshed"
+    | "canvas:created"
+    | "canvas:updated"
+    | "canvas:deleted"
+    | "canvas-area:created"
+    | "canvas-area:updated"
+    | "canvas-area:deleted";
 
 export const EventTopic = {
     AgentCreated: "agent:created",
@@ -99,6 +106,7 @@ export const EventTopic = {
     SheetUpdated: "sheet:updated",
     SheetDeleted: "sheet:deleted",
     SheetCountsUpdated: "sheet:counts-updated",
+    SheetCalculationUpdated: "sheet:calculation-updated",
     SnapshotCreated: "snapshot:created",
     RecordsCreated: "records:created",
     RecordsUpdated: "records:updated",
@@ -143,4 +151,10 @@ export const EventTopic = {
     DataClipResolutionsCreated: "data-clip:resolutions-created",
     DataClipResolutionsUpdated: "data-clip:resolutions-updated",
     DataClipResolutionsRefreshed: "data-clip:resolutions-refreshed",
+    CanvasCreated: "canvas:created",
+    CanvasUpdated: "canvas:updated",
+    CanvasDeleted: "canvas:deleted",
+    CanvasAreaCreated: "canvas-area:created",
+    CanvasAreaUpdated: "canvas-area:updated",
+    CanvasAreaDeleted: "canvas-area:deleted",
 } as const;

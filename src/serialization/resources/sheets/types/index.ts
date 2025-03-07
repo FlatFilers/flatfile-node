@@ -20,3 +20,6 @@ export * from "./CellValueWithCounts";
 export * from "./FieldKey";
 export * from "./Distinct";
 export * from "./IncludeCounts";
+export * from "./CalculationType";
+export * from "./Calculation";
+export * from "./ListCalculationsResponse";

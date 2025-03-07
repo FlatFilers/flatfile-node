@@ -17,6 +17,7 @@ import { FileOrigin } from "./FileOrigin";
 export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, Flatfile.File_> = core.serialization.object({
     id: FileId,
     name: core.serialization.string(),
+    description: core.serialization.string().optional(),
     ext: core.serialization.string(),
     mimetype: core.serialization.string(),
     encoding: core.serialization.string(),
@@ -38,6 +39,7 @@ export declare namespace File_ {
     interface Raw {
         id: FileId.Raw;
         name: string;
+        description?: string | null;
         ext: string;
         mimetype: string;
         encoding: string;

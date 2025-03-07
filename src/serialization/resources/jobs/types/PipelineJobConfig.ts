@@ -6,6 +6,7 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { SheetId } from "../../commons/types/SheetId";
+import { RunbookId } from "../../commons/types/RunbookId";
 
 export const PipelineJobConfig: core.serialization.ObjectSchema<
     serializers.PipelineJobConfig.Raw,
@@ -13,11 +14,13 @@ export const PipelineJobConfig: core.serialization.ObjectSchema<
 > = core.serialization.object({
     sourceSheetId: SheetId,
     destinationSheetId: SheetId,
+    runbookId: RunbookId.optional(),
 });
 
 export declare namespace PipelineJobConfig {
     interface Raw {
         sourceSheetId: SheetId.Raw;
         destinationSheetId: SheetId.Raw;
+        runbookId?: RunbookId.Raw | null;
     }
 }

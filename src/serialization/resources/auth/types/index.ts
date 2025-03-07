@@ -8,3 +8,8 @@ export * from "./UserCredentials";
 export * from "./ApiKeyId";
 export * from "./RawKey";
 export * from "./SftpCredentials";
+export * from "./PersonalAccessTokenId";
+export * from "./PersonalAccessToken";
+export * from "./PersonalAccessTokensResponse";
+export * from "./CreatePersonalAccessTokenResponse";
+export * from "./CreatePersonalAccessTokenResponseData";

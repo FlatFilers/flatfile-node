@@ -7,10 +7,15 @@ import * as Flatfile from "../../../..";
 /**
  * @example
  *     {
- *         environmentId: "us_env_YOUR_ID"
+ *         environmentId: "us_env_YOUR_ID",
+ *         pageSize: 20,
+ *         pageNumber: 1
  *     }
  */
 export interface ListAgentsRequest {
     environmentId: Flatfile.EnvironmentId;
     isSystem?: boolean;
+    search?: string;
+    pageSize?: Flatfile.PageSize;
+    pageNumber?: Flatfile.PageNumber;
 }

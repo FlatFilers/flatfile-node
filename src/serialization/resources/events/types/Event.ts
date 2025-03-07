@@ -30,6 +30,7 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "sheet:updated": GenericEvent,
         "sheet:deleted": GenericEvent,
         "sheet:counts-updated": GenericEvent,
+        "sheet:calculation-updated": GenericEvent,
         "snapshot:created": GenericEvent,
         "records:created": GenericEvent,
         "records:updated": GenericEvent,
@@ -70,6 +71,12 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "data-clip:resolutions-created": GenericEvent,
         "data-clip:resolutions-updated": GenericEvent,
         "data-clip:resolutions-refreshed": GenericEvent,
+        "canvas:created": GenericEvent,
+        "canvas:updated": GenericEvent,
+        "canvas:deleted": GenericEvent,
+        "canvas-area:created": GenericEvent,
+        "canvas-area:updated": GenericEvent,
+        "canvas-area:deleted": GenericEvent,
     })
     .transform<Flatfile.Event>({
         transform: (value) => value,
@@ -99,6 +106,7 @@ export declare namespace Event {
         | Event.SheetUpdated
         | Event.SheetDeleted
         | Event.SheetCountsUpdated
+        | Event.SheetCalculationUpdated
         | Event.SnapshotCreated
         | Event.RecordsCreated
         | Event.RecordsUpdated
@@ -138,7 +146,13 @@ export declare namespace Event {
         | Event.DataClipCollaboratorUpdated
         | Event.DataClipResolutionsCreated
         | Event.DataClipResolutionsUpdated
-        | Event.DataClipResolutionsRefreshed;
+        | Event.DataClipResolutionsRefreshed
+        | Event.CanvasCreated
+        | Event.CanvasUpdated
+        | Event.CanvasDeleted
+        | Event.CanvasAreaCreated
+        | Event.CanvasAreaUpdated
+        | Event.CanvasAreaDeleted;
 
     interface AgentCreated extends GenericEvent.Raw {
         topic: "agent:created";
@@ -222,6 +236,10 @@ export declare namespace Event {
 
     interface SheetCountsUpdated extends GenericEvent.Raw {
         topic: "sheet:counts-updated";
+    }
+
+    interface SheetCalculationUpdated extends GenericEvent.Raw {
+        topic: "sheet:calculation-updated";
     }
 
     interface SnapshotCreated extends GenericEvent.Raw {
@@ -382,5 +400,29 @@ export declare namespace Event {
 
     interface DataClipResolutionsRefreshed extends GenericEvent.Raw {
         topic: "data-clip:resolutions-refreshed";
+    }
+
+    interface CanvasCreated extends GenericEvent.Raw {
+        topic: "canvas:created";
+    }
+
+    interface CanvasUpdated extends GenericEvent.Raw {
+        topic: "canvas:updated";
+    }
+
+    interface CanvasDeleted extends GenericEvent.Raw {
+        topic: "canvas:deleted";
+    }
+
+    interface CanvasAreaCreated extends GenericEvent.Raw {
+        topic: "canvas-area:created";
+    }
+
+    interface CanvasAreaUpdated extends GenericEvent.Raw {
+        topic: "canvas-area:updated";
+    }
+
+    interface CanvasAreaDeleted extends GenericEvent.Raw {
+        topic: "canvas-area:deleted";
     }
 }

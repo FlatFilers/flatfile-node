@@ -20,9 +20,15 @@ import * as Flatfile from "../../..";
  *                 options: {
  *                     "namespace": "space:blue"
  *                 }
- *             }]
+ *             }],
+ *         pagination: {
+ *             currentPage: 3,
+ *             pageCount: 50,
+ *             totalCount: 100
+ *         }
  *     }
  */
 export interface ListAgentsResponse {
     data?: Flatfile.Agent[];
+    pagination?: Flatfile.Pagination;
 }

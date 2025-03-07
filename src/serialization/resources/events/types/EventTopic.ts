@@ -30,6 +30,7 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "sheet:updated",
         "sheet:deleted",
         "sheet:counts-updated",
+        "sheet:calculation-updated",
         "snapshot:created",
         "records:created",
         "records:updated",
@@ -74,6 +75,12 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "data-clip:resolutions-created",
         "data-clip:resolutions-updated",
         "data-clip:resolutions-refreshed",
+        "canvas:created",
+        "canvas:updated",
+        "canvas:deleted",
+        "canvas-area:created",
+        "canvas-area:updated",
+        "canvas-area:deleted",
     ]);
 
 export declare namespace EventTopic {
@@ -100,6 +107,7 @@ export declare namespace EventTopic {
         | "sheet:updated"
         | "sheet:deleted"
         | "sheet:counts-updated"
+        | "sheet:calculation-updated"
         | "snapshot:created"
         | "records:created"
         | "records:updated"
@@ -143,5 +151,11 @@ export declare namespace EventTopic {
         | "data-clip:collaborator-updated"
         | "data-clip:resolutions-created"
         | "data-clip:resolutions-updated"
-        | "data-clip:resolutions-refreshed";
+        | "data-clip:resolutions-refreshed"
+        | "canvas:created"
+        | "canvas:updated"
+        | "canvas:deleted"
+        | "canvas-area:created"
+        | "canvas-area:updated"
+        | "canvas-area:deleted";
 }

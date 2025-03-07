@@ -16,7 +16,7 @@ export interface ListSnapshotRequest {
      */
     sheetId: Flatfile.SheetId;
     /**
-     * ThreadId to filter snapshots by
+     * ID of thread to filter snapshots by
      */
     threadId?: string;
 }

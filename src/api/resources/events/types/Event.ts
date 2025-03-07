@@ -53,6 +53,7 @@ export type Event =
     | Flatfile.Event.SheetUpdated
     | Flatfile.Event.SheetDeleted
     | Flatfile.Event.SheetCountsUpdated
+    | Flatfile.Event.SheetCalculationUpdated
     | Flatfile.Event.SnapshotCreated
     | Flatfile.Event.RecordsCreated
     | Flatfile.Event.RecordsUpdated
@@ -92,7 +93,13 @@ export type Event =
     | Flatfile.Event.DataClipCollaboratorUpdated
     | Flatfile.Event.DataClipResolutionsCreated
     | Flatfile.Event.DataClipResolutionsUpdated
-    | Flatfile.Event.DataClipResolutionsRefreshed;
+    | Flatfile.Event.DataClipResolutionsRefreshed
+    | Flatfile.Event.CanvasCreated
+    | Flatfile.Event.CanvasUpdated
+    | Flatfile.Event.CanvasDeleted
+    | Flatfile.Event.CanvasAreaCreated
+    | Flatfile.Event.CanvasAreaUpdated
+    | Flatfile.Event.CanvasAreaDeleted;
 
 export declare namespace Event {
     interface AgentCreated extends Flatfile.GenericEvent {
@@ -177,6 +184,10 @@ export declare namespace Event {
 
     interface SheetCountsUpdated extends Flatfile.GenericEvent {
         topic: "sheet:counts-updated";
+    }
+
+    interface SheetCalculationUpdated extends Flatfile.GenericEvent {
+        topic: "sheet:calculation-updated";
     }
 
     interface SnapshotCreated extends Flatfile.GenericEvent {
@@ -337,5 +348,29 @@ export declare namespace Event {
 
     interface DataClipResolutionsRefreshed extends Flatfile.GenericEvent {
         topic: "data-clip:resolutions-refreshed";
+    }
+
+    interface CanvasCreated extends Flatfile.GenericEvent {
+        topic: "canvas:created";
+    }
+
+    interface CanvasUpdated extends Flatfile.GenericEvent {
+        topic: "canvas:updated";
+    }
+
+    interface CanvasDeleted extends Flatfile.GenericEvent {
+        topic: "canvas:deleted";
+    }
+
+    interface CanvasAreaCreated extends Flatfile.GenericEvent {
+        topic: "canvas-area:created";
+    }
+
+    interface CanvasAreaUpdated extends Flatfile.GenericEvent {
+        topic: "canvas-area:updated";
+    }
+
+    interface CanvasAreaDeleted extends Flatfile.GenericEvent {
+        topic: "canvas-area:deleted";
     }
 }

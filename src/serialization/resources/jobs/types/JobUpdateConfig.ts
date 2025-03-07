@@ -17,6 +17,9 @@ import { AiGenerateSampleDataJobConfig } from "./AiGenerateSampleDataJobConfig";
 import { AiGenerateBlueprintConstraintsJobConfig } from "./AiGenerateBlueprintConstraintsJobConfig";
 import { AiGenerateConstraintJobConfig } from "./AiGenerateConstraintJobConfig";
 import { AiRuleCreationJobConfig } from "./AiRuleCreationJobConfig";
+import { CaptureRoutineJobConfig } from "./CaptureRoutineJobConfig";
+import { RunRunbookJobConfig } from "./RunRunbookJobConfig";
+import { MappingFromPreprocessingJobConfig } from "./MappingFromPreprocessingJobConfig";
 import { EmptyObject } from "./EmptyObject";
 import { AddRecordsToDataClipJobConfig } from "./AddRecordsToDataClipJobConfig";
 import { UpdateDataClipResolutionsJobConfig } from "./UpdateDataClipResolutionsJobConfig";
@@ -36,6 +39,9 @@ export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateCon
         AiGenerateBlueprintConstraintsJobConfig,
         AiGenerateConstraintJobConfig,
         AiRuleCreationJobConfig,
+        CaptureRoutineJobConfig,
+        RunRunbookJobConfig,
+        MappingFromPreprocessingJobConfig,
         EmptyObject,
         AddRecordsToDataClipJobConfig,
         UpdateDataClipResolutionsJobConfig,
@@ -56,6 +62,9 @@ export declare namespace JobUpdateConfig {
         | AiGenerateBlueprintConstraintsJobConfig.Raw
         | AiGenerateConstraintJobConfig.Raw
         | AiRuleCreationJobConfig.Raw
+        | CaptureRoutineJobConfig.Raw
+        | RunRunbookJobConfig.Raw
+        | MappingFromPreprocessingJobConfig.Raw
         | EmptyObject.Raw
         | AddRecordsToDataClipJobConfig.Raw
         | UpdateDataClipResolutionsJobConfig.Raw

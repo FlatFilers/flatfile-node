@@ -11,6 +11,7 @@ import * as Flatfile from "../../..";
  *     {
  *         id: "us_fl_YOUR_ID",
  *         name: "Test File",
+ *         description: "This is a test file",
  *         ext: "png",
  *         mimetype: "image/png",
  *         encoding: "7bit",
@@ -27,6 +28,7 @@ import * as Flatfile from "../../..";
  *     {
  *         id: "us_fl_YOUR_ID",
  *         name: "NewFileName",
+ *         description: "This is a new test file",
  *         ext: "png",
  *         mimetype: "image/png",
  *         encoding: "7bit",
@@ -43,6 +45,8 @@ export interface File_ {
     id: Flatfile.FileId;
     /** Original filename */
     name: string;
+    /** Description of the file */
+    description?: string;
     /** Extension of the file */
     ext: string;
     /** MIME Type of the file */

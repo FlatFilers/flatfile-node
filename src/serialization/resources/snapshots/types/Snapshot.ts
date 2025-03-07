@@ -15,10 +15,10 @@ export const Snapshot: core.serialization.ObjectSchema<serializers.Snapshot.Raw,
         id: SnapshotId,
         sheetId: SheetId,
         label: core.serialization.string().optional(),
+        threadId: core.serialization.string().optional(),
         summary: SnapshotSummary.optional(),
         createdAt: core.serialization.date(),
         createdBy: UserId,
-        threadId: core.serialization.string().optional(),
     });
 
 export declare namespace Snapshot {
@@ -26,9 +26,9 @@ export declare namespace Snapshot {
         id: SnapshotId.Raw;
         sheetId: SheetId.Raw;
         label?: string | null;
+        threadId?: string | null;
         summary?: SnapshotSummary.Raw | null;
         createdAt: string;
         createdBy: UserId.Raw;
-        threadId?: string | null;
     }
 }

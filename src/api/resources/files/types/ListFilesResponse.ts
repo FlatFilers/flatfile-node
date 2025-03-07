@@ -10,6 +10,7 @@ import * as Flatfile from "../../..";
  *         data: [{
  *                 id: "us_fl_YOUR_ID",
  *                 name: "Test File",
+ *                 description: "This is a test file",
  *                 ext: "png",
  *                 mimetype: "image/png",
  *                 encoding: "7bit",

@@ -61,12 +61,12 @@ export interface Snapshot {
     sheetId: Flatfile.SheetId;
     /** The title of the Snapshot. */
     label?: string;
+    /** The ID of the thread associated with the snapshot. */
+    threadId?: string;
     /** A summary of the Snapshot. This field is only available on the single get snapshot endpoint. It is not available for the list snapshots endpoint. */
     summary?: Flatfile.SnapshotSummary;
     /** The time the Snapshot was created. */
     createdAt: Date;
     /** The actor who created the Snapshot. */
     createdBy: Flatfile.UserId;
-    /** The ID of the thread associated with the snapshot. */
-    threadId?: string;
 }

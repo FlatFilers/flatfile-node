@@ -15,4 +15,6 @@ export interface ProgramConfig {
     namespace?: string;
     /** Whether to save the program for editing later. Defaults to false. If true, the response will contain an ID and access token. */
     save?: boolean;
+    /** Mapping rules to use for the program. If present, the program will be created with these rules. */
+    rules?: Flatfile.MappingRuleConfig[];
 }

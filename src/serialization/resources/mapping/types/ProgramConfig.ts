@@ -7,6 +7,7 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { SheetConfig } from "../../sheets/types/SheetConfig";
 import { FamilyId } from "../../commons/types/FamilyId";
+import { MappingRuleConfig } from "./MappingRuleConfig";
 
 export const ProgramConfig: core.serialization.ObjectSchema<serializers.ProgramConfig.Raw, Flatfile.ProgramConfig> =
     core.serialization.object({
@@ -15,6 +16,7 @@ export const ProgramConfig: core.serialization.ObjectSchema<serializers.ProgramC
         familyId: FamilyId.optional(),
         namespace: core.serialization.string().optional(),
         save: core.serialization.boolean().optional(),
+        rules: core.serialization.list(MappingRuleConfig).optional(),
     });
 
 export declare namespace ProgramConfig {
@@ -24,5 +26,6 @@ export declare namespace ProgramConfig {
         familyId?: FamilyId.Raw | null;
         namespace?: string | null;
         save?: boolean | null;
+        rules?: MappingRuleConfig.Raw[] | null;
     }
 }

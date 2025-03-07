@@ -11,6 +11,7 @@ import { Agents } from "./api/resources/agents/client/Client";
 import { Apps } from "./api/resources/apps/client/Client";
 import { Assistant } from "./api/resources/assistant/client/Client";
 import { Auth } from "./api/resources/auth/client/Client";
+import { CanvasAreas } from "./api/resources/canvasAreas/client/Client";
 import { Cells } from "./api/resources/cells/client/Client";
 import { Commits } from "./api/resources/commits/client/Client";
 import { DataRetentionPolicies } from "./api/resources/dataRetentionPolicies/client/Client";
@@ -25,6 +26,8 @@ import { Jobs } from "./api/resources/jobs/client/Client";
 import { Mapping } from "./api/resources/mapping/client/Client";
 import { Records } from "./api/resources/records/client/Client";
 import { Roles } from "./api/resources/roles/client/Client";
+import { Routines } from "./api/resources/routines/client/Client";
+import { Runbooks } from "./api/resources/runbooks/client/Client";
 import { Secrets } from "./api/resources/secrets/client/Client";
 import { Sheets } from "./api/resources/sheets/client/Client";
 import { Snapshots } from "./api/resources/snapshots/client/Client";
@@ -90,6 +93,12 @@ export class FlatfileClient {
 
     public get auth(): Auth {
         return (this._auth ??= new Auth(this._options));
+    }
+
+    protected _canvasAreas: CanvasAreas | undefined;
+
+    public get canvasAreas(): CanvasAreas {
+        return (this._canvasAreas ??= new CanvasAreas(this._options));
     }
 
     protected _cells: Cells | undefined;
@@ -174,6 +183,18 @@ export class FlatfileClient {
 
     public get roles(): Roles {
         return (this._roles ??= new Roles(this._options));
+    }
+
+    protected _routines: Routines | undefined;
+
+    public get routines(): Routines {
+        return (this._routines ??= new Routines(this._options));
+    }
+
+    protected _runbooks: Runbooks | undefined;
+
+    public get runbooks(): Runbooks {
+        return (this._runbooks ??= new Runbooks(this._options));
     }
 
     protected _secrets: Secrets | undefined;

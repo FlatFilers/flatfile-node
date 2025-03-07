@@ -19,7 +19,9 @@ export type Domain =
     | "secret"
     | "cron"
     | "environment"
-    | "data-clip";
+    | "data-clip"
+    | "canvas"
+    | "canvas-area";
 
 export const Domain = {
     File: "file",
@@ -33,4 +35,6 @@ export const Domain = {
     Cron: "cron",
     Environment: "environment",
     DataClip: "data-clip",
+    Canvas: "canvas",
+    CanvasArea: "canvas-area",
 } as const;
