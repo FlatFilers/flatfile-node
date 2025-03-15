@@ -7,8 +7,8 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 
 export const AgentExportType: core.serialization.Schema<serializers.AgentExportType.Raw, Flatfile.AgentExportType> =
-    core.serialization.enum_(["AUTOBUILD_INLINED", "SOURCE"]);
+    core.serialization.enum_(["AUTOBUILD_INLINED", "SYSTEM_COMBINED", "SOURCE"]);
 
 export declare namespace AgentExportType {
-    type Raw = "AUTOBUILD_INLINED" | "SOURCE";
+    type Raw = "AUTOBUILD_INLINED" | "SYSTEM_COMBINED" | "SOURCE";
 }

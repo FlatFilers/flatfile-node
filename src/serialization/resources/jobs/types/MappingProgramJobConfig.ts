@@ -16,6 +16,7 @@ export const MappingProgramJobConfig: core.serialization.ObjectSchema<
     mappingRules: core.serialization.list(
         core.serialization.record(core.serialization.string(), core.serialization.any())
     ),
+    canRecompute: core.serialization.boolean().optional(),
 });
 
 export declare namespace MappingProgramJobConfig {
@@ -23,5 +24,6 @@ export declare namespace MappingProgramJobConfig {
         sourceSheetId: SheetId.Raw;
         destinationSheetId: SheetId.Raw;
         mappingRules: Record<string, any>[];
+        canRecompute?: boolean | null;
     }
 }

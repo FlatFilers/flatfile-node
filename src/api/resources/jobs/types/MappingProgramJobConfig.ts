@@ -8,4 +8,5 @@ export interface MappingProgramJobConfig {
     sourceSheetId: Flatfile.SheetId;
     destinationSheetId: Flatfile.SheetId;
     mappingRules: Record<string, any>[];
+    canRecompute?: boolean;
 }

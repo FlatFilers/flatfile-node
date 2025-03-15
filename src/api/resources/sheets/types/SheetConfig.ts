@@ -42,7 +42,7 @@ export interface SheetConfig {
     mappingConfidenceThreshold?: number;
     /** Control Sheet-level access for all users. */
     access?: Flatfile.SheetAccess[];
-    /** Where you define your Sheet’s data schema. */
+    /** Where you define your Sheet's data schema. */
     fields: Flatfile.Property[];
     /** An array of actions that end users can perform on this Sheet. */
     actions?: Flatfile.Action[];

@@ -6,10 +6,11 @@ import * as Flatfile from "../../../..";
 
 /**
  * @example
- *     {
- *         environmentId: "us_env_YOUR_ID"
- *     }
+ *     {}
  */
 export interface DeleteAgentRequest {
-    environmentId: Flatfile.EnvironmentId;
+    /**
+     * This environment variable is no longer needed or used
+     */
+    environmentId?: Flatfile.EnvironmentId;
 }

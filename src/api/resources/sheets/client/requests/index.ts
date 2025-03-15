@@ -1,4 +1,5 @@
 export { ListSheetsRequest } from "./ListSheetsRequest";
+export { DuplicateSheetRequest } from "./DuplicateSheetRequest";
 export { GetRecordsCsvRequest } from "./GetRecordsCsvRequest";
 export { GetRecordCountsRequest } from "./GetRecordCountsRequest";
 export { GetCalculationsRequest } from "./GetCalculationsRequest";

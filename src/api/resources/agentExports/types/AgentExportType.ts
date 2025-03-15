@@ -3,14 +3,24 @@
  */
 
 /**
- * A source export will attempt to deobfuscate the minified agent code. An autobuild_inlined export will generate an agent as it is created during the autobuild process except stored constraints will be converted to external constraints and all blueprints, space configuration, documents, and constraint code will be exported directly into the agent instead of pulling dynamically from the Flatfile APIs.
+ * The different export type formats available.
  *
  * @example
  *     Flatfile.AgentExportType.AutobuildInlined
  */
-export type AgentExportType = "AUTOBUILD_INLINED" | "SOURCE";
+export type AgentExportType =
+    /**
+     * Export will generate an agent as it is created during the autobuild process except stored constraints will be converted to external constraints and all blueprints, space configuration, documents, and constraint code will be exported directly into the agent instead of pulling dynamically from the Flatfile APIs. */
+    | "AUTOBUILD_INLINED"
+    /**
+     * Export type is similar to the AUTOBUILD_INLINED type in that all the resources that are dynamically pulled in the existing agent will be exported and included in this agents code. In addition to the autobuild agent code though, this export type will also combine all of the other system agent code that has been deployed into the namespace of the agent specified. */
+    | "SYSTEM_COMBINED"
+    /**
+     * Export type will use the source map created when the agent was deployed to recreate the original source code. */
+    | "SOURCE";
 
 export const AgentExportType = {
     AutobuildInlined: "AUTOBUILD_INLINED",
+    SystemCombined: "SYSTEM_COMBINED",
     Source: "SOURCE",
 } as const;
