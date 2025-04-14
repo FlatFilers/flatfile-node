@@ -81,6 +81,9 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "canvas-area:created",
         "canvas-area:updated",
         "canvas-area:deleted",
+        "thread:created",
+        "thread:updated",
+        "thread:deleted",
     ]);
 
 export declare namespace EventTopic {
@@ -157,5 +160,8 @@ export declare namespace EventTopic {
         | "canvas:deleted"
         | "canvas-area:created"
         | "canvas-area:updated"
-        | "canvas-area:deleted";
+        | "canvas-area:deleted"
+        | "thread:created"
+        | "thread:updated"
+        | "thread:deleted";
 }

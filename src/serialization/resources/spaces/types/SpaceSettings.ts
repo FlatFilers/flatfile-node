@@ -10,10 +10,12 @@ import { SpaceSidebarConfig } from "./SpaceSidebarConfig";
 export const SpaceSettings: core.serialization.ObjectSchema<serializers.SpaceSettings.Raw, Flatfile.SpaceSettings> =
     core.serialization.object({
         sidebarConfig: SpaceSidebarConfig.optional(),
+        filesMappedAfterJob: core.serialization.string().optional(),
     });
 
 export declare namespace SpaceSettings {
     interface Raw {
         sidebarConfig?: SpaceSidebarConfig.Raw | null;
+        filesMappedAfterJob?: string | null;
     }
 }

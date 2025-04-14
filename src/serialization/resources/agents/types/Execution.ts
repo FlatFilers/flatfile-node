@@ -14,6 +14,9 @@ export const Execution: core.serialization.ObjectSchema<serializers.Execution.Ra
         createdAt: core.serialization.date(),
         completedAt: core.serialization.date(),
         duration: core.serialization.number(),
+        requestTime: core.serialization.number().optional(),
+        requestCount: core.serialization.number().optional(),
+        memoryUsage: core.serialization.number().optional(),
         topic: core.serialization.string(),
     });
 
@@ -24,6 +27,9 @@ export declare namespace Execution {
         createdAt: string;
         completedAt: string;
         duration: number;
+        requestTime?: number | null;
+        requestCount?: number | null;
+        memoryUsage?: number | null;
         topic: string;
     }
 }

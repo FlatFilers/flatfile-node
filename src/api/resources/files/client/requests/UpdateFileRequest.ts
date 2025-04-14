@@ -16,7 +16,6 @@ export interface UpdateFileRequest {
     name?: string;
     /** The storage mode of file to update */
     mode?: Flatfile.Mode;
-    /** Status of the file */
     status?: Flatfile.ModelFileStatusEnum;
     /** The actions attached to the file */
     actions?: Flatfile.Action[];

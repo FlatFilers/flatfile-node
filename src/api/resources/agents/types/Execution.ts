@@ -25,6 +25,12 @@ export interface Execution {
     completedAt: Date;
     /** The duration of the agent execution */
     duration: number;
+    /** The amount of time the agent spent making http requests */
+    requestTime?: number;
+    /** The number of requests made by the agent */
+    requestCount?: number;
+    /** The memory usage of the agent */
+    memoryUsage?: number;
     /** The topics of the agent execution */
     topic: string;
 }

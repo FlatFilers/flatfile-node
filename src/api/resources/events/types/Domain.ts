@@ -21,7 +21,8 @@ export type Domain =
     | "environment"
     | "data-clip"
     | "canvas"
-    | "canvas-area";
+    | "canvas-area"
+    | "thread";
 
 export const Domain = {
     File: "file",
@@ -37,4 +38,5 @@ export const Domain = {
     DataClip: "data-clip",
     Canvas: "canvas",
     CanvasArea: "canvas-area",
+    Thread: "thread",
 } as const;

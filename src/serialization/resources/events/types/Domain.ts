@@ -20,6 +20,7 @@ export const Domain: core.serialization.Schema<serializers.Domain.Raw, Flatfile.
     "data-clip",
     "canvas",
     "canvas-area",
+    "thread",
 ]);
 
 export declare namespace Domain {
@@ -36,5 +37,6 @@ export declare namespace Domain {
         | "environment"
         | "data-clip"
         | "canvas"
-        | "canvas-area";
+        | "canvas-area"
+        | "thread";
 }

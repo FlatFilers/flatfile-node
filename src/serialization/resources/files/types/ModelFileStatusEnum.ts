@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const ModelFileStatusEnum: core.serialization.Schema<
     serializers.ModelFileStatusEnum.Raw,
     Flatfile.ModelFileStatusEnum
-> = core.serialization.enum_(["partial", "complete", "archived", "purged", "failed"]);
+> = core.serialization.enum_(["partial", "analyzing", "analyzed", "complete", "archived", "purged", "failed"]);
 
 export declare namespace ModelFileStatusEnum {
-    type Raw = "partial" | "complete" | "archived" | "purged" | "failed";
+    type Raw = "partial" | "analyzing" | "analyzed" | "complete" | "archived" | "purged" | "failed";
 }

@@ -10,6 +10,7 @@ import * as Flatfile from "../../..";
  * @example
  *     {
  *         id: "us_jb_YOUR_ID",
+ *         createdBy: "us_usr_YOUR_ID",
  *         createdAt: new Date("2023-10-30T20:04:28.556Z"),
  *         updatedAt: new Date("2023-10-30T20:04:32.075Z"),
  *         startedAt: new Date("2023-10-30T20:04:29.453Z"),
@@ -39,6 +40,8 @@ import * as Flatfile from "../../..";
  */
 export interface Job extends Flatfile.JobConfig {
     id: Flatfile.JobId;
+    /** The user, guest, or agent who created the job */
+    createdBy: Flatfile.ActorId;
     /** Date the item was created */
     createdAt: Date;
     /** Date the item was last updated */

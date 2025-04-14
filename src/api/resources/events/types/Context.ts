@@ -42,4 +42,5 @@ export interface Context {
     appId?: Flatfile.AppId;
     actionId?: Flatfile.ActionId;
     dataClipId?: Flatfile.DataClipId;
+    threadId?: Flatfile.ThreadId;
 }

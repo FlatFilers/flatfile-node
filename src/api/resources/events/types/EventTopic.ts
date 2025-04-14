@@ -81,7 +81,10 @@ export type EventTopic =
     | "canvas:deleted"
     | "canvas-area:created"
     | "canvas-area:updated"
-    | "canvas-area:deleted";
+    | "canvas-area:deleted"
+    | "thread:created"
+    | "thread:updated"
+    | "thread:deleted";
 
 export const EventTopic = {
     AgentCreated: "agent:created",
@@ -157,4 +160,7 @@ export const EventTopic = {
     CanvasAreaCreated: "canvas-area:created",
     CanvasAreaUpdated: "canvas-area:updated",
     CanvasAreaDeleted: "canvas-area:deleted",
+    ThreadCreated: "thread:created",
+    ThreadUpdated: "thread:updated",
+    ThreadDeleted: "thread:deleted",
 } as const;

@@ -6,11 +6,13 @@ import * as serializers from "../../..";
 import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { JobId } from "../../commons/types/JobId";
+import { ActorId } from "../../commons/types/ActorId";
 import { JobConfig } from "./JobConfig";
 
 export const Job: core.serialization.ObjectSchema<serializers.Job.Raw, Flatfile.Job> = core.serialization
     .object({
         id: JobId,
+        createdBy: ActorId,
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
         startedAt: core.serialization.date().optional(),
@@ -22,6 +24,7 @@ export const Job: core.serialization.ObjectSchema<serializers.Job.Raw, Flatfile.
 export declare namespace Job {
     interface Raw extends JobConfig.Raw {
         id: JobId.Raw;
+        createdBy: ActorId.Raw;
         createdAt: string;
         updatedAt: string;
         startedAt?: string | null;

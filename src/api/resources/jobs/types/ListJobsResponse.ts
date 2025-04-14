@@ -14,6 +14,7 @@ import * as Flatfile from "../../..";
  *         },
  *         data: [{
  *                 id: "us_jb_YOUR_ID",
+ *                 createdBy: "us_usr_YOUR_ID",
  *                 createdAt: new Date("2023-10-30T20:04:28.556Z"),
  *                 updatedAt: new Date("2023-10-30T20:04:32.075Z"),
  *                 startedAt: new Date("2023-10-30T20:04:29.453Z"),

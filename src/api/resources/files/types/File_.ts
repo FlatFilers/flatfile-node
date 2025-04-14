@@ -53,7 +53,6 @@ export interface File_ {
     mimetype: string;
     /** Text encoding of the file */
     encoding: string;
-    /** Status of the file */
     status: Flatfile.ModelFileStatusEnum;
     /** The storage mode of file */
     mode?: Flatfile.Mode;
