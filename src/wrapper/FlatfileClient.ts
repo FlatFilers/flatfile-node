@@ -1,7 +1,7 @@
 import { CrossEnvConfig } from "@flatfile/cross-env-config";
 import urlJoin from "url-join";
 import { FlatfileClient as FernClient } from "../Client";
-import * as core from "../core";
+import type * as core from "../core";
 import * as environments from "../environments";
 import { Records } from "./RecordsClient";
 
@@ -24,14 +24,14 @@ export class FlatfileClient extends FernClient {
 
     constructor(options: FlatfileClient.Options = {}) {
         super({
-            environment: resolveEnvironment(options) ?? environmentSupplier,
+            environment: resolveEnvironment(options),
             token: options.token ?? tokenSupplier,
         });
     }
 
-    protected _records: Records | undefined;
+    protected declare _records: Records | undefined;
 
-    public get records(): Records {
+    public override get records(): Records {
         return (this._records ??= new Records(this._options));
     }
 }
@@ -40,7 +40,7 @@ const resolveEnvironment = (options: FlatfileClient.Options) => {
     if (options.apiUrl && !options.apiUrl.endsWith("/v1")) {
         return urlJoin(options.apiUrl, "v1");
     }
-    return options.environment || options.apiUrl;
+    return options.environment || options.apiUrl || environmentSupplier();
 };
 
 const environmentSupplier = () => {
@@ -53,7 +53,7 @@ const environmentSupplier = () => {
 
 const tokenSupplier = () => {
     const token = CrossEnvConfig.get("FLATFILE_BEARER_TOKEN");
-    if (token == undefined) {
+    if (token === undefined) {
         throw new Error("FLATFILE_BEARER_TOKEN is undefined");
     }
     return token;
