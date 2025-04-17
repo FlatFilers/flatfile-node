@@ -30,7 +30,6 @@ export type JobStatus =
     | "failed"
     | "canceled"
     | "waiting";
-
 export const JobStatus = {
     Created: "created",
     Planning: "planning",

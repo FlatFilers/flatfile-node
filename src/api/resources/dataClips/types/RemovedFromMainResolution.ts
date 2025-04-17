@@ -3,7 +3,6 @@
  */
 
 export type RemovedFromMainResolution = "ignore" | "restore";
-
 export const RemovedFromMainResolution = {
     Ignore: "ignore",
     Restore: "restore",

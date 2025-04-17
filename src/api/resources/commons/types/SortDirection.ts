@@ -9,7 +9,6 @@
  *     Flatfile.SortDirection.Asc
  */
 export type SortDirection = "asc" | "desc";
-
 export const SortDirection = {
     Asc: "asc",
     Desc: "desc",

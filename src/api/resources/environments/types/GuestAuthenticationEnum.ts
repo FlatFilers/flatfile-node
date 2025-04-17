@@ -9,7 +9,6 @@
  *     Flatfile.GuestAuthenticationEnum.MagicLink
  */
 export type GuestAuthenticationEnum = "shared_link" | "magic_link";
-
 export const GuestAuthenticationEnum = {
     SharedLink: "shared_link",
     MagicLink: "magic_link",

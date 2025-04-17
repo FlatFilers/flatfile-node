@@ -9,7 +9,6 @@ export type ValidationSource =
     | "unlinked"
     | "invalid-option"
     | "is-artifact";
-
 export const ValidationSource = {
     RequiredConstraint: "required-constraint",
     UniqueConstraint: "unique-constraint",

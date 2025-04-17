@@ -4,21 +4,33 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Flatfile from "../../..";
+import * as Flatfile from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Guests {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -28,17 +40,27 @@ export class Guests {
     /**
      * Returns all guests
      *
+     * @param {Flatfile.ListGuestsRequest} request
+     * @param {Guests.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.guests.list({
+     *     await client.guests.list({
      *         spaceId: "us_sp_YOUR_ID"
      *     })
      */
-    public async list(
+    public list(
         request: Flatfile.ListGuestsRequest,
-        requestOptions?: Guests.RequestOptions
-    ): Promise<Flatfile.ListGuestsResponse> {
+        requestOptions?: Guests.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.ListGuestsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: Flatfile.ListGuestsRequest,
+        requestOptions?: Guests.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.ListGuestsResponse>> {
         const { spaceId, email } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["spaceId"] = spaceId;
         if (email != null) {
             _queryParams["email"] = email;
@@ -46,38 +68,48 @@ export class Guests {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "guests"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                "guests",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ListGuestsResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ListGuestsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -86,12 +118,14 @@ export class Guests {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /guests.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -99,8 +133,11 @@ export class Guests {
     /**
      * Guests are only there to upload, edit, and download files and perform their tasks in a specific Space.
      *
+     * @param {Flatfile.GuestConfig[]} request
+     * @param {Guests.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.guests.create([{
+     *     await client.guests.create([{
      *             environmentId: "us_env_YOUR_ID",
      *             email: "email@example.com",
      *             name: "Your Name",
@@ -112,48 +149,65 @@ export class Guests {
      *                     sheets: [{
      *                             id: "us_sh_YOUR_ID"
      *                         }],
-     *                     lastAccessed: new Date("2023-10-30T16:59:45.735Z")
+     *                     lastAccessed: "2023-10-30T16:59:45.735Z"
      *                 }]
      *         }])
      */
-    public async create(
+    public create(
         request: Flatfile.GuestConfig[],
-        requestOptions?: Guests.RequestOptions
-    ): Promise<Flatfile.CreateGuestResponse> {
+        requestOptions?: Guests.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.CreateGuestResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
+    }
+
+    private async __create(
+        request: Flatfile.GuestConfig[],
+        requestOptions?: Guests.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.CreateGuestResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "guests"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                "guests",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.guests.create.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.guests.create.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.CreateGuestResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.CreateGuestResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -162,12 +216,14 @@ export class Guests {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /guests.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -175,46 +231,66 @@ export class Guests {
     /**
      * Returns a single guest
      *
+     * @param {Flatfile.GuestId} guestId - ID of guest to return
+     * @param {Guests.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.guests.get("us_g_YOUR_ID")
+     *     await client.guests.get("us_g_YOUR_ID")
      */
-    public async get(
+    public get(
         guestId: Flatfile.GuestId,
-        requestOptions?: Guests.RequestOptions
-    ): Promise<Flatfile.GuestResponse> {
+        requestOptions?: Guests.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.GuestResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__get(guestId, requestOptions));
+    }
+
+    private async __get(
+        guestId: Flatfile.GuestId,
+        requestOptions?: Guests.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.GuestResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `guests/${await serializers.GuestId.jsonOrThrow(guestId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `guests/${encodeURIComponent(serializers.GuestId.jsonOrThrow(guestId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.GuestResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.GuestResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -223,12 +299,14 @@ export class Guests {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /guests/{guestId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -236,43 +314,66 @@ export class Guests {
     /**
      * Deletes a single guest
      *
+     * @param {Flatfile.GuestId} guestId - ID of guest to return
+     * @param {Guests.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.guests.delete("us_g_YOUR_ID")
+     *     await client.guests.delete("us_g_YOUR_ID")
      */
-    public async delete(guestId: Flatfile.GuestId, requestOptions?: Guests.RequestOptions): Promise<Flatfile.Success> {
+    public delete(
+        guestId: Flatfile.GuestId,
+        requestOptions?: Guests.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.Success> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(guestId, requestOptions));
+    }
+
+    private async __delete(
+        guestId: Flatfile.GuestId,
+        requestOptions?: Guests.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.Success>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `guests/${await serializers.GuestId.jsonOrThrow(guestId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `guests/${encodeURIComponent(serializers.GuestId.jsonOrThrow(guestId))}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Success.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -281,12 +382,14 @@ export class Guests {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling DELETE /guests/{guestId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -294,51 +397,73 @@ export class Guests {
     /**
      * Updates a single guest, for example to change name or email
      *
+     * @param {Flatfile.GuestId} guestId - ID of guest to return
+     * @param {Flatfile.GuestConfigUpdate} request
+     * @param {Guests.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.guests.update("us_g_YOUR_ID", {
+     *     await client.guests.update("us_g_YOUR_ID", {
      *         email: "updated@example.com",
      *         name: "Your Name Updated"
      *     })
      */
-    public async update(
+    public update(
         guestId: Flatfile.GuestId,
         request: Flatfile.GuestConfigUpdate,
-        requestOptions?: Guests.RequestOptions
-    ): Promise<Flatfile.GuestResponse> {
+        requestOptions?: Guests.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.GuestResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__update(guestId, request, requestOptions));
+    }
+
+    private async __update(
+        guestId: Flatfile.GuestId,
+        request: Flatfile.GuestConfigUpdate,
+        requestOptions?: Guests.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.GuestResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `guests/${await serializers.GuestId.jsonOrThrow(guestId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `guests/${encodeURIComponent(serializers.GuestId.jsonOrThrow(guestId))}`,
             ),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.GuestConfigUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.GuestConfigUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.GuestResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.GuestResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -347,12 +472,14 @@ export class Guests {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling PATCH /guests/{guestId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -360,54 +487,76 @@ export class Guests {
     /**
      * Returns a single guest token
      *
+     * @param {Flatfile.GuestId} guestId - ID of guest to return
+     * @param {Flatfile.GetGuestTokenRequest} request
+     * @param {Guests.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.guests.getGuestToken("us_g_YOUR_ID")
+     *     await client.guests.getGuestToken("us_g_YOUR_ID")
      */
-    public async getGuestToken(
+    public getGuestToken(
         guestId: Flatfile.GuestId,
         request: Flatfile.GetGuestTokenRequest = {},
-        requestOptions?: Guests.RequestOptions
-    ): Promise<Flatfile.GuestTokenResponse> {
+        requestOptions?: Guests.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.GuestTokenResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getGuestToken(guestId, request, requestOptions));
+    }
+
+    private async __getGuestToken(
+        guestId: Flatfile.GuestId,
+        request: Flatfile.GetGuestTokenRequest = {},
+        requestOptions?: Guests.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.GuestTokenResponse>> {
         const { spaceId } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (spaceId != null) {
             _queryParams["spaceId"] = spaceId;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `guests/${await serializers.GuestId.jsonOrThrow(guestId)}/token`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `guests/${encodeURIComponent(serializers.GuestId.jsonOrThrow(guestId))}/token`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.GuestTokenResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.GuestTokenResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -416,91 +565,120 @@ export class Guests {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /guests/{guestId}/token.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Lists roles assigned to a guest.
+     *
+     * @param {Flatfile.GuestId} guestId - The guest id
+     * @param {Guests.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      * @throws {@link Flatfile.ForbiddenError}
+     *
+     * @example
+     *     await client.guests.listGuestRoles("guestId")
      */
-    public async listGuestRoles(
+    public listGuestRoles(
         guestId: Flatfile.GuestId,
-        requestOptions?: Guests.RequestOptions
-    ): Promise<Flatfile.ListActorRolesResponse> {
+        requestOptions?: Guests.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.ListActorRolesResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listGuestRoles(guestId, requestOptions));
+    }
+
+    private async __listGuestRoles(
+        guestId: Flatfile.GuestId,
+        requestOptions?: Guests.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.ListActorRolesResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `guests/${await serializers.GuestId.jsonOrThrow(guestId)}/roles`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `guests/${encodeURIComponent(serializers.GuestId.jsonOrThrow(guestId))}/roles`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ListActorRolesResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ListActorRolesResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 403:
                     throw new Flatfile.ForbiddenError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -510,93 +688,127 @@ export class Guests {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /guests/{guestId}/roles.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Assigns a role to a guest.
+     *
+     * @param {Flatfile.GuestId} guestId - The guest id
+     * @param {Flatfile.AssignActorRoleRequest} request
+     * @param {Guests.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      * @throws {@link Flatfile.ForbiddenError}
+     *
+     * @example
+     *     await client.guests.assignGuestRole("guestId", {
+     *         roleId: "roleId",
+     *         resourceId: "resourceId"
+     *     })
      */
-    public async assignGuestRole(
+    public assignGuestRole(
         guestId: Flatfile.GuestId,
         request: Flatfile.AssignActorRoleRequest,
-        requestOptions?: Guests.RequestOptions
-    ): Promise<Flatfile.AssignRoleResponse> {
+        requestOptions?: Guests.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.AssignRoleResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__assignGuestRole(guestId, request, requestOptions));
+    }
+
+    private async __assignGuestRole(
+        guestId: Flatfile.GuestId,
+        request: Flatfile.AssignActorRoleRequest,
+        requestOptions?: Guests.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.AssignRoleResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `guests/${await serializers.GuestId.jsonOrThrow(guestId)}/roles`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `guests/${encodeURIComponent(serializers.GuestId.jsonOrThrow(guestId))}/roles`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.AssignActorRoleRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.AssignActorRoleRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.AssignRoleResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.AssignRoleResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 403:
                     throw new Flatfile.ForbiddenError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -606,94 +818,123 @@ export class Guests {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /guests/{guestId}/roles.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Removes a role from a guest.
+     *
+     * @param {Flatfile.GuestId} guestId - The guest id
+     * @param {Flatfile.ActorRoleId} actorRoleId - The actor role id
+     * @param {Guests.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      * @throws {@link Flatfile.ForbiddenError}
+     *
+     * @example
+     *     await client.guests.deleteGuestRole("guestId", "actorRoleId")
      */
-    public async deleteGuestRole(
+    public deleteGuestRole(
         guestId: Flatfile.GuestId,
         actorRoleId: Flatfile.ActorRoleId,
-        requestOptions?: Guests.RequestOptions
-    ): Promise<Flatfile.Success> {
+        requestOptions?: Guests.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.Success> {
+        return core.HttpResponsePromise.fromPromise(this.__deleteGuestRole(guestId, actorRoleId, requestOptions));
+    }
+
+    private async __deleteGuestRole(
+        guestId: Flatfile.GuestId,
+        actorRoleId: Flatfile.ActorRoleId,
+        requestOptions?: Guests.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.Success>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `guests/${await serializers.GuestId.jsonOrThrow(
-                    guestId
-                )}/roles/${await serializers.ActorRoleId.jsonOrThrow(actorRoleId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `guests/${encodeURIComponent(serializers.GuestId.jsonOrThrow(guestId))}/roles/${encodeURIComponent(serializers.ActorRoleId.jsonOrThrow(actorRoleId))}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Success.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 403:
                     throw new Flatfile.ForbiddenError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -703,12 +944,16 @@ export class Guests {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling DELETE /guests/{guestId}/roles/{actorRoleId}.",
+                );
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -716,49 +961,72 @@ export class Guests {
     /**
      * Guests can be created as a named guest on the Space or there’s a global link that will let anonymous guests into the space.
      *
+     * @param {Flatfile.Invite[]} request
+     * @param {Guests.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.guests.invite([{
+     *     await client.guests.invite([{
      *             guestId: "us_g_YOUR_ID",
      *             spaceId: "us_sp_YOUR_ID",
      *             fromName: "Your Name",
      *             message: "Hello, I would like to invite you to my space."
      *         }])
      */
-    public async invite(request: Flatfile.Invite[], requestOptions?: Guests.RequestOptions): Promise<Flatfile.Success> {
+    public invite(
+        request: Flatfile.Invite[],
+        requestOptions?: Guests.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.Success> {
+        return core.HttpResponsePromise.fromPromise(this.__invite(request, requestOptions));
+    }
+
+    private async __invite(
+        request: Flatfile.Invite[],
+        requestOptions?: Guests.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.Success>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "invitations"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                "invitations",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.guests.invite.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.guests.invite.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Success.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -767,17 +1035,19 @@ export class Guests {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /invitations.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

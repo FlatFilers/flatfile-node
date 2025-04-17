@@ -10,7 +10,6 @@
  *     Flatfile.RunbookType.Preprocessing
  */
 export type RunbookType = "SHEET_TOOL" | "PREPROCESSING";
-
 export const RunbookType = {
     SheetTool: "SHEET_TOOL",
     Preprocessing: "PREPROCESSING",

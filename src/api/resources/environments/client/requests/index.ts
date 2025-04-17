@@ -1,2 +1,2 @@
-export { ListEnvironmentsRequest } from "./ListEnvironmentsRequest";
-export { GetEnvironmentEventTokenRequest } from "./GetEnvironmentEventTokenRequest";
+export { type ListEnvironmentsRequest } from "./ListEnvironmentsRequest";
+export { type GetEnvironmentEventTokenRequest } from "./GetEnvironmentEventTokenRequest";

@@ -3,7 +3,6 @@
  */
 
 export type JobPartExecution = "sequential" | "parallel";
-
 export const JobPartExecution = {
     Sequential: "sequential",
     Parallel: "parallel",

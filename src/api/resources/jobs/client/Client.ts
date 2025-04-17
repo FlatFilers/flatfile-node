@@ -4,31 +4,60 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Flatfile from "../../..";
+import * as Flatfile from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Jobs {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class Jobs {
     constructor(protected readonly _options: Jobs.Options = {}) {}
 
-    public async list(
+    /**
+     * @param {Flatfile.ListJobsRequest} request
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.jobs.list({
+     *         environmentId: "us_env_YOUR_ID",
+     *         spaceId: "us_sp_YOUR_ID"
+     *     })
+     */
+    public list(
         request: Flatfile.ListJobsRequest = {},
-        requestOptions?: Jobs.RequestOptions
-    ): Promise<Flatfile.ListJobsResponse> {
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.ListJobsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: Flatfile.ListJobsRequest = {},
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.ListJobsResponse>> {
         const {
             environmentId,
             spaceId,
@@ -40,7 +69,7 @@ export class Jobs {
             sortDirection,
             excludeChildJobs,
         } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (environmentId != null) {
             _queryParams["environmentId"] = environmentId;
         }
@@ -70,7 +99,9 @@ export class Jobs {
         }
 
         if (sortDirection != null) {
-            _queryParams["sortDirection"] = sortDirection;
+            _queryParams["sortDirection"] = serializers.SortDirection.jsonOrThrow(sortDirection, {
+                unrecognizedObjectKeys: "strip",
+            });
         }
 
         if (excludeChildJobs != null) {
@@ -79,38 +110,48 @@ export class Jobs {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/jobs"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                "/jobs",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ListJobsResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ListJobsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -119,54 +160,84 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /jobs.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
-    public async create(
+    /**
+     * @param {Flatfile.JobConfig} request
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.jobs.create({
+     *         type: "workbook",
+     *         operation: "submitAction",
+     *         source: "us_wb_YOUR_ID"
+     *     })
+     */
+    public create(
         request: Flatfile.JobConfig,
-        requestOptions?: Jobs.RequestOptions
-    ): Promise<Flatfile.JobResponse> {
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.JobResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
+    }
+
+    private async __create(
+        request: Flatfile.JobConfig,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.JobResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/jobs"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                "/jobs",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.JobConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.JobConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.JobResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.JobResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -175,50 +246,79 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /jobs.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
-    public async get(jobId: Flatfile.JobId, requestOptions?: Jobs.RequestOptions): Promise<Flatfile.JobResponse> {
+    /**
+     * @param {Flatfile.JobId} jobId - The id of the job to return
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.jobs.get("us_jb_YOUR_ID")
+     */
+    public get(
+        jobId: Flatfile.JobId,
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.JobResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__get(jobId, requestOptions));
+    }
+
+    private async __get(
+        jobId: Flatfile.JobId,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.JobResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/jobs/${encodeURIComponent(serializers.JobId.jsonOrThrow(jobId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.JobResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.JobResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -227,55 +327,87 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /jobs/{jobId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
-    public async update(
+    /**
+     * @param {Flatfile.JobId} jobId - The id of the job to patch
+     * @param {Flatfile.JobUpdate} request
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.jobs.update("us_jb_YOUR_ID", {
+     *         config: {},
+     *         status: "complete",
+     *         progress: 100
+     *     })
+     */
+    public update(
         jobId: Flatfile.JobId,
         request: Flatfile.JobUpdate,
-        requestOptions?: Jobs.RequestOptions
-    ): Promise<Flatfile.JobResponse> {
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.JobResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__update(jobId, request, requestOptions));
+    }
+
+    private async __update(
+        jobId: Flatfile.JobId,
+        request: Flatfile.JobUpdate,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.JobResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/jobs/${encodeURIComponent(serializers.JobId.jsonOrThrow(jobId))}`,
             ),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.JobUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.JobUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.JobResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.JobResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -284,50 +416,79 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling PATCH /jobs/{jobId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
-    public async delete(jobId: Flatfile.JobId, requestOptions?: Jobs.RequestOptions): Promise<Flatfile.Success> {
+    /**
+     * @param {Flatfile.JobId} jobId - The id of the job to delete
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.jobs.delete("us_jb_YOUR_ID")
+     */
+    public delete(
+        jobId: Flatfile.JobId,
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.Success> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(jobId, requestOptions));
+    }
+
+    private async __delete(
+        jobId: Flatfile.JobId,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.Success>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/jobs/${encodeURIComponent(serializers.JobId.jsonOrThrow(jobId))}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Success.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -336,12 +497,14 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling DELETE /jobs/{jobId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -349,43 +512,63 @@ export class Jobs {
     /**
      * Execute a job and return the job
      *
+     * @param {string} jobId - ID of job to return
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.jobs.execute("us_jb_YOUR_ID")
+     *     await client.jobs.execute("us_jb_YOUR_ID")
      */
-    public async execute(jobId: string, requestOptions?: Jobs.RequestOptions): Promise<Flatfile.Success> {
+    public execute(jobId: string, requestOptions?: Jobs.RequestOptions): core.HttpResponsePromise<Flatfile.Success> {
+        return core.HttpResponsePromise.fromPromise(this.__execute(jobId, requestOptions));
+    }
+
+    private async __execute(
+        jobId: string,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.Success>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/jobs/${jobId}/execute`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/jobs/${encodeURIComponent(jobId)}/execute`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Success.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -394,12 +577,14 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /jobs/{jobId}/execute.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -407,46 +592,66 @@ export class Jobs {
     /**
      * Returns a single job's execution plan
      *
+     * @param {Flatfile.JobId} jobId - ID of job to return
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.jobs.getExecutionPlan("us_jb_YOUR_ID")
+     *     await client.jobs.getExecutionPlan("us_jb_YOUR_ID")
      */
-    public async getExecutionPlan(
+    public getExecutionPlan(
         jobId: Flatfile.JobId,
-        requestOptions?: Jobs.RequestOptions
-    ): Promise<Flatfile.JobPlanResponse> {
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.JobPlanResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getExecutionPlan(jobId, requestOptions));
+    }
+
+    private async __getExecutionPlan(
+        jobId: Flatfile.JobId,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.JobPlanResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/plan`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/jobs/${encodeURIComponent(serializers.JobId.jsonOrThrow(jobId))}/plan`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.JobPlanResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.JobPlanResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -455,12 +660,14 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /jobs/{jobId}/plan.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -468,8 +675,12 @@ export class Jobs {
     /**
      * Update a job's entire execution plan
      *
+     * @param {Flatfile.JobId} jobId - ID of job to return
+     * @param {Flatfile.JobExecutionPlanRequest} request
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.jobs.updateExecutionPlan("us_jb_YOUR_ID", {
+     *     await client.jobs.updateExecutionPlan("us_jb_YOUR_ID", {
      *         fieldMapping: [{
      *                 sourceField: {
      *                     type: "string",
@@ -508,45 +719,63 @@ export class Jobs {
      *         jobId: "us_jb_YOUR_ID"
      *     })
      */
-    public async updateExecutionPlan(
+    public updateExecutionPlan(
         jobId: Flatfile.JobId,
         request: Flatfile.JobExecutionPlanRequest,
-        requestOptions?: Jobs.RequestOptions
-    ): Promise<Flatfile.JobPlanResponse> {
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.JobPlanResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__updateExecutionPlan(jobId, request, requestOptions));
+    }
+
+    private async __updateExecutionPlan(
+        jobId: Flatfile.JobId,
+        request: Flatfile.JobExecutionPlanRequest,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.JobPlanResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/plan`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/jobs/${encodeURIComponent(serializers.JobId.jsonOrThrow(jobId))}/plan`,
             ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.JobExecutionPlanRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.JobExecutionPlanRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.JobPlanResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.JobPlanResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -555,60 +784,88 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling PUT /jobs/{jobId}/plan.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Update one or more individual fields on a job's execution plan
+     *
+     * @param {string} jobId - ID of job to return
+     * @param {Flatfile.JobExecutionPlanConfigRequest} request
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.jobs.updateExecutionPlanFields("jobId", {
+     *         fileId: "fileId",
+     *         jobId: "jobId"
+     *     })
      */
-    public async updateExecutionPlanFields(
+    public updateExecutionPlanFields(
         jobId: string,
         request: Flatfile.JobExecutionPlanConfigRequest,
-        requestOptions?: Jobs.RequestOptions
-    ): Promise<Flatfile.JobPlanResponse> {
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.JobPlanResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__updateExecutionPlanFields(jobId, request, requestOptions));
+    }
+
+    private async __updateExecutionPlanFields(
+        jobId: string,
+        request: Flatfile.JobExecutionPlanConfigRequest,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.JobPlanResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/jobs/${jobId}/plan`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/jobs/${encodeURIComponent(jobId)}/plan`,
             ),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.JobExecutionPlanConfigRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            requestType: "json",
+            body: serializers.JobExecutionPlanConfigRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.JobPlanResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.JobPlanResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -617,12 +874,14 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling PATCH /jobs/{jobId}/plan.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -630,55 +889,77 @@ export class Jobs {
     /**
      * Acknowledge a job and return the job
      *
+     * @param {Flatfile.JobId} jobId - ID of job to return
+     * @param {Flatfile.JobAckDetails} request
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.jobs.ack("us_jb_YOUR_ID", {
+     *     await client.jobs.ack("us_jb_YOUR_ID", {
      *         info: "Acknowledged by user",
      *         progress: 100,
-     *         estimatedCompletionAt: new Date("2023-10-30T20:04:32.074Z")
+     *         estimatedCompletionAt: "2023-10-30T20:04:32.074Z"
      *     })
      */
-    public async ack(
+    public ack(
         jobId: Flatfile.JobId,
         request?: Flatfile.JobAckDetails,
-        requestOptions?: Jobs.RequestOptions
-    ): Promise<Flatfile.JobResponse> {
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.JobResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__ack(jobId, request, requestOptions));
+    }
+
+    private async __ack(
+        jobId: Flatfile.JobId,
+        request?: Flatfile.JobAckDetails,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.JobResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/ack`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/jobs/${encodeURIComponent(serializers.JobId.jsonOrThrow(jobId))}/ack`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body:
                 request != null
-                    ? await serializers.jobs.ack.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })
+                    ? serializers.jobs.ack.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })
                     : undefined,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.JobResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.JobResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -687,12 +968,14 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /jobs/{jobId}/ack.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -700,46 +983,66 @@ export class Jobs {
     /**
      * Acknowledge a job outcome and return the job
      *
+     * @param {Flatfile.JobId} jobId - ID of job to return
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.jobs.ackOutcome("us_jb_YOUR_ID")
+     *     await client.jobs.ackOutcome("us_jb_YOUR_ID")
      */
-    public async ackOutcome(
+    public ackOutcome(
         jobId: Flatfile.JobId,
-        requestOptions?: Jobs.RequestOptions
-    ): Promise<Flatfile.JobResponse> {
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.JobResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__ackOutcome(jobId, requestOptions));
+    }
+
+    private async __ackOutcome(
+        jobId: Flatfile.JobId,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.JobResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/outcome/ack`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/jobs/${encodeURIComponent(serializers.JobId.jsonOrThrow(jobId))}/outcome/ack`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.JobResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.JobResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -748,12 +1051,14 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /jobs/{jobId}/outcome/ack.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -761,8 +1066,12 @@ export class Jobs {
     /**
      * Complete a job and return the job
      *
+     * @param {Flatfile.JobId} jobId - ID of job to return
+     * @param {Flatfile.JobCompleteDetails} request
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.jobs.complete("us_jb_YOUR_ID", {
+     *     await client.jobs.complete("us_jb_YOUR_ID", {
      *         outcome: {
      *             acknowledge: true,
      *             buttonText: "Acknowledge",
@@ -776,48 +1085,66 @@ export class Jobs {
      *         info: "Job is Complete"
      *     })
      */
-    public async complete(
+    public complete(
         jobId: Flatfile.JobId,
         request?: Flatfile.JobCompleteDetails,
-        requestOptions?: Jobs.RequestOptions
-    ): Promise<Flatfile.JobResponse> {
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.JobResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__complete(jobId, request, requestOptions));
+    }
+
+    private async __complete(
+        jobId: Flatfile.JobId,
+        request?: Flatfile.JobCompleteDetails,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.JobResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/complete`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/jobs/${encodeURIComponent(serializers.JobId.jsonOrThrow(jobId))}/complete`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body:
                 request != null
-                    ? await serializers.jobs.complete.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })
+                    ? serializers.jobs.complete.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })
                     : undefined,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.JobResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.JobResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -826,12 +1153,14 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /jobs/{jobId}/complete.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -839,8 +1168,12 @@ export class Jobs {
     /**
      * Fail a job and return the job
      *
+     * @param {Flatfile.JobId} jobId - ID of job to return
+     * @param {Flatfile.JobCompleteDetails} request
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.jobs.fail("us_jb_YOUR_ID", {
+     *     await client.jobs.fail("us_jb_YOUR_ID", {
      *         outcome: {
      *             acknowledge: true,
      *             buttonText: "Acknowledge",
@@ -854,48 +1187,66 @@ export class Jobs {
      *         info: "Job was failed"
      *     })
      */
-    public async fail(
+    public fail(
         jobId: Flatfile.JobId,
         request?: Flatfile.JobCompleteDetails,
-        requestOptions?: Jobs.RequestOptions
-    ): Promise<Flatfile.JobResponse> {
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.JobResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__fail(jobId, request, requestOptions));
+    }
+
+    private async __fail(
+        jobId: Flatfile.JobId,
+        request?: Flatfile.JobCompleteDetails,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.JobResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/fail`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/jobs/${encodeURIComponent(serializers.JobId.jsonOrThrow(jobId))}/fail`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body:
                 request != null
-                    ? await serializers.jobs.fail.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })
+                    ? serializers.jobs.fail.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })
                     : undefined,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.JobResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.JobResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -904,12 +1255,14 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /jobs/{jobId}/fail.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -917,53 +1270,75 @@ export class Jobs {
     /**
      * Cancel a job and return the job
      *
+     * @param {Flatfile.JobId} jobId - ID of job to return
+     * @param {Flatfile.JobCancelDetails} request
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.jobs.cancel("us_jb_YOUR_ID", {
+     *     await client.jobs.cancel("us_jb_YOUR_ID", {
      *         info: "Job was canceled"
      *     })
      */
-    public async cancel(
+    public cancel(
         jobId: Flatfile.JobId,
         request?: Flatfile.JobCancelDetails,
-        requestOptions?: Jobs.RequestOptions
-    ): Promise<Flatfile.JobResponse> {
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.JobResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__cancel(jobId, request, requestOptions));
+    }
+
+    private async __cancel(
+        jobId: Flatfile.JobId,
+        request?: Flatfile.JobCancelDetails,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.JobResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/cancel`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/jobs/${encodeURIComponent(serializers.JobId.jsonOrThrow(jobId))}/cancel`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body:
                 request != null
-                    ? await serializers.jobs.cancel.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })
+                    ? serializers.jobs.cancel.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })
                     : undefined,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.JobResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.JobResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -972,53 +1347,81 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /jobs/{jobId}/cancel.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Retry a failt job and return the job
+     *
+     * @param {Flatfile.JobId} jobId - ID of job to return
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.jobs.retry("jobId")
      */
-    public async retry(jobId: Flatfile.JobId, requestOptions?: Jobs.RequestOptions): Promise<Flatfile.JobResponse> {
+    public retry(
+        jobId: Flatfile.JobId,
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.JobResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__retry(jobId, requestOptions));
+    }
+
+    private async __retry(
+        jobId: Flatfile.JobId,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.JobResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/retry`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/jobs/${encodeURIComponent(serializers.JobId.jsonOrThrow(jobId))}/retry`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.JobResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.JobResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -1027,57 +1430,85 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /jobs/{jobId}/retry.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Preview the results of a mutation
+     *
+     * @param {Flatfile.MutateJobConfig} request
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.jobs.previewMutation({
+     *         sheetId: "sheetId",
+     *         mutateRecord: "mutateRecord"
+     *     })
      */
-    public async previewMutation(
+    public previewMutation(
         request: Flatfile.MutateJobConfig,
-        requestOptions?: Jobs.RequestOptions
-    ): Promise<Flatfile.DiffRecordsResponse> {
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.DiffRecordsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__previewMutation(request, requestOptions));
+    }
+
+    private async __previewMutation(
+        request: Flatfile.MutateJobConfig,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.DiffRecordsResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/jobs/preview-mutation"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                "/jobs/preview-mutation",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.MutateJobConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.MutateJobConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.DiffRecordsResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.DiffRecordsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -1086,12 +1517,14 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /jobs/preview-mutation.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -1099,51 +1532,73 @@ export class Jobs {
     /**
      * Split a job and return the job
      *
+     * @param {Flatfile.JobId} jobId - ID of job to return
+     * @param {Flatfile.JobSplitDetails} request
+     * @param {Jobs.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.jobs.split("us_jb_YOUR_ID", {
+     *     await client.jobs.split("us_jb_YOUR_ID", {
      *         parts: [{}],
      *         runInParallel: true
      *     })
      */
-    public async split(
+    public split(
         jobId: Flatfile.JobId,
         request: Flatfile.JobSplitDetails,
-        requestOptions?: Jobs.RequestOptions
-    ): Promise<Flatfile.JobResponse> {
+        requestOptions?: Jobs.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.JobResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__split(jobId, request, requestOptions));
+    }
+
+    private async __split(
+        jobId: Flatfile.JobId,
+        request: Flatfile.JobSplitDetails,
+        requestOptions?: Jobs.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.JobResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/jobs/${await serializers.JobId.jsonOrThrow(jobId)}/split`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/jobs/${encodeURIComponent(serializers.JobId.jsonOrThrow(jobId))}/split`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.JobSplitDetails.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.JobSplitDetails.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.JobResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.JobResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -1152,17 +1607,19 @@ export class Jobs {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /jobs/{jobId}/split.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

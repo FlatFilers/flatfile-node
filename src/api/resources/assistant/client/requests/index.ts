@@ -1,1 +1,1 @@
-export { ListPromptsRequest } from "./ListPromptsRequest";
+export { type ListPromptsRequest } from "./ListPromptsRequest";

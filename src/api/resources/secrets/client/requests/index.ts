@@ -1,1 +1,1 @@
-export { ListSecrets } from "./ListSecrets";
+export { type ListSecrets } from "./ListSecrets";

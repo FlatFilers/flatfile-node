@@ -1,1 +1,1 @@
-export { GetConstraintsRequest } from "./GetConstraintsRequest";
+export { type GetConstraintsRequest } from "./GetConstraintsRequest";

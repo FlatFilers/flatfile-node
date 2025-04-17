@@ -3,7 +3,6 @@
  */
 
 export type SchemaDiffEnum = "added" | "removed" | "unchanged";
-
 export const SchemaDiffEnum = {
     Added: "added",
     Removed: "removed",

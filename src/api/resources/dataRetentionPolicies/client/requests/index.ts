@@ -1,1 +1,1 @@
-export { ListDataRetentionPoliciesRequest } from "./ListDataRetentionPoliciesRequest";
+export { type ListDataRetentionPoliciesRequest } from "./ListDataRetentionPoliciesRequest";

@@ -3,7 +3,6 @@
  */
 
 export type EnumPropertySortBy = "label" | "value" | "ordinal";
-
 export const EnumPropertySortBy = {
     Label: "label",
     Value: "value",

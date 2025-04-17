@@ -3,7 +3,6 @@
  */
 
 export type TypeEnum = "sidebar" | "popout" | "tooltip";
-
 export const TypeEnum = {
     Sidebar: "sidebar",
     Popout: "popout",

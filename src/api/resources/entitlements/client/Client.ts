@@ -4,21 +4,33 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Flatfile from "../../..";
+import * as Flatfile from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Entitlements {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -27,77 +39,100 @@ export class Entitlements {
 
     /**
      * Returns all entitlements matching a filter for resourceId
+     *
+     * @param {Flatfile.ListEntitlementsRequest} request
+     * @param {Entitlements.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.entitlements.list({
+     *     await client.entitlements.list({
      *         resourceId: "string"
      *     })
      */
-    public async list(
+    public list(
         request: Flatfile.ListEntitlementsRequest,
-        requestOptions?: Entitlements.RequestOptions
-    ): Promise<Flatfile.ListEntitlementsResponse> {
+        requestOptions?: Entitlements.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.ListEntitlementsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: Flatfile.ListEntitlementsRequest,
+        requestOptions?: Entitlements.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.ListEntitlementsResponse>> {
         const { resourceId } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["resourceId"] = resourceId;
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/entitlements"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                "/entitlements",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ListEntitlementsResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ListEntitlementsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -107,17 +142,19 @@ export class Entitlements {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /entitlements.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

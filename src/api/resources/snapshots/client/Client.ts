@@ -4,21 +4,33 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Flatfile from "../../..";
-import * as serializers from "../../../../serialization";
+import * as Flatfile from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Snapshots {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -27,75 +39,98 @@ export class Snapshots {
 
     /**
      * Creates a snapshot of a sheet
+     *
+     * @param {Flatfile.CreateSnapshotRequest} request
+     * @param {Snapshots.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.snapshots.createSnapshot({
+     *     await client.snapshots.createSnapshot({
      *         sheetId: "us_sh_YOUR_ID",
      *         label: "My snapshot"
      *     })
      */
-    public async createSnapshot(
+    public createSnapshot(
         request: Flatfile.CreateSnapshotRequest,
-        requestOptions?: Snapshots.RequestOptions
-    ): Promise<Flatfile.SnapshotResponse> {
+        requestOptions?: Snapshots.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.SnapshotResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__createSnapshot(request, requestOptions));
+    }
+
+    private async __createSnapshot(
+        request: Flatfile.CreateSnapshotRequest,
+        requestOptions?: Snapshots.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.SnapshotResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/snapshots"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                "/snapshots",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.CreateSnapshotRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.CreateSnapshotRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.SnapshotResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.SnapshotResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -105,32 +140,45 @@ export class Snapshots {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /snapshots.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * List all snapshots of a sheet
+     *
+     * @param {Flatfile.ListSnapshotRequest} request
+     * @param {Snapshots.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.snapshots.listSnapshots({
+     *     await client.snapshots.listSnapshots({
      *         sheetId: "us_sh_YOUR_ID"
      *     })
      */
-    public async listSnapshots(
+    public listSnapshots(
         request: Flatfile.ListSnapshotRequest,
-        requestOptions?: Snapshots.RequestOptions
-    ): Promise<Flatfile.SnapshotsResponse> {
+        requestOptions?: Snapshots.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.SnapshotsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listSnapshots(request, requestOptions));
+    }
+
+    private async __listSnapshots(
+        request: Flatfile.ListSnapshotRequest,
+        requestOptions?: Snapshots.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.SnapshotsResponse>> {
         const { sheetId, threadId } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["sheetId"] = sheetId;
         if (threadId != null) {
             _queryParams["threadId"] = threadId;
@@ -138,60 +186,72 @@ export class Snapshots {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/snapshots"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                "/snapshots",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.SnapshotsResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.SnapshotsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -201,90 +261,117 @@ export class Snapshots {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /snapshots.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Gets a snapshot of a sheet
+     *
+     * @param {Flatfile.SnapshotId} snapshotId - ID of snapshot
+     * @param {Flatfile.GetSnapshotRequest} request
+     * @param {Snapshots.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.snapshots.getSnapshot("us_ss_YOUR_ID", {
+     *     await client.snapshots.getSnapshot("us_ss_YOUR_ID", {
      *         includeSummary: true
      *     })
      */
-    public async getSnapshot(
+    public getSnapshot(
         snapshotId: Flatfile.SnapshotId,
         request: Flatfile.GetSnapshotRequest,
-        requestOptions?: Snapshots.RequestOptions
-    ): Promise<Flatfile.SnapshotResponse> {
+        requestOptions?: Snapshots.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.SnapshotResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getSnapshot(snapshotId, request, requestOptions));
+    }
+
+    private async __getSnapshot(
+        snapshotId: Flatfile.SnapshotId,
+        request: Flatfile.GetSnapshotRequest,
+        requestOptions?: Snapshots.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.SnapshotResponse>> {
         const { includeSummary } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["includeSummary"] = includeSummary.toString();
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/snapshots/${await serializers.SnapshotId.jsonOrThrow(snapshotId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/snapshots/${encodeURIComponent(serializers.SnapshotId.jsonOrThrow(snapshotId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.SnapshotResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.SnapshotResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -294,83 +381,108 @@ export class Snapshots {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /snapshots/{snapshotId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Deletes a snapshot of a sheet
+     *
+     * @param {Flatfile.SnapshotId} snapshotId - ID of snapshot
+     * @param {Snapshots.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.snapshots.deleteSnapshot("us_ss_YOUR_ID")
+     *     await client.snapshots.deleteSnapshot("us_ss_YOUR_ID")
      */
-    public async deleteSnapshot(
+    public deleteSnapshot(
         snapshotId: Flatfile.SnapshotId,
-        requestOptions?: Snapshots.RequestOptions
-    ): Promise<Flatfile.Success> {
+        requestOptions?: Snapshots.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.Success> {
+        return core.HttpResponsePromise.fromPromise(this.__deleteSnapshot(snapshotId, requestOptions));
+    }
+
+    private async __deleteSnapshot(
+        snapshotId: Flatfile.SnapshotId,
+        requestOptions?: Snapshots.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.Success>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/snapshots/${await serializers.SnapshotId.jsonOrThrow(snapshotId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/snapshots/${encodeURIComponent(serializers.SnapshotId.jsonOrThrow(snapshotId))}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Success.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -380,94 +492,121 @@ export class Snapshots {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling DELETE /snapshots/{snapshotId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Restores a snapshot of a sheet
+     *
+     * @param {Flatfile.SnapshotId} snapshotId - ID of snapshot
+     * @param {Flatfile.RestoreOptions} request
+     * @param {Snapshots.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.snapshots.restoreSnapshot("us_ss_YOUR_ID", {
+     *     await client.snapshots.restoreSnapshot("us_ss_YOUR_ID", {
      *         created: true,
      *         updated: true,
      *         deleted: true
      *     })
      */
-    public async restoreSnapshot(
+    public restoreSnapshot(
         snapshotId: Flatfile.SnapshotId,
         request?: Flatfile.RestoreOptions,
-        requestOptions?: Snapshots.RequestOptions
-    ): Promise<Flatfile.SnapshotResponse> {
+        requestOptions?: Snapshots.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.SnapshotResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__restoreSnapshot(snapshotId, request, requestOptions));
+    }
+
+    private async __restoreSnapshot(
+        snapshotId: Flatfile.SnapshotId,
+        request?: Flatfile.RestoreOptions,
+        requestOptions?: Snapshots.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.SnapshotResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/snapshots/${await serializers.SnapshotId.jsonOrThrow(snapshotId)}/restore`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/snapshots/${encodeURIComponent(serializers.SnapshotId.jsonOrThrow(snapshotId))}/restore`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             body:
                 request != null
-                    ? await serializers.snapshots.restoreSnapshot.Request.jsonOrThrow(request, {
+                    ? serializers.snapshots.restoreSnapshot.Request.jsonOrThrow(request, {
                           unrecognizedObjectKeys: "strip",
                       })
                     : undefined,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.SnapshotResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.SnapshotResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -477,35 +616,52 @@ export class Snapshots {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling POST /snapshots/{snapshotId}/restore.",
+                );
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Gets records from a snapshot of a sheet
+     *
+     * @param {Flatfile.SnapshotId} snapshotId - ID of snapshot
+     * @param {Flatfile.GetSnapshotRecordsRequest} request
+     * @param {Snapshots.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.snapshots.getSnapshotRecords("us_ss_YOUR_ID", {
+     *     await client.snapshots.getSnapshotRecords("us_ss_YOUR_ID", {
      *         pageSize: 10,
      *         pageNumber: 1,
-     *         changeType: Flatfile.ChangeType.CreatedSince
+     *         changeType: "createdSince"
      *     })
      */
-    public async getSnapshotRecords(
+    public getSnapshotRecords(
         snapshotId: Flatfile.SnapshotId,
         request: Flatfile.GetSnapshotRecordsRequest = {},
-        requestOptions?: Snapshots.RequestOptions
-    ): Promise<Flatfile.DiffRecordsResponse> {
+        requestOptions?: Snapshots.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.DiffRecordsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getSnapshotRecords(snapshotId, request, requestOptions));
+    }
+
+    private async __getSnapshotRecords(
+        snapshotId: Flatfile.SnapshotId,
+        request: Flatfile.GetSnapshotRecordsRequest = {},
+        requestOptions?: Snapshots.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.DiffRecordsResponse>> {
         const { pageSize, pageNumber, changeType } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (pageSize != null) {
             _queryParams["pageSize"] = pageSize.toString();
         }
@@ -515,65 +671,79 @@ export class Snapshots {
         }
 
         if (changeType != null) {
-            _queryParams["changeType"] = changeType;
+            _queryParams["changeType"] = serializers.ChangeType.jsonOrThrow(changeType, {
+                unrecognizedObjectKeys: "strip",
+            });
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/snapshots/${await serializers.SnapshotId.jsonOrThrow(snapshotId)}/records`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/snapshots/${encodeURIComponent(serializers.SnapshotId.jsonOrThrow(snapshotId))}/records`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.DiffRecordsResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.DiffRecordsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -583,17 +753,21 @@ export class Snapshots {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling GET /snapshots/{snapshotId}/records.",
+                );
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

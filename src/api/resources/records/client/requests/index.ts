@@ -1,4 +1,4 @@
-export { GetRecordsRequest } from "./GetRecordsRequest";
-export { GetRecordIndicesRequest } from "./GetRecordIndicesRequest";
-export { DeleteRecordsRequest } from "./DeleteRecordsRequest";
-export { FindAndReplaceRecordRequest } from "./FindAndReplaceRecordRequest";
+export { type GetRecordsRequest } from "./GetRecordsRequest";
+export { type GetRecordIndicesRequest } from "./GetRecordIndicesRequest";
+export { type DeleteRecordsRequest } from "./DeleteRecordsRequest";
+export { type FindAndReplaceRecordRequest } from "./FindAndReplaceRecordRequest";

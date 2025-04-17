@@ -10,7 +10,6 @@ export type GetSpacesSortField =
     | "createdByUserName"
     | "createdAt"
     | "lastActivityAt";
-
 export const GetSpacesSortField = {
     Name: "name",
     WorkbooksCount: "workbooksCount",

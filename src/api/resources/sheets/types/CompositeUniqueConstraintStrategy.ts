@@ -9,7 +9,6 @@ export type CompositeUniqueConstraintStrategy =
     /**
      * The values of the fields will be concatenated to determine uniqueness */
     | "concat";
-
 export const CompositeUniqueConstraintStrategy = {
     Hash: "hash",
     Concat: "concat",

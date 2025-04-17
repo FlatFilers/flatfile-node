@@ -6,7 +6,6 @@
  * Status of the file. Partial: File is uploaded but not yet processed. Analyzing: Smart Extract is running. Analyzed: Smart Extract has finished running. Complete: File has been extracted and is ready to be used. Archived: File has been archived. Purged: File has been purged. Failed: File has failed to be extracted.
  */
 export type ModelFileStatusEnum = "partial" | "analyzing" | "analyzed" | "complete" | "archived" | "purged" | "failed";
-
 export const ModelFileStatusEnum = {
     Partial: "partial",
     Analyzing: "analyzing",

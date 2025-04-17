@@ -1,1 +1,1 @@
-export { VersionsPostRequestBody } from "./VersionsPostRequestBody";
+export { type VersionsPostRequestBody } from "./VersionsPostRequestBody";

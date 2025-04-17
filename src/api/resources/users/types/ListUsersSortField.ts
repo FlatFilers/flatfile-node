@@ -12,7 +12,6 @@ export type ListUsersSortField =
     | "updated_at"
     | "last_seen_at"
     | "dashboard";
-
 export const ListUsersSortField = {
     Email: "email",
     Name: "name",

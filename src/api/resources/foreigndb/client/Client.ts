@@ -4,21 +4,33 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Flatfile from "../../..";
-import * as serializers from "../../../../serialization";
+import * as Flatfile from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Foreigndb {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -27,70 +39,100 @@ export class Foreigndb {
 
     /**
      * Restore a database from a backup
+     *
+     * @param {string} workbookId - the workbook id
+     * @param {Flatfile.RestoreDatabaseRequest} request
+     * @param {Foreigndb.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await client.foreigndb.restore("workbookId", {
+     *         fileId: "fileId"
+     *     })
      */
-    public async restore(
+    public restore(
         workbookId: string,
         request: Flatfile.RestoreDatabaseRequest,
-        requestOptions?: Foreigndb.RequestOptions
-    ): Promise<Flatfile.RestoreDatabaseResponse> {
+        requestOptions?: Foreigndb.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.RestoreDatabaseResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__restore(workbookId, request, requestOptions));
+    }
+
+    private async __restore(
+        workbookId: string,
+        request: Flatfile.RestoreDatabaseRequest,
+        requestOptions?: Foreigndb.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.RestoreDatabaseResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/foreigndb/${workbookId}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/foreigndb/${encodeURIComponent(workbookId)}`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.RestoreDatabaseRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.RestoreDatabaseRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.RestoreDatabaseResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.RestoreDatabaseResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -100,80 +142,108 @@ export class Foreigndb {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /foreigndb/{workbookId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Get database user credentials
+     *
+     * @param {string} workbookId - the workbook id
+     * @param {Foreigndb.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await client.foreigndb.getDatabaseUser("workbookId")
      */
-    public async getDatabaseUser(
+    public getDatabaseUser(
         workbookId: string,
-        requestOptions?: Foreigndb.RequestOptions
-    ): Promise<Flatfile.GetDatabaseUserResponse> {
+        requestOptions?: Foreigndb.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.GetDatabaseUserResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getDatabaseUser(workbookId, requestOptions));
+    }
+
+    private async __getDatabaseUser(
+        workbookId: string,
+        requestOptions?: Foreigndb.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.GetDatabaseUserResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/foreigndb/${workbookId}/user`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/foreigndb/${encodeURIComponent(workbookId)}/user`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.GetDatabaseUserResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.GetDatabaseUserResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -183,80 +253,110 @@ export class Foreigndb {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling GET /foreigndb/{workbookId}/user.",
+                );
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Get the database information
+     *
+     * @param {string} workbookId - the workbook id
+     * @param {Foreigndb.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await client.foreigndb.getDatabaseInfo("workbookId")
      */
-    public async getDatabaseInfo(
+    public getDatabaseInfo(
         workbookId: string,
-        requestOptions?: Foreigndb.RequestOptions
-    ): Promise<Flatfile.GetDatabaseResponse> {
+        requestOptions?: Foreigndb.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.GetDatabaseResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getDatabaseInfo(workbookId, requestOptions));
+    }
+
+    private async __getDatabaseInfo(
+        workbookId: string,
+        requestOptions?: Foreigndb.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.GetDatabaseResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/foreigndb/${workbookId}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/foreigndb/${encodeURIComponent(workbookId)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.GetDatabaseResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.GetDatabaseResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -266,80 +366,108 @@ export class Foreigndb {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /foreigndb/{workbookId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Delete the database
+     *
+     * @param {string} workbookId - the workbook id
+     * @param {Foreigndb.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await client.foreigndb.deleteDatabase("workbookId")
      */
-    public async deleteDatabase(
+    public deleteDatabase(
         workbookId: string,
-        requestOptions?: Foreigndb.RequestOptions
-    ): Promise<Flatfile.Success> {
+        requestOptions?: Foreigndb.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.Success> {
+        return core.HttpResponsePromise.fromPromise(this.__deleteDatabase(workbookId, requestOptions));
+    }
+
+    private async __deleteDatabase(
+        workbookId: string,
+        requestOptions?: Foreigndb.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.Success>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/foreigndb/${workbookId}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/foreigndb/${encodeURIComponent(workbookId)}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Success.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -349,84 +477,114 @@ export class Foreigndb {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling DELETE /foreigndb/{workbookId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Persist a file in s3 object storage
+     *
+     * @param {string} workbookId - the workbook id
+     * @param {Flatfile.UploadToObjectStorageRequest} request
+     * @param {Foreigndb.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await client.foreigndb.upload("workbookId", {
+     *         fileId: "fileId"
+     *     })
      */
-    public async upload(
+    public upload(
         workbookId: string,
         request: Flatfile.UploadToObjectStorageRequest,
-        requestOptions?: Foreigndb.RequestOptions
-    ): Promise<Flatfile.Success> {
+        requestOptions?: Foreigndb.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.Success> {
+        return core.HttpResponsePromise.fromPromise(this.__upload(workbookId, request, requestOptions));
+    }
+
+    private async __upload(
+        workbookId: string,
+        request: Flatfile.UploadToObjectStorageRequest,
+        requestOptions?: Foreigndb.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.Success>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/foreigndb/${workbookId}/storage`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/foreigndb/${encodeURIComponent(workbookId)}/storage`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.UploadToObjectStorageRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            requestType: "json",
+            body: serializers.UploadToObjectStorageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Success.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -436,17 +594,21 @@ export class Foreigndb {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling POST /foreigndb/{workbookId}/storage.",
+                );
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

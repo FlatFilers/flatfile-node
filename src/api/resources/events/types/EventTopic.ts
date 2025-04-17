@@ -85,7 +85,6 @@ export type EventTopic =
     | "thread:created"
     | "thread:updated"
     | "thread:deleted";
-
 export const EventTopic = {
     AgentCreated: "agent:created",
     AgentUpdated: "agent:updated",

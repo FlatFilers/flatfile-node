@@ -3,7 +3,6 @@
  */
 
 export type Mode = "import" | "export";
-
 export const Mode = {
     Import: "import",
     Export: "export",

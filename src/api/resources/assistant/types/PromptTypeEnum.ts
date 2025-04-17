@@ -3,7 +3,6 @@
  */
 
 export type PromptTypeEnum = "AI_ASSIST" | "CONSTRAINT_GENERATION";
-
 export const PromptTypeEnum = {
     AiAssist: "AI_ASSIST",
     ConstraintGeneration: "CONSTRAINT_GENERATION",

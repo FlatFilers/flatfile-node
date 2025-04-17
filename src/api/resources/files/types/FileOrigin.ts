@@ -3,7 +3,6 @@
  */
 
 export type FileOrigin = "filesystem" | "googledrive" | "box" | "onedrive";
-
 export const FileOrigin = {
     Filesystem: "filesystem",
     Googledrive: "googledrive",

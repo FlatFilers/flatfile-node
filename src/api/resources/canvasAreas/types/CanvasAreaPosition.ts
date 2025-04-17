@@ -3,7 +3,6 @@
  */
 
 export type CanvasAreaPosition = "top" | "left" | "right" | "middle" | "bottom";
-
 export const CanvasAreaPosition = {
     Top: "top",
     Left: "left",

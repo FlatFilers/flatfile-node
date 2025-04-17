@@ -1,2 +1,2 @@
-export { ListGuestsRequest } from "./ListGuestsRequest";
-export { GetGuestTokenRequest } from "./GetGuestTokenRequest";
+export { type ListGuestsRequest } from "./ListGuestsRequest";
+export { type GetGuestTokenRequest } from "./GetGuestTokenRequest";

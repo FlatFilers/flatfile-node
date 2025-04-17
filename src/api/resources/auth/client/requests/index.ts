@@ -1,6 +1,6 @@
-export { GetApiKeysRequest } from "./GetApiKeysRequest";
-export { CreateNewApiKeyRequest } from "./CreateNewApiKeyRequest";
-export { DeleteApiKeyRequest } from "./DeleteApiKeyRequest";
-export { GetSftpCredentialsRequest } from "./GetSftpCredentialsRequest";
-export { CreatePersonalAccessTokenRequest } from "./CreatePersonalAccessTokenRequest";
-export { DeletePersonalAccessTokenRequest } from "./DeletePersonalAccessTokenRequest";
+export { type GetApiKeysRequest } from "./GetApiKeysRequest";
+export { type CreateNewApiKeyRequest } from "./CreateNewApiKeyRequest";
+export { type DeleteApiKeyRequest } from "./DeleteApiKeyRequest";
+export { type GetSftpCredentialsRequest } from "./GetSftpCredentialsRequest";
+export { type CreatePersonalAccessTokenRequest } from "./CreatePersonalAccessTokenRequest";
+export { type DeletePersonalAccessTokenRequest } from "./DeletePersonalAccessTokenRequest";

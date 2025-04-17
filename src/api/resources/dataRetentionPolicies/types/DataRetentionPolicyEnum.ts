@@ -6,7 +6,6 @@
  * The type of data retention policy on an environment
  */
 export type DataRetentionPolicyEnum = "lastActivity" | "sinceCreated";
-
 export const DataRetentionPolicyEnum = {
     LastActivity: "lastActivity",
     SinceCreated: "sinceCreated",

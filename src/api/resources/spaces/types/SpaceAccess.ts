@@ -3,7 +3,6 @@
  */
 
 export type SpaceAccess = "*" | "upload";
-
 export const SpaceAccess = {
     All: "*",
     Upload: "upload",

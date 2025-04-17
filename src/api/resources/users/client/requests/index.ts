@@ -1,5 +1,5 @@
-export { ListUsersRequest } from "./ListUsersRequest";
-export { UpdateUserRequest } from "./UpdateUserRequest";
-export { ListApiTokensRequest } from "./ListApiTokensRequest";
-export { CreateApiTokenRequest } from "./CreateApiTokenRequest";
-export { ExchangeTokenRequest } from "./ExchangeTokenRequest";
+export { type ListUsersRequest } from "./ListUsersRequest";
+export { type UpdateUserRequest } from "./UpdateUserRequest";
+export { type ListApiTokensRequest } from "./ListApiTokensRequest";
+export { type CreateApiTokenRequest } from "./CreateApiTokenRequest";
+export { type ExchangeTokenRequest } from "./ExchangeTokenRequest";

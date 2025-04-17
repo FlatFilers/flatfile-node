@@ -4,21 +4,33 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Flatfile from "../../..";
+import * as Flatfile from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Apps {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -27,41 +39,60 @@ export class Apps {
 
     /**
      * Returns apps in an account
+     *
+     * @param {Apps.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.apps.list()
      */
-    public async list(requestOptions?: Apps.RequestOptions): Promise<Flatfile.AppsResponse> {
+    public list(requestOptions?: Apps.RequestOptions): core.HttpResponsePromise<Flatfile.AppsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(requestOptions));
+    }
+
+    private async __list(requestOptions?: Apps.RequestOptions): Promise<core.WithRawResponse<Flatfile.AppsResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/apps"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                "/apps",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.AppsResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.AppsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -70,12 +101,14 @@ export class Apps {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /apps.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -83,43 +116,66 @@ export class Apps {
     /**
      * Returns an app
      *
+     * @param {Flatfile.AppId} appId - ID of app
+     * @param {Apps.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.apps.get("us_app_YOUR_ID")
+     *     await client.apps.get("us_app_YOUR_ID")
      */
-    public async get(appId: Flatfile.AppId, requestOptions?: Apps.RequestOptions): Promise<Flatfile.AppResponse> {
+    public get(
+        appId: Flatfile.AppId,
+        requestOptions?: Apps.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.AppResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__get(appId, requestOptions));
+    }
+
+    private async __get(
+        appId: Flatfile.AppId,
+        requestOptions?: Apps.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.AppResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/apps/${await serializers.AppId.jsonOrThrow(appId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/apps/${encodeURIComponent(serializers.AppId.jsonOrThrow(appId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.AppResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.AppResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -128,12 +184,14 @@ export class Apps {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /apps/{appId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -141,8 +199,12 @@ export class Apps {
     /**
      * Updates an app
      *
+     * @param {Flatfile.AppId} appId - ID of app
+     * @param {Flatfile.AppPatch} request
+     * @param {Apps.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.apps.update("us_app_YOUR_ID", {
+     *     await client.apps.update("us_app_YOUR_ID", {
      *         name: "Nightly Data Loads",
      *         namespace: "nightly-data",
      *         entity: "Sync",
@@ -153,45 +215,63 @@ export class Apps {
      *         }
      *     })
      */
-    public async update(
+    public update(
         appId: Flatfile.AppId,
         request: Flatfile.AppPatch,
-        requestOptions?: Apps.RequestOptions
-    ): Promise<Flatfile.AppResponse> {
+        requestOptions?: Apps.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.AppResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__update(appId, request, requestOptions));
+    }
+
+    private async __update(
+        appId: Flatfile.AppId,
+        request: Flatfile.AppPatch,
+        requestOptions?: Apps.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.AppResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/apps/${await serializers.AppId.jsonOrThrow(appId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/apps/${encodeURIComponent(serializers.AppId.jsonOrThrow(appId))}`,
             ),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.AppPatch.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.AppPatch.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.AppResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.AppResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -200,12 +280,14 @@ export class Apps {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling PATCH /apps/{appId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -213,11 +295,14 @@ export class Apps {
     /**
      * Creates an app
      *
+     * @param {Flatfile.AppCreate} request
+     * @param {Apps.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.apps.create({
+     *     await client.apps.create({
      *         name: "Nightly Data Loads",
      *         namespace: "nightly-data",
-     *         type: Flatfile.AppType.Custom,
+     *         type: "CUSTOM",
      *         entity: "Sync",
      *         entityPlural: "Syncs",
      *         icon: "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" class=\"bi bi-bar-chart-fill\" viewBox=\"0 0 16 16\">\n  <path d=\"M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z\"/>\n</svg>",
@@ -226,44 +311,61 @@ export class Apps {
      *         }
      *     })
      */
-    public async create(
+    public create(
         request: Flatfile.AppCreate,
-        requestOptions?: Apps.RequestOptions
-    ): Promise<Flatfile.AppResponse> {
+        requestOptions?: Apps.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.AppResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
+    }
+
+    private async __create(
+        request: Flatfile.AppCreate,
+        requestOptions?: Apps.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.AppResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/apps"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                "/apps",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.AppCreate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.AppCreate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.AppResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.AppResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -272,12 +374,14 @@ export class Apps {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /apps.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -285,46 +389,66 @@ export class Apps {
     /**
      * Deletes an app
      *
+     * @param {Flatfile.AppId} appId - ID of app to delete
+     * @param {Apps.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.apps.delete("us_app_YOUR_ID")
+     *     await client.apps.delete("us_app_YOUR_ID")
      */
-    public async delete(
+    public delete(
         appId: Flatfile.AppId,
-        requestOptions?: Apps.RequestOptions
-    ): Promise<Flatfile.SuccessResponse> {
+        requestOptions?: Apps.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.SuccessResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(appId, requestOptions));
+    }
+
+    private async __delete(
+        appId: Flatfile.AppId,
+        requestOptions?: Apps.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.SuccessResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/apps/${await serializers.AppId.jsonOrThrow(appId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/apps/${encodeURIComponent(serializers.AppId.jsonOrThrow(appId))}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.SuccessResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.SuccessResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -333,64 +457,91 @@ export class Apps {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling DELETE /apps/{appId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Returns constraints for an app
+     *
+     * @param {Flatfile.AppId} appId - ID of the app
+     * @param {Flatfile.GetConstraintsRequest} request
+     * @param {Apps.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.apps.getConstraints("appId")
      */
-    public async getConstraints(
+    public getConstraints(
         appId: Flatfile.AppId,
         request: Flatfile.GetConstraintsRequest = {},
-        requestOptions?: Apps.RequestOptions
-    ): Promise<Flatfile.ConstraintsResponse> {
+        requestOptions?: Apps.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.ConstraintsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getConstraints(appId, request, requestOptions));
+    }
+
+    private async __getConstraints(
+        appId: Flatfile.AppId,
+        request: Flatfile.GetConstraintsRequest = {},
+        requestOptions?: Apps.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.ConstraintsResponse>> {
         const { includeBuiltins } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (includeBuiltins != null) {
             _queryParams["includeBuiltins"] = includeBuiltins.toString();
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/apps/${await serializers.AppId.jsonOrThrow(appId)}/constraints`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/apps/${encodeURIComponent(serializers.AppId.jsonOrThrow(appId))}/constraints`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ConstraintsResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ConstraintsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -399,58 +550,85 @@ export class Apps {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /apps/{appId}/constraints.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Creates a new constraint for an app
+     *
+     * @param {Flatfile.AppId} appId - ID of the app
+     * @param {Flatfile.ConstraintCreate} request
+     * @param {Apps.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.apps.createConstraint("appId", {})
      */
-    public async createConstraint(
+    public createConstraint(
         appId: Flatfile.AppId,
         request: Flatfile.ConstraintCreate,
-        requestOptions?: Apps.RequestOptions
-    ): Promise<Flatfile.ConstraintResponse> {
+        requestOptions?: Apps.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.ConstraintResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__createConstraint(appId, request, requestOptions));
+    }
+
+    private async __createConstraint(
+        appId: Flatfile.AppId,
+        request: Flatfile.ConstraintCreate,
+        requestOptions?: Apps.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.ConstraintResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/apps/${await serializers.AppId.jsonOrThrow(appId)}/constraints`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/apps/${encodeURIComponent(serializers.AppId.jsonOrThrow(appId))}/constraints`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.ConstraintCreate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.ConstraintCreate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ConstraintResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ConstraintResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -459,59 +637,84 @@ export class Apps {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /apps/{appId}/constraints.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Returns a specific constraint
+     *
+     * @param {Flatfile.AppId} appId - ID of the app
+     * @param {Flatfile.ConstraintId} constraintId - ID of the constraint
+     * @param {Apps.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.apps.getConstraintById("appId", "constraintId")
      */
-    public async getConstraintById(
+    public getConstraintById(
         appId: Flatfile.AppId,
         constraintId: Flatfile.ConstraintId,
-        requestOptions?: Apps.RequestOptions
-    ): Promise<Flatfile.ConstraintResponse> {
+        requestOptions?: Apps.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.ConstraintResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getConstraintById(appId, constraintId, requestOptions));
+    }
+
+    private async __getConstraintById(
+        appId: Flatfile.AppId,
+        constraintId: Flatfile.ConstraintId,
+        requestOptions?: Apps.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.ConstraintResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/apps/${await serializers.AppId.jsonOrThrow(
-                    appId
-                )}/constraints/${await serializers.ConstraintId.jsonOrThrow(constraintId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/apps/${encodeURIComponent(serializers.AppId.jsonOrThrow(appId))}/constraints/${encodeURIComponent(serializers.ConstraintId.jsonOrThrow(constraintId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ConstraintResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ConstraintResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -520,59 +723,86 @@ export class Apps {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling GET /apps/{appId}/constraints/{constraintId}.",
+                );
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Returns the versions of a specific constraint
+     *
+     * @param {Flatfile.AppId} appId - ID of the app
+     * @param {Flatfile.ConstraintId} constraintId - ID of the constraint
+     * @param {Apps.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.apps.getConstraintVersions("appId", "constraintId")
      */
-    public async getConstraintVersions(
+    public getConstraintVersions(
         appId: Flatfile.AppId,
         constraintId: Flatfile.ConstraintId,
-        requestOptions?: Apps.RequestOptions
-    ): Promise<Flatfile.ConstraintVersionsResponse> {
+        requestOptions?: Apps.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.ConstraintVersionsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getConstraintVersions(appId, constraintId, requestOptions));
+    }
+
+    private async __getConstraintVersions(
+        appId: Flatfile.AppId,
+        constraintId: Flatfile.ConstraintId,
+        requestOptions?: Apps.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.ConstraintVersionsResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/apps/${await serializers.AppId.jsonOrThrow(
-                    appId
-                )}/constraints/${await serializers.ConstraintId.jsonOrThrow(constraintId)}/versions`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/apps/${encodeURIComponent(serializers.AppId.jsonOrThrow(appId))}/constraints/${encodeURIComponent(serializers.ConstraintId.jsonOrThrow(constraintId))}/versions`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ConstraintVersionsResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ConstraintVersionsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -581,60 +811,91 @@ export class Apps {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling GET /apps/{appId}/constraints/{constraintId}/versions.",
+                );
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Returns a specified version of a specific constraint
+     *
+     * @param {Flatfile.AppId} appId - ID of the app
+     * @param {Flatfile.ConstraintId} constraintId - ID of the constraint
+     * @param {number} version - Version of the constraint
+     * @param {Apps.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.apps.getConstraintVersion("appId", "constraintId", 1)
      */
-    public async getConstraintVersion(
+    public getConstraintVersion(
         appId: Flatfile.AppId,
         constraintId: Flatfile.ConstraintId,
         version: number,
-        requestOptions?: Apps.RequestOptions
-    ): Promise<Flatfile.ConstraintVersionResponse> {
+        requestOptions?: Apps.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.ConstraintVersionResponse> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getConstraintVersion(appId, constraintId, version, requestOptions),
+        );
+    }
+
+    private async __getConstraintVersion(
+        appId: Flatfile.AppId,
+        constraintId: Flatfile.ConstraintId,
+        version: number,
+        requestOptions?: Apps.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.ConstraintVersionResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/apps/${await serializers.AppId.jsonOrThrow(
-                    appId
-                )}/constraints/${await serializers.ConstraintId.jsonOrThrow(constraintId)}/versions/${version}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/apps/${encodeURIComponent(serializers.AppId.jsonOrThrow(appId))}/constraints/${encodeURIComponent(serializers.ConstraintId.jsonOrThrow(constraintId))}/versions/${encodeURIComponent(version)}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ConstraintVersionResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ConstraintVersionResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -643,61 +904,92 @@ export class Apps {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling GET /apps/{appId}/constraints/{constraintId}/versions/{version}.",
+                );
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Updates a specific constraint
+     *
+     * @param {Flatfile.AppId} appId - ID of the app
+     * @param {Flatfile.ConstraintId} constraintId - ID of the constraint
+     * @param {Flatfile.ConstraintUpdate} request
+     * @param {Apps.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.apps.updateConstraint("appId", "constraintId", {})
      */
-    public async updateConstraint(
+    public updateConstraint(
         appId: Flatfile.AppId,
         constraintId: Flatfile.ConstraintId,
         request: Flatfile.ConstraintUpdate,
-        requestOptions?: Apps.RequestOptions
-    ): Promise<Flatfile.ConstraintResponse> {
+        requestOptions?: Apps.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.ConstraintResponse> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__updateConstraint(appId, constraintId, request, requestOptions),
+        );
+    }
+
+    private async __updateConstraint(
+        appId: Flatfile.AppId,
+        constraintId: Flatfile.ConstraintId,
+        request: Flatfile.ConstraintUpdate,
+        requestOptions?: Apps.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.ConstraintResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/apps/${await serializers.AppId.jsonOrThrow(
-                    appId
-                )}/constraints/${await serializers.ConstraintId.jsonOrThrow(constraintId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/apps/${encodeURIComponent(serializers.AppId.jsonOrThrow(appId))}/constraints/${encodeURIComponent(serializers.ConstraintId.jsonOrThrow(constraintId))}`,
             ),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.ConstraintUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.ConstraintUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ConstraintResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ConstraintResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -706,59 +998,86 @@ export class Apps {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling PATCH /apps/{appId}/constraints/{constraintId}.",
+                );
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Deletes a specific constraint
+     *
+     * @param {Flatfile.AppId} appId - ID of the app
+     * @param {Flatfile.ConstraintId} constraintId - ID of the constraint
+     * @param {Apps.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.apps.deleteConstraint("appId", "constraintId")
      */
-    public async deleteConstraint(
+    public deleteConstraint(
         appId: Flatfile.AppId,
         constraintId: Flatfile.ConstraintId,
-        requestOptions?: Apps.RequestOptions
-    ): Promise<Flatfile.SuccessResponse> {
+        requestOptions?: Apps.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.SuccessResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__deleteConstraint(appId, constraintId, requestOptions));
+    }
+
+    private async __deleteConstraint(
+        appId: Flatfile.AppId,
+        constraintId: Flatfile.ConstraintId,
+        requestOptions?: Apps.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.SuccessResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/apps/${await serializers.AppId.jsonOrThrow(
-                    appId
-                )}/constraints/${await serializers.ConstraintId.jsonOrThrow(constraintId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/apps/${encodeURIComponent(serializers.AppId.jsonOrThrow(appId))}/constraints/${encodeURIComponent(serializers.ConstraintId.jsonOrThrow(constraintId))}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.SuccessResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.SuccessResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -767,17 +1086,21 @@ export class Apps {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling DELETE /apps/{appId}/constraints/{constraintId}.",
+                );
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

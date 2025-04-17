@@ -9,7 +9,7 @@
  *     {
  *         info: "Acknowledged by user",
  *         progress: 100,
- *         estimatedCompletionAt: new Date("2023-10-30T20:04:32.074Z")
+ *         estimatedCompletionAt: "2023-10-30T20:04:32.074Z"
  *     }
  */
 export interface JobAckDetails {

@@ -7,7 +7,6 @@
  *     Flatfile.RoutineType.Job
  */
 export type RoutineType = "JOB";
-
 export const RoutineType = {
     Job: "JOB",
 } as const;

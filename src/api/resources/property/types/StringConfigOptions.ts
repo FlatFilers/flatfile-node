@@ -18,7 +18,6 @@ export type StringConfigOptions =
     /**
      * 4gb */
     | "long";
-
 export const StringConfigOptions = {
     Tiny: "tiny",
     Normal: "normal",

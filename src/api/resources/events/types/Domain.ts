@@ -23,7 +23,6 @@ export type Domain =
     | "canvas"
     | "canvas-area"
     | "thread";
-
 export const Domain = {
     File: "file",
     Space: "space",

@@ -18,7 +18,6 @@ export type AgentExportType =
     /**
      * Export type will use the source map created when the agent was deployed to recreate the original source code. */
     | "SOURCE";
-
 export const AgentExportType = {
     AutobuildInlined: "AUTOBUILD_INLINED",
     SystemCombined: "SYSTEM_COMBINED",

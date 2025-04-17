@@ -3,7 +3,6 @@
  */
 
 export type PromptTypeQueryEnum = "ALL" | "AI_ASSIST" | "CONSTRAINT_GENERATION";
-
 export const PromptTypeQueryEnum = {
     All: "ALL",
     AiAssist: "AI_ASSIST",

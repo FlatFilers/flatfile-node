@@ -3,7 +3,6 @@
  */
 
 export type ResolveTo = "clip" | "main" | "snapshot";
-
 export const ResolveTo = {
     Clip: "clip",
     Main: "main",

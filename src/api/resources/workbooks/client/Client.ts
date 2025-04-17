@@ -4,21 +4,33 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as Flatfile from "../../..";
+import * as Flatfile from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Workbooks {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -27,19 +39,30 @@ export class Workbooks {
 
     /**
      * Returns all workbooks matching a filter for an account or space
+     *
+     * @param {Flatfile.ListWorkbooksRequest} request
+     * @param {Workbooks.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      *
      * @example
-     *     await flatfile.workbooks.list({
+     *     await client.workbooks.list({
      *         spaceId: "us_sp_YOUR_ID"
      *     })
      */
-    public async list(
+    public list(
         request: Flatfile.ListWorkbooksRequest = {},
-        requestOptions?: Workbooks.RequestOptions
-    ): Promise<Flatfile.ListWorkbooksResponse> {
+        requestOptions?: Workbooks.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.ListWorkbooksResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: Flatfile.ListWorkbooksRequest = {},
+        requestOptions?: Workbooks.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.ListWorkbooksResponse>> {
         const { spaceId, name, namespace, label, treatment, includeSheets, includeCounts } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (spaceId != null) {
             _queryParams["spaceId"] = spaceId;
         }
@@ -70,50 +93,61 @@ export class Workbooks {
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/workbooks"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                "/workbooks",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ListWorkbooksResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ListWorkbooksResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -123,22 +157,28 @@ export class Workbooks {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /workbooks.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Creates a workbook and adds it to a space
+     *
+     * @param {Flatfile.CreateWorkbookConfig} request
+     * @param {Workbooks.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      *
      * @example
-     *     await flatfile.workbooks.create({
+     *     await client.workbooks.create({
      *         name: "My First Workbook",
      *         sheets: [{
      *                 name: "Contacts",
@@ -161,7 +201,7 @@ export class Workbooks {
      *         labels: ["simple-demo"],
      *         actions: [{
      *                 operation: "submitAction",
-     *                 mode: Flatfile.ActionMode.Foreground,
+     *                 mode: "foreground",
      *                 label: "Submit",
      *                 description: "Submit data to webhook.site",
      *                 primary: true
@@ -171,56 +211,74 @@ export class Workbooks {
      *         }
      *     })
      */
-    public async create(
+    public create(
         request: Flatfile.CreateWorkbookConfig,
-        requestOptions?: Workbooks.RequestOptions
-    ): Promise<Flatfile.WorkbookResponse> {
+        requestOptions?: Workbooks.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.WorkbookResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
+    }
+
+    private async __create(
+        request: Flatfile.CreateWorkbookConfig,
+        requestOptions?: Workbooks.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.WorkbookResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                "/workbooks"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                "/workbooks",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.CreateWorkbookConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.CreateWorkbookConfig.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.WorkbookResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.WorkbookResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -230,83 +288,108 @@ export class Workbooks {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling POST /workbooks.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Returns a single workbook
+     *
+     * @param {Flatfile.WorkbookId} workbookId - ID of workbook to return
+     * @param {Workbooks.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.workbooks.get("us_wb_YOUR_ID")
+     *     await client.workbooks.get("us_wb_YOUR_ID")
      */
-    public async get(
+    public get(
         workbookId: Flatfile.WorkbookId,
-        requestOptions?: Workbooks.RequestOptions
-    ): Promise<Flatfile.WorkbookResponse> {
+        requestOptions?: Workbooks.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.WorkbookResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__get(workbookId, requestOptions));
+    }
+
+    private async __get(
+        workbookId: Flatfile.WorkbookId,
+        requestOptions?: Workbooks.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.WorkbookResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/workbooks/${await serializers.WorkbookId.jsonOrThrow(workbookId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/workbooks/${encodeURIComponent(serializers.WorkbookId.jsonOrThrow(workbookId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.WorkbookResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.WorkbookResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -316,83 +399,108 @@ export class Workbooks {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /workbooks/{workbookId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Deletes a workbook and all of its record data permanently
+     *
+     * @param {Flatfile.WorkbookId} workbookId - ID of workbook to delete
+     * @param {Workbooks.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.workbooks.delete("us_wb_YOUR_ID")
+     *     await client.workbooks.delete("us_wb_YOUR_ID")
      */
-    public async delete(
+    public delete(
         workbookId: Flatfile.WorkbookId,
-        requestOptions?: Workbooks.RequestOptions
-    ): Promise<Flatfile.Success> {
+        requestOptions?: Workbooks.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.Success> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(workbookId, requestOptions));
+    }
+
+    private async __delete(
+        workbookId: Flatfile.WorkbookId,
+        requestOptions?: Workbooks.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.Success>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/workbooks/${await serializers.WorkbookId.jsonOrThrow(workbookId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/workbooks/${encodeURIComponent(serializers.WorkbookId.jsonOrThrow(workbookId))}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Success.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -402,12 +510,14 @@ export class Workbooks {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling DELETE /workbooks/{workbookId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -417,83 +527,108 @@ export class Workbooks {
      * <Note>
      *   Adding a sheet to a workbook does not require the config object to be provided, however updating an existing sheet does.
      * </Note>
+     *
+     * @param {Flatfile.WorkbookId} workbookId - ID of workbook to update
+     * @param {Flatfile.WorkbookUpdate} request
+     * @param {Workbooks.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await flatfile.workbooks.update("us_wb_YOUR_ID", {
+     *     await client.workbooks.update("us_wb_YOUR_ID", {
      *         name: "My Updated Workbook",
      *         labels: ["my-new-label"],
      *         actions: [{
      *                 operation: "submitAction",
-     *                 mode: Flatfile.ActionMode.Foreground,
+     *                 mode: "foreground",
      *                 label: "Submit Changes",
      *                 description: "Submit data to webhook.site",
      *                 primary: true
      *             }]
      *     })
      */
-    public async update(
+    public update(
         workbookId: Flatfile.WorkbookId,
         request: Flatfile.WorkbookUpdate,
-        requestOptions?: Workbooks.RequestOptions
-    ): Promise<Flatfile.WorkbookResponse> {
+        requestOptions?: Workbooks.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.WorkbookResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__update(workbookId, request, requestOptions));
+    }
+
+    private async __update(
+        workbookId: Flatfile.WorkbookId,
+        request: Flatfile.WorkbookUpdate,
+        requestOptions?: Workbooks.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.WorkbookResponse>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/workbooks/${await serializers.WorkbookId.jsonOrThrow(workbookId)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/workbooks/${encodeURIComponent(serializers.WorkbookId.jsonOrThrow(workbookId))}`,
             ),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
-            body: await serializers.WorkbookUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.WorkbookUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.WorkbookResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.WorkbookResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -503,12 +638,14 @@ export class Workbooks {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError("Timeout exceeded when calling PATCH /workbooks/{workbookId}.");
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -516,54 +653,76 @@ export class Workbooks {
     /**
      * Returns the commits for a workbook
      *
+     * @param {Flatfile.WorkbookId} workbookId - ID of workbook
+     * @param {Flatfile.ListWorkbookCommitsRequest} request
+     * @param {Workbooks.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
-     *     await flatfile.workbooks.getWorkbookCommits("us_wb_YOUR_ID")
+     *     await client.workbooks.getWorkbookCommits("us_wb_YOUR_ID")
      */
-    public async getWorkbookCommits(
+    public getWorkbookCommits(
         workbookId: Flatfile.WorkbookId,
         request: Flatfile.ListWorkbookCommitsRequest = {},
-        requestOptions?: Workbooks.RequestOptions
-    ): Promise<Flatfile.ListCommitsResponse> {
+        requestOptions?: Workbooks.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.ListCommitsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getWorkbookCommits(workbookId, request, requestOptions));
+    }
+
+    private async __getWorkbookCommits(
+        workbookId: Flatfile.WorkbookId,
+        request: Flatfile.ListWorkbookCommitsRequest = {},
+        requestOptions?: Workbooks.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.ListCommitsResponse>> {
         const { completed } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (completed != null) {
             _queryParams["completed"] = completed.toString();
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/workbooks/${await serializers.WorkbookId.jsonOrThrow(workbookId)}/commits`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/workbooks/${encodeURIComponent(serializers.WorkbookId.jsonOrThrow(workbookId))}/commits`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.ListCommitsResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.ListCommitsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.FlatfileError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -572,80 +731,110 @@ export class Workbooks {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling GET /workbooks/{workbookId}/commits.",
+                );
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
     /**
      * Rebuild a workbook
+     *
+     * @param {Flatfile.WorkbookId} workbookId - ID of workbook to rebuild
+     * @param {Workbooks.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link Flatfile.BadRequestError}
      * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await client.workbooks.rebuildWorkbook("workbookId")
      */
-    public async rebuildWorkbook(
+    public rebuildWorkbook(
         workbookId: Flatfile.WorkbookId,
-        requestOptions?: Workbooks.RequestOptions
-    ): Promise<Flatfile.Success> {
+        requestOptions?: Workbooks.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.Success> {
+        return core.HttpResponsePromise.fromPromise(this.__rebuildWorkbook(workbookId, requestOptions));
+    }
+
+    private async __rebuildWorkbook(
+        workbookId: Flatfile.WorkbookId,
+        requestOptions?: Workbooks.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.Success>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                (await core.Supplier.get(this._options.environment)) ?? environments.FlatfileEnvironment.Production,
-                `/workbooks/${await serializers.WorkbookId.jsonOrThrow(workbookId)}/rebuild`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/workbooks/${encodeURIComponent(serializers.WorkbookId.jsonOrThrow(workbookId))}/rebuild`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
-                "X-Disable-Hooks": "true",
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.15.7-rc.0",
+                "X-Fern-SDK-Version": "1.15.7-rc.1",
+                "User-Agent": "@flatfile/api/1.15.7-rc.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Success.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Success.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new Flatfile.BadRequestError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
-                        await serializers.Errors.parseOrThrow(_response.error.body, {
+                        serializers.Errors.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
+                        rawResponse: _response.rawResponse,
                     });
             }
         }
@@ -655,17 +844,21 @@ export class Workbooks {
                 throw new errors.FlatfileError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.FlatfileTimeoutError();
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling POST /workbooks/{workbookId}/rebuild.",
+                );
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

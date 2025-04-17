@@ -3,7 +3,6 @@
  */
 
 export type AppType = "PORTAL" | "PROJECTS" | "MAPPING" | "WORKBOOKS" | "CUSTOM";
-
 export const AppType = {
     Portal: "PORTAL",
     Projects: "PROJECTS",

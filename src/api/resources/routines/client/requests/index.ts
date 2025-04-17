@@ -1,1 +1,1 @@
-export { ListRoutinesRequest } from "./ListRoutinesRequest";
+export { type ListRoutinesRequest } from "./ListRoutinesRequest";

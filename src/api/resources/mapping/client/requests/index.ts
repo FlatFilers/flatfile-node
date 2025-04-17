@@ -1,4 +1,4 @@
-export { CreateMappingProgram } from "./CreateMappingProgram";
-export { DeleteAllHistoryForUserRequest } from "./DeleteAllHistoryForUserRequest";
-export { ListProgramsRequest } from "./ListProgramsRequest";
-export { DeleteMultipleRulesRequest } from "./DeleteMultipleRulesRequest";
+export { type CreateMappingProgram } from "./CreateMappingProgram";
+export { type DeleteAllHistoryForUserRequest } from "./DeleteAllHistoryForUserRequest";
+export { type ListProgramsRequest } from "./ListProgramsRequest";
+export { type DeleteMultipleRulesRequest } from "./DeleteMultipleRulesRequest";

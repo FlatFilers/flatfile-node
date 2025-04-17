@@ -1,1 +1,1 @@
-export { ListEntitlementsRequest } from "./ListEntitlementsRequest";
+export { type ListEntitlementsRequest } from "./ListEntitlementsRequest";

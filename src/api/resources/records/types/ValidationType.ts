@@ -3,7 +3,6 @@
  */
 
 export type ValidationType = "error" | "warn" | "info";
-
 export const ValidationType = {
     Error: "error",
     Warn: "warn",

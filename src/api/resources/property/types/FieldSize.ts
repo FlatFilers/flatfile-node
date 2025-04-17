@@ -6,7 +6,6 @@
  * The default visual sizing. This sizing may be overridden by a user
  */
 export type FieldSize = "xs" | "s" | "m" | "l" | "xl";
-
 export const FieldSize = {
     Xs: "xs",
     S: "s",

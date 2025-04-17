@@ -1,4 +1,4 @@
-export { ListSpacesRequest } from "./ListSpacesRequest";
-export { DeleteSpacesRequest } from "./DeleteSpacesRequest";
-export { ListGuidanceRequest } from "./ListGuidanceRequest";
-export { GetGuidanceRequest } from "./GetGuidanceRequest";
+export { type ListSpacesRequest } from "./ListSpacesRequest";
+export { type DeleteSpacesRequest } from "./DeleteSpacesRequest";
+export { type ListGuidanceRequest } from "./ListGuidanceRequest";
+export { type GetGuidanceRequest } from "./GetGuidanceRequest";

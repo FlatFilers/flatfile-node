@@ -12,7 +12,6 @@
  *     Flatfile.Trigger.Manual
  */
 export type Trigger = "manual" | "immediate";
-
 export const Trigger = {
     Manual: "manual",
     Immediate: "immediate",

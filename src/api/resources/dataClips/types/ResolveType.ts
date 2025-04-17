@@ -3,7 +3,6 @@
  */
 
 export type ResolveType = "conflict" | "resolve";
-
 export const ResolveType = {
     Conflict: "conflict",
     Resolve: "resolve",

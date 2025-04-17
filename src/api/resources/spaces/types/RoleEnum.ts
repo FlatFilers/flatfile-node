@@ -3,7 +3,6 @@
  */
 
 export type RoleEnum = "admin" | "guest";
-
 export const RoleEnum = {
     Admin: "admin",
     Guest: "guest",

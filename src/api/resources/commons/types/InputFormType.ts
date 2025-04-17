@@ -3,7 +3,6 @@
  */
 
 export type InputFormType = "simple";
-
 export const InputFormType = {
     Simple: "simple",
 } as const;

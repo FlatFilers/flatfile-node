@@ -1,2 +1,2 @@
-export { ListEventsRequest } from "./ListEventsRequest";
-export { GetEventTokenRequest } from "./GetEventTokenRequest";
+export { type ListEventsRequest } from "./ListEventsRequest";
+export { type GetEventTokenRequest } from "./GetEventTokenRequest";

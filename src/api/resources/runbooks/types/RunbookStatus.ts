@@ -25,7 +25,6 @@
  *     Flatfile.RunbookStatus.Canceled
  */
 export type RunbookStatus = "CREATED" | "RECORDING" | "EXECUTING" | "WAITING" | "COMPLETED" | "FAILED" | "CANCELED";
-
 export const RunbookStatus = {
     Created: "CREATED",
     Recording: "RECORDING",

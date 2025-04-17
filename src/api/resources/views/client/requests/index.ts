@@ -1,1 +1,1 @@
-export { ListViewsRequest } from "./ListViewsRequest";
+export { type ListViewsRequest } from "./ListViewsRequest";

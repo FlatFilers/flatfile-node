@@ -10,8 +10,8 @@
  *         id: "us_gu_123",
  *         version: 1,
  *         content: "# Getting Started\nWelcome to the guide...",
- *         createdAt: new Date("2023-10-30T16:59:45.735Z"),
- *         updatedAt: new Date("2023-10-30T16:59:45.735Z")
+ *         createdAt: "2023-10-30T16:59:45.735Z",
+ *         updatedAt: "2023-10-30T16:59:45.735Z"
  *     }
  */
 export interface GuideVersionResource {

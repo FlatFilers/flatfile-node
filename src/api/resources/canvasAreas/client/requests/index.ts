@@ -1,3 +1,3 @@
-export { ListCanvasAreasRequest } from "./ListCanvasAreasRequest";
-export { CreateCanvasAreaRequest } from "./CreateCanvasAreaRequest";
-export { UpdateCanvasAreaRequest } from "./UpdateCanvasAreaRequest";
+export { type ListCanvasAreasRequest } from "./ListCanvasAreasRequest";
+export { type CreateCanvasAreaRequest } from "./CreateCanvasAreaRequest";
+export { type UpdateCanvasAreaRequest } from "./UpdateCanvasAreaRequest";

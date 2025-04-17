@@ -1,1 +1,1 @@
-export { ListRunbooksRequest } from "./ListRunbooksRequest";
+export { type ListRunbooksRequest } from "./ListRunbooksRequest";

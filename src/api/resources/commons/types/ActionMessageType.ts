@@ -3,7 +3,6 @@
  */
 
 export type ActionMessageType = "error" | "info";
-
 export const ActionMessageType = {
     Error: "error",
     Info: "info",

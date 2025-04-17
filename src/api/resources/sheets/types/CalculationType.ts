@@ -9,7 +9,6 @@ export type CalculationType =
     | "PERCENT_NON_EMPTY"
     | "COUNT_CHANGED"
     | "PERCENT_CHANGED";
-
 export const CalculationType = {
     CountEmpty: "COUNT_EMPTY",
     CountNonEmpty: "COUNT_NON_EMPTY",

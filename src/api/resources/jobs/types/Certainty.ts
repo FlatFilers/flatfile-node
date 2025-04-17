@@ -3,7 +3,6 @@
  */
 
 export type Certainty = "absolute" | "strong" | "moderate" | "weak";
-
 export const Certainty = {
     Absolute: "absolute",
     Strong: "strong",

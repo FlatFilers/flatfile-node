@@ -3,7 +3,6 @@
  */
 
 export type SheetAccess = "*" | "add" | "edit" | "delete" | "import";
-
 export const SheetAccess = {
     All: "*",
     Add: "add",

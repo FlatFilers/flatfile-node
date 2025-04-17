@@ -1,1 +1,1 @@
-export { GetFieldValuesRequestDeprecated } from "./GetFieldValuesRequestDeprecated";
+export { type GetFieldValuesRequestDeprecated } from "./GetFieldValuesRequestDeprecated";

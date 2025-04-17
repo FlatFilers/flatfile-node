@@ -3,7 +3,6 @@
  */
 
 export type ActionSchedule = "weekly" | "daily" | "hourly";
-
 export const ActionSchedule = {
     Weekly: "weekly",
     Daily: "daily",

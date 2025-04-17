@@ -1,3 +1,3 @@
-export { ListFilesRequest } from "./ListFilesRequest";
-export { CreateFileRequest } from "./CreateFileRequest";
-export { UpdateFileRequest } from "./UpdateFileRequest";
+export { type ListFilesRequest } from "./ListFilesRequest";
+export { type CreateFileRequest } from "./CreateFileRequest";
+export { type UpdateFileRequest } from "./UpdateFileRequest";

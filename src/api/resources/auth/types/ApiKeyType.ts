@@ -3,7 +3,6 @@
  */
 
 export type ApiKeyType = "PUBLISHABLE" | "SECRET";
-
 export const ApiKeyType = {
     Publishable: "PUBLISHABLE",
     Secret: "SECRET",

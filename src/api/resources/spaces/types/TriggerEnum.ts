@@ -3,7 +3,6 @@
  */
 
 export type TriggerEnum = "first" | "hover" | "event" | "manual";
-
 export const TriggerEnum = {
     First: "first",
     Hover: "hover",

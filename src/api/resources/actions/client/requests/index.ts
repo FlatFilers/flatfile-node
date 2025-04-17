@@ -1,3 +1,3 @@
-export { ActionCreateRequest } from "./ActionCreateRequest";
-export { ActionsBulkCreateRequest } from "./ActionsBulkCreateRequest";
-export { GetActionsRequest } from "./GetActionsRequest";
+export { type ActionCreateRequest } from "./ActionCreateRequest";
+export { type ActionsBulkCreateRequest } from "./ActionsBulkCreateRequest";
+export { type GetActionsRequest } from "./GetActionsRequest";

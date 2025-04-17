@@ -9,7 +9,6 @@
  *     Flatfile.Compiler.Js
  */
 export type Compiler = "js";
-
 export const Compiler = {
     Js: "js",
 } as const;

@@ -3,7 +3,6 @@
  */
 
 export type InputConstraintType = "required";
-
 export const InputConstraintType = {
     Required: "required",
 } as const;

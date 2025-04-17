@@ -6,7 +6,6 @@
  * Options to filter records in a snapshot
  */
 export type ChangeType = "createdSince" | "updatedSince" | "deletedSince";
-
 export const ChangeType = {
     CreatedSince: "createdSince",
     UpdatedSince: "updatedSince",

@@ -6,7 +6,6 @@
  * Options to filter records
  */
 export type Filter = "valid" | "error" | "all" | "none";
-
 export const Filter = {
     Valid: "valid",
     Error: "error",

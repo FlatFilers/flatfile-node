@@ -13,7 +13,6 @@ export type CanvasAreaType =
     | "document"
     | "file"
     | "iframe";
-
 export const CanvasAreaType = {
     Mapping: "mapping",
     Header: "header",

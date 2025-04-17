@@ -1,4 +1,4 @@
-export { CreateSnapshotRequest } from "./CreateSnapshotRequest";
-export { ListSnapshotRequest } from "./ListSnapshotRequest";
-export { GetSnapshotRequest } from "./GetSnapshotRequest";
-export { GetSnapshotRecordsRequest } from "./GetSnapshotRecordsRequest";
+export { type CreateSnapshotRequest } from "./CreateSnapshotRequest";
+export { type ListSnapshotRequest } from "./ListSnapshotRequest";
+export { type GetSnapshotRequest } from "./GetSnapshotRequest";
+export { type GetSnapshotRecordsRequest } from "./GetSnapshotRecordsRequest";

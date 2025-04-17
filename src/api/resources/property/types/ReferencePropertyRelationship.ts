@@ -3,7 +3,6 @@
  */
 
 export type ReferencePropertyRelationship = "has-one" | "has-many";
-
 export const ReferencePropertyRelationship = {
     HasOne: "has-one",
     HasMany: "has-many",

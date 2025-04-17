@@ -3,7 +3,6 @@
  */
 
 export type CanvasAreaLayout = "split" | "drawer" | "modal";
-
 export const CanvasAreaLayout = {
     Split: "split",
     Drawer: "drawer",

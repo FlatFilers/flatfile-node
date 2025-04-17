@@ -38,208 +38,189 @@ import { Views } from "./api/resources/views/client/Client";
 import { Workbooks } from "./api/resources/workbooks/client/Client";
 
 export declare namespace FlatfileClient {
-    interface Options {
+    export interface Options {
         environment?: core.Supplier<environments.FlatfileEnvironment | string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
+        abortSignal?: AbortSignal;
+        /** Override the X-Disable-Hooks header */
+        xDisableHooks?: "true";
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class FlatfileClient {
-    constructor(protected readonly _options: FlatfileClient.Options = {}) {}
-
     protected _accounts: Accounts | undefined;
+    protected _actions: Actions | undefined;
+    protected _agentExports: AgentExports | undefined;
+    protected _agents: Agents | undefined;
+    protected _apps: Apps | undefined;
+    protected _assistant: Assistant | undefined;
+    protected _auth: Auth | undefined;
+    protected _canvasAreas: CanvasAreas | undefined;
+    protected _cells: Cells | undefined;
+    protected _commits: Commits | undefined;
+    protected _dataRetentionPolicies: DataRetentionPolicies | undefined;
+    protected _documents: Documents | undefined;
+    protected _entitlements: Entitlements | undefined;
+    protected _environments: Environments | undefined;
+    protected _events: Events | undefined;
+    protected _files: Files | undefined;
+    protected _foreigndb: Foreigndb | undefined;
+    protected _guests: Guests | undefined;
+    protected _jobs: Jobs | undefined;
+    protected _mapping: Mapping | undefined;
+    protected _records: Records | undefined;
+    protected _roles: Roles | undefined;
+    protected _routines: Routines | undefined;
+    protected _runbooks: Runbooks | undefined;
+    protected _secrets: Secrets | undefined;
+    protected _sheets: Sheets | undefined;
+    protected _snapshots: Snapshots | undefined;
+    protected _spaces: Spaces | undefined;
+    protected _users: Users | undefined;
+    protected _versions: Versions | undefined;
+    protected _views: Views | undefined;
+    protected _workbooks: Workbooks | undefined;
+
+    constructor(protected readonly _options: FlatfileClient.Options = {}) {}
 
     public get accounts(): Accounts {
         return (this._accounts ??= new Accounts(this._options));
     }
 
-    protected _actions: Actions | undefined;
-
     public get actions(): Actions {
         return (this._actions ??= new Actions(this._options));
     }
-
-    protected _agentExports: AgentExports | undefined;
 
     public get agentExports(): AgentExports {
         return (this._agentExports ??= new AgentExports(this._options));
     }
 
-    protected _agents: Agents | undefined;
-
     public get agents(): Agents {
         return (this._agents ??= new Agents(this._options));
     }
-
-    protected _apps: Apps | undefined;
 
     public get apps(): Apps {
         return (this._apps ??= new Apps(this._options));
     }
 
-    protected _assistant: Assistant | undefined;
-
     public get assistant(): Assistant {
         return (this._assistant ??= new Assistant(this._options));
     }
-
-    protected _auth: Auth | undefined;
 
     public get auth(): Auth {
         return (this._auth ??= new Auth(this._options));
     }
 
-    protected _canvasAreas: CanvasAreas | undefined;
-
     public get canvasAreas(): CanvasAreas {
         return (this._canvasAreas ??= new CanvasAreas(this._options));
     }
-
-    protected _cells: Cells | undefined;
 
     public get cells(): Cells {
         return (this._cells ??= new Cells(this._options));
     }
 
-    protected _commits: Commits | undefined;
-
     public get commits(): Commits {
         return (this._commits ??= new Commits(this._options));
     }
-
-    protected _dataRetentionPolicies: DataRetentionPolicies | undefined;
 
     public get dataRetentionPolicies(): DataRetentionPolicies {
         return (this._dataRetentionPolicies ??= new DataRetentionPolicies(this._options));
     }
 
-    protected _documents: Documents | undefined;
-
     public get documents(): Documents {
         return (this._documents ??= new Documents(this._options));
     }
-
-    protected _entitlements: Entitlements | undefined;
 
     public get entitlements(): Entitlements {
         return (this._entitlements ??= new Entitlements(this._options));
     }
 
-    protected _environments: Environments | undefined;
-
     public get environments(): Environments {
         return (this._environments ??= new Environments(this._options));
     }
-
-    protected _events: Events | undefined;
 
     public get events(): Events {
         return (this._events ??= new Events(this._options));
     }
 
-    protected _files: Files | undefined;
-
     public get files(): Files {
         return (this._files ??= new Files(this._options));
     }
-
-    protected _foreigndb: Foreigndb | undefined;
 
     public get foreigndb(): Foreigndb {
         return (this._foreigndb ??= new Foreigndb(this._options));
     }
 
-    protected _guests: Guests | undefined;
-
     public get guests(): Guests {
         return (this._guests ??= new Guests(this._options));
     }
-
-    protected _jobs: Jobs | undefined;
 
     public get jobs(): Jobs {
         return (this._jobs ??= new Jobs(this._options));
     }
 
-    protected _mapping: Mapping | undefined;
-
     public get mapping(): Mapping {
         return (this._mapping ??= new Mapping(this._options));
     }
-
-    protected _records: Records | undefined;
 
     public get records(): Records {
         return (this._records ??= new Records(this._options));
     }
 
-    protected _roles: Roles | undefined;
-
     public get roles(): Roles {
         return (this._roles ??= new Roles(this._options));
     }
-
-    protected _routines: Routines | undefined;
 
     public get routines(): Routines {
         return (this._routines ??= new Routines(this._options));
     }
 
-    protected _runbooks: Runbooks | undefined;
-
     public get runbooks(): Runbooks {
         return (this._runbooks ??= new Runbooks(this._options));
     }
-
-    protected _secrets: Secrets | undefined;
 
     public get secrets(): Secrets {
         return (this._secrets ??= new Secrets(this._options));
     }
 
-    protected _sheets: Sheets | undefined;
-
     public get sheets(): Sheets {
         return (this._sheets ??= new Sheets(this._options));
     }
-
-    protected _snapshots: Snapshots | undefined;
 
     public get snapshots(): Snapshots {
         return (this._snapshots ??= new Snapshots(this._options));
     }
 
-    protected _spaces: Spaces | undefined;
-
     public get spaces(): Spaces {
         return (this._spaces ??= new Spaces(this._options));
     }
-
-    protected _users: Users | undefined;
 
     public get users(): Users {
         return (this._users ??= new Users(this._options));
     }
 
-    protected _versions: Versions | undefined;
-
     public get versions(): Versions {
         return (this._versions ??= new Versions(this._options));
     }
 
-    protected _views: Views | undefined;
-
     public get views(): Views {
         return (this._views ??= new Views(this._options));
     }
-
-    protected _workbooks: Workbooks | undefined;
 
     public get workbooks(): Workbooks {
         return (this._workbooks ??= new Workbooks(this._options));

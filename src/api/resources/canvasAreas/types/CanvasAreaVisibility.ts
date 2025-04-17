@@ -3,7 +3,6 @@
  */
 
 export type CanvasAreaVisibility = "visible" | "hidden" | "optional" | "skeleton";
-
 export const CanvasAreaVisibility = {
     Visible: "visible",
     Hidden: "hidden",
