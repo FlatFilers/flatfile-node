@@ -7,11 +7,13 @@ import * as Flatfile from "../../../../api";
 import * as core from "../../../../core";
 import { SpaceId } from "../../commons/types/SpaceId";
 import { GuestWorkbook } from "./GuestWorkbook";
+import { GuestSheet } from "./GuestSheet";
 
 export const GuestSpace: core.serialization.ObjectSchema<serializers.GuestSpace.Raw, Flatfile.GuestSpace> =
     core.serialization.object({
         id: SpaceId,
         workbooks: core.serialization.list(GuestWorkbook).optional(),
+        sheets: core.serialization.list(GuestSheet).optional(),
         lastAccessed: core.serialization.date().optional(),
     });
 
@@ -19,6 +21,7 @@ export declare namespace GuestSpace {
     interface Raw {
         id: SpaceId.Raw;
         workbooks?: GuestWorkbook.Raw[] | null;
+        sheets?: GuestSheet.Raw[] | null;
         lastAccessed?: string | null;
     }
 }

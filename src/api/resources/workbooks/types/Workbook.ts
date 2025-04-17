@@ -88,4 +88,6 @@ export interface Workbook {
     createdAt: Date;
     /** Date the workbook was created */
     expiredAt?: Date;
+    /** The storage type of the workbook */
+    storageType?: string;
 }

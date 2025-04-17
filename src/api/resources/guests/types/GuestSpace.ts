@@ -11,11 +11,15 @@ import * as Flatfile from "../../..";
  *         workbooks: [{
  *                 id: "us_wb_YOUR_ID"
  *             }],
+ *         sheets: [{
+ *                 id: "us_sh_YOUR_ID"
+ *             }],
  *         lastAccessed: new Date("2023-10-30T16:59:45.735Z")
  *     }
  */
 export interface GuestSpace {
     id: Flatfile.SpaceId;
     workbooks?: Flatfile.GuestWorkbook[];
+    sheets?: Flatfile.GuestSheet[];
     lastAccessed?: Date;
 }
