@@ -40,6 +40,7 @@ export * from "./DataRetentionPolicyId";
 export * from "./RunbookId";
 export * from "./RoutineId";
 export * from "./ThreadId";
+export * from "./MessageId";
 export * from "./Pagination";
 export * from "./PageSize";
 export * from "./PageNumber";

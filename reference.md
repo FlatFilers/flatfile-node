@@ -8939,6 +8939,370 @@ await client.mapping.deleteRule("us_mp_YOUR_ID", "us_mr_YOUR_ID");
 </dl>
 </details>
 
+## Messages
+
+<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">createMessage</a>(threadId, { ...params }) -> Flatfile.MessageModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new message in a thread
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.messages.createMessage("threadId", {
+    content: {
+        content: {
+            key: "value",
+        },
+    },
+    role: "system",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**threadId:** `Flatfile.ThreadId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.MessageApiCreateData`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Messages.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">getMessages</a>(threadId) -> Flatfile.MessageCollection</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all messages in a thread
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.messages.getMessages("threadId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**threadId:** `Flatfile.ThreadId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Messages.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">getMessage</a>(threadId, messageId) -> Flatfile.MessageModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific message by ID
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.messages.getMessage("threadId", "messageId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**threadId:** `Flatfile.ThreadId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**messageId:** `Flatfile.MessageId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Messages.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">updateMessage</a>(threadId, messageId, { ...params }) -> Flatfile.MessageModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an existing message
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.messages.updateMessage("threadId", "messageId", {});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**threadId:** `Flatfile.ThreadId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**messageId:** `Flatfile.MessageId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.MessageApiUpdateData`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Messages.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">deleteMessage</a>(threadId, messageId) -> Flatfile.Success</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a message
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.messages.deleteMessage("threadId", "messageId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**threadId:** `Flatfile.ThreadId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**messageId:** `Flatfile.MessageId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Messages.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Records
 
 <details><summary><code>client.records.<a href="/src/api/resources/records/client/Client.ts">get</a>(sheetId, { ...params }) -> Flatfile.GetRecordsResponse</code></summary>
@@ -12706,6 +13070,334 @@ await client.spaces.deleteGuidance("spaceId", "guidanceId");
 <dd>
 
 **requestOptions:** `Spaces.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Threads
+
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">createThread</a>({ ...params }) -> Flatfile.ThreadResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new thread
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.threads.createThread({
+    resourceId: "resourceId",
+    status: "ready",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.ThreadApiCreateData`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Threads.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">getThreads</a>({ ...params }) -> Flatfile.ThreadCollection</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get threads with optional filtering by resource
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.threads.getThreads();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.GetThreadsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Threads.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">getThread</a>(threadId) -> Flatfile.ThreadResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific thread by ID
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.threads.getThread("threadId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**threadId:** `Flatfile.ThreadId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Threads.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">updateThread</a>(threadId, { ...params }) -> Flatfile.ThreadResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a thread
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.threads.updateThread("threadId", {});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**threadId:** `Flatfile.ThreadId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.ThreadApiUpdateData`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Threads.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">deleteThread</a>(threadId) -> Flatfile.Success</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Soft delete a thread
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.threads.deleteThread("threadId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**threadId:** `Flatfile.ThreadId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Threads.RequestOptions`
 
 </dd>
 </dl>

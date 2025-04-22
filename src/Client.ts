@@ -24,6 +24,7 @@ import { Foreigndb } from "./api/resources/foreigndb/client/Client";
 import { Guests } from "./api/resources/guests/client/Client";
 import { Jobs } from "./api/resources/jobs/client/Client";
 import { Mapping } from "./api/resources/mapping/client/Client";
+import { Messages } from "./api/resources/messages/client/Client";
 import { Records } from "./api/resources/records/client/Client";
 import { Roles } from "./api/resources/roles/client/Client";
 import { Routines } from "./api/resources/routines/client/Client";
@@ -32,6 +33,7 @@ import { Secrets } from "./api/resources/secrets/client/Client";
 import { Sheets } from "./api/resources/sheets/client/Client";
 import { Snapshots } from "./api/resources/snapshots/client/Client";
 import { Spaces } from "./api/resources/spaces/client/Client";
+import { Threads } from "./api/resources/threads/client/Client";
 import { Users } from "./api/resources/users/client/Client";
 import { Versions } from "./api/resources/versions/client/Client";
 import { Views } from "./api/resources/views/client/Client";
@@ -83,6 +85,7 @@ export class FlatfileClient {
     protected _guests: Guests | undefined;
     protected _jobs: Jobs | undefined;
     protected _mapping: Mapping | undefined;
+    protected _messages: Messages | undefined;
     protected _records: Records | undefined;
     protected _roles: Roles | undefined;
     protected _routines: Routines | undefined;
@@ -91,6 +94,7 @@ export class FlatfileClient {
     protected _sheets: Sheets | undefined;
     protected _snapshots: Snapshots | undefined;
     protected _spaces: Spaces | undefined;
+    protected _threads: Threads | undefined;
     protected _users: Users | undefined;
     protected _versions: Versions | undefined;
     protected _views: Views | undefined;
@@ -178,6 +182,10 @@ export class FlatfileClient {
         return (this._mapping ??= new Mapping(this._options));
     }
 
+    public get messages(): Messages {
+        return (this._messages ??= new Messages(this._options));
+    }
+
     public get records(): Records {
         return (this._records ??= new Records(this._options));
     }
@@ -208,6 +216,10 @@ export class FlatfileClient {
 
     public get spaces(): Spaces {
         return (this._spaces ??= new Spaces(this._options));
+    }
+
+    public get threads(): Threads {
+        return (this._threads ??= new Threads(this._options));
     }
 
     public get users(): Users {
