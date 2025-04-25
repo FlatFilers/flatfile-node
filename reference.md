@@ -13080,6 +13080,132 @@ await client.spaces.deleteGuidance("spaceId", "guidanceId");
 </dl>
 </details>
 
+<details><summary><code>client.spaces.<a href="/src/api/resources/spaces/client/Client.ts">createDraft</a>(spaceId) -> Flatfile.SpaceDraftResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a draft of a space
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.spaces.createDraft("spaceId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**spaceId:** `Flatfile.SpaceId` — ID of space to create draft of
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Spaces.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.spaces.<a href="/src/api/resources/spaces/client/Client.ts">listSpaceDrafts</a>(spaceId) -> Flatfile.SpaceDraftListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists drafts for a space
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.spaces.listSpaceDrafts("spaceId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**spaceId:** `Flatfile.SpaceId` — ID of space to list drafts for
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Spaces.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Threads
 
 <details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">createThread</a>({ ...params }) -> Flatfile.ThreadResponse</code></summary>

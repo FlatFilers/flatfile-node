@@ -1,3 +1,6 @@
+export * from "./SpaceDraftResponse";
+export * from "./SpaceDraftListResponse";
+export * from "./SpaceDraft";
 export * from "./ListSpacesResponse";
 export * from "./SpaceResponse";
 export * from "./Space";

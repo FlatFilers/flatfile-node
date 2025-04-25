@@ -15,6 +15,7 @@ export interface InternalSpaceConfigBase {
     settings?: Flatfile.SpaceSettings;
     actions?: Flatfile.Action[];
     access?: Flatfile.SpaceAccess[];
+    /** Only used during creation - will be ignored on update */
     autoConfigure?: boolean;
     namespace?: string;
     labels?: string[];
