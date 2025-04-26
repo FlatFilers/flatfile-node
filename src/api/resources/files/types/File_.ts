@@ -71,4 +71,5 @@ export interface File_ {
     sheetId?: Flatfile.SheetId;
     actions?: Flatfile.Action[];
     origin?: Flatfile.FileOrigin;
+    treatments?: Flatfile.FileTreatments[];
 }

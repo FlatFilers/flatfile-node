@@ -4,3 +4,4 @@ export * from "./File_";
 export * from "./ModelFileStatusEnum";
 export * from "./Mode";
 export * from "./FileOrigin";
+export * from "./FileTreatments";

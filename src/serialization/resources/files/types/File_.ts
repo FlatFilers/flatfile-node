@@ -13,6 +13,7 @@ import { WorkbookId } from "../../commons/types/WorkbookId";
 import { SheetId } from "../../commons/types/SheetId";
 import { Action } from "../../commons/types/Action";
 import { FileOrigin } from "./FileOrigin";
+import { FileTreatments } from "./FileTreatments";
 
 export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, Flatfile.File_> = core.serialization.object({
     id: FileId,
@@ -33,6 +34,7 @@ export const File_: core.serialization.ObjectSchema<serializers.File_.Raw, Flatf
     sheetId: SheetId.optional(),
     actions: core.serialization.list(Action).optional(),
     origin: FileOrigin.optional(),
+    treatments: core.serialization.list(FileTreatments).optional(),
 });
 
 export declare namespace File_ {
@@ -55,5 +57,6 @@ export declare namespace File_ {
         sheetId?: SheetId.Raw | null;
         actions?: Action.Raw[] | null;
         origin?: FileOrigin.Raw | null;
+        treatments?: FileTreatments.Raw[] | null;
     }
 }
