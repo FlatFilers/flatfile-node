@@ -1,4 +1,5 @@
 export * from "./AgentId";
+export * from "./AgentLogId";
 export * from "./AgentExportId";
 export * from "./AgentVersionId";
 export * from "./AccountId";
@@ -41,6 +42,8 @@ export * from "./RunbookId";
 export * from "./RoutineId";
 export * from "./ThreadId";
 export * from "./MessageId";
+export * from "./OnboardingDatapointId";
+export * from "./OnboardingId";
 export * from "./Pagination";
 export * from "./PageSize";
 export * from "./PageNumber";

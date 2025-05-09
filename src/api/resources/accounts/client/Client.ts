@@ -65,8 +65,8 @@ export class Accounts {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -123,6 +123,7 @@ export class Accounts {
      *
      * @example
      *     await client.accounts.updateCurrent({
+     *         name: "My Company Name",
      *         defaultAppId: "us_app_YOUR_ID"
      *     })
      */
@@ -150,8 +151,8 @@ export class Accounts {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

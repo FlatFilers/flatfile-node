@@ -13,12 +13,23 @@ import * as Flatfile from "../../../index";
  *             totalCount: 100
  *         },
  *         data: [{
+ *                 id: "us_lg_YOUR_ID",
  *                 eventId: "us_evt_YOUR_ID",
  *                 agentId: "us_ag_YOUR_ID",
  *                 success: true,
  *                 createdAt: "2022-09-18T00:19:57.007Z",
  *                 completedAt: "2022-09-18T00:20:04.007Z",
- *                 log: "SUCCESS"
+ *                 log: "SUCCESS",
+ *                 queueLag: 100,
+ *                 namespaces: ["space:blue"],
+ *                 context: {},
+ *                 topic: "space:created",
+ *                 duration: 7000,
+ *                 memoryUsage: 524,
+ *                 requestTime: 1500,
+ *                 requestCount: 5,
+ *                 bytesReceived: 1024,
+ *                 bytesSent: 2048
  *             }]
  *     }
  */

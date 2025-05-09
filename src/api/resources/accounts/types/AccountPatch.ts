@@ -9,9 +9,11 @@ import * as Flatfile from "../../../index";
  *
  * @example
  *     {
+ *         name: "My Company Name",
  *         defaultAppId: "us_app_YOUR_ID"
  *     }
  */
 export interface AccountPatch {
-    defaultAppId: Flatfile.AppId;
+    name?: string;
+    defaultAppId?: Flatfile.AppId;
 }

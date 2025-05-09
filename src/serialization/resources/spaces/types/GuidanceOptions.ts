@@ -16,7 +16,7 @@ export const GuidanceOptions: core.serialization.ObjectSchema<
     target: core.serialization.string(),
     trigger: TriggerEnum,
     type: TypeEnum,
-    role: RoleEnum,
+    role: RoleEnum.optional(),
 });
 
 export declare namespace GuidanceOptions {
@@ -24,6 +24,6 @@ export declare namespace GuidanceOptions {
         target: string;
         trigger: TriggerEnum.Raw;
         type: TypeEnum.Raw;
-        role: RoleEnum.Raw;
+        role?: RoleEnum.Raw | null;
     }
 }

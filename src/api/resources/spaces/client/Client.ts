@@ -141,8 +141,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -247,8 +247,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -359,8 +359,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -470,8 +470,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -593,8 +593,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -710,8 +710,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -822,8 +822,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -933,8 +933,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1049,8 +1049,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1137,10 +1137,10 @@ export class Spaces {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await client.spaces.createGuidance("spaceId", {
-     *         guideSlug: "guideSlug",
+     *     await client.spaces.createGuidance("us_sp_YOUR_ID", {
+     *         guideSlug: "getting-started",
      *         options: {
-     *             target: "target",
+     *             target: "getting-started",
      *             trigger: "first",
      *             type: "sidebar",
      *             role: "admin"
@@ -1173,8 +1173,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1272,7 +1272,9 @@ export class Spaces {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await client.spaces.listGuidance("spaceId")
+     *     await client.spaces.listGuidance("us_sp_YOUR_ID", {
+     *         includeGuide: true
+     *     })
      */
     public listGuidance(
         spaceId: Flatfile.SpaceId,
@@ -1287,10 +1289,10 @@ export class Spaces {
         request: Flatfile.ListGuidanceRequest = {},
         requestOptions?: Spaces.RequestOptions,
     ): Promise<core.WithRawResponse<Flatfile.GuidanceListResponse>> {
-        const { guide } = request;
+        const { includeGuide } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (guide != null) {
-            _queryParams["guide"] = guide;
+        if (includeGuide != null) {
+            _queryParams["includeGuide"] = includeGuide.toString();
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -1306,8 +1308,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1406,7 +1408,9 @@ export class Spaces {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await client.spaces.getGuidance("spaceId", "guidanceId")
+     *     await client.spaces.getGuidance("us_sp_YOUR_ID", "us_gd_YOUR_ID", {
+     *         includeGuide: true
+     *     })
      */
     public getGuidance(
         spaceId: Flatfile.SpaceId,
@@ -1423,10 +1427,10 @@ export class Spaces {
         request: Flatfile.GetGuidanceRequest = {},
         requestOptions?: Spaces.RequestOptions,
     ): Promise<core.WithRawResponse<Flatfile.GuidanceResource>> {
-        const { guide } = request;
+        const { includeGuide } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (guide != null) {
-            _queryParams["guide"] = guide;
+        if (includeGuide != null) {
+            _queryParams["includeGuide"] = includeGuide.toString();
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -1442,8 +1446,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1544,9 +1548,9 @@ export class Spaces {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await client.spaces.updateGuidance("spaceId", "guidanceId", {
+     *     await client.spaces.updateGuidance("us_sp_YOUR_ID", "us_gd_YOUR_ID", {
      *         options: {
-     *             target: "target",
+     *             target: "getting-started",
      *             trigger: "first",
      *             type: "sidebar",
      *             role: "admin"
@@ -1583,8 +1587,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1684,7 +1688,7 @@ export class Spaces {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await client.spaces.deleteGuidance("spaceId", "guidanceId")
+     *     await client.spaces.deleteGuidance("us_sp_YOUR_ID", "us_gd_YOUR_ID")
      */
     public deleteGuidance(
         spaceId: Flatfile.SpaceId,
@@ -1712,8 +1716,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1836,8 +1840,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1947,8 +1951,8 @@ export class Spaces {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -2014,6 +2018,238 @@ export class Spaces {
                 });
             case "timeout":
                 throw new errors.FlatfileTimeoutError("Timeout exceeded when calling GET /spaces/{spaceId}/drafts.");
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Gets a draft by the space id and draft space id
+     *
+     * @param {Flatfile.SpaceId} spaceId - ID of space to get draft for
+     * @param {Flatfile.SpaceId} draftSpaceId - ID of draft space to get
+     * @param {Spaces.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await client.spaces.getSpaceDraft("spaceId", "draftSpaceId")
+     */
+    public getSpaceDraft(
+        spaceId: Flatfile.SpaceId,
+        draftSpaceId: Flatfile.SpaceId,
+        requestOptions?: Spaces.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.SpaceDraftMergeOperationsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getSpaceDraft(spaceId, draftSpaceId, requestOptions));
+    }
+
+    private async __getSpaceDraft(
+        spaceId: Flatfile.SpaceId,
+        draftSpaceId: Flatfile.SpaceId,
+        requestOptions?: Spaces.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.SpaceDraftMergeOperationsResponse>> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/spaces/${encodeURIComponent(serializers.SpaceId.jsonOrThrow(spaceId))}/drafts/${encodeURIComponent(serializers.SpaceId.jsonOrThrow(draftSpaceId))}/merge`,
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.SpaceDraftMergeOperationsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling GET /spaces/{spaceId}/drafts/{draftSpaceId}/merge.",
+                );
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Merges a draft into a space
+     *
+     * @param {Flatfile.SpaceId} spaceId - ID of space to merge draft into
+     * @param {Flatfile.SpaceId} draftSpaceId - ID of draft space to merge
+     * @param {Spaces.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link Flatfile.BadRequestError}
+     * @throws {@link Flatfile.NotFoundError}
+     *
+     * @example
+     *     await client.spaces.mergeDraft("spaceId", "draftSpaceId")
+     */
+    public mergeDraft(
+        spaceId: Flatfile.SpaceId,
+        draftSpaceId: Flatfile.SpaceId,
+        requestOptions?: Spaces.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.Success> {
+        return core.HttpResponsePromise.fromPromise(this.__mergeDraft(spaceId, draftSpaceId, requestOptions));
+    }
+
+    private async __mergeDraft(
+        spaceId: Flatfile.SpaceId,
+        draftSpaceId: Flatfile.SpaceId,
+        requestOptions?: Spaces.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.Success>> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/spaces/${encodeURIComponent(serializers.SpaceId.jsonOrThrow(spaceId))}/drafts/${encodeURIComponent(serializers.SpaceId.jsonOrThrow(draftSpaceId))}/merge`,
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.Success.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Flatfile.BadRequestError(
+                        serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new Flatfile.NotFoundError(
+                        serializers.Errors.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.FlatfileError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling POST /spaces/{spaceId}/drafts/{draftSpaceId}/merge.",
+                );
             case "unknown":
                 throw new errors.FlatfileError({
                     message: _response.error.errorMessage,

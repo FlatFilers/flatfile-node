@@ -23,6 +23,8 @@ export const Sheet: core.serialization.ObjectSchema<serializers.Sheet.Raw, Flatf
     createdAt: core.serialization.date(),
     lockedAt: core.serialization.date().optional(),
     recordCounts: RecordCounts.optional(),
+    createdFrom: SheetId.optional(),
+    lastPropagatedAt: core.serialization.date().optional(),
 });
 
 export declare namespace Sheet {
@@ -39,5 +41,7 @@ export declare namespace Sheet {
         createdAt: string;
         lockedAt?: string | null;
         recordCounts?: RecordCounts.Raw | null;
+        createdFrom?: SheetId.Raw | null;
+        lastPropagatedAt?: string | null;
     }
 }

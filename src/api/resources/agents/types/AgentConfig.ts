@@ -34,4 +34,8 @@ export interface AgentConfig {
     isSystem?: boolean;
     /** The namespace this agent should be limited to. Right now, this is information only and not used to actually filter agents that run, so you must still specify the namespace filter in the agent code. */
     namespace?: string;
+    /** Package versions information for the agent */
+    packageVersions?: Record<string, string>;
+    /** Commit information for the agent */
+    commitInfo?: Record<string, any>;
 }

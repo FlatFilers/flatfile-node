@@ -98,4 +98,8 @@ export interface Sheet {
     lockedAt?: Date;
     /** The precomputed counts of records in the Sheet (may not exist). */
     recordCounts?: Flatfile.RecordCounts;
+    /** The sheet id of the template that was used to create this sheet */
+    createdFrom?: Flatfile.SheetId;
+    /** The last time the sheet template configuration was propagated to this sheet */
+    lastPropagatedAt?: Date;
 }

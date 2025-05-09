@@ -4,9 +4,26 @@
 
 import * as Flatfile from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         target: "getting-started",
+ *         trigger: Flatfile.TriggerEnum.First,
+ *         type: Flatfile.TypeEnum.Sidebar,
+ *         role: Flatfile.RoleEnum.Admin
+ *     }
+ *
+ * @example
+ *     {
+ *         target: "getting-started",
+ *         trigger: Flatfile.TriggerEnum.Hover,
+ *         type: Flatfile.TypeEnum.Sidebar,
+ *         role: Flatfile.RoleEnum.Guest
+ *     }
+ */
 export interface GuidanceOptions {
     target: string;
     trigger: Flatfile.TriggerEnum;
     type: Flatfile.TypeEnum;
-    role: Flatfile.RoleEnum;
+    role?: Flatfile.RoleEnum;
 }

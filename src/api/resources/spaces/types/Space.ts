@@ -78,4 +78,8 @@ export interface Space extends Flatfile.InternalSpaceConfigBase {
     upgradedAt?: Date;
     /** Type of guest authentication */
     guestAuthentication: Flatfile.GuestAuthenticationEnum[];
+    /** The space id of the template that was used to create this space */
+    createdFrom?: Flatfile.SpaceId;
+    /** The last time the space template configuration was propagated to this space */
+    lastPropagatedAt?: Date;
 }

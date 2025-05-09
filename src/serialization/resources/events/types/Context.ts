@@ -50,6 +50,8 @@ export const Context: core.serialization.ObjectSchema<serializers.Context.Raw, F
         actionId: ActionId.optional(),
         dataClipId: DataClipId.optional(),
         threadId: ThreadId.optional(),
+        filters: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
+        entityId: core.serialization.string().optional(),
     });
 
 export declare namespace Context {
@@ -76,5 +78,7 @@ export declare namespace Context {
         actionId?: ActionId.Raw | null;
         dataClipId?: DataClipId.Raw | null;
         threadId?: ThreadId.Raw | null;
+        filters?: Record<string, string> | null;
+        entityId?: string | null;
     }
 }

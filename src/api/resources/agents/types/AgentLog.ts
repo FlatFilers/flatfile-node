@@ -9,15 +9,27 @@ import * as Flatfile from "../../../index";
  *
  * @example
  *     {
+ *         id: "us_lg_YOUR_ID",
  *         eventId: "us_evt_YOUR_ID",
  *         agentId: "us_ag_YOUR_ID",
  *         success: true,
  *         createdAt: "2022-09-18T00:19:57.007Z",
  *         completedAt: "2022-09-18T00:20:04.007Z",
- *         log: "SUCCESS"
+ *         log: "SUCCESS",
+ *         queueLag: 100,
+ *         namespaces: ["space:blue"],
+ *         context: {},
+ *         topic: "space:created",
+ *         duration: 7000,
+ *         memoryUsage: 524,
+ *         requestTime: 1500,
+ *         requestCount: 5,
+ *         bytesReceived: 1024,
+ *         bytesSent: 2048
  *     }
  */
 export interface AgentLog {
+    id: Flatfile.AgentLogId;
     agentId: Flatfile.AgentId;
     eventId: Flatfile.EventId;
     /** Whether the agent execution was successful */
@@ -26,4 +38,24 @@ export interface AgentLog {
     completedAt: string;
     /** The log of the agent execution */
     log?: string;
+    /** The time difference between when the event was created and when the agent started processing it */
+    queueLag?: number;
+    /** The namespaces associated with the event */
+    namespaces?: string[];
+    /** The context of the agent execution */
+    context?: Record<string, any>;
+    /** The topic of the agent execution */
+    topic?: string;
+    /** The duration of the agent execution in milliseconds */
+    duration?: number;
+    /** The memory usage of the agent execution in bytes */
+    memoryUsage?: number;
+    /** The amount of time the agent spent making HTTP requests in milliseconds */
+    requestTime?: number;
+    /** The number of HTTP requests made by the agent */
+    requestCount?: number;
+    /** The total amount of data received by the agent during execution in bytes */
+    bytesReceived?: number;
+    /** The total amount of data sent by the agent during execution in bytes */
+    bytesSent?: number;
 }

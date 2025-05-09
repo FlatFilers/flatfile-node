@@ -25,6 +25,8 @@ import { Guests } from "./api/resources/guests/client/Client";
 import { Jobs } from "./api/resources/jobs/client/Client";
 import { Mapping } from "./api/resources/mapping/client/Client";
 import { Messages } from "./api/resources/messages/client/Client";
+import { OnboardingDatapoints } from "./api/resources/onboardingDatapoints/client/Client";
+import { Onboardings } from "./api/resources/onboardings/client/Client";
 import { Records } from "./api/resources/records/client/Client";
 import { Roles } from "./api/resources/roles/client/Client";
 import { Routines } from "./api/resources/routines/client/Client";
@@ -86,6 +88,8 @@ export class FlatfileClient {
     protected _jobs: Jobs | undefined;
     protected _mapping: Mapping | undefined;
     protected _messages: Messages | undefined;
+    protected _onboardingDatapoints: OnboardingDatapoints | undefined;
+    protected _onboardings: Onboardings | undefined;
     protected _records: Records | undefined;
     protected _roles: Roles | undefined;
     protected _routines: Routines | undefined;
@@ -184,6 +188,14 @@ export class FlatfileClient {
 
     public get messages(): Messages {
         return (this._messages ??= new Messages(this._options));
+    }
+
+    public get onboardingDatapoints(): OnboardingDatapoints {
+        return (this._onboardingDatapoints ??= new OnboardingDatapoints(this._options));
+    }
+
+    public get onboardings(): Onboardings {
+        return (this._onboardings ??= new Onboardings(this._options));
     }
 
     public get records(): Records {

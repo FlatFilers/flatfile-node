@@ -4,6 +4,11 @@
 
 /**
  * Properties used to upgrade a space
+ *
+ * @example
+ *     {
+ *         id: "us_sp_YOUR_ID"
+ *     }
  */
 export interface UpgradeSpaceConfig {
     id: string;

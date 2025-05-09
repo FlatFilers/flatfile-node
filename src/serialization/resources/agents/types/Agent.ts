@@ -17,6 +17,8 @@ export const Agent: core.serialization.ObjectSchema<serializers.Agent.Raw, Flatf
         updatedAt: core.serialization.date(),
         accountId: AccountId,
         environmentId: EnvironmentId,
+        createdFrom: AgentId.optional(),
+        lastPropagatedAt: core.serialization.date().optional(),
     })
     .extend(AgentConfig);
 
@@ -27,5 +29,7 @@ export declare namespace Agent {
         updatedAt: string;
         accountId: AccountId.Raw;
         environmentId: EnvironmentId.Raw;
+        createdFrom?: AgentId.Raw | null;
+        lastPropagatedAt?: string | null;
     }
 }

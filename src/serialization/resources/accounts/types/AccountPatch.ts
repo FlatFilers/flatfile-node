@@ -9,11 +9,13 @@ import { AppId } from "../../commons/types/AppId";
 
 export const AccountPatch: core.serialization.ObjectSchema<serializers.AccountPatch.Raw, Flatfile.AccountPatch> =
     core.serialization.object({
-        defaultAppId: AppId,
+        name: core.serialization.string().optional(),
+        defaultAppId: AppId.optional(),
     });
 
 export declare namespace AccountPatch {
     export interface Raw {
-        defaultAppId: AppId.Raw;
+        name?: string | null;
+        defaultAppId?: AppId.Raw | null;
     }
 }

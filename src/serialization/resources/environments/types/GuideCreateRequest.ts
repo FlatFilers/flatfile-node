@@ -5,7 +5,6 @@
 import * as serializers from "../../../index";
 import * as Flatfile from "../../../../api/index";
 import * as core from "../../../../core";
-import { GuideVersionResource } from "./GuideVersionResource";
 
 export const GuideCreateRequest: core.serialization.ObjectSchema<
     serializers.GuideCreateRequest.Raw,
@@ -15,7 +14,6 @@ export const GuideCreateRequest: core.serialization.ObjectSchema<
     title: core.serialization.string(),
     metadata: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
     slug: core.serialization.string(),
-    versions: core.serialization.list(GuideVersionResource),
     blocks: core.serialization.list(
         core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
     ),
@@ -28,7 +26,6 @@ export declare namespace GuideCreateRequest {
         title: string;
         metadata?: Record<string, any> | null;
         slug: string;
-        versions: GuideVersionResource.Raw[];
         blocks: (Record<string, any> | null | undefined)[];
         environmentId: string;
     }

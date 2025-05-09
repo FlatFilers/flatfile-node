@@ -23,4 +23,5 @@ export type JobUpdateConfig =
     | Flatfile.EmptyObject
     | Flatfile.AddRecordsToDataClipJobConfig
     | Flatfile.UpdateDataClipResolutionsJobConfig
-    | Flatfile.AgentExportJobConfig;
+    | Flatfile.AgentExportJobConfig
+    | Flatfile.CompanyResearchJobConfig;

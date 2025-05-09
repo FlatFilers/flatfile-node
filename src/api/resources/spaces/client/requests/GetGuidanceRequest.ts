@@ -4,11 +4,13 @@
 
 /**
  * @example
- *     {}
+ *     {
+ *         includeGuide: true
+ *     }
  */
 export interface GetGuidanceRequest {
     /**
-     * Include the guide with the guidance
+     * Include the guide with the guidance, default is false
      */
-    guide?: string;
+    includeGuide?: boolean;
 }

@@ -5,26 +5,49 @@
 import * as serializers from "../../../index";
 import * as Flatfile from "../../../../api/index";
 import * as core from "../../../../core";
+import { AgentLogId } from "../../commons/types/AgentLogId";
 import { AgentId } from "../../commons/types/AgentId";
 import { EventId } from "../../commons/types/EventId";
 
 export const AgentLog: core.serialization.ObjectSchema<serializers.AgentLog.Raw, Flatfile.AgentLog> =
     core.serialization.object({
+        id: AgentLogId,
         agentId: AgentId,
         eventId: EventId,
         success: core.serialization.boolean(),
         createdAt: core.serialization.string(),
         completedAt: core.serialization.string(),
         log: core.serialization.string().optional(),
+        queueLag: core.serialization.number().optional(),
+        namespaces: core.serialization.list(core.serialization.string()).optional(),
+        context: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
+        topic: core.serialization.string().optional(),
+        duration: core.serialization.number().optional(),
+        memoryUsage: core.serialization.number().optional(),
+        requestTime: core.serialization.number().optional(),
+        requestCount: core.serialization.number().optional(),
+        bytesReceived: core.serialization.number().optional(),
+        bytesSent: core.serialization.number().optional(),
     });
 
 export declare namespace AgentLog {
     export interface Raw {
+        id: AgentLogId.Raw;
         agentId: AgentId.Raw;
         eventId: EventId.Raw;
         success: boolean;
         createdAt: string;
         completedAt: string;
         log?: string | null;
+        queueLag?: number | null;
+        namespaces?: string[] | null;
+        context?: Record<string, any> | null;
+        topic?: string | null;
+        duration?: number | null;
+        memoryUsage?: number | null;
+        requestTime?: number | null;
+        requestCount?: number | null;
+        bytesReceived?: number | null;
+        bytesSent?: number | null;
     }
 }

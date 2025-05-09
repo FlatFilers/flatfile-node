@@ -15,8 +15,18 @@ export const JobType: core.serialization.Schema<serializers.JobType.Raw, Flatfil
     "app",
     "agent",
     "autobuild",
+    "onboarding",
 ]);
 
 export declare namespace JobType {
-    export type Raw = "file" | "workbook" | "sheet" | "space" | "document" | "app" | "agent" | "autobuild";
+    export type Raw =
+        | "file"
+        | "workbook"
+        | "sheet"
+        | "space"
+        | "document"
+        | "app"
+        | "agent"
+        | "autobuild"
+        | "onboarding";
 }

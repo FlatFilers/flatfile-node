@@ -80,8 +80,8 @@ export class Environments {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -172,8 +172,8 @@ export class Environments {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -264,8 +264,8 @@ export class Environments {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -378,8 +378,8 @@ export class Environments {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -499,8 +499,8 @@ export class Environments {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -562,7 +562,7 @@ export class Environments {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await client.environments.delete("environmentId")
+     *     await client.environments.delete("us_env_YOUR_ID")
      */
     public delete(
         environmentId: string,
@@ -588,8 +588,8 @@ export class Environments {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -675,7 +675,7 @@ export class Environments {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await client.environments.listGuides("environmentId")
+     *     await client.environments.listGuides("us_env_YOUR_ID")
      */
     public listGuides(
         environmentId: Flatfile.EnvironmentId,
@@ -701,8 +701,8 @@ export class Environments {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -817,8 +817,8 @@ export class Environments {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -946,8 +946,8 @@ export class Environments {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1040,7 +1040,6 @@ export class Environments {
      *         title: "Data import made easy",
      *         slug: "getting-started",
      *         environmentId: "commons.EnvironmentId",
-     *         versions: [],
      *         blocks: [],
      *         metadata: {
      *             "category": "onboarding"
@@ -1073,8 +1072,8 @@ export class Environments {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1190,8 +1189,8 @@ export class Environments {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1279,7 +1278,7 @@ export class Environments {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await client.environments.getGuideVersion("environmentId", "guideId", 1)
+     *     await client.environments.getGuideVersion("us_env_YOUR_ID", "us_gu_YOUR_ID", 1)
      */
     public getGuideVersion(
         environmentId: Flatfile.EnvironmentId,
@@ -1311,8 +1310,8 @@ export class Environments {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.2",
-                "User-Agent": "@flatfile/api/1.17.2",
+                "X-Fern-SDK-Version": "1.17.3",
+                "User-Agent": "@flatfile/api/1.17.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

@@ -27,4 +27,8 @@ export interface Agent extends Flatfile.AgentConfig {
     updatedAt: Date;
     accountId: Flatfile.AccountId;
     environmentId: Flatfile.EnvironmentId;
+    /** The agent id of the template that was used to create this agent */
+    createdFrom?: Flatfile.AgentId;
+    /** The last time the agent template configuration was propagated to this agent */
+    lastPropagatedAt?: Date;
 }

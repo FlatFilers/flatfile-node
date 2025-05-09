@@ -30,6 +30,8 @@ export const Space: core.serialization.ObjectSchema<serializers.Space.Raw, Flatf
         size: SpaceSize.optional(),
         upgradedAt: core.serialization.date().optional(),
         guestAuthentication: core.serialization.list(GuestAuthenticationEnum),
+        createdFrom: SpaceId.optional(),
+        lastPropagatedAt: core.serialization.date().optional(),
     })
     .extend(InternalSpaceConfigBase);
 
@@ -52,5 +54,7 @@ export declare namespace Space {
         size?: SpaceSize.Raw | null;
         upgradedAt?: string | null;
         guestAuthentication: GuestAuthenticationEnum.Raw[];
+        createdFrom?: SpaceId.Raw | null;
+        lastPropagatedAt?: string | null;
     }
 }

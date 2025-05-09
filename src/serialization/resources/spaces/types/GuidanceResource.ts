@@ -15,6 +15,8 @@ export const GuidanceResource: core.serialization.ObjectSchema<
     id: GuidanceId,
     guideSlug: core.serialization.string(),
     options: GuidanceOptions,
+    createdFrom: GuidanceId.optional(),
+    lastPropagatedAt: core.serialization.date().optional(),
 });
 
 export declare namespace GuidanceResource {
@@ -22,5 +24,7 @@ export declare namespace GuidanceResource {
         id: GuidanceId.Raw;
         guideSlug: string;
         options: GuidanceOptions.Raw;
+        createdFrom?: GuidanceId.Raw | null;
+        lastPropagatedAt?: string | null;
     }
 }

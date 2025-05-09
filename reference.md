@@ -86,6 +86,7 @@ Update the current account
 
 ```typescript
 await client.accounts.updateCurrent({
+    name: "My Company Name",
     defaultAppId: "us_app_YOUR_ID",
 });
 ```
@@ -4794,7 +4795,7 @@ Deletes a single environment
 <dd>
 
 ```typescript
-await client.environments.delete("environmentId");
+await client.environments.delete("us_env_YOUR_ID");
 ```
 
 </dd>
@@ -4857,7 +4858,7 @@ Returns guides in an account
 <dd>
 
 ```typescript
-await client.environments.listGuides("environmentId");
+await client.environments.listGuides("us_env_YOUR_ID");
 ```
 
 </dd>
@@ -5083,7 +5084,6 @@ await client.environments.createGuide("us_env_YOUR_ID", {
     title: "Data import made easy",
     slug: "getting-started",
     environmentId: "commons.EnvironmentId",
-    versions: [],
     blocks: [],
     metadata: {
         category: "onboarding",
@@ -5230,7 +5230,7 @@ Returns a specified version of a specific guide
 <dd>
 
 ```typescript
-await client.environments.getGuideVersion("environmentId", "guideId", 1);
+await client.environments.getGuideVersion("us_env_YOUR_ID", "us_gu_YOUR_ID", 1);
 ```
 
 </dd>
@@ -9303,6 +9303,624 @@ await client.messages.deleteMessage("threadId", "messageId");
 </dl>
 </details>
 
+## OnboardingDatapoints
+
+<details><summary><code>client.onboardingDatapoints.<a href="/src/api/resources/onboardingDatapoints/client/Client.ts">createOnboardingDatapoint</a>(onboardingId, { ...params }) -> Flatfile.OnboardingDatapointResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new onboarding datapoint
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.onboardingDatapoints.createOnboardingDatapoint("onboardingId", {
+    onboardingId: "onboardingId",
+    data: {
+        key: "value",
+    },
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**onboardingId:** `Flatfile.OnboardingId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.OnboardingDatapointCreate`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OnboardingDatapoints.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.onboardingDatapoints.<a href="/src/api/resources/onboardingDatapoints/client/Client.ts">getOnboardingDatapoints</a>(onboardingId) -> Flatfile.OnboardingDatapointsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all datapoints for an onboarding
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.onboardingDatapoints.getOnboardingDatapoints("onboardingId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**onboardingId:** `Flatfile.OnboardingId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OnboardingDatapoints.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.onboardingDatapoints.<a href="/src/api/resources/onboardingDatapoints/client/Client.ts">getOnboardingDatapoint</a>(onboardingId, datapointId) -> Flatfile.OnboardingDatapointResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a single onboarding datapoint by ID
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.onboardingDatapoints.getOnboardingDatapoint("onboardingId", "datapointId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**onboardingId:** `Flatfile.OnboardingId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**datapointId:** `Flatfile.OnboardingDatapointId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OnboardingDatapoints.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.onboardingDatapoints.<a href="/src/api/resources/onboardingDatapoints/client/Client.ts">updateOnboardingDatapoint</a>(onboardingId, datapointId, { ...params }) -> Flatfile.OnboardingDatapointResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an onboarding datapoint
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.onboardingDatapoints.updateOnboardingDatapoint("onboardingId", "datapointId", {});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**onboardingId:** `Flatfile.OnboardingId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**datapointId:** `Flatfile.OnboardingDatapointId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.OnboardingDatapointUpdate`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OnboardingDatapoints.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.onboardingDatapoints.<a href="/src/api/resources/onboardingDatapoints/client/Client.ts">deleteOnboardingDatapoint</a>(onboardingId, datapointId) -> Flatfile.Success</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Soft delete an onboarding datapoint
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.onboardingDatapoints.deleteOnboardingDatapoint("onboardingId", "datapointId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**onboardingId:** `Flatfile.OnboardingId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**datapointId:** `Flatfile.OnboardingDatapointId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OnboardingDatapoints.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Onboardings
+
+<details><summary><code>client.onboardings.<a href="/src/api/resources/onboardings/client/Client.ts">createOnboarding</a>({ ...params }) -> Flatfile.OnboardingResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new onboarding
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.onboardings.createOnboarding({
+    userId: "userId",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.OnboardingCreate`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Onboardings.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.onboardings.<a href="/src/api/resources/onboardings/client/Client.ts">getOnboardings</a>({ ...params }) -> Flatfile.OnboardingsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get onboardings with optional filtering by user ID
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.onboardings.getOnboardings();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.GetOnboardingsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Onboardings.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.onboardings.<a href="/src/api/resources/onboardings/client/Client.ts">getOnboarding</a>(onboardingId) -> Flatfile.OnboardingResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a single onboarding by ID
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.onboardings.getOnboarding("onboardingId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**onboardingId:** `Flatfile.OnboardingId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Onboardings.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.onboardings.<a href="/src/api/resources/onboardings/client/Client.ts">deleteOnboarding</a>(onboardingId) -> Flatfile.Success</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Soft delete an onboarding
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.onboardings.deleteOnboarding("onboardingId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**onboardingId:** `Flatfile.OnboardingId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Onboardings.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Records
 
 <details><summary><code>client.records.<a href="/src/api/resources/records/client/Client.ts">get</a>(sheetId, { ...params }) -> Flatfile.GetRecordsResponse</code></summary>
@@ -12722,10 +13340,10 @@ Creates a new guidance
 <dd>
 
 ```typescript
-await client.spaces.createGuidance("spaceId", {
-    guideSlug: "guideSlug",
+await client.spaces.createGuidance("us_sp_YOUR_ID", {
+    guideSlug: "getting-started",
     options: {
-        target: "target",
+        target: "getting-started",
         trigger: "first",
         type: "sidebar",
         role: "admin",
@@ -12801,7 +13419,9 @@ Lists guidances
 <dd>
 
 ```typescript
-await client.spaces.listGuidance("spaceId");
+await client.spaces.listGuidance("us_sp_YOUR_ID", {
+    includeGuide: true,
+});
 ```
 
 </dd>
@@ -12872,7 +13492,9 @@ Retrieves a guidance by its id
 <dd>
 
 ```typescript
-await client.spaces.getGuidance("spaceId", "guidanceId");
+await client.spaces.getGuidance("us_sp_YOUR_ID", "us_gd_YOUR_ID", {
+    includeGuide: true,
+});
 ```
 
 </dd>
@@ -12951,9 +13573,9 @@ Updates a guidance with the given id
 <dd>
 
 ```typescript
-await client.spaces.updateGuidance("spaceId", "guidanceId", {
+await client.spaces.updateGuidance("us_sp_YOUR_ID", "us_gd_YOUR_ID", {
     options: {
-        target: "target",
+        target: "getting-started",
         trigger: "first",
         type: "sidebar",
         role: "admin",
@@ -13037,7 +13659,7 @@ Deletes a guidance by its id
 <dd>
 
 ```typescript
-await client.spaces.deleteGuidance("spaceId", "guidanceId");
+await client.spaces.deleteGuidance("us_sp_YOUR_ID", "us_gd_YOUR_ID");
 ```
 
 </dd>
@@ -13188,6 +13810,148 @@ await client.spaces.listSpaceDrafts("spaceId");
 <dd>
 
 **spaceId:** `Flatfile.SpaceId` — ID of space to list drafts for
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Spaces.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.spaces.<a href="/src/api/resources/spaces/client/Client.ts">getSpaceDraft</a>(spaceId, draftSpaceId) -> Flatfile.SpaceDraftMergeOperationsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets a draft by the space id and draft space id
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.spaces.getSpaceDraft("spaceId", "draftSpaceId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**spaceId:** `Flatfile.SpaceId` — ID of space to get draft for
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draftSpaceId:** `Flatfile.SpaceId` — ID of draft space to get
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Spaces.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.spaces.<a href="/src/api/resources/spaces/client/Client.ts">mergeDraft</a>(spaceId, draftSpaceId) -> Flatfile.Success</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Merges a draft into a space
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.spaces.mergeDraft("spaceId", "draftSpaceId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**spaceId:** `Flatfile.SpaceId` — ID of space to merge draft into
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draftSpaceId:** `Flatfile.SpaceId` — ID of draft space to merge
 
 </dd>
 </dl>

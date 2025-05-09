@@ -53,4 +53,8 @@ export interface Document extends Flatfile.DocumentConfig {
     createdAt: Date;
     /** Date the document was last updated */
     updatedAt: Date;
+    /** The document id of the template that was used to create this document */
+    createdFrom?: Flatfile.DocumentId;
+    /** The last time the document template configuration was propagated to this document */
+    lastPropagatedAt?: Date;
 }

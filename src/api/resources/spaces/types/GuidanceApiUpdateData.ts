@@ -4,6 +4,17 @@
 
 import * as Flatfile from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         options: {
+ *             target: "getting-started",
+ *             trigger: Flatfile.TriggerEnum.First,
+ *             type: Flatfile.TypeEnum.Sidebar,
+ *             role: Flatfile.RoleEnum.Admin
+ *         }
+ *     }
+ */
 export interface GuidanceApiUpdateData {
     /** Options for the guidance */
     options: Flatfile.GuidanceOptions;

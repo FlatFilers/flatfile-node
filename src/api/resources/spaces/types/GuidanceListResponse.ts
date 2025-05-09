@@ -4,6 +4,23 @@
 
 import * as Flatfile from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         data: [{
+ *                 id: "us_gd_YOUR_ID",
+ *                 guideSlug: "getting-started",
+ *                 options: {
+ *                     target: "getting-started",
+ *                     trigger: Flatfile.TriggerEnum.First,
+ *                     type: Flatfile.TypeEnum.Sidebar,
+ *                     role: Flatfile.RoleEnum.Admin
+ *                 },
+ *                 createdFrom: "us_gd_YOUR_ID",
+ *                 lastPropagatedAt: "2023-10-30T16:59:45.735Z"
+ *             }]
+ *     }
+ */
 export interface GuidanceListResponse {
     data: Flatfile.GuidanceResource[];
 }

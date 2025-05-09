@@ -37,4 +37,10 @@ export interface ActionWithoutLabel {
     mount?: Flatfile.ActionMount;
     guide?: Flatfile.Guide;
     guardrail?: Flatfile.Guardrail;
+    /** The action that this action was cloned from */
+    createdFrom?: Flatfile.ActionId;
+    /** The last time this action was propagated to a workbook */
+    lastPropagatedAt?: Date;
+    /** The time this action was deleted */
+    deletedAt?: Date;
 }

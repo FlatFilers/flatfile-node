@@ -43,4 +43,6 @@ export interface Context {
     actionId?: Flatfile.ActionId;
     dataClipId?: Flatfile.DataClipId;
     threadId?: Flatfile.ThreadId;
+    filters?: Record<string, string>;
+    entityId?: string;
 }

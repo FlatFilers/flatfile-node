@@ -13,6 +13,7 @@ import { ActionConstraint } from "./ActionConstraint";
 import { ActionMount } from "./ActionMount";
 import { Guide } from "./Guide";
 import { Guardrail } from "./Guardrail";
+import { ActionId } from "./ActionId";
 
 export const ActionWithoutLabel: core.serialization.ObjectSchema<
     serializers.ActionWithoutLabel.Raw,
@@ -36,6 +37,9 @@ export const ActionWithoutLabel: core.serialization.ObjectSchema<
     mount: ActionMount.optional(),
     guide: Guide.optional(),
     guardrail: Guardrail.optional(),
+    createdFrom: ActionId.optional(),
+    lastPropagatedAt: core.serialization.date().optional(),
+    deletedAt: core.serialization.date().optional(),
 });
 
 export declare namespace ActionWithoutLabel {
@@ -58,5 +62,8 @@ export declare namespace ActionWithoutLabel {
         mount?: ActionMount.Raw | null;
         guide?: Guide.Raw | null;
         guardrail?: Guardrail.Raw | null;
+        createdFrom?: ActionId.Raw | null;
+        lastPropagatedAt?: string | null;
+        deletedAt?: string | null;
     }
 }

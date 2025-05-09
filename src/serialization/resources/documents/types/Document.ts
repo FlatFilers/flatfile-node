@@ -17,6 +17,8 @@ export const Document: core.serialization.ObjectSchema<serializers.Document.Raw,
         environmentId: EnvironmentId.optional(),
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
+        createdFrom: DocumentId.optional(),
+        lastPropagatedAt: core.serialization.date().optional(),
     })
     .extend(DocumentConfig);
 
@@ -27,5 +29,7 @@ export declare namespace Document {
         environmentId?: EnvironmentId.Raw | null;
         createdAt: string;
         updatedAt: string;
+        createdFrom?: DocumentId.Raw | null;
+        lastPropagatedAt?: string | null;
     }
 }
