@@ -2661,6 +2661,56 @@ await client.auth.getApiKeys({
 </dl>
 </details>
 
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getPublishableKey</a>({ ...params }) -> Flatfile.PublishableKeyResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.auth.getPublishableKey({
+    environmentId: "us_env_YOUR_ID",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.GetPublishableKeyRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Auth.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">createNewApiKey</a>({ ...params }) -> Flatfile.ApiKeysResponse</code></summary>
 <dl>
 <dd>
@@ -14288,6 +14338,233 @@ await client.threads.deleteThread("threadId");
 <dd>
 
 **requestOptions:** `Threads.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Transformations
+
+<details><summary><code>client.transformations.<a href="/src/api/resources/transformations/client/Client.ts">list</a>({ ...params }) -> Flatfile.TransformationsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.transformations.list({
+    appId: "appId",
+    matchKeys: ["matchKeys", "matchKeys"],
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.ListTransformationsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Transformations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.transformations.<a href="/src/api/resources/transformations/client/Client.ts">create</a>({ ...params }) -> Flatfile.TransformationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.transformations.create({
+    accountId: "accountId",
+    environmentId: "environmentId",
+    spaceId: "spaceId",
+    appId: "appId",
+    programId: "programId",
+    keys: ["keys", "keys"],
+    sourceKeys: ["sourceKeys", "sourceKeys"],
+    destinationKeys: ["destinationKeys", "destinationKeys"],
+    transformationFunction: "transformationFunction",
+    mutationCommand: "mutationCommand",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.TransformationCreateDto`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Transformations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.transformations.<a href="/src/api/resources/transformations/client/Client.ts">update</a>(transformationId, { ...params }) -> Flatfile.TransformationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.transformations.update("transformationId", {
+    accountId: "accountId",
+    environmentId: "environmentId",
+    spaceId: "spaceId",
+    appId: "appId",
+    programId: "programId",
+    keys: ["keys", "keys"],
+    sourceKeys: ["sourceKeys", "sourceKeys"],
+    destinationKeys: ["destinationKeys", "destinationKeys"],
+    transformationFunction: "transformationFunction",
+    mutationCommand: "mutationCommand",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**transformationId:** `Flatfile.TransformationId` — The id of the transformation to update
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.TransformationCreateDto`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Transformations.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.transformations.<a href="/src/api/resources/transformations/client/Client.ts">delete</a>(transformationId) -> Flatfile.Success</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.transformations.delete("transformationId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**transformationId:** `Flatfile.TransformationId` — The id of the transformation to delete
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Transformations.RequestOptions`
 
 </dd>
 </dl>

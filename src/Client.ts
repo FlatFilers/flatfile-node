@@ -36,6 +36,7 @@ import { Sheets } from "./api/resources/sheets/client/Client";
 import { Snapshots } from "./api/resources/snapshots/client/Client";
 import { Spaces } from "./api/resources/spaces/client/Client";
 import { Threads } from "./api/resources/threads/client/Client";
+import { Transformations } from "./api/resources/transformations/client/Client";
 import { Users } from "./api/resources/users/client/Client";
 import { Versions } from "./api/resources/versions/client/Client";
 import { Views } from "./api/resources/views/client/Client";
@@ -99,6 +100,7 @@ export class FlatfileClient {
     protected _snapshots: Snapshots | undefined;
     protected _spaces: Spaces | undefined;
     protected _threads: Threads | undefined;
+    protected _transformations: Transformations | undefined;
     protected _users: Users | undefined;
     protected _versions: Versions | undefined;
     protected _views: Views | undefined;
@@ -232,6 +234,10 @@ export class FlatfileClient {
 
     public get threads(): Threads {
         return (this._threads ??= new Threads(this._options));
+    }
+
+    public get transformations(): Transformations {
+        return (this._transformations ??= new Transformations(this._options));
     }
 
     public get users(): Users {

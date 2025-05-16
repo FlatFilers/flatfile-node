@@ -68,6 +68,8 @@ export * as spaces from "./spaces";
 export * from "./spaces/types";
 export * as threads from "./threads";
 export * from "./threads/types";
+export * as transformations from "./transformations";
+export * from "./transformations/types";
 export * as users from "./users";
 export * from "./users/types";
 export * as versions from "./versions";

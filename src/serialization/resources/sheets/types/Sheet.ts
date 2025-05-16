@@ -9,6 +9,7 @@ import { SheetId } from "../../commons/types/SheetId";
 import { WorkbookId } from "../../commons/types/WorkbookId";
 import { SheetConfig } from "./SheetConfig";
 import { RecordCounts } from "../../records/types/RecordCounts";
+import { SheetTreatments } from "./SheetTreatments";
 
 export const Sheet: core.serialization.ObjectSchema<serializers.Sheet.Raw, Flatfile.Sheet> = core.serialization.object({
     id: SheetId,
@@ -25,6 +26,7 @@ export const Sheet: core.serialization.ObjectSchema<serializers.Sheet.Raw, Flatf
     recordCounts: RecordCounts.optional(),
     createdFrom: SheetId.optional(),
     lastPropagatedAt: core.serialization.date().optional(),
+    treatments: core.serialization.list(SheetTreatments).optional(),
 });
 
 export declare namespace Sheet {
@@ -43,5 +45,6 @@ export declare namespace Sheet {
         recordCounts?: RecordCounts.Raw | null;
         createdFrom?: SheetId.Raw | null;
         lastPropagatedAt?: string | null;
+        treatments?: SheetTreatments.Raw[] | null;
     }
 }

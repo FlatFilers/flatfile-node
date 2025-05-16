@@ -35,6 +35,7 @@ export * from "./FamilyId";
 export * from "./PromptId";
 export * from "./ViewId";
 export * from "./ActionId";
+export * from "./TransformationId";
 export * from "./GuideId";
 export * from "./GuidanceId";
 export * from "./DataRetentionPolicyId";

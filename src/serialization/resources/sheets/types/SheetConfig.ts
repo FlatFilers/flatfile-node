@@ -9,6 +9,7 @@ import { SheetAccess } from "./SheetAccess";
 import { Property } from "../../property/types/Property";
 import { Action } from "../../commons/types/Action";
 import { SheetConstraint } from "./SheetConstraint";
+import { SheetTreatments } from "./SheetTreatments";
 
 export const SheetConfig: core.serialization.ObjectSchema<serializers.SheetConfig.Raw, Flatfile.SheetConfig> =
     core.serialization.object({
@@ -23,6 +24,7 @@ export const SheetConfig: core.serialization.ObjectSchema<serializers.SheetConfi
         actions: core.serialization.list(Action).optional(),
         metadata: core.serialization.any().optional(),
         constraints: core.serialization.list(SheetConstraint).optional(),
+        treatments: core.serialization.list(SheetTreatments).optional(),
     });
 
 export declare namespace SheetConfig {
@@ -38,5 +40,6 @@ export declare namespace SheetConfig {
         actions?: Action.Raw[] | null;
         metadata?: any | null;
         constraints?: SheetConstraint.Raw[] | null;
+        treatments?: SheetTreatments.Raw[] | null;
     }
 }

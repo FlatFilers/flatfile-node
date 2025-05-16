@@ -23,3 +23,4 @@ export * from "./IncludeCounts";
 export * from "./CalculationType";
 export * from "./Calculation";
 export * from "./ListCalculationsResponse";
+export * from "./SheetTreatments";

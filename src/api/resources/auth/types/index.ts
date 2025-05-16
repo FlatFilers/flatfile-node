@@ -1,5 +1,6 @@
 export * from "./ApiCredentials";
 export * from "./ApiKeysResponse";
+export * from "./PublishableKeyResponse";
 export * from "./ApiKeyType";
 export * from "./ApiKeyOperation";
 export * from "./ApiKey";

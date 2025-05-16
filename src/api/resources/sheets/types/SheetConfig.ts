@@ -50,4 +50,6 @@ export interface SheetConfig {
     metadata?: any;
     /** An array of constraints that end users can perform on this Sheet. */
     constraints?: Flatfile.SheetConstraint[];
+    /** An array of treatments that define the behavior of the sheet. */
+    treatments?: Flatfile.SheetTreatments[];
 }

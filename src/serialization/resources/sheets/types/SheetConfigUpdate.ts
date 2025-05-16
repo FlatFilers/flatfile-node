@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { SheetAccess } from "./SheetAccess";
 import { Property } from "../../property/types/Property";
 import { Action } from "../../commons/types/Action";
+import { SheetTreatments } from "./SheetTreatments";
 
 export const SheetConfigUpdate: core.serialization.ObjectSchema<
     serializers.SheetConfigUpdate.Raw,
@@ -22,6 +23,7 @@ export const SheetConfigUpdate: core.serialization.ObjectSchema<
     access: core.serialization.list(SheetAccess).optional(),
     fields: core.serialization.list(Property).optional(),
     actions: core.serialization.list(Action).optional(),
+    treatments: core.serialization.list(SheetTreatments).optional(),
 });
 
 export declare namespace SheetConfigUpdate {
@@ -35,5 +37,6 @@ export declare namespace SheetConfigUpdate {
         access?: SheetAccess.Raw[] | null;
         fields?: Property.Raw[] | null;
         actions?: Action.Raw[] | null;
+        treatments?: SheetTreatments.Raw[] | null;
     }
 }

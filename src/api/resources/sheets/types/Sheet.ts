@@ -102,4 +102,6 @@ export interface Sheet {
     createdFrom?: Flatfile.SheetId;
     /** The last time the sheet template configuration was propagated to this sheet */
     lastPropagatedAt?: Date;
+    /** An array of treatments that define the behavior of the sheet. */
+    treatments?: Flatfile.SheetTreatments[];
 }
