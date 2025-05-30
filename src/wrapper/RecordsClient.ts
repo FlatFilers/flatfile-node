@@ -44,7 +44,7 @@ export class Records extends FernRecords {
     public insert(
         sheetId: Flatfile.SheetId,
         request: Flatfile.RecordData[],
-        requestOptions?: InsertRequestOptions
+        requestOptions?: InsertRequestOptions,
     ): core.HttpResponsePromise<Flatfile.RecordsResponse> {
         return core.HttpResponsePromise.fromPromise(this.__insertRecords(sheetId, request, requestOptions));
     }
@@ -52,7 +52,7 @@ export class Records extends FernRecords {
     private async __insertRecords(
         sheetId: Flatfile.SheetId,
         request: Flatfile.RecordData[],
-        requestOptions?: InsertRequestOptions
+        requestOptions?: InsertRequestOptions,
     ): Promise<core.WithRawResponse<Flatfile.RecordsResponse>> {
         const body = requestOptions?.compressRequestBody
             ? pako.gzip(JSON.stringify(request))
@@ -67,7 +67,7 @@ export class Records extends FernRecords {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.FlatfileEnvironment.Production,
-                `/sheets/${encodeURIComponent(serializers.SheetId.jsonOrThrow(sheetId))}/records`
+                `/sheets/${encodeURIComponent(serializers.SheetId.jsonOrThrow(sheetId))}/records`,
             ),
             method: "POST",
             headers: {
@@ -80,10 +80,8 @@ export class Records extends FernRecords {
                 ...gzipHeaders,
             },
             contentType: "application/json",
-            requestType: "json",
-            body: serializers.records.insert.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-            }),
+            requestType: requestOptions?.compressRequestBody ? "bytes" : "json",
+            body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -112,7 +110,7 @@ export class Records extends FernRecords {
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
                         }),
-                        _response.rawResponse
+                        _response.rawResponse,
                     );
                 case 404:
                     throw new Flatfile.NotFoundError(
@@ -123,7 +121,7 @@ export class Records extends FernRecords {
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
                         }),
-                        _response.rawResponse
+                        _response.rawResponse,
                     );
                 default:
                     throw new errors.FlatfileError({
