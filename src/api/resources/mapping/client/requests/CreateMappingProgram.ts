@@ -11,17 +11,21 @@ import * as Flatfile from "../../../../index";
  *             source: {
  *                 name: "name",
  *                 fields: [{
- *                         type: "string"
+ *                         type: "string",
+ *                         key: "key"
  *                     }, {
- *                         type: "string"
+ *                         type: "string",
+ *                         key: "key"
  *                     }]
  *             },
  *             destination: {
  *                 name: "name",
  *                 fields: [{
- *                         type: "string"
+ *                         type: "string",
+ *                         key: "key"
  *                     }, {
- *                         type: "string"
+ *                         type: "string",
+ *                         key: "key"
  *                     }]
  *             }
  *         }

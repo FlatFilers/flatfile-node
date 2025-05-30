@@ -8,7 +8,11 @@ export type CalculationType =
     | "PERCENT_EMPTY"
     | "PERCENT_NON_EMPTY"
     | "COUNT_CHANGED"
-    | "PERCENT_CHANGED";
+    | "PERCENT_CHANGED"
+    | "SUM"
+    | "AVERAGE"
+    | "MIN"
+    | "MAX";
 export const CalculationType = {
     CountEmpty: "COUNT_EMPTY",
     CountNonEmpty: "COUNT_NON_EMPTY",
@@ -16,4 +20,8 @@ export const CalculationType = {
     PercentNonEmpty: "PERCENT_NON_EMPTY",
     CountChanged: "COUNT_CHANGED",
     PercentChanged: "PERCENT_CHANGED",
+    Sum: "SUM",
+    Average: "AVERAGE",
+    Min: "MIN",
+    Max: "MAX",
 } as const;

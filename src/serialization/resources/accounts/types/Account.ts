@@ -12,6 +12,7 @@ export const Account: core.serialization.ObjectSchema<serializers.Account.Raw, F
     core.serialization.object({
         id: AccountId,
         name: core.serialization.string(),
+        primaryDomain: core.serialization.string().optional(),
         subdomain: core.serialization.string().optional(),
         vanityDomainDashboard: core.serialization.string().optional(),
         vanityDomainSpaces: core.serialization.string().optional(),
@@ -29,6 +30,7 @@ export declare namespace Account {
     export interface Raw {
         id: AccountId.Raw;
         name: string;
+        primaryDomain?: string | null;
         subdomain?: string | null;
         vanityDomainDashboard?: string | null;
         vanityDomainSpaces?: string | null;

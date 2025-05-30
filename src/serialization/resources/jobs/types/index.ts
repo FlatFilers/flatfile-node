@@ -24,6 +24,7 @@ export * from "./AddRecordsToDataClipJobConfig";
 export * from "./UpdateDataClipResolutionsJobConfig";
 export * from "./AgentExportJobConfig";
 export * from "./CompanyResearchJobConfig";
+export * from "./ConfigureDemoJobConfig";
 export * from "./Driver";
 export * from "./Trigger";
 export * from "./PipelineJobConfig";

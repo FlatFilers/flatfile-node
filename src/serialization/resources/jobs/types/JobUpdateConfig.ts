@@ -25,6 +25,7 @@ import { AddRecordsToDataClipJobConfig } from "./AddRecordsToDataClipJobConfig";
 import { UpdateDataClipResolutionsJobConfig } from "./UpdateDataClipResolutionsJobConfig";
 import { AgentExportJobConfig } from "./AgentExportJobConfig";
 import { CompanyResearchJobConfig } from "./CompanyResearchJobConfig";
+import { ConfigureDemoJobConfig } from "./ConfigureDemoJobConfig";
 
 export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateConfig.Raw, Flatfile.JobUpdateConfig> =
     core.serialization.undiscriminatedUnion([
@@ -48,6 +49,7 @@ export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateCon
         UpdateDataClipResolutionsJobConfig,
         AgentExportJobConfig,
         CompanyResearchJobConfig,
+        ConfigureDemoJobConfig,
     ]);
 
 export declare namespace JobUpdateConfig {
@@ -71,5 +73,6 @@ export declare namespace JobUpdateConfig {
         | AddRecordsToDataClipJobConfig.Raw
         | UpdateDataClipResolutionsJobConfig.Raw
         | AgentExportJobConfig.Raw
-        | CompanyResearchJobConfig.Raw;
+        | CompanyResearchJobConfig.Raw
+        | ConfigureDemoJobConfig.Raw;
 }

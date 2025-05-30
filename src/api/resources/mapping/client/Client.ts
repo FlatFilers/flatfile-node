@@ -52,17 +52,21 @@ export class Mapping {
      *             source: {
      *                 name: "name",
      *                 fields: [{
-     *                         type: "string"
+     *                         type: "string",
+     *                         key: "key"
      *                     }, {
-     *                         type: "string"
+     *                         type: "string",
+     *                         key: "key"
      *                     }]
      *             },
      *             destination: {
      *                 name: "name",
      *                 fields: [{
-     *                         type: "string"
+     *                         type: "string",
+     *                         key: "key"
      *                     }, {
-     *                         type: "string"
+     *                         type: "string",
+     *                         key: "key"
      *                     }]
      *             }
      *         }
@@ -98,8 +102,8 @@ export class Mapping {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.4",
-                "User-Agent": "@flatfile/api/1.17.4",
+                "X-Fern-SDK-Version": "1.17.5",
+                "User-Agent": "@flatfile/api/1.17.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -211,8 +215,8 @@ export class Mapping {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.4",
-                "User-Agent": "@flatfile/api/1.17.4",
+                "X-Fern-SDK-Version": "1.17.5",
+                "User-Agent": "@flatfile/api/1.17.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -375,8 +379,8 @@ export class Mapping {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.4",
-                "User-Agent": "@flatfile/api/1.17.4",
+                "X-Fern-SDK-Version": "1.17.5",
+                "User-Agent": "@flatfile/api/1.17.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -476,8 +480,8 @@ export class Mapping {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.4",
-                "User-Agent": "@flatfile/api/1.17.4",
+                "X-Fern-SDK-Version": "1.17.5",
+                "User-Agent": "@flatfile/api/1.17.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -566,17 +570,21 @@ export class Mapping {
      *         source: {
      *             name: "name",
      *             fields: [{
-     *                     type: "string"
+     *                     type: "string",
+     *                     key: "key"
      *                 }, {
-     *                     type: "string"
+     *                     type: "string",
+     *                     key: "key"
      *                 }]
      *         },
      *         destination: {
      *             name: "name",
      *             fields: [{
-     *                     type: "string"
+     *                     type: "string",
+     *                     key: "key"
      *                 }, {
-     *                     type: "string"
+     *                     type: "string",
+     *                     key: "key"
      *                 }]
      *         }
      *     })
@@ -607,8 +615,8 @@ export class Mapping {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.4",
-                "User-Agent": "@flatfile/api/1.17.4",
+                "X-Fern-SDK-Version": "1.17.5",
+                "User-Agent": "@flatfile/api/1.17.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -719,8 +727,8 @@ export class Mapping {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.4",
-                "User-Agent": "@flatfile/api/1.17.4",
+                "X-Fern-SDK-Version": "1.17.5",
+                "User-Agent": "@flatfile/api/1.17.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -839,8 +847,8 @@ export class Mapping {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.4",
-                "User-Agent": "@flatfile/api/1.17.4",
+                "X-Fern-SDK-Version": "1.17.5",
+                "User-Agent": "@flatfile/api/1.17.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -956,8 +964,8 @@ export class Mapping {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.4",
-                "User-Agent": "@flatfile/api/1.17.4",
+                "X-Fern-SDK-Version": "1.17.5",
+                "User-Agent": "@flatfile/api/1.17.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1070,8 +1078,8 @@ export class Mapping {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.4",
-                "User-Agent": "@flatfile/api/1.17.4",
+                "X-Fern-SDK-Version": "1.17.5",
+                "User-Agent": "@flatfile/api/1.17.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1184,8 +1192,8 @@ export class Mapping {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.4",
-                "User-Agent": "@flatfile/api/1.17.4",
+                "X-Fern-SDK-Version": "1.17.5",
+                "User-Agent": "@flatfile/api/1.17.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1308,8 +1316,8 @@ export class Mapping {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.4",
-                "User-Agent": "@flatfile/api/1.17.4",
+                "X-Fern-SDK-Version": "1.17.5",
+                "User-Agent": "@flatfile/api/1.17.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1398,10 +1406,14 @@ export class Mapping {
      *
      * @example
      *     await client.mapping.updateRules("programId", [{
+     *             name: "name",
+     *             type: "type",
      *             id: "id",
      *             createdAt: "2024-01-15T09:30:00Z",
      *             updatedAt: "2024-01-15T09:30:00Z"
      *         }, {
+     *             name: "name",
+     *             type: "type",
      *             id: "id",
      *             createdAt: "2024-01-15T09:30:00Z",
      *             updatedAt: "2024-01-15T09:30:00Z"
@@ -1433,8 +1445,8 @@ export class Mapping {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.4",
-                "User-Agent": "@flatfile/api/1.17.4",
+                "X-Fern-SDK-Version": "1.17.5",
+                "User-Agent": "@flatfile/api/1.17.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -1550,8 +1562,8 @@ export class Mapping {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.4",
-                "User-Agent": "@flatfile/api/1.17.4",
+                "X-Fern-SDK-Version": "1.17.5",
+                "User-Agent": "@flatfile/api/1.17.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

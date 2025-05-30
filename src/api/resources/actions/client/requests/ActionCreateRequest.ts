@@ -9,6 +9,7 @@ import * as Flatfile from "../../../../index";
  *     {
  *         spaceId: "spaceId",
  *         body: {
+ *             label: "label",
  *             targetId: "targetId"
  *         }
  *     }

@@ -10,11 +10,15 @@ export const CompanyResearchJobConfig: core.serialization.ObjectSchema<
     serializers.CompanyResearchJobConfig.Raw,
     Flatfile.CompanyResearchJobConfig
 > = core.serialization.object({
-    url: core.serialization.string(),
+    onboardingId: core.serialization.string(),
+    url: core.serialization.string().optional(),
+    companyName: core.serialization.string().optional(),
 });
 
 export declare namespace CompanyResearchJobConfig {
     export interface Raw {
-        url: string;
+        onboardingId: string;
+        url?: string | null;
+        companyName?: string | null;
     }
 }

@@ -19,6 +19,7 @@ import * as Flatfile from "../../../index";
 export interface Account {
     id: Flatfile.AccountId;
     name: string;
+    primaryDomain?: string;
     subdomain?: string;
     vanityDomainDashboard?: string;
     vanityDomainSpaces?: string;

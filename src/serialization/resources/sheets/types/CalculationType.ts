@@ -14,6 +14,10 @@ export const CalculationType: core.serialization.Schema<serializers.CalculationT
         "PERCENT_NON_EMPTY",
         "COUNT_CHANGED",
         "PERCENT_CHANGED",
+        "SUM",
+        "AVERAGE",
+        "MIN",
+        "MAX",
     ]);
 
 export declare namespace CalculationType {
@@ -23,5 +27,9 @@ export declare namespace CalculationType {
         | "PERCENT_EMPTY"
         | "PERCENT_NON_EMPTY"
         | "COUNT_CHANGED"
-        | "PERCENT_CHANGED";
+        | "PERCENT_CHANGED"
+        | "SUM"
+        | "AVERAGE"
+        | "MIN"
+        | "MAX";
 }

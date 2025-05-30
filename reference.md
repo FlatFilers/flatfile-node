@@ -141,6 +141,7 @@ await client.accounts.updateCurrent({
 await client.actions.create({
     spaceId: "spaceId",
     body: {
+        label: "label",
         targetId: "targetId",
     },
 });
@@ -195,9 +196,11 @@ await client.actions.bulkCreate({
     spaceId: "spaceId",
     body: [
         {
+            label: "label",
             targetId: "targetId",
         },
         {
+            label: "label",
             targetId: "targetId",
         },
     ],
@@ -8066,9 +8069,11 @@ await client.mapping.createMappingProgram({
             fields: [
                 {
                     type: "string",
+                    key: "key",
                 },
                 {
                     type: "string",
+                    key: "key",
                 },
             ],
         },
@@ -8077,9 +8082,11 @@ await client.mapping.createMappingProgram({
             fields: [
                 {
                     type: "string",
+                    key: "key",
                 },
                 {
                     type: "string",
+                    key: "key",
                 },
             ],
         },
@@ -8342,9 +8349,11 @@ await client.mapping.updateMappingProgram("programId", {
         fields: [
             {
                 type: "string",
+                key: "key",
             },
             {
                 type: "string",
+                key: "key",
             },
         ],
     },
@@ -8353,9 +8362,11 @@ await client.mapping.updateMappingProgram("programId", {
         fields: [
             {
                 type: "string",
+                key: "key",
             },
             {
                 type: "string",
+                key: "key",
             },
         ],
     },
@@ -8866,11 +8877,15 @@ Updates a list of mapping rules in a program
 ```typescript
 await client.mapping.updateRules("programId", [
     {
+        name: "name",
+        type: "type",
         id: "id",
         createdAt: "2024-01-15T09:30:00Z",
         updatedAt: "2024-01-15T09:30:00Z",
     },
     {
+        name: "name",
+        type: "type",
         id: "id",
         createdAt: "2024-01-15T09:30:00Z",
         updatedAt: "2024-01-15T09:30:00Z",
@@ -11895,6 +11910,7 @@ Adds a new field to a sheet
 await client.sheets.addField("sheetId", {
     body: {
         type: "string",
+        key: "key",
     },
 });
 ```

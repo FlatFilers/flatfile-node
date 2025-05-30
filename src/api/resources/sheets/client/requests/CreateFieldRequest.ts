@@ -8,7 +8,8 @@ import * as Flatfile from "../../../../index";
  * @example
  *     {
  *         body: {
- *             type: "string"
+ *             type: "string",
+ *             key: "key"
  *         }
  *     }
  */
