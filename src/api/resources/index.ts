@@ -109,3 +109,4 @@ export * from "./users/client/requests";
 export * from "./versions/client/requests";
 export * from "./views/client/requests";
 export * from "./workbooks/client/requests";
+export * as v2 from "./v2";
