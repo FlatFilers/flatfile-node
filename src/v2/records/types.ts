@@ -122,3 +122,44 @@ interface JsonlRecordSpecialParams {
 export interface JsonlRecord extends JsonlRecordSpecialParams {
     [fieldKey: string]: any;
 }
+
+/**
+ * Request options for writing records
+ */
+interface WriteRecordsParams {
+    /** The ID of the Sheet */
+    sheetId?: Flatfile.SheetId;
+    /** The ID of the Workbook */
+    workbookId?: Flatfile.WorkbookId;
+    /** The slug of the Sheet */
+    sheetSlug?: string;
+    /** Whether to truncate (clear) the sheet before writing */
+    truncate?: boolean;
+    /** Whether to create a snapshot before writing */
+    snapshot?: boolean;
+    /** Whether to suppress hooks during writing */
+    silent?: boolean;
+    /** Event ID for context */
+    for?: Flatfile.EventId;
+}
+
+export type WriteRecordsRequestOptions = WriteRecordsParams;
+
+/**
+ * Response structure for write operations
+ */
+export interface WriteRecordsResponse {
+    success: boolean;
+    created?: number;
+    updated?: number;
+}
+
+/**
+ * Options for streaming write operations
+ */
+export interface WriteStreamingOptions extends WriteRecordsRequestOptions {
+    /** Size of chunks to send in each batch */
+    chunkSize?: number;
+    /** Whether to use true HTTP body streaming vs chunking (default: auto-detect) */
+    useBodyStreaming?: boolean | "auto";
+}
