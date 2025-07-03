@@ -48,9 +48,10 @@ export class RecordsV2 {
         options: GetRecordsRequestOptions = {},
         requestOptions: FernRecords.RequestOptions,
     ): Promise<Flatfile.GetRecordsResponse> {
-        // Ensure includeMessages is true by default to match V1 behavior
+        // Ensure includeMessages and includeEmptyCells are true by default to match V1 behavior
         const enhancedOptions = {
             includeMessages: true,
+            includeEmptyCells: true,
             ...options,
         };
         
@@ -100,9 +101,10 @@ export class RecordsV2 {
         options: GetRecordsRequestOptions = {},
         requestOptions: FernRecords.RequestOptions = {},
     ): AsyncGenerator<Flatfile.RecordWithLinks, void, unknown> {
-        // Ensure includeMessages is true by default to match V1 behavior
+        // Ensure includeMessages and includeEmptyCells are true by default to match V1 behavior
         const enhancedOptions = {
             includeMessages: true,
+            includeEmptyCells: true,
             ...options,
         };
         

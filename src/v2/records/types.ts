@@ -51,6 +51,8 @@ interface GetRecordsParams {
     noContext?: boolean;
     /** Whether to stream the response */
     isStream?: boolean;
+    /** Whether to include empty cells/fields in the response */
+    includeEmptyCells?: boolean;
     /** Specific fields to include in the response */
     fields?: string[];
 }
