@@ -48,8 +48,14 @@ export class RecordsV2 {
         options: GetRecordsRequestOptions = {},
         requestOptions: FernRecords.RequestOptions,
     ): Promise<Flatfile.GetRecordsResponse> {
+        // Ensure includeMessages is true by default to match V1 behavior
+        const enhancedOptions = {
+            includeMessages: true,
+            ...options,
+        };
+        
         // Use getRaw to fetch the JSONL records
-        const rawRecords = await this.getRaw(sheetId, options, requestOptions);
+        const rawRecords = await this.getRaw(sheetId, enhancedOptions, requestOptions);
 
         // Convert each JSONL record to the expected format
         const records: Flatfile.RecordWithLinks[] = rawRecords.map((record) => this._convertStreamedRecord(record));
@@ -94,8 +100,14 @@ export class RecordsV2 {
         options: GetRecordsRequestOptions = {},
         requestOptions: FernRecords.RequestOptions = {},
     ): AsyncGenerator<Flatfile.RecordWithLinks, void, unknown> {
+        // Ensure includeMessages is true by default to match V1 behavior
+        const enhancedOptions = {
+            includeMessages: true,
+            ...options,
+        };
+        
         // Use getRawStreaming to get the JSONL records as they stream in
-        for await (const rawRecord of this.getRawStreaming(sheetId, options, requestOptions)) {
+        for await (const rawRecord of this.getRawStreaming(sheetId, enhancedOptions, requestOptions)) {
             // Convert each JSONL record to the expected format and yield it
             yield this._convertStreamedRecord(rawRecord);
         }
@@ -323,16 +335,32 @@ export class RecordsV2 {
     ): Promise<WriteRecordsResponse> {
         const url = await this._buildUrl(`/v2-alpha/records.jsonl`);
 
-        // Add options as query parameters
-        const queryParams = this._buildQueryParams(options);
+        // For write operations, ensure all records have the sheet ID set if provided in options
+        const enrichedRecords = records.map(record => {
+            // Always ensure sheet ID is present when provided in options
+            if (options.sheetId) {
+                return { __s: options.sheetId, ...record };
+            }
+            return record;
+        });
+
+        // Add options as query parameters, excluding sheetId since it's in the record body
+        const { sheetId: _, ...queryOptions } = options;
+        const queryParams = this._buildQueryParams(queryOptions, false); // Write operation
         if (queryParams.length > 0) {
             url.search = queryParams;
         }
 
         // Convert records to JSONL format (one record per line)
-        const jsonlBody = records.map((record) => JSON.stringify(record)).join("\n");
+        const jsonlBody = enrichedRecords.map((record) => JSON.stringify(record)).join("\n");
 
         const headers = await this._prepareHeaders(requestOptions, "application/jsonl");
+        
+        // Add sheet ID header if provided in options and not already in records
+        if (options.sheetId) {
+            headers["X-Sheet-Id"] = options.sheetId;
+        }
+        
         const response = await this._executeRequest(url.toString(), "POST", {
             body: jsonlBody,
             contentType: "application/jsonl",
@@ -413,8 +441,9 @@ export class RecordsV2 {
 
         const url = await this._buildUrl(`/v2-alpha/records.jsonl`);
 
-        // Add options as query parameters
-        const queryParams = this._buildQueryParams(options);
+        // Add options as query parameters, excluding sheetId since it's in the record body
+        const { sheetId, ...queryOptions } = options;
+        const queryParams = this._buildQueryParams(queryOptions, false); // Write operation
         if (queryParams.length > 0) {
             url.search = queryParams;
         }
@@ -425,8 +454,10 @@ export class RecordsV2 {
                 const encoder = new TextEncoder();
                 try {
                     for await (const record of recordsStream) {
-                        recordsBuffer.push(record); // Buffer for potential fallback
-                        const jsonlLine = JSON.stringify(record) + "\n";
+                        // Ensure sheet ID is set if provided in options
+                        const enrichedRecord = sheetId && !record.__s ? { ...record, __s: sheetId } : record;
+                        recordsBuffer.push(enrichedRecord); // Buffer for potential fallback
+                        const jsonlLine = JSON.stringify(enrichedRecord) + "\n";
                         controller.enqueue(encoder.encode(jsonlLine));
                     }
                     controller.close();
@@ -513,9 +544,9 @@ export class RecordsV2 {
         // Convert response to match V1 format
         const response: Flatfile.RecordsResponse = {
             data: {
-                records: [], // V2 doesn't return the actual records, but V1 clients might expect this structure
+                // V2 doesn't return the actual records, match V1 behavior exactly
                 success: writeResult.success,
-            },
+            } as any, // Cast to avoid TypeScript issues with optional records field
         };
 
         return response;
@@ -574,8 +605,13 @@ export class RecordsV2 {
     /**
      * Build query parameters string from options object
      */
-    private _buildQueryParams(params: Record<string, any>): string {
+    private _buildQueryParams(params: Record<string, any>, isReadOperation: boolean = true): string {
         const searchParams = new URLSearchParams();
+
+        // Only include stream=true for read operations (GET requests)
+        if (isReadOperation) {
+            searchParams.append("stream", "true");
+        }
 
         for (const [key, value] of Object.entries(params)) {
             if (value !== undefined && value !== null) {
@@ -750,35 +786,99 @@ export class RecordsV2 {
 
         // Convert field values to expected format
         const values: Flatfile.RecordDataWithLinks = {};
+        let hasValidationErrors = false;
 
+        // First, process validation messages to create validation-only fields (to match V1 field order)
+        if (__i) {
+            let messagesToProcess: Array<{fieldKey: string, messages: any[]}> = [];
+            
+            if (Array.isArray(__i)) {
+                // V2 format: __i is an array of message objects with {x: fieldName, m: message}
+                __i.forEach((msg: any) => {
+                    if (msg.x && msg.m) {
+                        messagesToProcess.push({
+                            fieldKey: msg.x,
+                            messages: [msg]
+                        });
+                    }
+                });
+            } else if (typeof __i === 'object') {
+                // V1 format: __i is an object with field names as keys
+                Object.entries(__i).forEach(([fieldKey, fieldMessages]) => {
+                    const messages = Array.isArray(fieldMessages) ? fieldMessages : [fieldMessages];
+                    messagesToProcess.push({ fieldKey, messages });
+                });
+            }
+            
+            // Process validation messages first to create validation-only fields at the beginning
+            messagesToProcess.forEach(({ fieldKey, messages }) => {
+                // Create field if it doesn't exist (for fields with only validation messages)
+                if (!values[fieldKey]) {
+                    values[fieldKey] = {
+                        value: undefined, // Field exists but has no value
+                        valid: true, // Will be set below
+                        messages: [],
+                    };
+                }
+                
+                values[fieldKey].messages = messages;
+                
+                // Check if any messages indicate invalid state
+                // V2 messages have format {x: field, m: message} and are generally errors
+                // V1 messages have format {type: "error", field: "field", message: "message"}
+                const hasErrors = messages.some((msg: any) => 
+                    // V1 format
+                    msg.type === 'error' || msg.type === 'warn' || 
+                    (msg.level && (msg.level === 'error' || msg.level === 'warn')) ||
+                    // V2 format - any message with 'm' property is considered an error
+                    (msg.m && typeof msg.m === 'string')
+                );
+                values[fieldKey].valid = !hasErrors;
+                
+                if (hasErrors) {
+                    hasValidationErrors = true;
+                }
+            });
+        }
+
+        // Then, process all field values that exist in the record
         Object.entries(fieldValues).forEach(([fieldKey, fieldValue]) => {
             // Skip special keys that might have been missed
             if (fieldKey.startsWith("__")) {
                 return;
             }
 
-            const cellValue: Flatfile.CellValueWithLinks = {
-                value: fieldValue,
-                valid: true, // Default to valid, will be overridden by messages if present
-                messages: [],
-            };
-
-            // Add messages if present for this field
-            if (__i && __i[fieldKey]) {
-                cellValue.messages = Array.isArray(__i[fieldKey]) ? __i[fieldKey] : [__i[fieldKey]];
-                cellValue.valid = cellValue.messages.length === 0;
+            // Create field if it doesn't already exist from validation processing
+            if (!values[fieldKey]) {
+                values[fieldKey] = {
+                    value: fieldValue,
+                    valid: true, // Will be overridden by validation if messages exist
+                    messages: [],
+                };
+            } else {
+                // Field already exists from validation processing, just set the value
+                values[fieldKey].value = fieldValue;
             }
-
-            values[fieldKey] = cellValue;
         });
 
-        // Build the record
+        // Determine record validity based on presence of validation errors first, then __e field
+        // This prioritizes actual validation state over server-provided validity flag
+        let recordValid = true;
+        if (hasValidationErrors) {
+            recordValid = false;
+        } else if (__e !== undefined) {
+            recordValid = __e;
+        }
+
+
+
+        // Build the record with the same key order as V1
         const record: Flatfile.RecordWithLinks = {
             id: __k as Flatfile.RecordId,
             values,
-            valid: __e ?? true,
             metadata: __m || {},
             config: __c || {},
+            valid: recordValid,
         };
 
         // Add record-level timestamp if present (when includeTimestamps=true)
@@ -797,20 +897,8 @@ export class RecordsV2 {
             (record as any).commitId = __v;
         }
 
-        // Add messages at record level (deprecated but might be expected)
-        if (__i && typeof __i === "object") {
-            const recordMessages: Flatfile.ValidationMessage[] = [];
-            Object.values(__i).forEach((fieldMessages: any) => {
-                if (Array.isArray(fieldMessages)) {
-                    recordMessages.push(...fieldMessages);
-                } else if (fieldMessages) {
-                    recordMessages.push(fieldMessages);
-                }
-            });
-            if (recordMessages.length > 0) {
-                record.messages = recordMessages;
-            }
-        }
+        // V1 does not include record-level messages field, so we skip this to match V1 behavior
+        // All validation messages are handled at the field level in record.values[field].messages
 
         return record;
     }
@@ -819,9 +907,10 @@ export class RecordsV2 {
      * Convert a standard Flatfile RecordData to JSONL format
      */
     private _convertRecordDataToJsonl(record: Flatfile.RecordData, sheetId: Flatfile.SheetId): JsonlRecord {
-        const jsonlRecord: JsonlRecord = {
-            __s: sheetId,
-        };
+        const jsonlRecord: JsonlRecord = {};
+
+        // Always add sheet ID to each record
+        jsonlRecord.__s = sheetId;
 
         // Extract field values from CellValue objects
         Object.entries(record).forEach(([fieldKey, cellValue]) => {
@@ -948,8 +1037,9 @@ export class RecordsV2 {
     ): Promise<WriteRecordsResponse> {
         const url = await this._buildUrl(`/v2-alpha/records.jsonl`);
 
-        // Add options as query parameters
-        const queryParams = this._buildQueryParams(options);
+        // Add options as query parameters, excluding sheetId since it's in the record body
+        const { sheetId, ...queryOptions } = options;
+        const queryParams = this._buildQueryParams(queryOptions, false); // Write operation
         if (queryParams.length > 0) {
             url.search = queryParams;
         }
@@ -960,7 +1050,9 @@ export class RecordsV2 {
                 const encoder = new TextEncoder();
                 try {
                     for await (const record of recordsStream) {
-                        const jsonlLine = JSON.stringify(record) + "\n";
+                        // Ensure sheet ID is set if provided in options
+                        const enrichedRecord = sheetId && !record.__s ? { ...record, __s: sheetId } : record;
+                        const jsonlLine = JSON.stringify(enrichedRecord) + "\n";
                         controller.enqueue(encoder.encode(jsonlLine));
                     }
                     controller.close();
@@ -1007,7 +1099,9 @@ export class RecordsV2 {
         try {
             for await (const record of recordsStream) {
                 hasRecords = true;
-                buffer.push(record);
+                // Ensure sheet ID is set if provided in options
+                const enrichedRecord = options.sheetId && !record.__s ? { ...record, __s: options.sheetId } : record;
+                buffer.push(enrichedRecord);
 
                 if (buffer.length >= chunkSize) {
                     const result = await this.writeRaw(buffer, options, requestOptions);
