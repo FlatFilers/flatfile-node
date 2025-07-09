@@ -159,9 +159,4 @@ export interface WriteRecordsResponse {
 /**
  * Options for streaming write operations
  */
-export interface WriteStreamingOptions extends WriteRecordsRequestOptions {
-    /** Size of chunks to send in each batch */
-    chunkSize?: number;
-    /** Whether to use true HTTP body streaming vs chunking (default: auto-detect) */
-    useBodyStreaming?: boolean | "auto";
-}
+export interface WriteStreamingOptions extends WriteRecordsRequestOptions {}

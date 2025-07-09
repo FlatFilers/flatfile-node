@@ -289,14 +289,19 @@ export class RecordsV2 {
     }
 
     /**
-     * Stream records to a sheet in raw JSONL format.
+     * Stream records to a sheet in raw JSONL format using HTTP body streaming.
      *
-     * This method provides an efficient way to write large datasets by streaming
-     * records in chunks rather than loading all records into memory at once.
-     * Accepts an async generator/iterator of JsonlRecord objects.
+     * This method accepts an async generator/iterator of records and streams them
+     * directly to the server using a ReadableStream as the HTTP request body.
+     * This approach is memory efficient for large datasets as records are processed
+     * and transmitted without loading all data into memory at once.
+     *
+     * The operation is atomic - all records are sent in a single HTTP request,
+     * ensuring consistent write semantics. Records can be new inserts (without __k)
+     * or updates to existing records (with __k field containing the record ID).
      *
      * @param recordsStream - Async generator/iterator that yields JsonlRecord objects
-     * @param options - Write configuration options including chunk size
+     * @param options - Write configuration options (sheetId, truncate, etc.)
      * @param requestOptions - Optional request configuration (headers, timeout, etc.)
      * @returns Promise that resolves to WriteRecordsResponse with operation results
      *
@@ -314,8 +319,9 @@ export class RecordsV2 {
      *
      * const result = await recordsV2.writeRawStreaming(generateRecords(), {
      *   sheetId: 'us_sh_123',
-     *   chunkSize: 1000
+     *   truncate: false
      * });
+     * console.log(`Created: ${result.created}, Updated: ${result.updated}`);
      * ```
      */
     public async writeRawStreaming(
@@ -323,32 +329,6 @@ export class RecordsV2 {
         options: WriteStreamingOptions = {},
         requestOptions: FernRecords.RequestOptions = {},
     ): Promise<WriteRecordsResponse> {
-        const useBodyStreaming = this._shouldUseBodyStreaming(options.useBodyStreaming);
-
-        if (useBodyStreaming) {
-            try {
-                return await this._writeRawStreamingBodyWithFallback(recordsStream, options, requestOptions);
-            } catch (error) {
-                // This shouldn't happen with the new fallback implementation, but keep as safety net
-                console.warn("Body streaming failed, falling back to chunking:", error);
-                return await this._writeRawStreamingChunked(recordsStream, options, requestOptions);
-            }
-        } else {
-            return await this._writeRawStreamingChunked(recordsStream, options, requestOptions);
-        }
-    }
-
-    /**
-     * Implementation of body streaming with built-in fallback to chunking
-     */
-    private async _writeRawStreamingBodyWithFallback(
-        recordsStream: AsyncIterable<JsonlRecord>,
-        options: WriteStreamingOptions = {},
-        requestOptions: FernRecords.RequestOptions = {},
-    ): Promise<WriteRecordsResponse> {
-        const recordsBuffer: JsonlRecord[] = [];
-        let streamingError: Error | null = null;
-
         const url = await this._buildUrl(`/v2-alpha/records.jsonl`);
 
         // Add options as query parameters, excluding sheetId since it's in the record body
@@ -358,7 +338,7 @@ export class RecordsV2 {
             url.search = queryParams;
         }
 
-        // Create ReadableStream that converts records to JSONL and buffers them for fallback
+        // Create ReadableStream that converts records to JSONL
         const readableStream = new ReadableStream({
             async start(controller) {
                 const encoder = new TextEncoder();
@@ -366,7 +346,6 @@ export class RecordsV2 {
                     for await (const record of recordsStream) {
                         // Ensure sheet ID is set if provided in options
                         const enrichedRecord = sheetId && !record.__s ? { ...record, __s: sheetId } : record;
-                        recordsBuffer.push(enrichedRecord); // Buffer for potential fallback
                         const jsonlLine = JSON.stringify(enrichedRecord) + "\n";
                         controller.enqueue(encoder.encode(jsonlLine));
                     }
@@ -379,36 +358,21 @@ export class RecordsV2 {
 
         const headers = await this._prepareHeaders(requestOptions, "application/jsonl");
 
+        // Execute the streaming request
+        const response = await this._executeRequest(url.toString(), "POST", {
+            body: readableStream as any, // TypeScript might complain about ReadableStream
+            contentType: "application/jsonl",
+            headers,
+            requestOptions,
+        });
+
+        // Parse the response
+        const responseBody = await response.text();
         try {
-            // Try body streaming first
-            const response = await this._executeRequest(url.toString(), "POST", {
-                body: readableStream as any,
-                contentType: "application/jsonl",
-                headers,
-                requestOptions,
-            });
-
-            // Parse the response
-            const responseBody = await response.text();
-            try {
-                return JSON.parse(responseBody) as WriteRecordsResponse;
-            } catch (error) {
-                return { success: true };
-            }
+            return JSON.parse(responseBody) as WriteRecordsResponse;
         } catch (error) {
-            // Body streaming failed, fall back to single request with buffered records
-            console.warn("Body streaming failed, falling back to single request:", error);
-
-            if (recordsBuffer.length === 0) {
-                return {
-                    success: true,
-                    created: 0,
-                    updated: 0,
-                };
-            }
-
-            // Use single writeRaw request with all buffered records
-            return await this.writeRaw(recordsBuffer, options, requestOptions);
+            // If response isn't JSON, return a basic success response
+            return { success: true };
         }
     }
 
@@ -635,200 +599,6 @@ export class RecordsV2 {
                     body: errorBody,
                     rawResponse: rawResponse,
                 });
-        }
-    }
-
-    /**
-     * Check if the current environment supports streaming request bodies
-     */
-    private _supportsStreamingRequestBody(): boolean {
-        try {
-            // Check if ReadableStream exists and can be used as request body
-            if (typeof ReadableStream === "undefined") {
-                return false;
-            }
-
-            // Additional checks for environments that have ReadableStream but don't support it in fetch
-            if (typeof window !== "undefined") {
-                // Browser environment - most modern browsers support this
-                return true;
-            } else {
-                // Node.js environment - check if it's a recent enough version
-                // Node.js 18+ has proper ReadableStream support for fetch
-                const nodeVersion = process.version;
-                if (nodeVersion) {
-                    const majorVersion = parseInt(nodeVersion.slice(1).split(".")[0]);
-                    return majorVersion >= 18;
-                }
-                return true; // Assume support if we can't detect version
-            }
-        } catch {
-            return false;
-        }
-    }
-
-    /**
-     * Determine whether to use body streaming based on options and browser capability
-     */
-    private _shouldUseBodyStreaming(option?: boolean | "auto"): boolean {
-        if (option === true) {
-            return true;
-        }
-        if (option === false) {
-            return false;
-        }
-        // Auto-detect (default)
-        return this._supportsStreamingRequestBody();
-    }
-
-    /**
-     * Write records using true HTTP body streaming (single request with streaming body).
-     *
-     * This method streams the request body directly using ReadableStream, sending
-     * all records in a single HTTP request rather than chunking into multiple requests.
-     * This is more memory efficient and faster for very large datasets but requires
-     * browser support for streaming request bodies.
-     *
-     * @param recordsStream - Async generator/iterator that yields JsonlRecord objects
-     * @param options - Write configuration options
-     * @param requestOptions - Optional request configuration (headers, timeout, etc.)
-     * @returns Promise that resolves to WriteRecordsResponse with operation results
-     *
-     * @example
-     * ```typescript
-     * async function* generateRecords() {
-     *   for (let i = 0; i < 100000; i++) {
-     *     yield { firstName: `User${i}`, __s: 'us_sh_123' };
-     *   }
-     * }
-     *
-     * const result = await recordsV2.writeRawStreamingBody(generateRecords(), {
-     *   sheetId: 'us_sh_123'
-     * });
-     * ```
-     */
-    public async writeRawStreamingBody(
-        recordsStream: AsyncIterable<JsonlRecord>,
-        options: WriteRecordsRequestOptions = {},
-        requestOptions: FernRecords.RequestOptions = {},
-    ): Promise<WriteRecordsResponse> {
-        if (!this._supportsStreamingRequestBody()) {
-            throw new errors.FlatfileError({
-                message:
-                    "Browser does not support streaming request bodies. Use writeRawStreaming with chunking instead.",
-            });
-        }
-
-        return await this._writeRawStreamingBody(recordsStream, options, requestOptions);
-    }
-
-    /**
-     * Implementation of true HTTP body streaming
-     */
-    private async _writeRawStreamingBody(
-        recordsStream: AsyncIterable<JsonlRecord>,
-        options: WriteRecordsRequestOptions = {},
-        requestOptions: FernRecords.RequestOptions = {},
-    ): Promise<WriteRecordsResponse> {
-        const url = await this._buildUrl(`/v2-alpha/records.jsonl`);
-
-        // Add options as query parameters, excluding sheetId since it's in the record body
-        const { sheetId, ...queryOptions } = options;
-        const queryParams = this._buildQueryParams(queryOptions, false); // Write operation
-        if (queryParams.length > 0) {
-            url.search = queryParams;
-        }
-
-        // Create ReadableStream that converts records to JSONL
-        const readableStream = new ReadableStream({
-            async start(controller) {
-                const encoder = new TextEncoder();
-                try {
-                    for await (const record of recordsStream) {
-                        // Ensure sheet ID is set if provided in options
-                        const enrichedRecord = sheetId && !record.__s ? { ...record, __s: sheetId } : record;
-                        const jsonlLine = JSON.stringify(enrichedRecord) + "\n";
-                        controller.enqueue(encoder.encode(jsonlLine));
-                    }
-                    controller.close();
-                } catch (error) {
-                    controller.error(error);
-                }
-            },
-        });
-
-        const headers = await this._prepareHeaders(requestOptions, "application/jsonl");
-
-        // Execute the streaming request
-        const response = await this._executeRequest(url.toString(), "POST", {
-            body: readableStream as any, // TypeScript might complain about ReadableStream
-            contentType: "application/jsonl",
-            headers,
-            requestOptions,
-        });
-
-        // Parse the response
-        const responseBody = await response.text();
-        try {
-            return JSON.parse(responseBody) as WriteRecordsResponse;
-        } catch (error) {
-            // If response isn't JSON, return a basic success response
-            return { success: true };
-        }
-    }
-
-    /**
-     * Implementation of chunked streaming (existing behavior)
-     */
-    private async _writeRawStreamingChunked(
-        recordsStream: AsyncIterable<JsonlRecord>,
-        options: WriteStreamingOptions = {},
-        requestOptions: FernRecords.RequestOptions = {},
-    ): Promise<WriteRecordsResponse> {
-        const chunkSize = options.chunkSize || 1000;
-        let totalCreated = 0;
-        let totalUpdated = 0;
-        let buffer: JsonlRecord[] = [];
-        let hasRecords = false;
-
-        try {
-            for await (const record of recordsStream) {
-                hasRecords = true;
-                // Ensure sheet ID is set if provided in options
-                const enrichedRecord = options.sheetId && !record.__s ? { ...record, __s: options.sheetId } : record;
-                buffer.push(enrichedRecord);
-
-                if (buffer.length >= chunkSize) {
-                    const result = await this.writeRaw(buffer, options, requestOptions);
-                    totalCreated += result.created || 0;
-                    totalUpdated += result.updated || 0;
-                    buffer = [];
-                }
-            }
-
-            // Write remaining records in buffer
-            if (buffer.length > 0) {
-                const result = await this.writeRaw(buffer, options, requestOptions);
-                totalCreated += result.created || 0;
-                totalUpdated += result.updated || 0;
-            }
-
-            // If no records were processed, return success with 0 counts
-            if (!hasRecords) {
-                return {
-                    success: true,
-                    created: 0,
-                    updated: 0,
-                };
-            }
-
-            return {
-                success: true,
-                created: totalCreated,
-                updated: totalUpdated,
-            };
-        } catch (error) {
-            throw error;
         }
     }
 }
