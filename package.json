@@ -3,12 +3,11 @@
     "version": "1.17.5",
     "private": false,
     "repository": "https://github.com/FlatFilers/flatfile-node",
-    "main": "./index.js",
-    "types": "./index.d.ts",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
         "build": "tsc",
-        "prepack": "cp -rv dist/. .",
         "test": "jest"
     },
     "dependencies": {
