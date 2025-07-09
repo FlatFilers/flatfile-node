@@ -24,98 +24,6 @@ export class RecordsV2 {
     }
 
     /**
-     * Retrieve records from a sheet in the standard Flatfile format.
-     *
-     * This method fetches records and converts them to the expected RecordWithLinks format,
-     * returning them wrapped in a GetRecordsResponse structure.
-     *
-     * @param sheetId - The ID of the sheet to retrieve records from
-     * @param options - Optional request parameters for filtering, pagination, etc.
-     * @param requestOptions - Optional request configuration (headers, timeout, etc.)
-     * @returns Promise that resolves to a GetRecordsResponse containing the formatted records
-     *
-     * @example
-     * ```typescript
-     * const response = await recordsV2.get('us_sh_123', {
-     *   pageSize: 100,
-     *   includeMessages: true
-     * });
-     * console.log(response.data.records);
-     * ```
-     */
-    public async get(
-        sheetId: Flatfile.SheetId,
-        options: GetRecordsRequestOptions = {},
-        requestOptions: FernRecords.RequestOptions,
-    ): Promise<Flatfile.GetRecordsResponse> {
-        // Ensure includeMessages and includeEmptyCells are true by default to match V1 behavior
-        const enhancedOptions = {
-            includeMessages: true,
-            includeEmptyCells: true,
-            ...options,
-        };
-        
-        // Use getRaw to fetch the JSONL records
-        const rawRecords = await this.getRaw(sheetId, enhancedOptions, requestOptions);
-
-        // Convert each JSONL record to the expected format
-        const records: Flatfile.RecordWithLinks[] = rawRecords.map((record) => this._convertStreamedRecord(record));
-
-        // Build and return the GetRecordsResponse structure
-        const response: Flatfile.GetRecordsResponse = {
-            data: {
-                records,
-                success: true,
-                // Note: counts, versionId, and commitId are not available from the raw JSONL endpoint
-                // These would need to be populated if the endpoint provides this information
-            },
-        };
-
-        return response;
-    }
-
-    /**
-     * Stream records from a sheet in the standard Flatfile format.
-     *
-     * This method provides an async generator that yields RecordWithLinks objects
-     * as they are received from the server, allowing for memory-efficient processing
-     * of large datasets.
-     *
-     * @param sheetId - The ID of the sheet to retrieve records from
-     * @param options - Optional request parameters for filtering, pagination, etc.
-     * @param requestOptions - Optional request configuration (headers, timeout, etc.)
-     * @returns AsyncGenerator that yields RecordWithLinks objects
-     *
-     * @example
-     * ```typescript
-     * for await (const record of recordsV2.getStreaming('us_sh_123', {
-     *   includeMessages: true
-     * })) {
-     *   console.log(`Record ${record.id}:`, record.values);
-     *   // Process each record as it streams in
-     * }
-     * ```
-     */
-    public async *getStreaming(
-        sheetId: Flatfile.SheetId,
-        options: GetRecordsRequestOptions = {},
-        requestOptions: FernRecords.RequestOptions = {},
-    ): AsyncGenerator<Flatfile.RecordWithLinks, void, unknown> {
-        // Ensure includeMessages and includeEmptyCells are true by default to match V1 behavior
-        const enhancedOptions = {
-            includeMessages: true,
-            includeEmptyCells: true,
-            ...options,
-        };
-        
-        // Use getRawStreaming to get the JSONL records as they stream in
-        for await (const rawRecord of this.getRawStreaming(sheetId, enhancedOptions, requestOptions)) {
-            // Convert each JSONL record to the expected format and yield it
-            yield this._convertStreamedRecord(rawRecord);
-        }
-    }
-
-    /**
      * Retrieve records from a sheet in raw JSONL format.
      *
      * This method fetches all records at once and returns them as an array of
@@ -338,7 +246,7 @@ export class RecordsV2 {
         const url = await this._buildUrl(`/v2-alpha/records.jsonl`);
 
         // For write operations, ensure all records have the sheet ID set if provided in options
-        const enrichedRecords = records.map(record => {
+        const enrichedRecords = records.map((record) => {
             // Always ensure sheet ID is present when provided in options
             if (options.sheetId) {
                 return { __s: options.sheetId, ...record };
@@ -357,12 +265,12 @@ export class RecordsV2 {
         const jsonlBody = enrichedRecords.map((record) => JSON.stringify(record)).join("\n");
 
         const headers = await this._prepareHeaders(requestOptions, "application/jsonl");
-        
+
         // Add sheet ID header if provided in options and not already in records
         if (options.sheetId) {
             headers["X-Sheet-Id"] = options.sheetId;
         }
-        
+
         const response = await this._executeRequest(url.toString(), "POST", {
             body: jsonlBody,
             contentType: "application/jsonl",
@@ -502,56 +410,6 @@ export class RecordsV2 {
             // Use single writeRaw request with all buffered records
             return await this.writeRaw(recordsBuffer, options, requestOptions);
         }
-    }
-
-    /**
-     * Insert records using the standard Flatfile format.
-     *
-     * This method provides compatibility with the V1 Records API by accepting
-     * standard RecordData objects and converting them to the optimized JSONL format
-     * internally. This is the recommended method when migrating from V1 to V2.
-     *
-     * @param sheetId - The ID of the sheet to insert records into
-     * @param records - Array of RecordData objects in standard Flatfile format
-     * @param requestOptions - Optional request configuration (headers, timeout, etc.)
-     * @returns Promise that resolves to RecordsResponse in standard Flatfile format
-     *
-     * @example
-     * ```typescript
-     * const records: Flatfile.RecordData[] = [{
-     *   firstName: { value: "John", valid: true, messages: [] },
-     *   lastName: { value: "Doe", valid: true, messages: [] },
-     *   email: { value: "john.doe@example.com", valid: true, messages: [] }
-     * }];
-     *
-     * const response = await recordsV2.insert('us_sh_123', records);
-     * console.log(response.data.records);
-     * ```
-     */
-    public async insert(
-        sheetId: Flatfile.SheetId,
-        records: Flatfile.RecordData[],
-        requestOptions: FernRecords.RequestOptions = {},
-    ): Promise<Flatfile.RecordsResponse> {
-        // Convert RecordData to JsonlRecord format
-        const jsonlRecords: JsonlRecord[] = records.map((record) => this._convertRecordDataToJsonl(record, sheetId));
-
-        // Write the records
-        const writeResult = await this.writeRaw(
-            jsonlRecords,
-            { sheetId, silent: false }, // Don't silence hooks for compatibility with V1
-            requestOptions,
-        );
-
-        // Convert response to match V1 format
-        const response: Flatfile.RecordsResponse = {
-            data: {
-                // V2 doesn't return the actual records, match V1 behavior exactly
-                success: writeResult.success,
-            } as any, // Cast to avoid TypeScript issues with optional records field
-        };
-
-        return response;
     }
 
     private async _prepareHeaders(
@@ -778,171 +636,6 @@ export class RecordsV2 {
                     rawResponse: rawResponse,
                 });
         }
-    }
-
-    /**
-     * Convert a streamed record to the expected record format
-     */
-    private _convertStreamedRecord(streamedRecord: JsonlRecord): Flatfile.RecordWithLinks {
-        const { __k, __v, __s, __n, __c, __m, __i, __d, __e, __l, __u, ...fieldValues } = streamedRecord;
-
-        // Convert field values to expected format
-        const values: Flatfile.RecordDataWithLinks = {};
-        let hasValidationErrors = false;
-
-        // First, process validation messages to create validation-only fields (to match V1 field order)
-        if (__i) {
-            let messagesToProcess: Array<{fieldKey: string, messages: any[]}> = [];
-            
-            if (Array.isArray(__i)) {
-                // V2 format: __i is an array of message objects with {x: fieldName, m: message}
-                __i.forEach((msg: any) => {
-                    if (msg.x && msg.m) {
-                        messagesToProcess.push({
-                            fieldKey: msg.x,
-                            messages: [msg]
-                        });
-                    }
-                });
-            } else if (typeof __i === 'object') {
-                // V1 format: __i is an object with field names as keys
-                Object.entries(__i).forEach(([fieldKey, fieldMessages]) => {
-                    const messages = Array.isArray(fieldMessages) ? fieldMessages : [fieldMessages];
-                    messagesToProcess.push({ fieldKey, messages });
-                });
-            }
-            
-            // Process validation messages first to create validation-only fields at the beginning
-            messagesToProcess.forEach(({ fieldKey, messages }) => {
-                // Create field if it doesn't exist (for fields with only validation messages)
-                if (!values[fieldKey]) {
-                    values[fieldKey] = {
-                        value: undefined, // Field exists but has no value
-                        valid: true, // Will be set below
-                        messages: [],
-                    };
-                }
-                
-                values[fieldKey].messages = messages;
-                
-                // Check if any messages indicate invalid state
-                // V2 messages have format {x: field, m: message} and are generally errors
-                // V1 messages have format {type: "error", field: "field", message: "message"}
-                const hasErrors = messages.some((msg: any) => 
-                    // V1 format
-                    msg.type === 'error' || msg.type === 'warn' || 
-                    (msg.level && (msg.level === 'error' || msg.level === 'warn')) ||
-                    // V2 format - any message with 'm' property is considered an error
-                    (msg.m && typeof msg.m === 'string')
-                );
-                values[fieldKey].valid = !hasErrors;
-                
-                if (hasErrors) {
-                    hasValidationErrors = true;
-                }
-            });
-        }
-
-        // Then, process all field values that exist in the record
-        Object.entries(fieldValues).forEach(([fieldKey, fieldValue]) => {
-            // Skip special keys that might have been missed
-            if (fieldKey.startsWith("__")) {
-                return;
-            }
-
-            // Create field if it doesn't already exist from validation processing
-            if (!values[fieldKey]) {
-                values[fieldKey] = {
-                    value: fieldValue,
-                    valid: true, // Will be overridden by validation if messages exist
-                    messages: [],
-                };
-            } else {
-                // Field already exists from validation processing, just set the value
-                values[fieldKey].value = fieldValue;
-            }
-        });
-
-        // Determine record validity based on presence of validation errors first, then __e field
-        // This prioritizes actual validation state over server-provided validity flag
-        let recordValid = true;
-        if (hasValidationErrors) {
-            recordValid = false;
-        } else if (__e !== undefined) {
-            recordValid = __e;
-        }
-
-
-
-        // Build the record with the same key order as V1
-        const record: Flatfile.RecordWithLinks = {
-            id: __k as Flatfile.RecordId,
-            values,
-            metadata: __m || {},
-            config: __c || {},
-            valid: recordValid,
-        };
-
-        // Add record-level timestamp if present (when includeTimestamps=true)
-        if (__u) {
-            try {
-                (record as any).updatedAt = new Date(__u);
-            } catch {
-                // If timestamp parsing fails, include as string
-                (record as any).updatedAt = __u;
-            }
-        }
-
-        // Add deprecated versionId for backward compatibility
-        if (__v) {
-            (record as any).versionId = __v;
-            (record as any).commitId = __v;
-        }
-
-        // V1 does not include record-level messages field, so we skip this to match V1 behavior
-        // All validation messages are handled at the field level in record.values[field].messages
-
-        return record;
-    }
-
-    /**
-     * Convert a standard Flatfile RecordData to JSONL format
-     */
-    private _convertRecordDataToJsonl(record: Flatfile.RecordData, sheetId: Flatfile.SheetId): JsonlRecord {
-        const jsonlRecord: JsonlRecord = {};
-
-        // Always add sheet ID to each record
-        jsonlRecord.__s = sheetId;
-
-        // Extract field values from CellValue objects
-        Object.entries(record).forEach(([fieldKey, cellValue]) => {
-            if (fieldKey === "id") {
-                // Handle record ID specially
-                if (cellValue) {
-                    jsonlRecord.__k = cellValue as string;
-                }
-                return;
-            }
-
-            // Extract the actual value from CellValue
-            if (cellValue && typeof cellValue === "object" && "value" in cellValue) {
-                const cell = cellValue as Flatfile.CellValue;
-                jsonlRecord[fieldKey] = cell.value;
-
-                // Add messages if present
-                if (cell.messages && cell.messages.length > 0) {
-                    if (!jsonlRecord.__i) {
-                        jsonlRecord.__i = {};
-                    }
-                    jsonlRecord.__i[fieldKey] = cell.messages;
-                }
-            } else {
-                // If it's not a CellValue object, use the value directly
-                jsonlRecord[fieldKey] = cellValue;
-            }
-        });
-
-        return jsonlRecord;
     }
 
     /**
