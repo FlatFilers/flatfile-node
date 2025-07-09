@@ -12,4 +12,6 @@ export interface SpaceSettings {
     sidebarConfig?: Flatfile.SpaceSidebarConfig;
     /** The name of the job that needs to complete before navigating to file mapping */
     filesMappedAfterJob?: string;
+    /** The extraction options for CSV files. */
+    extractionOptions?: Flatfile.HeaderDetectionOptions;
 }

@@ -14,6 +14,7 @@ import { Auth } from "./api/resources/auth/client/Client";
 import { CanvasAreas } from "./api/resources/canvasAreas/client/Client";
 import { Cells } from "./api/resources/cells/client/Client";
 import { Commits } from "./api/resources/commits/client/Client";
+import { DataClips } from "./api/resources/dataClips/client/Client";
 import { DataRetentionPolicies } from "./api/resources/dataRetentionPolicies/client/Client";
 import { Documents } from "./api/resources/documents/client/Client";
 import { Entitlements } from "./api/resources/entitlements/client/Client";
@@ -78,6 +79,7 @@ export class FlatfileClient {
     protected _canvasAreas: CanvasAreas | undefined;
     protected _cells: Cells | undefined;
     protected _commits: Commits | undefined;
+    protected _dataClips: DataClips | undefined;
     protected _dataRetentionPolicies: DataRetentionPolicies | undefined;
     protected _documents: Documents | undefined;
     protected _entitlements: Entitlements | undefined;
@@ -146,6 +148,10 @@ export class FlatfileClient {
 
     public get commits(): Commits {
         return (this._commits ??= new Commits(this._options));
+    }
+
+    public get dataClips(): DataClips {
+        return (this._dataClips ??= new DataClips(this._options));
     }
 
     public get dataRetentionPolicies(): DataRetentionPolicies {

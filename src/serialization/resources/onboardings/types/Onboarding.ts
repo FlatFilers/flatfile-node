@@ -7,11 +7,15 @@ import * as Flatfile from "../../../../api/index";
 import * as core from "../../../../core";
 import { OnboardingId } from "../../commons/types/OnboardingId";
 import { UserId } from "../../commons/types/UserId";
+import { OnboardingFlow } from "./OnboardingFlow";
 
 export const Onboarding: core.serialization.ObjectSchema<serializers.Onboarding.Raw, Flatfile.Onboarding> =
     core.serialization.object({
         id: OnboardingId,
         userId: UserId,
+        flow: OnboardingFlow.optional(),
+        currentStep: core.serialization.number(),
+        completedAt: core.serialization.date().optional(),
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
     });
@@ -20,6 +24,9 @@ export declare namespace Onboarding {
     export interface Raw {
         id: OnboardingId.Raw;
         userId: UserId.Raw;
+        flow?: OnboardingFlow.Raw | null;
+        currentStep: number;
+        completedAt?: string | null;
         createdAt: string;
         updatedAt: string;
     }

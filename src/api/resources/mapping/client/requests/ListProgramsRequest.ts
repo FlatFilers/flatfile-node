@@ -34,6 +34,10 @@ export interface ListProgramsRequest {
      */
     environmentId?: Flatfile.EnvironmentId;
     /**
+     * A job ID to find mapping programs for
+     */
+    jobId?: Flatfile.JobId;
+    /**
      * Filter by family
      */
     familyId?: Flatfile.FamilyId;

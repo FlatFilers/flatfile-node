@@ -87,6 +87,7 @@ export * from "./assistant/client/requests";
 export * from "./auth/client/requests";
 export * from "./canvasAreas/client/requests";
 export * from "./cells/client/requests";
+export * from "./dataClips/client/requests";
 export * from "./dataRetentionPolicies/client/requests";
 export * from "./entitlements/client/requests";
 export * from "./environments/client/requests";

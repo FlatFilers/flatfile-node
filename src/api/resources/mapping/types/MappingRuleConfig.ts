@@ -21,7 +21,7 @@ export interface MappingRuleConfig {
     /** Time the mapping rule was last updated */
     acceptedAt?: Date;
     /** User ID of the contributor of the mapping rule */
-    acceptedBy?: Flatfile.UserId;
+    acceptedBy?: Flatfile.ActorId;
     /** Metadata of the mapping rule */
     metadata?: any;
 }

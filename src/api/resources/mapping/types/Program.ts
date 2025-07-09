@@ -25,4 +25,8 @@ export interface Program {
     summary?: Flatfile.ProgramSummary;
     /** If this program was saved, this token allows you to modify the program */
     accessToken?: string;
+    /** If this program was accepted, this is the time it was accepted */
+    acceptedAt?: Date;
+    /** If this program was accepted, this is the user ID of the user who accepted it */
+    acceptedBy?: Flatfile.ActorId;
 }

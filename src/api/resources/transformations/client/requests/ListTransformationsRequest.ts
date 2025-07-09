@@ -28,4 +28,8 @@ export interface ListTransformationsRequest {
      * Page number to return (default 1)
      */
     page?: number;
+    /**
+     * Minimum Jaccard similarity threshold (default 0.8)
+     */
+    overlap?: number;
 }

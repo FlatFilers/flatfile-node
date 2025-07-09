@@ -11,6 +11,8 @@ import * as Flatfile from "../../../index";
  *     {
  *         id: "us_onb_123abc",
  *         userId: "us_usr_789ghi",
+ *         flow: Flatfile.OnboardingFlow.Buildmode,
+ *         currentStep: 0,
  *         createdAt: "2025-04-01T10:30:00Z",
  *         updatedAt: "2025-04-01T10:30:00Z"
  *     }
@@ -18,6 +20,12 @@ import * as Flatfile from "../../../index";
 export interface Onboarding {
     id: Flatfile.OnboardingId;
     userId: Flatfile.UserId;
+    /** The type of onboarding flow */
+    flow?: Flatfile.OnboardingFlow;
+    /** The current step in the onboarding flow */
+    currentStep: number;
+    /** When the onboarding was completed (null if not completed) */
+    completedAt?: Date;
     /** When the onboarding was created */
     createdAt: Date;
     /** When the onboarding was last updated */

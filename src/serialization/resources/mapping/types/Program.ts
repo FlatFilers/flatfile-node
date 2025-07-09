@@ -9,6 +9,7 @@ import { MappingRuleOrConfig } from "./MappingRuleOrConfig";
 import { FamilyId } from "../../commons/types/FamilyId";
 import { UserId } from "../../commons/types/UserId";
 import { ProgramSummary } from "./ProgramSummary";
+import { ActorId } from "../../commons/types/ActorId";
 
 export const Program: core.serialization.ObjectSchema<serializers.Program.Raw, Flatfile.Program> =
     core.serialization.object({
@@ -22,6 +23,8 @@ export const Program: core.serialization.ObjectSchema<serializers.Program.Raw, F
         destinationKeys: core.serialization.list(core.serialization.string()),
         summary: ProgramSummary.optional(),
         accessToken: core.serialization.string().optional(),
+        acceptedAt: core.serialization.date().optional(),
+        acceptedBy: ActorId.optional(),
     });
 
 export declare namespace Program {
@@ -36,5 +39,7 @@ export declare namespace Program {
         destinationKeys: string[];
         summary?: ProgramSummary.Raw | null;
         accessToken?: string | null;
+        acceptedAt?: string | null;
+        acceptedBy?: ActorId.Raw | null;
     }
 }

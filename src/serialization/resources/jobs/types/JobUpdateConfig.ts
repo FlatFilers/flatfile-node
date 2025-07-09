@@ -24,6 +24,7 @@ import { EmptyObject } from "./EmptyObject";
 import { AddRecordsToDataClipJobConfig } from "./AddRecordsToDataClipJobConfig";
 import { UpdateDataClipResolutionsJobConfig } from "./UpdateDataClipResolutionsJobConfig";
 import { AgentExportJobConfig } from "./AgentExportJobConfig";
+import { AgentPromotionJobConfig } from "./AgentPromotionJobConfig";
 import { CompanyResearchJobConfig } from "./CompanyResearchJobConfig";
 import { ConfigureDemoJobConfig } from "./ConfigureDemoJobConfig";
 
@@ -48,6 +49,7 @@ export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateCon
         AddRecordsToDataClipJobConfig,
         UpdateDataClipResolutionsJobConfig,
         AgentExportJobConfig,
+        AgentPromotionJobConfig,
         CompanyResearchJobConfig,
         ConfigureDemoJobConfig,
     ]);
@@ -73,6 +75,7 @@ export declare namespace JobUpdateConfig {
         | AddRecordsToDataClipJobConfig.Raw
         | UpdateDataClipResolutionsJobConfig.Raw
         | AgentExportJobConfig.Raw
+        | AgentPromotionJobConfig.Raw
         | CompanyResearchJobConfig.Raw
         | ConfigureDemoJobConfig.Raw;
 }

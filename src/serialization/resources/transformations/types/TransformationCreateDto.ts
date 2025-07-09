@@ -10,6 +10,7 @@ import { EnvironmentId } from "../../commons/types/EnvironmentId";
 import { SpaceId } from "../../commons/types/SpaceId";
 import { AppId } from "../../commons/types/AppId";
 import { ProgramId } from "../../commons/types/ProgramId";
+import { SheetId } from "../../commons/types/SheetId";
 
 export const TransformationCreateDto: core.serialization.ObjectSchema<
     serializers.TransformationCreateDto.Raw,
@@ -19,14 +20,16 @@ export const TransformationCreateDto: core.serialization.ObjectSchema<
     environmentId: EnvironmentId,
     spaceId: SpaceId,
     appId: AppId,
-    programId: ProgramId,
+    programId: ProgramId.optional(),
+    sheetId: SheetId,
     keys: core.serialization.list(core.serialization.string()),
     sourceKeys: core.serialization.list(core.serialization.string()),
     destinationKeys: core.serialization.list(core.serialization.string()),
-    transformationFunction: core.serialization.string(),
     mutationCommand: core.serialization.string(),
     errorMessage: core.serialization.string().optional(),
     genesisValidationError: core.serialization.string().optional(),
+    config: core.serialization.any(),
+    type: core.serialization.string(),
 });
 
 export declare namespace TransformationCreateDto {
@@ -35,13 +38,15 @@ export declare namespace TransformationCreateDto {
         environmentId: EnvironmentId.Raw;
         spaceId: SpaceId.Raw;
         appId: AppId.Raw;
-        programId: ProgramId.Raw;
+        programId?: ProgramId.Raw | null;
+        sheetId: SheetId.Raw;
         keys: string[];
         sourceKeys: string[];
         destinationKeys: string[];
-        transformationFunction: string;
         mutationCommand: string;
         errorMessage?: string | null;
         genesisValidationError?: string | null;
+        config?: any;
+        type: string;
     }
 }

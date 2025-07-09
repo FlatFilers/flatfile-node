@@ -23,6 +23,7 @@ export * from "./MappingFromPreprocessingJobConfig";
 export * from "./AddRecordsToDataClipJobConfig";
 export * from "./UpdateDataClipResolutionsJobConfig";
 export * from "./AgentExportJobConfig";
+export * from "./AgentPromotionJobConfig";
 export * from "./CompanyResearchJobConfig";
 export * from "./ConfigureDemoJobConfig";
 export * from "./Driver";

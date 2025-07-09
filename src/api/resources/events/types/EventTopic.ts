@@ -51,6 +51,8 @@ export type EventTopic =
     | "job:failed"
     | "program:created"
     | "program:updated"
+    | "program:recomputing"
+    | "program:recomputed"
     | "commit:created"
     | "commit:updated"
     | "commit:completed"
@@ -128,6 +130,8 @@ export const EventTopic = {
     JobFailed: "job:failed",
     ProgramCreated: "program:created",
     ProgramUpdated: "program:updated",
+    ProgramRecomputing: "program:recomputing",
+    ProgramRecomputed: "program:recomputed",
     CommitCreated: "commit:created",
     CommitUpdated: "commit:updated",
     CommitCompleted: "commit:completed",

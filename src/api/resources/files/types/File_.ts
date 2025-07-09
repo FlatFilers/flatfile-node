@@ -12,8 +12,8 @@ import * as Flatfile from "../../../index";
  *         id: "us_fl_YOUR_ID",
  *         name: "Test File",
  *         description: "This is a test file",
- *         ext: "png",
- *         mimetype: "image/png",
+ *         ext: "csv",
+ *         mimetype: "text/csv",
  *         encoding: "7bit",
  *         status: Flatfile.ModelFileStatusEnum.Partial,
  *         mode: Flatfile.Mode.Import,
@@ -29,8 +29,8 @@ import * as Flatfile from "../../../index";
  *         id: "us_fl_YOUR_ID",
  *         name: "NewFileName",
  *         description: "This is a new test file",
- *         ext: "png",
- *         mimetype: "image/png",
+ *         ext: "csv",
+ *         mimetype: "text/csv",
  *         encoding: "7bit",
  *         status: Flatfile.ModelFileStatusEnum.Partial,
  *         mode: Flatfile.Mode.Import,
@@ -38,6 +38,23 @@ import * as Flatfile from "../../../index";
  *         bytesReceived: 81593,
  *         createdAt: "2023-11-15T19:31:33.015Z",
  *         updatedAt: "2023-11-15T19:31:33.015Z",
+ *         spaceId: "us_sp_YOUR_ID"
+ *     }
+ *
+ * @example
+ *     {
+ *         id: "us_file_1234567890abcdef",
+ *         name: "Cloned Test File",
+ *         description: "This is a cloned test file",
+ *         ext: "csv",
+ *         mimetype: "text/csv",
+ *         encoding: "7bit",
+ *         status: Flatfile.ModelFileStatusEnum.Partial,
+ *         mode: Flatfile.Mode.Import,
+ *         size: 81953,
+ *         bytesReceived: 81953,
+ *         createdAt: "2023-11-15T19:32:45.123Z",
+ *         updatedAt: "2023-11-15T19:32:45.123Z",
  *         spaceId: "us_sp_YOUR_ID"
  *     }
  */

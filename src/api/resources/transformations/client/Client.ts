@@ -59,7 +59,7 @@ export class Transformations {
         request: Flatfile.ListTransformationsRequest,
         requestOptions?: Transformations.RequestOptions,
     ): Promise<core.WithRawResponse<Flatfile.TransformationsResponse>> {
-        const { appId, matchKeys, filterKeys, page } = request;
+        const { appId, matchKeys, filterKeys, page, overlap } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["appId"] = appId;
         _queryParams["matchKeys"] = toJson(matchKeys);
@@ -69,6 +69,10 @@ export class Transformations {
 
         if (page != null) {
             _queryParams["page"] = page.toString();
+        }
+
+        if (overlap != null) {
+            _queryParams["overlap"] = overlap.toString();
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -84,8 +88,8 @@ export class Transformations {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.5",
-                "User-Agent": "@flatfile/api/1.17.5",
+                "X-Fern-SDK-Version": "1.18.0",
+                "User-Agent": "@flatfile/api/1.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -145,12 +149,15 @@ export class Transformations {
      *         environmentId: "environmentId",
      *         spaceId: "spaceId",
      *         appId: "appId",
-     *         programId: "programId",
+     *         sheetId: "sheetId",
      *         keys: ["keys", "keys"],
      *         sourceKeys: ["sourceKeys", "sourceKeys"],
      *         destinationKeys: ["destinationKeys", "destinationKeys"],
-     *         transformationFunction: "transformationFunction",
-     *         mutationCommand: "mutationCommand"
+     *         mutationCommand: "mutationCommand",
+     *         config: {
+     *             "key": "value"
+     *         },
+     *         type: "type"
      *     })
      */
     public create(
@@ -177,8 +184,8 @@ export class Transformations {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.5",
-                "User-Agent": "@flatfile/api/1.17.5",
+                "X-Fern-SDK-Version": "1.18.0",
+                "User-Agent": "@flatfile/api/1.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -239,12 +246,15 @@ export class Transformations {
      *         environmentId: "environmentId",
      *         spaceId: "spaceId",
      *         appId: "appId",
-     *         programId: "programId",
+     *         sheetId: "sheetId",
      *         keys: ["keys", "keys"],
      *         sourceKeys: ["sourceKeys", "sourceKeys"],
      *         destinationKeys: ["destinationKeys", "destinationKeys"],
-     *         transformationFunction: "transformationFunction",
-     *         mutationCommand: "mutationCommand"
+     *         mutationCommand: "mutationCommand",
+     *         config: {
+     *             "key": "value"
+     *         },
+     *         type: "type"
      *     })
      */
     public update(
@@ -273,8 +283,8 @@ export class Transformations {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.5",
-                "User-Agent": "@flatfile/api/1.17.5",
+                "X-Fern-SDK-Version": "1.18.0",
+                "User-Agent": "@flatfile/api/1.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -357,8 +367,8 @@ export class Transformations {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.17.5",
-                "User-Agent": "@flatfile/api/1.17.5",
+                "X-Fern-SDK-Version": "1.18.0",
+                "User-Agent": "@flatfile/api/1.18.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

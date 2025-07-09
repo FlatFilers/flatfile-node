@@ -6,16 +6,19 @@ import * as serializers from "../../../index";
 import * as Flatfile from "../../../../api/index";
 import * as core from "../../../../core";
 import { SpaceSidebarConfig } from "./SpaceSidebarConfig";
+import { HeaderDetectionOptions } from "../../files/types/HeaderDetectionOptions";
 
 export const SpaceSettings: core.serialization.ObjectSchema<serializers.SpaceSettings.Raw, Flatfile.SpaceSettings> =
     core.serialization.object({
         sidebarConfig: SpaceSidebarConfig.optional(),
         filesMappedAfterJob: core.serialization.string().optional(),
+        extractionOptions: HeaderDetectionOptions.optional(),
     });
 
 export declare namespace SpaceSettings {
     export interface Raw {
         sidebarConfig?: SpaceSidebarConfig.Raw | null;
         filesMappedAfterJob?: string | null;
+        extractionOptions?: HeaderDetectionOptions.Raw | null;
     }
 }

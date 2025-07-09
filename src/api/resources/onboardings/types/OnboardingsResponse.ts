@@ -12,6 +12,8 @@ import * as Flatfile from "../../../index";
  *         data: [{
  *                 id: "us_onb_123abc",
  *                 userId: "us_usr_789ghi",
+ *                 flow: Flatfile.OnboardingFlow.Buildmode,
+ *                 currentStep: 0,
  *                 createdAt: "2025-04-01T10:30:00Z",
  *                 updatedAt: "2025-04-01T10:30:00Z"
  *             }]

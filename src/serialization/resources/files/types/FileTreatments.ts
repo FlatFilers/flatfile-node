@@ -7,8 +7,8 @@ import * as Flatfile from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const FileTreatments: core.serialization.Schema<serializers.FileTreatments.Raw, Flatfile.FileTreatments> =
-    core.serialization.enum_(["IS_BASIC_FILE_SHAPE"]);
+    core.serialization.enum_(["IS_BASIC_FILE_SHAPE", "IS_COMPLEX_FILE_SHAPE"]);
 
 export declare namespace FileTreatments {
-    export type Raw = "IS_BASIC_FILE_SHAPE";
+    export type Raw = "IS_BASIC_FILE_SHAPE" | "IS_COMPLEX_FILE_SHAPE";
 }

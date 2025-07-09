@@ -40,4 +40,8 @@ export interface GetFieldValuesRequest {
      * A value to find for a given field in a sheet. Wrap the value in "" for exact match
      */
     searchValue?: Flatfile.SearchValue;
+    /**
+     * An FFQL query used to filter the records to be queried
+     */
+    q?: string;
 }

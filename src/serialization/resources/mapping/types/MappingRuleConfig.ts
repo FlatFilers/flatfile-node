@@ -5,7 +5,7 @@
 import * as serializers from "../../../index";
 import * as Flatfile from "../../../../api/index";
 import * as core from "../../../../core";
-import { UserId } from "../../commons/types/UserId";
+import { ActorId } from "../../commons/types/ActorId";
 
 export const MappingRuleConfig: core.serialization.ObjectSchema<
     serializers.MappingRuleConfig.Raw,
@@ -15,7 +15,7 @@ export const MappingRuleConfig: core.serialization.ObjectSchema<
     type: core.serialization.string(),
     config: core.serialization.any().optional(),
     acceptedAt: core.serialization.date().optional(),
-    acceptedBy: UserId.optional(),
+    acceptedBy: ActorId.optional(),
     metadata: core.serialization.any().optional(),
 });
 
@@ -25,7 +25,7 @@ export declare namespace MappingRuleConfig {
         type: string;
         config?: any | null;
         acceptedAt?: string | null;
-        acceptedBy?: UserId.Raw | null;
+        acceptedBy?: ActorId.Raw | null;
         metadata?: any | null;
     }
 }

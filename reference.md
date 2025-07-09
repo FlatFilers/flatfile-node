@@ -3703,6 +3703,579 @@ await client.commits.replay("commitId");
 </dl>
 </details>
 
+## DataClips
+
+<details><summary><code>client.dataClips.<a href="/src/api/resources/dataClips/client/Client.ts">create</a>({ ...params }) -> Flatfile.DataClip</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new DataClip.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.dataClips.create({
+    name: "name",
+    sourceSheetId: "sourceSheetId",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.CreateDataClipRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DataClips.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dataClips.<a href="/src/api/resources/dataClips/client/Client.ts">update</a>(dataClipId, { ...params }) -> Flatfile.DataClipResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.dataClips.update("dataClipId", {
+    name: "name",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dataClipId:** `Flatfile.DataClipId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.UpdateDataClipRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DataClips.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dataClips.<a href="/src/api/resources/dataClips/client/Client.ts">delete</a>(dataClipId) -> Flatfile.Success</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.dataClips.delete("dataClipId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dataClipId:** `Flatfile.DataClipId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DataClips.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dataClips.<a href="/src/api/resources/dataClips/client/Client.ts">get</a>(dataClipId) -> Flatfile.DataClipResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.dataClips.get("dataClipId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dataClipId:** `Flatfile.DataClipId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DataClips.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dataClips.<a href="/src/api/resources/dataClips/client/Client.ts">addRecordsToClip</a>(dataClipId, { ...params }) -> Flatfile.RecordsResponseData</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Adds records to an existing DataClip.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.dataClips.addRecordsToClip("dataClipId", {
+    recordIds: ["recordIds", "recordIds"],
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dataClipId:** `Flatfile.DataClipId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.AddRecordsToClipRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DataClips.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dataClips.<a href="/src/api/resources/dataClips/client/Client.ts">list</a>({ ...params }) -> Flatfile.ListDataClipResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.dataClips.list();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.ListDataClipsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DataClips.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dataClips.<a href="/src/api/resources/dataClips/client/Client.ts">getResolutions</a>(dataClipId, { ...params }) -> Flatfile.DiffRecordsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.dataClips.getResolutions("dataClipId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dataClipId:** `Flatfile.DataClipId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.GetDataClipResolutionsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DataClips.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dataClips.<a href="/src/api/resources/dataClips/client/Client.ts">getResolutionIndex</a>(dataClipId, { ...params }) -> Flatfile.GetResolutionIndexResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.dataClips.getResolutionIndex("dataClipId", {
+    filterConflicts: "filterConflicts",
+    id: "id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dataClipId:** `Flatfile.DataClipId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.GetDataClipResolutionIndexRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DataClips.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dataClips.<a href="/src/api/resources/dataClips/client/Client.ts">updateResolution</a>(dataClipId, { ...params }) -> Flatfile.Success</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.dataClips.updateResolution("dataClipId", {
+    resolvedRecords: [
+        {
+            recordId: "recordId",
+            resolves: [{}, {}],
+        },
+        {
+            recordId: "recordId",
+            resolves: [{}, {}],
+        },
+    ],
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dataClipId:** `Flatfile.DataClipId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.UpdateResolutionRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DataClips.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dataClips.<a href="/src/api/resources/dataClips/client/Client.ts">refreshResolutions</a>(dataClipId) -> Flatfile.Success</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.dataClips.refreshResolutions("dataClipId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**dataClipId:** `Flatfile.DataClipId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DataClips.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## DataRetentionPolicies
 
 <details><summary><code>client.dataRetentionPolicies.<a href="/src/api/resources/dataRetentionPolicies/client/Client.ts">list</a>({ ...params }) -> Flatfile.ListDataRetentionPoliciesResponse</code></summary>
@@ -5820,6 +6393,125 @@ await client.files.update("us_fl_YOUR_ID", {
 <dd>
 
 **request:** `Flatfile.UpdateFileRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Files.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.files.<a href="/src/api/resources/files/client/Client.ts">clone</a>(fileId, { ...params }) -> Flatfile.FileResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.files.clone("us_fl_YOUR_ID", {
+    prefix: "Cloned Test File",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fileId:** `Flatfile.FileId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.CloneFileRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Files.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.files.<a href="/src/api/resources/files/client/Client.ts">detectHeader</a>({ ...params }) -> Flatfile.DetectHeaderResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.files.detectHeader({
+    options: {
+        algorithm: "aiDetection",
+    },
+    data: [
+        ["", "", "", "", ""],
+        ["Trip Idea", "", "", "", ""],
+        ["Name", "Age", "City", "", ""],
+        ["David", "25", "New York", "Yes", ""],
+        ["Sarah", "32", "London", "", "Green"],
+        ["Michael", "42", "Sydney", "No", ""],
+        ["Jessica", "28", "Paris", "No", "Blue"],
+    ],
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.DetectHeaderRequest`
 
 </dd>
 </dl>
@@ -9952,6 +10644,142 @@ Soft delete an onboarding
 
 ```typescript
 await client.onboardings.deleteOnboarding("onboardingId");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**onboardingId:** `Flatfile.OnboardingId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Onboardings.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.onboardings.<a href="/src/api/resources/onboardings/client/Client.ts">updateOnboardingProgress</a>(onboardingId, { ...params }) -> Flatfile.OnboardingResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update onboarding progress
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.onboardings.updateOnboardingProgress("onboardingId", {
+    currentStep: 1,
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**onboardingId:** `Flatfile.OnboardingId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.OnboardingProgressUpdate`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Onboardings.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.onboardings.<a href="/src/api/resources/onboardings/client/Client.ts">getOnboardingStatus</a>(onboardingId) -> Flatfile.OnboardingResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get onboarding status
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.onboardings.getOnboardingStatus("onboardingId");
 ```
 
 </dd>
@@ -14435,12 +15263,15 @@ await client.transformations.create({
     environmentId: "environmentId",
     spaceId: "spaceId",
     appId: "appId",
-    programId: "programId",
+    sheetId: "sheetId",
     keys: ["keys", "keys"],
     sourceKeys: ["sourceKeys", "sourceKeys"],
     destinationKeys: ["destinationKeys", "destinationKeys"],
-    transformationFunction: "transformationFunction",
     mutationCommand: "mutationCommand",
+    config: {
+        key: "value",
+    },
+    type: "type",
 });
 ```
 
@@ -14494,12 +15325,15 @@ await client.transformations.update("transformationId", {
     environmentId: "environmentId",
     spaceId: "spaceId",
     appId: "appId",
-    programId: "programId",
+    sheetId: "sheetId",
     keys: ["keys", "keys"],
     sourceKeys: ["sourceKeys", "sourceKeys"],
     destinationKeys: ["destinationKeys", "destinationKeys"],
-    transformationFunction: "transformationFunction",
     mutationCommand: "mutationCommand",
+    config: {
+        key: "value",
+    },
+    type: "type",
 });
 ```
 

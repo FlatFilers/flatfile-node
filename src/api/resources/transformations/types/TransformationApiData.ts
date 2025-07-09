@@ -10,11 +10,11 @@ export interface TransformationApiData {
     environmentId: Flatfile.EnvironmentId;
     spaceId: Flatfile.SpaceId;
     appId: Flatfile.AppId;
-    programId: Flatfile.ProgramId;
+    programId?: Flatfile.ProgramId;
+    sheetId: Flatfile.SheetId;
     keys: string[];
     sourceKeys: string[];
     destinationKeys: string[];
-    transformationFunction: string;
     mutationCommand: string;
     errorMessage?: string;
     genesisValidationError?: string;
@@ -23,4 +23,6 @@ export interface TransformationApiData {
     updatedAt: Date;
     lastExecuted?: Date;
     usageCount: number;
+    config?: any;
+    type: string;
 }
