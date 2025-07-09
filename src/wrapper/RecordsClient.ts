@@ -2,6 +2,7 @@ import pako from "pako";
 import urlJoin from "url-join";
 import { Flatfile } from "..";
 import { Records as FernRecords } from "../api/resources/records/client/Client";
+import { RecordsV2 } from "../v2/records";
 import * as core from "../core";
 import * as environments from "../environments";
 import * as errors from "../errors";
@@ -47,6 +48,10 @@ export class Records extends FernRecords {
         requestOptions?: InsertRequestOptions,
     ): core.HttpResponsePromise<Flatfile.RecordsResponse> {
         return core.HttpResponsePromise.fromPromise(this.__insertRecords(sheetId, request, requestOptions));
+    }
+
+    get v2(): RecordsV2 {
+        return new RecordsV2(this._options);
     }
 
     private async __insertRecords(
