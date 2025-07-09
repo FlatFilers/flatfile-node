@@ -6,6 +6,9 @@ cl-config.yml
 
 src/wrapper
 src/index.ts
+src/v2
+tests/bun
+tests/fixtures
 
 .github/workflows/ci.yml
 .github/workflows/cl-create.yml
