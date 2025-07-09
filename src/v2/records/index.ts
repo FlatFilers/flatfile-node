@@ -495,12 +495,20 @@ export class RecordsV2 {
                     timeoutId = setTimeout(() => controller.abort(), timeoutMs);
                 }
 
-                const response = await fetch(url, {
+                // Prepare fetch options
+                const fetchOptions: RequestInit = {
                     method,
                     headers: finalHeaders,
                     body,
                     signal: controller.signal,
-                });
+                };
+
+                // Add duplex option when body is a ReadableStream (only if ReadableStream is available)
+                if (typeof ReadableStream !== "undefined" && body instanceof ReadableStream) {
+                    (fetchOptions as any).duplex = "half";
+                }
+
+                const response = await fetch(url, fetchOptions);
 
                 if (timeoutId) {
                     clearTimeout(timeoutId);
