@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as Flatfile from "../../../../api/index";
 import * as core from "../../../../core";
+import { ReferenceFilter } from "./ReferenceFilter";
 
 export const ReferenceListPropertyConfig: core.serialization.ObjectSchema<
     serializers.ReferenceListPropertyConfig.Raw,
@@ -12,11 +13,13 @@ export const ReferenceListPropertyConfig: core.serialization.ObjectSchema<
 > = core.serialization.object({
     ref: core.serialization.string(),
     key: core.serialization.string(),
+    filter: ReferenceFilter.optional(),
 });
 
 export declare namespace ReferenceListPropertyConfig {
     export interface Raw {
         ref: string;
         key: string;
+        filter?: ReferenceFilter.Raw | null;
     }
 }

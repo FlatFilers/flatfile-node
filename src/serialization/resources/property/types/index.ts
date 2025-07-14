@@ -18,6 +18,7 @@ export * from "./ReferenceListProperty";
 export * from "./ReferencePropertyConfig";
 export * from "./ReferencePropertyRelationship";
 export * from "./ReferenceListPropertyConfig";
+export * from "./ReferenceFilter";
 export * from "./Constraint";
 export * from "./UniqueConstraint";
 export * from "./ExternalConstraint";

@@ -9,6 +9,8 @@ export interface ReferencePropertyConfig {
     ref: string;
     /** Key of the property to use as the reference key. Defaults to `id` */
     key: string;
+    /** Optional filter to narrow the set of records in the reference sheet used as valid values */
+    filter?: Flatfile.ReferenceFilter;
     /** The type of relationship this defines */
     relationship?: Flatfile.ReferencePropertyRelationship;
 }

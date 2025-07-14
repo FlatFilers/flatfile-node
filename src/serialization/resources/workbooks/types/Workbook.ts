@@ -12,6 +12,7 @@ import { Sheet } from "../../sheets/types/Sheet";
 import { Action } from "../../commons/types/Action";
 import { WorkbookConfigSettings } from "./WorkbookConfigSettings";
 import { WorkbookTreatments } from "./WorkbookTreatments";
+import { StorageStrategy } from "./StorageStrategy";
 
 export const Workbook: core.serialization.ObjectSchema<serializers.Workbook.Raw, Flatfile.Workbook> =
     core.serialization.object({
@@ -30,6 +31,7 @@ export const Workbook: core.serialization.ObjectSchema<serializers.Workbook.Raw,
         createdAt: core.serialization.date(),
         expiredAt: core.serialization.date().optional(),
         storageType: core.serialization.string().optional(),
+        storageStrategy: StorageStrategy.optional(),
         createdFrom: WorkbookId.optional(),
         lastPropagatedAt: core.serialization.date().optional(),
     });
@@ -51,6 +53,7 @@ export declare namespace Workbook {
         createdAt: string;
         expiredAt?: string | null;
         storageType?: string | null;
+        storageStrategy?: StorageStrategy.Raw | null;
         createdFrom?: WorkbookId.Raw | null;
         lastPropagatedAt?: string | null;
     }

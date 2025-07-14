@@ -90,6 +90,8 @@ export interface Workbook {
     expiredAt?: Date;
     /** The storage type of the workbook */
     storageType?: string;
+    /** The storage strategy of the workbook */
+    storageStrategy?: Flatfile.StorageStrategy;
     /** The workbook id of the template that was used to create this workbook */
     createdFrom?: Flatfile.WorkbookId;
     /** The last time the workbook template configuration was propagated to this workbook */

@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as Flatfile from "../../../../api/index";
 import * as core from "../../../../core";
+import { ReferenceFilter } from "./ReferenceFilter";
 import { ReferencePropertyRelationship } from "./ReferencePropertyRelationship";
 
 export const ReferencePropertyConfig: core.serialization.ObjectSchema<
@@ -13,6 +14,7 @@ export const ReferencePropertyConfig: core.serialization.ObjectSchema<
 > = core.serialization.object({
     ref: core.serialization.string(),
     key: core.serialization.string(),
+    filter: ReferenceFilter.optional(),
     relationship: ReferencePropertyRelationship.optional(),
 });
 
@@ -20,6 +22,7 @@ export declare namespace ReferencePropertyConfig {
     export interface Raw {
         ref: string;
         key: string;
+        filter?: ReferenceFilter.Raw | null;
         relationship?: ReferencePropertyRelationship.Raw | null;
     }
 }
