@@ -11,6 +11,7 @@ import { SheetConfig } from "../../sheets/types/SheetConfig";
 import { Action } from "../../commons/types/Action";
 import { WorkbookConfigSettings } from "./WorkbookConfigSettings";
 import { WorkbookTreatments } from "./WorkbookTreatments";
+import { StorageStrategy } from "./StorageStrategy";
 
 export const CreateWorkbookConfig: core.serialization.ObjectSchema<
     serializers.CreateWorkbookConfig.Raw,
@@ -26,6 +27,7 @@ export const CreateWorkbookConfig: core.serialization.ObjectSchema<
     settings: WorkbookConfigSettings.optional(),
     metadata: core.serialization.any().optional(),
     treatments: core.serialization.list(WorkbookTreatments).optional(),
+    storageStrategy: StorageStrategy.optional(),
 });
 
 export declare namespace CreateWorkbookConfig {
@@ -40,5 +42,6 @@ export declare namespace CreateWorkbookConfig {
         settings?: WorkbookConfigSettings.Raw | null;
         metadata?: any | null;
         treatments?: WorkbookTreatments.Raw[] | null;
+        storageStrategy?: StorageStrategy.Raw | null;
     }
 }

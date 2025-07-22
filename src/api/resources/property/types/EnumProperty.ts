@@ -8,7 +8,7 @@ import * as Flatfile from "../../../index";
  * Defines an enumerated list of options for the user to select from. Matching tooling attempts to resolve incoming data assigment to a valid option. The maximum number of options for this list is `100`. For larger lists, users should use the reference or future `lookup` types.
  */
 export interface EnumProperty extends Flatfile.BaseProperty, Flatfile.ArrayableProperty {
-    /** Will allow multiple values and store / provide the values in an array if set. Not all field types support arrays. */
+    /** Will allow multiple values and store / provide the values in an array if set. Not all field types support arrays. Use enum-list type instead. */
     multi?: boolean;
     config: Flatfile.EnumPropertyConfig;
 }

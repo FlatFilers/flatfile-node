@@ -14,4 +14,6 @@ export interface WorkbookConfigSettings {
     noMappingRedirect?: boolean;
     /** Used to set the order of sheets in the sidebar. Sheets that are not specified will be shown after those listed. */
     sheetSidebarOrder?: Flatfile.SheetId[];
+    /** Whether to automatically run analysis on the workbook when the inlineTransform feature is enabled. Defaults to true. */
+    autoRunAnalysis?: boolean;
 }

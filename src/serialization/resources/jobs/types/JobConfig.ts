@@ -33,6 +33,7 @@ export const JobConfig: core.serialization.ObjectSchema<serializers.JobConfig.Ra
         input: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
         subject: JobSubject.optional(),
         outcome: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
+        result: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
         info: core.serialization.string().optional(),
         managed: core.serialization.boolean().optional(),
         environmentId: EnvironmentId.optional(),
@@ -59,6 +60,7 @@ export declare namespace JobConfig {
         input?: Record<string, any> | null;
         subject?: JobSubject.Raw | null;
         outcome?: Record<string, any> | null;
+        result?: Record<string, any> | null;
         info?: string | null;
         managed?: boolean | null;
         environmentId?: EnvironmentId.Raw | null;

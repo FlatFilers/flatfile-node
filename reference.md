@@ -660,9 +660,7 @@ await client.agents.create({
         topics: ["workbook:updated"],
         compiler: "js",
         source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }",
-        options: {
-            namespace: "space:blue",
-        },
+        namespace: "space:blue",
     },
 });
 ```
@@ -16777,6 +16775,7 @@ await client.workbooks.create({
     ],
     settings: {
         trackChanges: true,
+        autoRunAnalysis: true,
     },
 });
 ```

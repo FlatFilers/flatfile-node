@@ -12,9 +12,7 @@ import * as Flatfile from "../../../../index";
  *             topics: ["workbook:updated"],
  *             compiler: "js",
  *             source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }",
- *             options: {
- *                 "namespace": "space:blue"
- *             }
+ *             namespace: "space:blue"
  *         }
  *     }
  *
@@ -25,9 +23,7 @@ import * as Flatfile from "../../../../index";
  *             topics: ["workbook:updated"],
  *             compiler: "js",
  *             source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }",
- *             options: {
- *                 "namespace": "space:blue"
- *             }
+ *             namespace: "space:blue"
  *         }
  *     }
  */

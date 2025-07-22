@@ -12,9 +12,7 @@ import * as Flatfile from "../../../index";
  *         topics: [Flatfile.EventTopic.WorkbookUpdated],
  *         compiler: Flatfile.Compiler.Js,
  *         source: "module.exports = { routeEvent: async (...args) => { console.log(args) } }",
- *         options: {
- *             "namespace": "space:blue"
- *         }
+ *         namespace: "space:blue"
  *     }
  */
 export interface AgentConfig {
@@ -28,8 +26,12 @@ export interface AgentConfig {
     sourceMap?: string;
     /** The slug of the agent */
     slug?: string;
-    /** Options for the agent */
+    /** This field is deprecated and will be removed in the future. Use the `template` and `templateOptions` fields instead. */
     options?: Record<string, any>;
+    /** The template of the agent; Template options are required for templated agents. */
+    template?: Flatfile.AgentTemplateEnum;
+    /** The options for a templated agent. Must be provided if `template` is provided. */
+    templateOptions?: Flatfile.TemplateOptions;
     /** Whether the agent is a system agent. This should be false for all agents created by users. */
     isSystem?: boolean;
     /** The namespace this agent should be limited to. Right now, this is information only and not used to actually filter agents that run, so you must still specify the namespace filter in the agent code. */

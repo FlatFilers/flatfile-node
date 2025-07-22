@@ -37,7 +37,8 @@ import * as Flatfile from "../../../index";
  *                 primary: true
  *             }],
  *         settings: {
- *             trackChanges: true
+ *             trackChanges: true,
+ *             autoRunAnalysis: true
  *         }
  *     }
  */
@@ -62,4 +63,6 @@ export interface CreateWorkbookConfig {
     metadata?: any;
     /** Treatments for the workbook */
     treatments?: Flatfile.WorkbookTreatments[];
+    /** Storage strategy for the workbook. Defaults to QUICKSTORE. */
+    storageStrategy?: Flatfile.StorageStrategy;
 }

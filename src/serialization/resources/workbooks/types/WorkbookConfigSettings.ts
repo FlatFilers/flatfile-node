@@ -14,6 +14,7 @@ export const WorkbookConfigSettings: core.serialization.ObjectSchema<
     trackChanges: core.serialization.boolean().optional(),
     noMappingRedirect: core.serialization.boolean().optional(),
     sheetSidebarOrder: core.serialization.list(SheetId).optional(),
+    autoRunAnalysis: core.serialization.boolean().optional(),
 });
 
 export declare namespace WorkbookConfigSettings {
@@ -21,5 +22,6 @@ export declare namespace WorkbookConfigSettings {
         trackChanges?: boolean | null;
         noMappingRedirect?: boolean | null;
         sheetSidebarOrder?: SheetId.Raw[] | null;
+        autoRunAnalysis?: boolean | null;
     }
 }

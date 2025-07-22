@@ -3,6 +3,6 @@
  */
 
 export interface ArrayableProperty {
-    /** Will allow multiple values and store as an array */
+    /** Will allow multiple values and store as an array. Use enum-list type instead. */
     isArray?: boolean;
 }

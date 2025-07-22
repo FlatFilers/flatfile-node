@@ -7,6 +7,8 @@ import * as Flatfile from "../../../../api/index";
 import * as core from "../../../../core";
 import { EventTopic } from "../../events/types/EventTopic";
 import { Compiler } from "./Compiler";
+import { AgentTemplateEnum } from "./AgentTemplateEnum";
+import { TemplateOptions } from "./TemplateOptions";
 
 export const AgentConfig: core.serialization.ObjectSchema<serializers.AgentConfig.Raw, Flatfile.AgentConfig> =
     core.serialization.object({
@@ -16,6 +18,8 @@ export const AgentConfig: core.serialization.ObjectSchema<serializers.AgentConfi
         sourceMap: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
         options: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
+        template: AgentTemplateEnum.optional(),
+        templateOptions: TemplateOptions.optional(),
         isSystem: core.serialization.boolean().optional(),
         namespace: core.serialization.string().optional(),
         packageVersions: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
@@ -30,6 +34,8 @@ export declare namespace AgentConfig {
         sourceMap?: string | null;
         slug?: string | null;
         options?: Record<string, any> | null;
+        template?: AgentTemplateEnum.Raw | null;
+        templateOptions?: TemplateOptions.Raw | null;
         isSystem?: boolean | null;
         namespace?: string | null;
         packageVersions?: Record<string, string> | null;

@@ -37,6 +37,8 @@ export interface JobConfig {
     subject?: Flatfile.JobSubject;
     /** Outcome summary of job. */
     outcome?: Record<string, any>;
+    /** Information computed during job execution can be stored here */
+    result?: Record<string, any>;
     /** Current status of job in text */
     info?: string;
     /** Indicates if Flatfile is managing the control flow of this job or if it is being manually tracked. */
