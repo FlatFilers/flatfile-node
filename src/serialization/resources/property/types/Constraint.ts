@@ -5,13 +5,14 @@
 import * as serializers from "../../../index";
 import * as Flatfile from "../../../../api/index";
 import * as core from "../../../../core";
+import { RequiredConstraint } from "./RequiredConstraint";
 import { UniqueConstraint } from "./UniqueConstraint";
 import { ExternalConstraint } from "./ExternalConstraint";
 import { StoredConstraint } from "./StoredConstraint";
 
 export const Constraint: core.serialization.Schema<serializers.Constraint.Raw, Flatfile.Constraint> = core.serialization
     .union("type", {
-        required: core.serialization.object({}),
+        required: RequiredConstraint,
         unique: UniqueConstraint,
         computed: core.serialization.object({}),
         external: ExternalConstraint,
@@ -30,7 +31,7 @@ export declare namespace Constraint {
         | Constraint.External
         | Constraint.Stored;
 
-    export interface Required {
+    export interface Required extends RequiredConstraint.Raw {
         type: "required";
     }
 

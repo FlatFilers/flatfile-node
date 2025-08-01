@@ -49,6 +49,9 @@ export type Event =
     | Flatfile.Event.WorkbookUpdated
     | Flatfile.Event.WorkbookDeleted
     | Flatfile.Event.WorkbookExpired
+    | Flatfile.Event.FlagCreated
+    | Flatfile.Event.FlagUpdated
+    | Flatfile.Event.FlagDeleted
     | Flatfile.Event.SheetCreated
     | Flatfile.Event.SheetUpdated
     | Flatfile.Event.SheetDeleted
@@ -168,6 +171,18 @@ export namespace Event {
 
     export interface WorkbookExpired extends Flatfile.GenericEvent {
         topic: "workbook:expired";
+    }
+
+    export interface FlagCreated extends Flatfile.GenericEvent {
+        topic: "flag:created";
+    }
+
+    export interface FlagUpdated extends Flatfile.GenericEvent {
+        topic: "flag:updated";
+    }
+
+    export interface FlagDeleted extends Flatfile.GenericEvent {
+        topic: "flag:deleted";
     }
 
     export interface SheetCreated extends Flatfile.GenericEvent {

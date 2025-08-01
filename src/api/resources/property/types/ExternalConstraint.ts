@@ -4,5 +4,9 @@
 
 export interface ExternalConstraint {
     validator: string;
+    /** A full description of what this constraint configuration does */
+    description?: string;
+    /** A short description of what this constraint constraint should do, example - values between 1 and 100 */
+    label?: string;
     config?: any;
 }

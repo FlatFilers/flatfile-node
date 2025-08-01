@@ -12,7 +12,14 @@ export const MessageApiUpdateData: core.serialization.ObjectSchema<
     serializers.MessageApiUpdateData.Raw,
     Flatfile.MessageApiUpdateData
 > = core.serialization.object({
+    messageId: core.serialization.string().optional(),
     content: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
+    parts: core.serialization
+        .list(core.serialization.record(core.serialization.string(), core.serialization.any()))
+        .optional(),
+    annotations: core.serialization
+        .list(core.serialization.record(core.serialization.string(), core.serialization.any()))
+        .optional(),
     role: MessageRole.optional(),
     state: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
     metadata: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
@@ -21,7 +28,10 @@ export const MessageApiUpdateData: core.serialization.ObjectSchema<
 
 export declare namespace MessageApiUpdateData {
     export interface Raw {
+        messageId?: string | null;
         content?: Record<string, any> | null;
+        parts?: Record<string, any>[] | null;
+        annotations?: Record<string, any>[] | null;
         role?: MessageRole.Raw | null;
         state?: Record<string, any> | null;
         metadata?: Record<string, any> | null;

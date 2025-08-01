@@ -14,7 +14,9 @@ import * as Flatfile from "../../../index";
  *         constraints: [{
  *                 type: "unique",
  *                 config: {
- *                     caseSensitive: false
+ *                     caseSensitive: false,
+ *                     message: "Custom unique constraint message",
+ *                     level: Flatfile.ValidationType.Warn
  *                 }
  *             }],
  *         config: {
@@ -120,6 +122,20 @@ import * as Flatfile from "../../../index";
  *         type: "string",
  *         key: "email",
  *         label: "Email"
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "string",
+ *         key: "requiredField",
+ *         label: "Required Field",
+ *         constraints: [{
+ *                 type: "required",
+ *                 config: {
+ *                     message: "This field must be filled out",
+ *                     level: Flatfile.ValidationType.Error
+ *                 }
+ *             }]
  *     }
  */
 export type Property =

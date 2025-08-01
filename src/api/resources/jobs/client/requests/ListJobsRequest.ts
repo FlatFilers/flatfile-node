@@ -48,4 +48,8 @@ export interface ListJobsRequest {
      * When true, only top-level jobs will be returned unless a parentId is specified
      */
     excludeChildJobs?: boolean;
+    /**
+     * When provided, only jobs with the given source will be returned
+     */
+    source?: string;
 }

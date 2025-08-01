@@ -11,7 +11,14 @@ export const MessageApiCreateData: core.serialization.ObjectSchema<
     serializers.MessageApiCreateData.Raw,
     Flatfile.MessageApiCreateData
 > = core.serialization.object({
+    messageId: core.serialization.string().optional(),
     content: core.serialization.record(core.serialization.string(), core.serialization.any()),
+    parts: core.serialization
+        .list(core.serialization.record(core.serialization.string(), core.serialization.any()))
+        .optional(),
+    annotations: core.serialization
+        .list(core.serialization.record(core.serialization.string(), core.serialization.any()))
+        .optional(),
     role: MessageRole,
     state: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
     metadata: core.serialization.record(core.serialization.string(), core.serialization.any()).optional(),
@@ -19,7 +26,10 @@ export const MessageApiCreateData: core.serialization.ObjectSchema<
 
 export declare namespace MessageApiCreateData {
     export interface Raw {
+        messageId?: string | null;
         content: Record<string, any>;
+        parts?: Record<string, any>[] | null;
+        annotations?: Record<string, any>[] | null;
         role: MessageRole.Raw;
         state?: Record<string, any> | null;
         metadata?: Record<string, any> | null;

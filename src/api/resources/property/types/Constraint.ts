@@ -12,7 +12,7 @@ export type Constraint =
     | Flatfile.Constraint.Stored;
 
 export namespace Constraint {
-    export interface Required {
+    export interface Required extends Flatfile.RequiredConstraint {
         type: "required";
     }
 

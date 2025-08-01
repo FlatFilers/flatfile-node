@@ -26,6 +26,9 @@ export const Event: core.serialization.Schema<serializers.Event.Raw, Flatfile.Ev
         "workbook:updated": GenericEvent,
         "workbook:deleted": GenericEvent,
         "workbook:expired": GenericEvent,
+        "flag:created": GenericEvent,
+        "flag:updated": GenericEvent,
+        "flag:deleted": GenericEvent,
         "sheet:created": GenericEvent,
         "sheet:updated": GenericEvent,
         "sheet:deleted": GenericEvent,
@@ -102,6 +105,9 @@ export declare namespace Event {
         | Event.WorkbookUpdated
         | Event.WorkbookDeleted
         | Event.WorkbookExpired
+        | Event.FlagCreated
+        | Event.FlagUpdated
+        | Event.FlagDeleted
         | Event.SheetCreated
         | Event.SheetUpdated
         | Event.SheetDeleted
@@ -220,6 +226,18 @@ export declare namespace Event {
 
     export interface WorkbookExpired extends GenericEvent.Raw {
         topic: "workbook:expired";
+    }
+
+    export interface FlagCreated extends GenericEvent.Raw {
+        topic: "flag:created";
+    }
+
+    export interface FlagUpdated extends GenericEvent.Raw {
+        topic: "flag:updated";
+    }
+
+    export interface FlagDeleted extends GenericEvent.Raw {
+        topic: "flag:deleted";
     }
 
     export interface SheetCreated extends GenericEvent.Raw {

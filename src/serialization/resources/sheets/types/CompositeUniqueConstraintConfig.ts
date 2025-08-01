@@ -7,20 +7,16 @@ import * as Flatfile from "../../../../api/index";
 import * as core from "../../../../core";
 import { ValidationType } from "../../records/types/ValidationType";
 
-export const UniqueConstraintConfig: core.serialization.ObjectSchema<
-    serializers.UniqueConstraintConfig.Raw,
-    Flatfile.UniqueConstraintConfig
+export const CompositeUniqueConstraintConfig: core.serialization.ObjectSchema<
+    serializers.CompositeUniqueConstraintConfig.Raw,
+    Flatfile.CompositeUniqueConstraintConfig
 > = core.serialization.object({
-    caseSensitive: core.serialization.boolean().optional(),
-    ignoreEmpty: core.serialization.boolean().optional(),
     message: core.serialization.string().optional(),
     level: ValidationType.optional(),
 });
 
-export declare namespace UniqueConstraintConfig {
+export declare namespace CompositeUniqueConstraintConfig {
     export interface Raw {
-        caseSensitive?: boolean | null;
-        ignoreEmpty?: boolean | null;
         message?: string | null;
         level?: ValidationType.Raw | null;
     }

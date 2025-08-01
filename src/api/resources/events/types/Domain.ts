@@ -12,6 +12,7 @@ export type Domain =
     | "file"
     | "space"
     | "workbook"
+    | "flag"
     | "job"
     | "document"
     | "sheet"
@@ -27,6 +28,7 @@ export const Domain = {
     File: "file",
     Space: "space",
     Workbook: "workbook",
+    Flag: "flag",
     Job: "job",
     Document: "document",
     Sheet: "sheet",

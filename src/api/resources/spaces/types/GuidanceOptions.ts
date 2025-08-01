@@ -25,5 +25,6 @@ export interface GuidanceOptions {
     target: string;
     trigger: Flatfile.TriggerEnum;
     type: Flatfile.TypeEnum;
+    /** The role for which this guidance should be displayed. If not specified, guidance will be shown to both admin and guest users. */
     role?: Flatfile.RoleEnum;
 }

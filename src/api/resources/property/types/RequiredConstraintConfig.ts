@@ -4,11 +4,7 @@
 
 import * as Flatfile from "../../../index";
 
-export interface UniqueConstraintConfig {
-    /** Ignore casing when determining uniqueness */
-    caseSensitive?: boolean;
-    /** Do not flag empty values as duplicate */
-    ignoreEmpty?: boolean;
+export interface RequiredConstraintConfig {
     /** Custom validation message to display when the constraint fails */
     message?: string;
     /** Validation level (error, warn, info). Defaults to error. */

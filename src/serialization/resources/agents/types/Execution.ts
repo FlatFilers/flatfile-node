@@ -6,11 +6,13 @@ import * as serializers from "../../../index";
 import * as Flatfile from "../../../../api/index";
 import * as core from "../../../../core";
 import { EventId } from "../../commons/types/EventId";
+import { SpaceId } from "../../commons/types/SpaceId";
 
 export const Execution: core.serialization.ObjectSchema<serializers.Execution.Raw, Flatfile.Execution> =
     core.serialization.object({
         eventId: EventId,
         success: core.serialization.boolean(),
+        spaceId: SpaceId.optional(),
         createdAt: core.serialization.date(),
         completedAt: core.serialization.date(),
         duration: core.serialization.number(),
@@ -24,6 +26,7 @@ export declare namespace Execution {
     export interface Raw {
         eventId: EventId.Raw;
         success: boolean;
+        spaceId?: SpaceId.Raw | null;
         createdAt: string;
         completedAt: string;
         duration: number;

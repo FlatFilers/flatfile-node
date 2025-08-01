@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as Flatfile from "../../../../api/index";
 import * as core from "../../../../core";
 import { CompositeUniqueConstraintStrategy } from "./CompositeUniqueConstraintStrategy";
+import { CompositeUniqueConstraintConfig } from "./CompositeUniqueConstraintConfig";
 
 export const CompositeUniqueConstraint: core.serialization.ObjectSchema<
     serializers.CompositeUniqueConstraint.Raw,
@@ -15,6 +16,7 @@ export const CompositeUniqueConstraint: core.serialization.ObjectSchema<
     fields: core.serialization.list(core.serialization.string()),
     requiredFields: core.serialization.list(core.serialization.string()).optional(),
     strategy: CompositeUniqueConstraintStrategy,
+    config: CompositeUniqueConstraintConfig.optional(),
 });
 
 export declare namespace CompositeUniqueConstraint {
@@ -23,5 +25,6 @@ export declare namespace CompositeUniqueConstraint {
         fields: string[];
         requiredFields?: string[] | null;
         strategy: CompositeUniqueConstraintStrategy.Raw;
+        config?: CompositeUniqueConstraintConfig.Raw | null;
     }
 }

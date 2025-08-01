@@ -12,4 +12,6 @@ export interface CompositeUniqueConstraint {
     /** Fields that, when empty, will cause this unique constraint to be ignored */
     requiredFields?: string[];
     strategy: Flatfile.CompositeUniqueConstraintStrategy;
+    /** Configuration options for the composite unique constraint */
+    config?: Flatfile.CompositeUniqueConstraintConfig;
 }

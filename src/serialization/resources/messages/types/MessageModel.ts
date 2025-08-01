@@ -13,7 +13,14 @@ export const MessageModel: core.serialization.ObjectSchema<serializers.MessageMo
     core.serialization.object({
         id: MessageId,
         threadId: ThreadId,
+        messageId: core.serialization.string().optional(),
         content: core.serialization.record(core.serialization.string(), core.serialization.any()),
+        parts: core.serialization
+            .list(core.serialization.record(core.serialization.string(), core.serialization.any()))
+            .optional(),
+        annotations: core.serialization
+            .list(core.serialization.record(core.serialization.string(), core.serialization.any()))
+            .optional(),
         createdAt: core.serialization.date(),
         updatedAt: core.serialization.date(),
         role: MessageRole,
@@ -25,7 +32,10 @@ export declare namespace MessageModel {
     export interface Raw {
         id: MessageId.Raw;
         threadId: ThreadId.Raw;
+        messageId?: string | null;
         content: Record<string, any>;
+        parts?: Record<string, any>[] | null;
+        annotations?: Record<string, any>[] | null;
         createdAt: string;
         updatedAt: string;
         role: MessageRole.Raw;

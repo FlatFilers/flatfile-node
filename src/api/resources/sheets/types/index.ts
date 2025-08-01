@@ -6,6 +6,7 @@ export * from "./SheetConfigUpdate";
 export * from "./SheetConstraint";
 export * from "./ExternalSheetConstraint";
 export * from "./CompositeUniqueConstraint";
+export * from "./CompositeUniqueConstraintConfig";
 export * from "./CompositeUniqueConstraintStrategy";
 export * from "./SheetUpdate";
 export * from "./SheetUpdateRequest";

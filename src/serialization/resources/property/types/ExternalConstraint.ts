@@ -11,12 +11,16 @@ export const ExternalConstraint: core.serialization.ObjectSchema<
     Flatfile.ExternalConstraint
 > = core.serialization.object({
     validator: core.serialization.string(),
+    description: core.serialization.string().optional(),
+    label: core.serialization.string().optional(),
     config: core.serialization.any().optional(),
 });
 
 export declare namespace ExternalConstraint {
     export interface Raw {
         validator: string;
+        description?: string | null;
+        label?: string | null;
         config?: any | null;
     }
 }

@@ -10,6 +10,7 @@ export const Domain: core.serialization.Schema<serializers.Domain.Raw, Flatfile.
     "file",
     "space",
     "workbook",
+    "flag",
     "job",
     "document",
     "sheet",
@@ -28,6 +29,7 @@ export declare namespace Domain {
         | "file"
         | "space"
         | "workbook"
+        | "flag"
         | "job"
         | "document"
         | "sheet"

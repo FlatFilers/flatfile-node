@@ -21,6 +21,8 @@ export interface Execution {
     eventId: Flatfile.EventId;
     /** Whether the agent execution was successful */
     success: boolean;
+    /** The space ID associated with this execution */
+    spaceId?: Flatfile.SpaceId;
     createdAt: Date;
     completedAt: Date;
     /** The duration of the agent execution */
