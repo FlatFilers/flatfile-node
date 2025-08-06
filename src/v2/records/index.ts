@@ -9,6 +9,7 @@ import {
     WriteRecordsResponse,
     WriteStreamingOptions,
 } from "./types";
+import { FlatfileRecord } from "./FlatfileRecord";
 import * as environments from "../../environments";
 import * as errors from "../../errors";
 import * as serializers from "../../serialization";
@@ -121,6 +122,83 @@ export class RecordsV2 {
         } else {
             // Final fallback for browsers without streaming support
             yield* this._fallbackJsonlResponse(response);
+        }
+    }
+
+    /**
+     * Retrieve records from a sheet as FlatfileRecord objects.
+     *
+     * This method fetches all records at once and returns them as an array of
+     * FlatfileRecord objects, which provide a rich API for manipulating record
+     * data including typed getters, validation, error handling, and change tracking.
+     *
+     * @param sheetId - The ID of the sheet to retrieve records from
+     * @param options - Optional request parameters for filtering, pagination, etc.
+     * @param requestOptions - Optional request configuration (headers, timeout, etc.)
+     * @returns Promise that resolves to an array of FlatfileRecord objects
+     *
+     * @example
+     * ```typescript
+     * const records = await recordsV2.get('us_sh_123', {
+     *   fields: ['firstName', 'lastName'],
+     *   pageSize: 1000
+     * });
+     * records.forEach(record => {
+     *   console.log(`Record ID: ${record.id}`);
+     *   console.log(`First Name: ${record.str('firstName')}`);
+     *   console.log(`Last Name: ${record.str('lastName')}`);
+     * });
+     * ```
+     */
+    public async get(
+        sheetId: Flatfile.SheetId,
+        options: GetRecordsRequestOptions = {},
+        requestOptions: FernRecords.RequestOptions = {},
+    ): Promise<FlatfileRecord[]> {
+        const rawRecords = await this.getRaw(sheetId, options, requestOptions);
+        return rawRecords.map(rawRecord => new FlatfileRecord(rawRecord));
+    }
+
+    /**
+     * Stream records from a sheet as FlatfileRecord objects.
+     *
+     * This method provides an async generator that yields FlatfileRecord objects
+     * as they are received from the server. FlatfileRecord objects provide a rich
+     * API for manipulating record data including typed getters, validation, error
+     * handling, and change tracking. This is the most memory-efficient way to
+     * process large datasets while maintaining the full functionality of FlatfileRecord.
+     *
+     * @param sheetId - The ID of the sheet to retrieve records from
+     * @param options - Optional request parameters for filtering, pagination, etc.
+     * @param requestOptions - Optional request configuration (headers, timeout, etc.)
+     * @returns AsyncGenerator that yields FlatfileRecord objects
+     *
+     * @example
+     * ```typescript
+     * for await (const record of recordsV2.getStreaming('us_sh_123', {
+     *   includeTimestamps: true
+     * })) {
+     *   console.log(`Record ID: ${record.id}`);
+     *   console.log(`Updated at: ${record.get('__u')}`);
+     *   
+     *   // Use rich FlatfileRecord API
+     *   if (record.has('email')) {
+     *     console.log(`Email: ${record.str('email')}`);
+     *   }
+     *   
+     *   if (record.hasError()) {
+     *     console.log('Record has validation errors');
+     *   }
+     * }
+     * ```
+     */
+    public async *getStreaming(
+        sheetId: Flatfile.SheetId,
+        options: GetRecordsRequestOptions = {},
+        requestOptions: FernRecords.RequestOptions = {},
+    ): AsyncGenerator<FlatfileRecord, void, unknown> {
+        for await (const rawRecord of this.getRawStreaming(sheetId, options, requestOptions)) {
+            yield new FlatfileRecord(rawRecord);
         }
     }
 
@@ -610,3 +688,5 @@ export class RecordsV2 {
         }
     }
 }
+
+export { FlatfileRecord };

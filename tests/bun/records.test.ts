@@ -1,6 +1,6 @@
 import fs from "fs";
 import { join } from "path";
-import { RecordsV2 } from "../../src/v2/records";
+import { RecordsV2, FlatfileRecord } from "../../src/v2/records";
 import { Flatfile } from "../../src";
 
 // Mock the global fetch function
@@ -322,6 +322,240 @@ invalid json line
 
             expect(mockFetch).toHaveBeenCalledTimes(1); // Always makes a request even for empty stream
             expect(result).toEqual(mockResponse);
+        });
+    });
+
+    describe("get", () => {
+        it("should fetch and return FlatfileRecord objects", async () => {
+            const fixtureData = getFixtureData();
+
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(fixtureData),
+                body: null,
+            });
+
+            const result = await recordsV2.get(sheetId, {}, defaultRequestOptions);
+
+            expect(result).toHaveLength(21);
+
+            // Check that results are FlatfileRecord instances
+            const firstRecord = result[0];
+            expect(firstRecord).toBeInstanceOf(FlatfileRecord);
+
+            // Test FlatfileRecord methods
+            expect(firstRecord.id).toBe("dev_rc_a5d2afda7dda4149afe51229e2674906");
+            expect(firstRecord.sheetId).toBe("dev_sh_jVnmFCKg");
+            expect(firstRecord.slug).toBe("contacts-pCZHI4");
+            expect(firstRecord.str("firstname")).toBe("John");
+            expect(firstRecord.str("lastname")).toBe("Smith [X]");
+            expect(firstRecord.str("email")).toBe("john.smith@example.com");
+
+            // Test presence checks
+            expect(firstRecord.has("firstname")).toBe(true);
+            expect(firstRecord.has("nonexistent")).toBe(false);
+
+            // Test type conversion
+            expect(firstRecord.defStr("firstname")).toBe("John");
+            expect(firstRecord.str("nonexistent")).toBeNull();
+        });
+
+        it("should handle empty response for get", async () => {
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(""),
+                body: null,
+            });
+
+            const result = await recordsV2.get(sheetId, {}, defaultRequestOptions);
+            expect(result).toEqual([]);
+        });
+
+        it("should skip malformed JSONL lines and return FlatfileRecord objects", async () => {
+            const malformedData = `{"__k":"valid1","name":"John"}
+invalid json line
+{"__k":"valid2","name":"Jane"}`;
+
+            // Mock console.warn to avoid test output noise
+            const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
+
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(malformedData),
+                body: null,
+            });
+
+            const result = await recordsV2.get(sheetId, {}, defaultRequestOptions);
+
+            expect(result).toHaveLength(2);
+            expect(result[0]).toBeInstanceOf(FlatfileRecord);
+            expect(result[1]).toBeInstanceOf(FlatfileRecord);
+            expect(result[0].id).toBe("valid1");
+            expect(result[1].id).toBe("valid2");
+            expect(result[0].str("name")).toBe("John");
+            expect(result[1].str("name")).toBe("Jane");
+
+            consoleSpy.mockRestore();
+        });
+
+        it("should handle FlatfileRecord manipulation", async () => {
+            const testData = `{"__k":"test_id","name":"Test","email":"test@example.com"}`;
+
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(testData),
+                body: null,
+            });
+
+            const result = await recordsV2.get(sheetId, {}, defaultRequestOptions);
+            const record = result[0];
+
+            // Test change tracking
+            expect(record.isDirty()).toBe(false);
+            record.set("newField", "newValue");
+            expect(record.isDirty()).toBe(true);
+            expect(record.get("newField")).toBe("newValue");
+
+            // Test error handling
+            expect(record.hasError()).toBe(false);
+            record.err("email", "Invalid email");
+            expect(record.hasError()).toBe(true);
+            expect(record.hasError("email")).toBe(true);
+
+            // Test conversion back to JSON
+            const jsonRecord = record.toJSON();
+            expect(jsonRecord.__k).toBe("test_id");
+            expect(jsonRecord.name).toBe("Test");
+            expect(jsonRecord.newField).toBe("newValue");
+        });
+    });
+
+    describe("getStreaming", () => {
+        it("should stream FlatfileRecord objects with ReadableStream", async () => {
+            const testData = `{"__k":"stream_test_id","name":"StreamTest"}`;
+            const encoder = new TextEncoder();
+            const chunk = encoder.encode(testData);
+
+            const mockStream = new ReadableStream({
+                start(controller) {
+                    controller.enqueue(chunk);
+                    controller.close();
+                },
+            });
+
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                body: mockStream,
+            });
+
+            const results: FlatfileRecord[] = [];
+            for await (const record of recordsV2.getStreaming(sheetId, {}, defaultRequestOptions)) {
+                results.push(record);
+            }
+
+            expect(results).toHaveLength(1);
+            const record = results[0];
+            expect(record).toBeInstanceOf(FlatfileRecord);
+            expect(record.id).toBe("stream_test_id");
+            expect(record.str("name")).toBe("StreamTest");
+
+            // Test FlatfileRecord methods work on streamed records
+            expect(record.has("name")).toBe(true);
+            expect(record.defStr("name")).toBe("StreamTest");
+        });
+
+        it("should handle streaming without ReadableStream support for getStreaming", async () => {
+            const fixtureData = getFixtureData();
+
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(fixtureData),
+                body: null, // No ReadableStream support
+            });
+
+            const results: FlatfileRecord[] = [];
+            for await (const record of recordsV2.getStreaming(sheetId, {}, defaultRequestOptions)) {
+                results.push(record);
+            }
+
+            expect(results).toHaveLength(21);
+            const firstRecord = results[0];
+            expect(firstRecord).toBeInstanceOf(FlatfileRecord);
+            expect(firstRecord.id).toBe("dev_rc_a5d2afda7dda4149afe51229e2674906");
+            expect(firstRecord.str("firstname")).toBe("John");
+        });
+
+        it("should handle multiple FlatfileRecord objects in stream", async () => {
+            const testData = `{"__k":"record1","name":"First"}
+{"__k":"record2","name":"Second"}
+{"__k":"record3","name":"Third"}`;
+
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(testData),
+                body: null,
+            });
+
+            const results: FlatfileRecord[] = [];
+            let recordCount = 0;
+            for await (const record of recordsV2.getStreaming(sheetId, {}, defaultRequestOptions)) {
+                expect(record).toBeInstanceOf(FlatfileRecord);
+                results.push(record);
+                recordCount++;
+
+                // Test each record individually as it streams
+                if (recordCount === 1) {
+                    expect(record.id).toBe("record1");
+                    expect(record.str("name")).toBe("First");
+                } else if (recordCount === 2) {
+                    expect(record.id).toBe("record2");
+                    expect(record.str("name")).toBe("Second");
+                } else if (recordCount === 3) {
+                    expect(record.id).toBe("record3");
+                    expect(record.str("name")).toBe("Third");
+                }
+            }
+
+            expect(results).toHaveLength(3);
+            expect(recordCount).toBe(3);
+        });
+
+        it("should handle manipulation of streamed FlatfileRecord objects", async () => {
+            const testData = `{"__k":"manipulation_test","email":"invalid-email","age":"25"}`;
+
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(testData),
+                body: null,
+            });
+
+            const results: FlatfileRecord[] = [];
+            for await (const record of recordsV2.getStreaming(sheetId, {}, defaultRequestOptions)) {
+                // Test type conversion on streamed record
+                expect(record.num("age")).toBe(25);
+                expect(record.str("email")).toBe("invalid-email");
+
+                // Test manipulation on streamed record
+                if (record.str("email") && !record.str("email")!.includes("@")) {
+                    record.err("email", "Invalid email format");
+                }
+
+                record.set("processed", true);
+                results.push(record);
+            }
+
+            const record = results[0];
+            expect(record.hasError("email")).toBe(true);
+            expect(record.get("processed")).toBe(true);
+            expect(record.isDirty()).toBe(true);
         });
     });
 });
