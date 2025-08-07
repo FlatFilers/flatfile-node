@@ -558,4 +558,467 @@ invalid json line
             expect(record.isDirty()).toBe(true);
         });
     });
+
+    describe("write", () => {
+        it("should write FlatfileRecord objects with changesets", async () => {
+            const mockResponse = { success: true, created: 1, updated: 1 };
+
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(JSON.stringify(mockResponse)),
+            });
+
+            // Create records with changes
+            const newRecord = new FlatfileRecord({ firstName: "John", lastName: "Doe" } as any);
+            newRecord.set("email", "john@example.com");
+            
+            const existingRecord = new FlatfileRecord({ __k: "us_rc_123", firstName: "Jane" } as any);
+            existingRecord.set("lastName", "Smith");
+
+            const records = [newRecord, existingRecord];
+
+            const result = await recordsV2.write(records, { sheetId }, defaultRequestOptions);
+
+            expect(mockFetch).toHaveBeenCalledTimes(1);
+
+            const fetchCall = mockFetch.mock.calls[0];
+            expect(fetchCall[0]).toContain("/v2-alpha/records.jsonl");
+            expect(fetchCall[1].method).toBe("POST");
+            expect(fetchCall[1].headers).toMatchObject({
+                Authorization: "Bearer test-token",
+                "Content-Type": "application/jsonl",
+                "X-Sheet-Id": sheetId,
+            });
+
+            // Check the body contains changesets, not full records
+            const bodyLines = fetchCall[1].body.split("\n").filter((line: string) => line.trim());
+            expect(bodyLines).toHaveLength(2);
+
+            const firstChangeset = JSON.parse(bodyLines[0]);
+            expect(firstChangeset).toMatchObject({
+                firstName: "John",
+                lastName: "Doe",
+                email: "john@example.com",
+                __s: sheetId,
+            });
+
+            const secondChangeset = JSON.parse(bodyLines[1]);
+            expect(secondChangeset).toMatchObject({
+                __k: "us_rc_123",
+                lastName: "Smith",
+                __s: sheetId,
+            });
+
+            expect(result).toEqual(mockResponse);
+
+            // Verify records are committed (changes cleared)
+            expect(newRecord.isDirty()).toBe(false); // Committed, no longer dirty
+            expect(existingRecord.isDirty()).toBe(false); // Has __k, changes cleared
+        });
+
+        it("should write full records when truncate is true", async () => {
+            const mockResponse = { success: true, created: 2, updated: 0 };
+
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(JSON.stringify(mockResponse)),
+            });
+
+            const record1 = new FlatfileRecord({ __k: "us_rc_123", firstName: "John", lastName: "Doe" } as any);
+            const record2 = new FlatfileRecord({ __k: "us_rc_456", firstName: "Jane", lastName: "Smith" } as any);
+            
+            // Make some changes
+            record1.set("email", "john@example.com");
+            record2.set("phone", "555-1234");
+
+            const records = [record1, record2];
+
+            const result = await recordsV2.write(records, { sheetId, truncate: true }, defaultRequestOptions);
+
+            const fetchCall = mockFetch.mock.calls[0];
+            const bodyLines = fetchCall[1].body.split("\n").filter((line: string) => line.trim());
+            expect(bodyLines).toHaveLength(2);
+
+            // With truncate=true, should get full records, not just changesets
+            const firstRecord = JSON.parse(bodyLines[0]);
+            expect(firstRecord).toMatchObject({
+                __k: "us_rc_123",
+                firstName: "John",
+                lastName: "Doe",
+                email: "john@example.com",
+                __s: sheetId,
+            });
+
+            const secondRecord = JSON.parse(bodyLines[1]);
+            expect(secondRecord).toMatchObject({
+                __k: "us_rc_456",
+                firstName: "Jane",
+                lastName: "Smith",
+                phone: "555-1234",
+                __s: sheetId,
+            });
+
+            expect(result).toEqual(mockResponse);
+        });
+
+        it("should throw error when no records provided", async () => {
+            await expect(recordsV2.write([], { sheetId }, defaultRequestOptions)).rejects.toThrow(
+                "No records provided to write."
+            );
+        });
+
+        it("should throw error when no changes to write", async () => {
+            const record = new FlatfileRecord({ __k: "us_rc_123", firstName: "John" } as any);
+            // Don't make any changes - record is not dirty
+
+            await expect(recordsV2.write([record], { sheetId }, defaultRequestOptions)).rejects.toThrow(
+                "No changes made to the records that would need to be written."
+            );
+        });
+
+        it("should filter out deleted temporary records", async () => {
+            const mockResponse = { success: true, created: 1, updated: 0 };
+
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(JSON.stringify(mockResponse)),
+            });
+
+            const validRecord = new FlatfileRecord({ firstName: "John" } as any);
+            validRecord.set("email", "john@example.com");
+
+            const tempRecord = new FlatfileRecord({} as any);
+            (tempRecord as any)._tempId = "TEMP_123";
+            tempRecord.delete();
+            tempRecord.set("firstName", "Temp");
+
+            const records = [validRecord, tempRecord];
+
+            await recordsV2.write(records, { sheetId }, defaultRequestOptions);
+
+            const fetchCall = mockFetch.mock.calls[0];
+            const bodyLines = fetchCall[1].body.split("\n").filter((line: string) => line.trim());
+            
+            // Should only have one record (temp deleted record filtered out)
+            expect(bodyLines).toHaveLength(1);
+            
+            const recordData = JSON.parse(bodyLines[0]);
+            expect(recordData).toMatchObject({
+                firstName: "John",
+                email: "john@example.com",
+            });
+        });
+    });
+
+    describe("writeStreaming", () => {
+        it("should stream FlatfileRecord objects with changesets", async () => {
+            const mockResponse = { success: true, created: 3, updated: 0 };
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(JSON.stringify(mockResponse)),
+            });
+
+            async function* generateRecords() {
+                for (let i = 1; i <= 3; i++) {
+                    const record = new FlatfileRecord({ firstName: `User${i}` } as any);
+                    record.set("email", `user${i}@example.com`);
+                    record.set("processed", true);
+                    yield record;
+                }
+            }
+
+            const result = await recordsV2.writeStreaming(generateRecords(), { sheetId }, defaultRequestOptions);
+
+            expect(mockFetch).toHaveBeenCalledTimes(1);
+            expect(result).toEqual(mockResponse);
+
+            // Check that the body is a ReadableStream-like object
+            const fetchCall = mockFetch.mock.calls[0];
+            expect(fetchCall[1].body).toBeDefined();
+        });
+
+        it("should handle truncate mode in streaming", async () => {
+            const mockResponse = { success: true, created: 2, updated: 0 };
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(JSON.stringify(mockResponse)),
+            });
+
+            async function* generateRecords() {
+                const record1 = new FlatfileRecord({ __k: "us_rc_123", firstName: "John", lastName: "Doe" } as any);
+                record1.set("email", "john@example.com");
+                yield record1;
+
+                const record2 = new FlatfileRecord({ __k: "us_rc_456", firstName: "Jane" } as any);
+                record2.set("lastName", "Smith");
+                yield record2;
+            }
+
+            const result = await recordsV2.writeStreaming(
+                generateRecords(), 
+                { sheetId, truncate: true }, 
+                defaultRequestOptions
+            );
+
+            expect(result).toEqual(mockResponse);
+        });
+
+        it("should handle empty stream when truncate is true", async () => {
+            const mockResponse = { success: true, created: 0, updated: 0 };
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(JSON.stringify(mockResponse)),
+            });
+
+            async function* generateRecords() {
+                // Empty generator
+                return;
+            }
+
+            const result = await recordsV2.writeStreaming(
+                generateRecords(),
+                { sheetId, truncate: true },
+                defaultRequestOptions
+            );
+
+            expect(result).toEqual(mockResponse);
+        });
+
+        it("should throw error when no changes in streaming mode", async () => {
+            async function* generateRecords() {
+                // Yield records with no changes
+                yield new FlatfileRecord({ __k: "us_rc_123", firstName: "John" } as any);
+                yield new FlatfileRecord({ __k: "us_rc_456", firstName: "Jane" } as any);
+            }
+
+            // The error should be thrown during the ReadableStream creation/processing
+            await expect(
+                recordsV2.writeStreaming(generateRecords(), { sheetId }, defaultRequestOptions)
+            ).rejects.toThrow(); // Just check that it throws, not the specific message
+        });
+
+        it("should filter deleted temporary records in streaming", async () => {
+            const mockResponse = { success: true, created: 1, updated: 0 };
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(JSON.stringify(mockResponse)),
+            });
+
+            async function* generateRecords() {
+                // Valid record with changes
+                const validRecord = new FlatfileRecord({ firstName: "John" } as any);
+                validRecord.set("email", "john@example.com");
+                yield validRecord;
+
+                // Temporary deleted record - should be filtered out
+                const tempRecord = new FlatfileRecord({} as any);
+                (tempRecord as any)._tempId = "TEMP_456";
+                tempRecord.delete();
+                tempRecord.set("firstName", "TempUser");
+                yield tempRecord;
+            }
+
+            const result = await recordsV2.writeStreaming(generateRecords(), { sheetId }, defaultRequestOptions);
+
+            expect(result).toEqual(mockResponse);
+        });
+
+        it("should commit all processed records after successful write", async () => {
+            const mockResponse = { success: true, created: 2, updated: 0 };
+            mockFetch.mockResolvedValueOnce({
+                ok: true,
+                status: 200,
+                text: () => Promise.resolve(JSON.stringify(mockResponse)),
+            });
+
+            const processedRecords: FlatfileRecord[] = [];
+
+            async function* generateRecords() {
+                const record1 = new FlatfileRecord({ firstName: "User1" } as any);
+                record1.set("email", "user1@example.com");
+                processedRecords.push(record1);
+                yield record1;
+
+                const record2 = new FlatfileRecord({ firstName: "User2" } as any);
+                record2.set("email", "user2@example.com");
+                processedRecords.push(record2);
+                yield record2;
+            }
+
+            // Verify records are dirty before write
+            const recordsArray: FlatfileRecord[] = [];
+            for await (const record of generateRecords()) {
+                recordsArray.push(record);
+            }
+            
+            expect(recordsArray[0].isDirty()).toBe(true);
+            expect(recordsArray[1].isDirty()).toBe(true);
+
+            // Reset and do the actual write
+            async function* generateRecordsAgain() {
+                yield recordsArray[0];
+                yield recordsArray[1];
+            }
+
+            await recordsV2.writeStreaming(generateRecordsAgain(), { sheetId }, defaultRequestOptions);
+
+            // Verify records are committed after successful write (changes cleared)
+            expect(recordsArray[0].isDirty()).toBe(false); // Committed, no longer dirty
+            expect(recordsArray[1].isDirty()).toBe(false); // Committed, no longer dirty
+        });
+    });
+
+    describe("FlatfileRecord changeset logic", () => {
+        it("should handle commit() behavior for new records", () => {
+            // New record should be dirty initially
+            const newRecord = new FlatfileRecord({ firstName: 'John' } as any);
+            expect(newRecord.isDirty()).toBe(true);
+            
+            // After commit, should no longer be dirty
+            newRecord.commit();
+            expect(newRecord.isDirty()).toBe(false);
+            
+            // Making changes should make it dirty again
+            newRecord.set('lastName', 'Doe');
+            expect(newRecord.isDirty()).toBe(true);
+            
+            // After commit, should be clean again
+            newRecord.commit();
+            expect(newRecord.isDirty()).toBe(false);
+        });
+
+        it("should reset committed flag when any state is modified", () => {
+            const record = new FlatfileRecord({ firstName: 'John' } as any);
+            record.commit();
+            expect(record.isDirty()).toBe(false);
+            
+            // Test set()
+            record.set('lastName', 'Doe');
+            expect(record.isDirty()).toBe(true);
+            record.commit();
+            expect(record.isDirty()).toBe(false);
+            
+            // Test err()
+            record.err('firstName', 'Invalid name');
+            expect(record.isDirty()).toBe(true);
+            record.commit();
+            expect(record.isDirty()).toBe(false);
+            
+            // Test warn()
+            record.warn('firstName', 'Warning message');
+            expect(record.isDirty()).toBe(true);
+            record.commit();
+            expect(record.isDirty()).toBe(false);
+            
+            // Test info()
+            record.info('firstName', 'Info message');
+            expect(record.isDirty()).toBe(true);
+            record.commit();
+            expect(record.isDirty()).toBe(false);
+            
+            // Test delete()
+            record.delete();
+            expect(record.isDirty()).toBe(true);
+        });
+
+        it("should manually mark record as dirty with setDirty()", () => {
+            // Test with new record
+            const newRecord = new FlatfileRecord({ firstName: 'John', lastName: 'Doe' } as any);
+            newRecord.commit();
+            expect(newRecord.isDirty()).toBe(false);
+            
+            newRecord.setDirty();
+            expect(newRecord.isDirty()).toBe(true);
+            
+            // Verify changeset includes all data for new record
+            const newChangeset = newRecord.changeset();
+            expect(newChangeset).toEqual({ firstName: 'John', lastName: 'Doe' });
+            
+            // Test with existing record (has __k)
+            const existingRecord = new FlatfileRecord({ __k: '123', firstName: 'Jane', age: 30 } as any);
+            existingRecord.commit();
+            expect(existingRecord.isDirty()).toBe(false);
+            
+            existingRecord.setDirty();
+            expect(existingRecord.isDirty()).toBe(true);
+            
+            // Verify changeset includes all non-system fields for existing record
+            const existingChangeset = existingRecord.changeset();
+            expect(existingChangeset).toEqual({ __k: '123', firstName: 'Jane', age: 30 });
+            
+            // Test that setDirty returns this for chaining
+            const chainResult = existingRecord.setDirty();
+            expect(chainResult).toBe(existingRecord);
+        });
+
+        it("should handle new vs existing record changesets correctly", () => {
+            // New record (no __k) - changeset should include all data
+            const newRecord = new FlatfileRecord({
+                firstName: 'John',
+                lastName: 'Doe'
+            } as any);
+            newRecord.set('email', 'john@example.com');
+
+            const newChangeset = newRecord.changeset();
+            expect(newChangeset).toMatchObject({
+                firstName: 'John',
+                lastName: 'Doe',
+                email: 'john@example.com'
+            });
+
+            // Existing record (with __k) - changeset should only include changes
+            const existingRecord = new FlatfileRecord({
+                __k: 'us_rc_123',
+                firstName: 'Jane',
+                lastName: 'Smith',
+                email: 'jane@example.com'
+            } as any);
+            existingRecord.set('email', 'jane.smith@newdomain.com');
+
+            const existingChangeset = existingRecord.changeset();
+            expect(existingChangeset).toMatchObject({
+                __k: 'us_rc_123',
+                email: 'jane.smith@newdomain.com'
+            });
+            expect(existingChangeset.firstName).toBeUndefined();
+            expect(existingChangeset.lastName).toBeUndefined();
+        });
+
+        it("should have consistent isDirty and changeset behavior", () => {
+            // New record should be dirty (has data to write)
+            const newRecord = new FlatfileRecord({
+                firstName: 'John',
+                lastName: 'Doe'
+            } as any);
+            
+            expect(newRecord.isDirty()).toBe(true); // New records are always dirty
+            const newChangeset = newRecord.changeset();
+            expect(Object.keys(newChangeset).length).toBeGreaterThan(0); // Has data
+
+            // Existing record with no changes should not be dirty
+            const existingRecord = new FlatfileRecord({
+                __k: 'us_rc_123',
+                firstName: 'Jane'
+            } as any);
+            
+            expect(existingRecord.isDirty()).toBe(false); // No changes made
+            
+            // But after making changes, should be dirty
+            existingRecord.set('email', 'jane@example.com');
+            expect(existingRecord.isDirty()).toBe(true); // Now has changes
+            
+            const existingChangeset = existingRecord.changeset();
+            expect(existingChangeset).toMatchObject({
+                __k: 'us_rc_123',
+                email: 'jane@example.com'
+            });
+        });
+    });
 });

@@ -1,22 +1,27 @@
-import { HASH_PROP_DELIM, HASH_VALUE_DELIM, asBool, asDate, asNullableString, asNumber, asString, isPresent } from "./utils";
-import { JsonlRecord, Primitive } from "./types";
+import {
+    HASH_PROP_DELIM,
+    HASH_VALUE_DELIM,
+    asBool,
+    asDate,
+    asNullableString,
+    asNumber,
+    asString,
+    isPresent,
+} from "./utils";
+import { JsonlRecord } from "./types";
 
 // Browser-compatible UUID generation
 function generateUUID(): string {
-    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    if (typeof crypto !== "undefined" && crypto.randomUUID) {
         return crypto.randomUUID();
     }
     // Fallback for older browsers
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = Math.random() * 16 | 0;
-        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+        const r = (Math.random() * 16) | 0;
+        const v = c === "x" ? r : (r & 0x3) | 0x8;
         return v.toString(16);
     });
 }
-
-type AnyRecord = {
-    [k: string]: any;
-};
 
 type CastingMethod = "str" | "defStr" | "bool" | "num" | "date";
 
@@ -28,41 +33,31 @@ export class FlatfileRecord<T extends JsonlRecord = JsonlRecord> {
     private _tempId?: string;
     private _info: Map<any, Set<string>> = new Map();
     private _warns: Map<any, Set<string>> = new Map();
+    private _committed = false;
 
-    constructor(
-        public data: Readonly<T>,
-        dirty = false,
-    ) {
+    constructor(public data: Readonly<T>) {
         this._metadata = data.__m || {};
-
-        if (dirty) {
-            this.data = Object.freeze({} as T);
-            Object.entries(data).forEach(([key, value]) => {
-                this.set(key, value);
-            });
-        } else {
-            Object.freeze(this.data);
-        }
+        Object.freeze(this.data);
 
         if (data.__i) {
             data.__i.forEach((message: { x: string; m: string; t?: string }) => {
                 if (!message.t || message.t === "error") {
                     if (!this._errs.has(message.x)) {
-                        this._errs.set(message.x, new Set())
+                        this._errs.set(message.x, new Set());
                     }
-                    this._errs.get(message.x)?.add(message.m)
+                    this._errs.get(message.x)?.add(message.m);
                 } else if (message.t === "info") {
                     if (!this._info.has(message.x)) {
-                        this._info.set(message.x, new Set())
+                        this._info.set(message.x, new Set());
                     }
-                    this._info.get(message.x)?.add(message.m)
+                    this._info.get(message.x)?.add(message.m);
                 } else if (message.t === "warn") {
                     if (!this._warns.has(message.x)) {
-                        this._warns.set(message.x, new Set())
+                        this._warns.set(message.x, new Set());
                     }
-                    this._warns.get(message.x)?.add(message.m)
+                    this._warns.get(message.x)?.add(message.m);
                 }
-            })
+            });
         }
     }
 
@@ -95,6 +90,8 @@ export class FlatfileRecord<T extends JsonlRecord = JsonlRecord> {
             return;
         }
         this._changes.set(key, value);
+        // Mark as uncommitted when changes are made
+        this._committed = false;
         return this;
     }
 
@@ -186,8 +183,45 @@ export class FlatfileRecord<T extends JsonlRecord = JsonlRecord> {
             );
         }
         return (
-            this._changes.size > 0 || this._errs.size > 0 || this._info.size > 0 || this._warns.size > 0 || this._deleted
+            this._changes.size > 0 ||
+            this._errs.size > 0 ||
+            this._info.size > 0 ||
+            this._warns.size > 0 ||
+            this._deleted ||
+            // New records (no __k) are dirty until they've been committed
+            (!this.get("__k") && !this._committed)
         );
+    }
+
+    /**
+     * Manually mark the record as dirty, forcing it to be written on the next save operation.
+     * Useful when you suspect the record may have been changed by another process.
+     * This adds all current field values to the changes, ensuring the full record will be written.
+     *
+     * @example
+     * ```typescript
+     * const record = new FlatfileRecord({ id: '123', name: 'John' });
+     * record.commit(); // Record is now clean
+     *
+     * // Later, you suspect the record may have been modified externally
+     * record.setDirty(); // Mark as dirty
+     * await recordsV2.write([record]); // Will write the full record
+     * ```
+     */
+    setDirty(): this {
+        // Add all non-system fields to changes to mark entire record as dirty
+        for (const key in this.data) {
+            if (!key.startsWith("__")) {
+                this._changes.set(key, this.data[key]);
+            }
+        }
+        this._committed = false;
+
+        // Note: We don't need to explicitly preserve _errs, _warns, _info, or _deleted
+        // because those are already separate state that isDirty() checks independently
+        // They remain intact and will make the record dirty regardless of _changes
+
+        return this;
     }
 
     eachOfKeysPresent(keys: string[], callback: (key: string, value: any) => void) {
@@ -204,6 +238,7 @@ export class FlatfileRecord<T extends JsonlRecord = JsonlRecord> {
 
     delete() {
         this._deleted = true;
+        this._committed = false;
     }
 
     str(key: string) {
@@ -242,6 +277,7 @@ export class FlatfileRecord<T extends JsonlRecord = JsonlRecord> {
         if (errors) {
             errors.add(msg);
         }
+        this._committed = false;
         return this;
     }
 
@@ -329,6 +365,7 @@ export class FlatfileRecord<T extends JsonlRecord = JsonlRecord> {
             newObj[key] = value;
         }
         this._changes.clear();
+        this._committed = true;
 
         if (this._errs.size) {
             newObj.__i = [];
@@ -364,42 +401,80 @@ export class FlatfileRecord<T extends JsonlRecord = JsonlRecord> {
     }
 
     changeset() {
-        const val = Object.fromEntries(this._changes)
-        val.__k = this.get("__k")
-        val.__s = this.get("__s")
-        val.__n = this.get("__n")
-        val.__m = this.get("__m")
-        val.__c = this.get("__c")
-        
+        // For new records (no __k), include all data
+        // For existing records, include only changes
+        if (!this.get("__k")) {
+            // New record - return all data (like toJSON but avoid circular call)
+            const val: Record<string, any> = { ...this.data, ...Object.fromEntries(this._changes) };
+
+            if (this._deleted) {
+                val.__d = true;
+            }
+            if (this._errs.size || this._info.size || this._warns.size) {
+                if (!val.__i) {
+                    val.__i = [];
+                }
+                for (const [key, errs] of this._errs) {
+                    for (const err of errs) {
+                        val[key] = this.get(key);
+                        val.__i.push({ x: key, m: err });
+                    }
+                }
+                for (const [key, infos] of this._info) {
+                    for (const info of infos) {
+                        val[key] = this.get(key);
+
+                        val.__i.push({ x: key, m: info, t: "info" });
+                    }
+                }
+                for (const [key, warns] of this._warns) {
+                    for (const warn of warns) {
+                        val[key] = this.get(key);
+
+                        val.__i.push({ x: key, m: warn, t: "warn" });
+                    }
+                }
+            }
+            return val;
+        }
+
+        // Existing record - return only changes
+        const val = Object.fromEntries(this._changes);
+        val.__k = this.get("__k");
+        val.__s = this.get("__s");
+        val.__n = this.get("__n");
+        val.__m = this.get("__m");
+        val.__c = this.get("__c");
+
         if (this._deleted) {
-            val.__d = true
+            val.__d = true;
         }
         if (this._errs.size || this._info.size || this._warns.size) {
             if (!val.__i) {
-                val.__i = []
+                val.__i = [];
             }
             for (const [key, errs] of this._errs) {
                 for (const err of errs) {
-                    val[key] = this.get(key)
-                    val.__i.push({ x: key, m: err })
+                    val[key] = this.get(key);
+                    val.__i.push({ x: key, m: err });
                 }
             }
             for (const [key, infos] of this._info) {
                 for (const info of infos) {
-                    val[key] = this.get(key)
+                    val[key] = this.get(key);
 
-                    val.__i.push({ x: key, m: info, t: "info" })
+                    val.__i.push({ x: key, m: info, t: "info" });
                 }
             }
             for (const [key, warns] of this._warns) {
                 for (const warn of warns) {
-                    val[key] = this.get(key)
+                    val[key] = this.get(key);
 
-                    val.__i.push({ x: key, m: warn, t: "warn" })
+                    val.__i.push({ x: key, m: warn, t: "warn" });
                 }
             }
         }
-        return val
+        return val;
     }
 
     /**
@@ -437,6 +512,7 @@ export class FlatfileRecord<T extends JsonlRecord = JsonlRecord> {
         if (infos) {
             infos.add(msg);
         }
+        this._committed = false;
         return this;
     }
 
@@ -462,6 +538,7 @@ export class FlatfileRecord<T extends JsonlRecord = JsonlRecord> {
         if (warnings) {
             warnings.add(msg);
         }
+        this._committed = false;
         return this;
     }
 
