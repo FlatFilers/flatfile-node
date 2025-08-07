@@ -1,6 +1,8 @@
 import * as Flatfile from "../../api/index";
 import { Sheet } from "../../serialization";
 
+export type Primitive = string | number | boolean | null | undefined;
+
 interface SheetSearchParams {
     filter?: string;
     filterField?: string;
@@ -119,6 +121,11 @@ interface JsonlRecordSpecialParams {
      * Record-level updated timestamp (when includeTimestamps=true)
      */
     __u?: string;
+
+    /**
+     * Link type identifier (used when this record represents a link)
+     */
+    __x?: string;
 }
 
 export interface JsonlRecord extends JsonlRecordSpecialParams {
