@@ -25,6 +25,7 @@ export const SheetConfig: core.serialization.ObjectSchema<serializers.SheetConfi
         metadata: core.serialization.any().optional(),
         constraints: core.serialization.list(SheetConstraint).optional(),
         treatments: core.serialization.list(SheetTreatments).optional(),
+        collection: core.serialization.string().optional(),
     });
 
 export declare namespace SheetConfig {
@@ -41,5 +42,6 @@ export declare namespace SheetConfig {
         metadata?: any | null;
         constraints?: SheetConstraint.Raw[] | null;
         treatments?: SheetTreatments.Raw[] | null;
+        collection?: string | null;
     }
 }

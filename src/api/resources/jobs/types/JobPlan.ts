@@ -17,6 +17,7 @@ import * as Flatfile from "../../../index";
  *             startedAt: "2023-10-30T20:04:29.453Z",
  *             finishedAt: "2023-10-30T20:04:32.074Z",
  *             environmentId: "us_env_YOUR_ID",
+ *             spaceId: "us_sp_YOUR_ID",
  *             type: Flatfile.JobType.Workbook,
  *             operation: "submitAction",
  *             source: "us_wb_YOUR_ID",

@@ -27,6 +27,7 @@ export const Sheet: core.serialization.ObjectSchema<serializers.Sheet.Raw, Flatf
     createdFrom: SheetId.optional(),
     lastPropagatedAt: core.serialization.date().optional(),
     treatments: core.serialization.list(SheetTreatments).optional(),
+    collection: core.serialization.string().optional(),
 });
 
 export declare namespace Sheet {
@@ -46,5 +47,6 @@ export declare namespace Sheet {
         createdFrom?: SheetId.Raw | null;
         lastPropagatedAt?: string | null;
         treatments?: SheetTreatments.Raw[] | null;
+        collection?: string | null;
     }
 }

@@ -34,6 +34,8 @@ export * as events from "./events";
 export * from "./events/types";
 export * as files from "./files";
 export * from "./files/types";
+export * as flags from "./flags";
+export * from "./flags/types";
 export * as foreigndb from "./foreigndb";
 export * from "./foreigndb/types";
 export * as guests from "./guests";

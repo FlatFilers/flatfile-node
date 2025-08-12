@@ -10,8 +10,9 @@ export const JobMode: core.serialization.Schema<serializers.JobMode.Raw, Flatfil
     "foreground",
     "background",
     "toolbarBlocking",
+    "hidden",
 ]);
 
 export declare namespace JobMode {
-    export type Raw = "foreground" | "background" | "toolbarBlocking";
+    export type Raw = "foreground" | "background" | "toolbarBlocking" | "hidden";
 }

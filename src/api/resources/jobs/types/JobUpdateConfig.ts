@@ -26,4 +26,5 @@ export type JobUpdateConfig =
     | Flatfile.AgentExportJobConfig
     | Flatfile.AgentPromotionJobConfig
     | Flatfile.CompanyResearchJobConfig
-    | Flatfile.ConfigureDemoJobConfig;
+    | Flatfile.ConfigureDemoJobConfig
+    | Flatfile.BulkMutateFlagsJobConfig;

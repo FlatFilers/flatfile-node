@@ -27,6 +27,7 @@ import { AgentExportJobConfig } from "./AgentExportJobConfig";
 import { AgentPromotionJobConfig } from "./AgentPromotionJobConfig";
 import { CompanyResearchJobConfig } from "./CompanyResearchJobConfig";
 import { ConfigureDemoJobConfig } from "./ConfigureDemoJobConfig";
+import { BulkMutateFlagsJobConfig } from "./BulkMutateFlagsJobConfig";
 
 export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateConfig.Raw, Flatfile.JobUpdateConfig> =
     core.serialization.undiscriminatedUnion([
@@ -52,6 +53,7 @@ export const JobUpdateConfig: core.serialization.Schema<serializers.JobUpdateCon
         AgentPromotionJobConfig,
         CompanyResearchJobConfig,
         ConfigureDemoJobConfig,
+        BulkMutateFlagsJobConfig,
     ]);
 
 export declare namespace JobUpdateConfig {
@@ -77,5 +79,6 @@ export declare namespace JobUpdateConfig {
         | AgentExportJobConfig.Raw
         | AgentPromotionJobConfig.Raw
         | CompanyResearchJobConfig.Raw
-        | ConfigureDemoJobConfig.Raw;
+        | ConfigureDemoJobConfig.Raw
+        | BulkMutateFlagsJobConfig.Raw;
 }

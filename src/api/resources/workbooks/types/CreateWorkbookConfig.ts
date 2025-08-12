@@ -65,4 +65,6 @@ export interface CreateWorkbookConfig {
     treatments?: Flatfile.WorkbookTreatments[];
     /** Storage strategy for the workbook. Defaults to QUICKSTORE. */
     storageStrategy?: Flatfile.StorageStrategy;
+    /** The folder to group the workbook in */
+    folder?: string;
 }

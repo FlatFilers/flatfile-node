@@ -22,6 +22,7 @@ export const WorkbookUpdate: core.serialization.ObjectSchema<serializers.Workboo
         actions: core.serialization.list(Action).optional(),
         metadata: core.serialization.any().optional(),
         settings: WorkbookConfigSettings.optional(),
+        folder: core.serialization.string().optional(),
     });
 
 export declare namespace WorkbookUpdate {
@@ -35,5 +36,6 @@ export declare namespace WorkbookUpdate {
         actions?: Action.Raw[] | null;
         metadata?: any | null;
         settings?: WorkbookConfigSettings.Raw | null;
+        folder?: string | null;
     }
 }

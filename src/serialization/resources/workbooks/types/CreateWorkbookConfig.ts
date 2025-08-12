@@ -28,6 +28,7 @@ export const CreateWorkbookConfig: core.serialization.ObjectSchema<
     metadata: core.serialization.any().optional(),
     treatments: core.serialization.list(WorkbookTreatments).optional(),
     storageStrategy: StorageStrategy.optional(),
+    folder: core.serialization.string().optional(),
 });
 
 export declare namespace CreateWorkbookConfig {
@@ -43,5 +44,6 @@ export declare namespace CreateWorkbookConfig {
         metadata?: any | null;
         treatments?: WorkbookTreatments.Raw[] | null;
         storageStrategy?: StorageStrategy.Raw | null;
+        folder?: string | null;
     }
 }

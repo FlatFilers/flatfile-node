@@ -7,6 +7,7 @@ import * as Flatfile from "../../../../api/index";
 import * as core from "../../../../core";
 import { JobId } from "../../commons/types/JobId";
 import { ActorId } from "../../commons/types/ActorId";
+import { SpaceId } from "../../commons/types/SpaceId";
 import { JobConfig } from "./JobConfig";
 
 export const Job: core.serialization.ObjectSchema<serializers.Job.Raw, Flatfile.Job> = core.serialization
@@ -18,6 +19,7 @@ export const Job: core.serialization.ObjectSchema<serializers.Job.Raw, Flatfile.
         startedAt: core.serialization.date().optional(),
         finishedAt: core.serialization.date().optional(),
         outcomeAcknowledgedAt: core.serialization.date().optional(),
+        spaceId: SpaceId.optional(),
     })
     .extend(JobConfig);
 
@@ -30,5 +32,6 @@ export declare namespace Job {
         startedAt?: string | null;
         finishedAt?: string | null;
         outcomeAcknowledgedAt?: string | null;
+        spaceId?: SpaceId.Raw | null;
     }
 }

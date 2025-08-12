@@ -24,6 +24,7 @@ export const SheetConfigUpdate: core.serialization.ObjectSchema<
     fields: core.serialization.list(Property).optional(),
     actions: core.serialization.list(Action).optional(),
     treatments: core.serialization.list(SheetTreatments).optional(),
+    collection: core.serialization.string().optional(),
 });
 
 export declare namespace SheetConfigUpdate {
@@ -38,5 +39,6 @@ export declare namespace SheetConfigUpdate {
         fields?: Property.Raw[] | null;
         actions?: Action.Raw[] | null;
         treatments?: SheetTreatments.Raw[] | null;
+        collection?: string | null;
     }
 }

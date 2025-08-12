@@ -14,9 +14,10 @@
  * @example
  *     Flatfile.JobMode.ToolbarBlocking
  */
-export type JobMode = "foreground" | "background" | "toolbarBlocking";
+export type JobMode = "foreground" | "background" | "toolbarBlocking" | "hidden";
 export const JobMode = {
     Foreground: "foreground",
     Background: "background",
     ToolbarBlocking: "toolbarBlocking",
+    Hidden: "hidden",
 } as const;

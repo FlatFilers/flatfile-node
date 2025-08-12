@@ -34,6 +34,7 @@ export const Workbook: core.serialization.ObjectSchema<serializers.Workbook.Raw,
         storageStrategy: StorageStrategy.optional(),
         createdFrom: WorkbookId.optional(),
         lastPropagatedAt: core.serialization.date().optional(),
+        folder: core.serialization.string().optional(),
     });
 
 export declare namespace Workbook {
@@ -56,5 +57,6 @@ export declare namespace Workbook {
         storageStrategy?: StorageStrategy.Raw | null;
         createdFrom?: WorkbookId.Raw | null;
         lastPropagatedAt?: string | null;
+        folder?: string | null;
     }
 }

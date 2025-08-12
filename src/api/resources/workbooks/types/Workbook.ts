@@ -96,4 +96,6 @@ export interface Workbook {
     createdFrom?: Flatfile.WorkbookId;
     /** The last time the workbook template configuration was propagated to this workbook */
     lastPropagatedAt?: Date;
+    /** The folder to group the workbook in */
+    folder?: string;
 }

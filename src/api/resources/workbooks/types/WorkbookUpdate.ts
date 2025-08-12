@@ -38,4 +38,6 @@ export interface WorkbookUpdate {
     metadata?: any;
     /** The Workbook settings. */
     settings?: Flatfile.WorkbookConfigSettings;
+    /** The folder to group the workbook in */
+    folder?: string;
 }

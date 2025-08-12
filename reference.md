@@ -6528,6 +6528,449 @@ await client.files.detectHeader({
 </dl>
 </details>
 
+## Flags
+
+<details><summary><code>client.flags.<a href="/src/api/resources/flags/client/Client.ts">create</a>(workbookId, { ...params }) -> Flatfile.FlagResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new flag for the workbook
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.flags.create("us_wb_YOUR_ID", {
+    slug: "important",
+    label: "Important",
+    colorHex: "#0090FF",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workbookId:** `Flatfile.WorkbookId` — The workbook ID to manage flags for
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.CreateFlagRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Flags.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flags.<a href="/src/api/resources/flags/client/Client.ts">list</a>(workbookId) -> Flatfile.FlagResponse[]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets all flags for the workbook
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.flags.list("us_wb_YOUR_ID");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workbookId:** `Flatfile.WorkbookId` — The workbook ID to manage flags for
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Flags.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flags.<a href="/src/api/resources/flags/client/Client.ts">get</a>(workbookId, slug) -> Flatfile.FlagResponse | undefined</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets a specific flag by its slug
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.flags.get("us_wb_YOUR_ID", "important");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workbookId:** `Flatfile.WorkbookId` — The workbook ID to manage flags for
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**slug:** `string` — The flag slug to retrieve
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Flags.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flags.<a href="/src/api/resources/flags/client/Client.ts">update</a>(workbookId, slug, { ...params }) -> Flatfile.FlagResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates an existing flag
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.flags.update("us_wb_YOUR_ID", "important", {
+    label: "Updated Important",
+    colorHex: "#30A46C",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workbookId:** `Flatfile.WorkbookId` — The workbook ID to manage flags for
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**slug:** `string` — The flag slug to update
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.UpdateFlagRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Flags.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flags.<a href="/src/api/resources/flags/client/Client.ts">delete</a>(workbookId, slug) -> Flatfile.Success</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a flag
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.flags.delete("us_wb_YOUR_ID", "important");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workbookId:** `Flatfile.WorkbookId` — The workbook ID to manage flags for
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**slug:** `string` — The flag slug to delete
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Flags.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flags.<a href="/src/api/resources/flags/client/Client.ts">bulkMutate</a>(workbookId, { ...params }) -> Flatfile.BulkMutateFlagsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Performs bulk flag operations on records
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.flags.bulkMutate("us_wb_YOUR_ID", {
+    operation: "apply",
+    slug: "important",
+    flag: {
+        label: "Important",
+        colorHex: "#0090FF",
+    },
+    snapshotLabel: "Before important flag application",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workbookId:** `Flatfile.WorkbookId` — The workbook ID to manage flags for
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.BulkMutateFlagsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Flags.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Foreigndb
 
 <details><summary><code>client.foreigndb.<a href="/src/api/resources/foreigndb/client/Client.ts">restore</a>(workbookId, { ...params }) -> Flatfile.RestoreDatabaseResponse</code></summary>

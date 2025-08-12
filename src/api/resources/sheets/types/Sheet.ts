@@ -104,4 +104,6 @@ export interface Sheet {
     lastPropagatedAt?: Date;
     /** An array of treatments that define the behavior of the sheet. */
     treatments?: Flatfile.SheetTreatments[];
+    /** Collection in which to group the sheet */
+    collection?: string;
 }
