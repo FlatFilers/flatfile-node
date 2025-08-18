@@ -9,6 +9,7 @@ import {
     WriteRecordsResponse,
     WriteStreamingOptions,
 } from "./types";
+import { FlatfileRecord } from "./FlatfileRecord";
 import * as environments from "../../environments";
 import * as errors from "../../errors";
 import * as serializers from "../../serialization";
@@ -121,6 +122,83 @@ export class RecordsV2 {
         } else {
             // Final fallback for browsers without streaming support
             yield* this._fallbackJsonlResponse(response);
+        }
+    }
+
+    /**
+     * Retrieve records from a sheet as FlatfileRecord objects.
+     *
+     * This method fetches all records at once and returns them as an array of
+     * FlatfileRecord objects, which provide a rich API for manipulating record
+     * data including typed getters, validation, error handling, and change tracking.
+     *
+     * @param sheetId - The ID of the sheet to retrieve records from
+     * @param options - Optional request parameters for filtering, pagination, etc.
+     * @param requestOptions - Optional request configuration (headers, timeout, etc.)
+     * @returns Promise that resolves to an array of FlatfileRecord objects
+     *
+     * @example
+     * ```typescript
+     * const records = await recordsV2.get('us_sh_123', {
+     *   fields: ['firstName', 'lastName'],
+     *   pageSize: 1000
+     * });
+     * records.forEach(record => {
+     *   console.log(`Record ID: ${record.id}`);
+     *   console.log(`First Name: ${record.str('firstName')}`);
+     *   console.log(`Last Name: ${record.str('lastName')}`);
+     * });
+     * ```
+     */
+    public async get(
+        sheetId: Flatfile.SheetId,
+        options: GetRecordsRequestOptions = {},
+        requestOptions: FernRecords.RequestOptions = {},
+    ): Promise<FlatfileRecord[]> {
+        const rawRecords = await this.getRaw(sheetId, options, requestOptions);
+        return rawRecords.map(rawRecord => new FlatfileRecord(rawRecord));
+    }
+
+    /**
+     * Stream records from a sheet as FlatfileRecord objects.
+     *
+     * This method provides an async generator that yields FlatfileRecord objects
+     * as they are received from the server. FlatfileRecord objects provide a rich
+     * API for manipulating record data including typed getters, validation, error
+     * handling, and change tracking. This is the most memory-efficient way to
+     * process large datasets while maintaining the full functionality of FlatfileRecord.
+     *
+     * @param sheetId - The ID of the sheet to retrieve records from
+     * @param options - Optional request parameters for filtering, pagination, etc.
+     * @param requestOptions - Optional request configuration (headers, timeout, etc.)
+     * @returns AsyncGenerator that yields FlatfileRecord objects
+     *
+     * @example
+     * ```typescript
+     * for await (const record of recordsV2.getStreaming('us_sh_123', {
+     *   includeTimestamps: true
+     * })) {
+     *   console.log(`Record ID: ${record.id}`);
+     *   console.log(`Updated at: ${record.get('__u')}`);
+     *   
+     *   // Use rich FlatfileRecord API
+     *   if (record.has('email')) {
+     *     console.log(`Email: ${record.str('email')}`);
+     *   }
+     *   
+     *   if (record.hasError()) {
+     *     console.log('Record has validation errors');
+     *   }
+     * }
+     * ```
+     */
+    public async *getStreaming(
+        sheetId: Flatfile.SheetId,
+        options: GetRecordsRequestOptions = {},
+        requestOptions: FernRecords.RequestOptions = {},
+    ): AsyncGenerator<FlatfileRecord, void, unknown> {
+        for await (const rawRecord of this.getRawStreaming(sheetId, options, requestOptions)) {
+            yield new FlatfileRecord(rawRecord);
         }
     }
 
@@ -286,6 +364,255 @@ export class RecordsV2 {
             // If response isn't JSON, return a basic success response
             return { success: true };
         }
+    }
+
+    /**
+     * Write FlatfileRecord objects to a sheet.
+     *
+     * This method takes an array of FlatfileRecord objects and writes them to the specified sheet.
+     * If truncate is true, it writes full record data using toJSON(). If truncate is false (default),
+     * it only writes changesets for dirty records. After successful write, all records are committed
+     * to clear their dirty state.
+     *
+     * @param records - Array of FlatfileRecord objects to write
+     * @param options - Write configuration options
+     * @param requestOptions - Optional request configuration (headers, timeout, etc.)
+     * @returns Promise that resolves to WriteRecordsResponse with operation results
+     *
+     * @example
+     * ```typescript
+     * const records = [
+     *   new FlatfileRecord({ firstName: 'John', lastName: 'Doe' }),
+     *   new FlatfileRecord({ __k: 'us_rc_456', firstName: 'Jane' }) // Update existing
+     * ];
+     * records[0].set('email', 'john@example.com'); // Make changes
+     * 
+     * const result = await recordsV2.write(records, {
+     *   sheetId: 'us_sh_123',
+     *   truncate: false
+     * });
+     * console.log(`Created: ${result.created}, Updated: ${result.updated}`);
+     * ```
+     */
+    public async write(
+        records: FlatfileRecord[],
+        options: WriteRecordsRequestOptions = {},
+        requestOptions: FernRecords.RequestOptions = {},
+    ): Promise<WriteRecordsResponse> {
+        if (records.length === 0) {
+            throw new Error("No records provided to write.");
+        }
+
+        const url = await this._buildUrl(`/v2-alpha/records.jsonl`);
+
+        // Serialize records based on truncate option
+        let jsonlBody: string;
+        if (options.truncate) {
+            // For truncate, write all records as full JSON
+            jsonlBody = records
+                .filter(r => r.id && !r.isDeleted()) // Only include non-deleted records
+                .map(r => {
+                    const json = r.toJSON();
+                    // Ensure sheet ID is set if provided in options
+                    if (options.sheetId && !json.__s) {
+                        json.__s = options.sheetId;
+                    }
+                    return JSON.stringify(json);
+                })
+                .join('\n');
+        } else {
+            // For non-truncate, only write changesets of dirty records
+            const dirtyRecords = records
+                .filter(r => {
+                    // Filter out temporary records that have been deleted
+                    if (r.id?.startsWith('TEMP_') && r.isDeleted()) {
+                        return false;
+                    }
+                    // Only include dirty records
+                    return r.isDirty();
+                });
+
+            if (dirtyRecords.length === 0) {
+                throw new Error("No changes made to the records that would need to be written.");
+            }
+
+            jsonlBody = dirtyRecords
+                .map(r => {
+                    const changeset = r.changeset();
+                    // Ensure sheet ID is set if provided in options
+                    if (options.sheetId && !changeset.__s) {
+                        changeset.__s = options.sheetId;
+                    }
+                    return JSON.stringify(changeset);
+                })
+                .join('\n');
+        }
+
+        // Add options as query parameters, excluding sheetId since it's in the record body
+        const { sheetId: _, ...queryOptions } = options;
+        const queryParams = this._buildQueryParams(queryOptions, false); // Write operation
+        if (queryParams.length > 0) {
+            url.search = queryParams;
+        }
+
+        const headers = await this._prepareHeaders(requestOptions, "application/jsonl");
+
+        // Add sheet ID header if provided in options
+        if (options.sheetId) {
+            headers["X-Sheet-Id"] = options.sheetId;
+        }
+
+        const response = await this._executeRequest(url.toString(), "POST", {
+            body: jsonlBody,
+            contentType: "application/jsonl",
+            headers,
+            requestOptions,
+        });
+
+        // Parse the response
+        const responseBody = await response.text();
+        let result: WriteRecordsResponse;
+        try {
+            result = JSON.parse(responseBody) as WriteRecordsResponse;
+        } catch (error) {
+            // If response isn't JSON, return a basic success response
+            result = { success: true };
+        }
+
+        // Commit all records after successful write to clear dirty state
+        records.forEach(r => r.commit());
+
+        return result;
+    }
+
+    /**
+     * Stream FlatfileRecord objects to a sheet using HTTP body streaming.
+     *
+     * This method accepts an async generator/iterator of FlatfileRecord objects and streams them
+     * directly to the server. Like the write method, it handles truncate vs changeset logic,
+     * but processes records as they stream without loading all data into memory at once.
+     *
+     * @param recordsStream - Async generator/iterator that yields FlatfileRecord objects
+     * @param options - Write configuration options (sheetId, truncate, etc.)
+     * @param requestOptions - Optional request configuration (headers, timeout, etc.)
+     * @returns Promise that resolves to WriteRecordsResponse with operation results
+     *
+     * @example
+     * ```typescript
+     * async function* generateRecords() {
+     *   for (let i = 0; i < 100000; i++) {
+     *     const record = new FlatfileRecord({
+     *       firstName: `User${i}`,
+     *       email: `user${i}@example.com`
+     *     });
+     *     record.set('processed', true);
+     *     yield record;
+     *   }
+     * }
+     *
+     * const result = await recordsV2.writeStreaming(generateRecords(), {
+     *   sheetId: 'us_sh_123',
+     *   truncate: false
+     * });
+     * ```
+     */
+    public async writeStreaming(
+        recordsStream: AsyncIterable<FlatfileRecord>,
+        options: WriteStreamingOptions = {},
+        requestOptions: FernRecords.RequestOptions = {},
+    ): Promise<WriteRecordsResponse> {
+        const url = await this._buildUrl(`/v2-alpha/records.jsonl`);
+
+        // Add options as query parameters, excluding sheetId since it's in the record body
+        const { sheetId, ...queryOptions } = options;
+        const queryParams = this._buildQueryParams(queryOptions, false); // Write operation
+        if (queryParams.length > 0) {
+            url.search = queryParams;
+        }
+
+        // Track records for committing after successful write
+        const processedRecords: FlatfileRecord[] = [];
+        let hasChanges = false;
+
+        // Create ReadableStream that processes FlatfileRecord objects
+        const readableStream = new ReadableStream({
+            async start(controller) {
+                const encoder = new TextEncoder();
+                try {
+                    for await (const record of recordsStream) {
+                        processedRecords.push(record);
+
+                        // Apply the same logic as write() method
+                        let shouldInclude = false;
+                        let jsonlLine: string;
+
+                        if (options.truncate) {
+                            // For truncate, include all non-deleted records
+                            if (record.id && !record.isDeleted()) {
+                                shouldInclude = true;
+                                const json = record.toJSON();
+                                // Ensure sheet ID is set if provided in options
+                                if (sheetId && !json.__s) {
+                                    json.__s = sheetId;
+                                }
+                                jsonlLine = JSON.stringify(json);
+                            }
+                        } else {
+                            // For non-truncate, only include dirty records (exclude temp deleted records)
+                            if (!(record.id?.startsWith('TEMP_') && record.isDeleted()) && record.isDirty()) {
+                                shouldInclude = true;
+                                const changeset = record.changeset();
+                                // Ensure sheet ID is set if provided in options
+                                if (sheetId && !changeset.__s) {
+                                    changeset.__s = sheetId;
+                                }
+                                jsonlLine = JSON.stringify(changeset);
+                            }
+                        }
+
+                        if (shouldInclude) {
+                            hasChanges = true;
+                            controller.enqueue(encoder.encode(jsonlLine! + '\n'));
+                        }
+                    }
+
+                    // Check if we have any changes to write (only for non-truncate mode)
+                    if (!options.truncate && !hasChanges) {
+                        controller.error(new Error("No changes made to the records that would need to be written."));
+                        return;
+                    }
+
+                    controller.close();
+                } catch (error) {
+                    controller.error(error);
+                }
+            },
+        });
+
+        const headers = await this._prepareHeaders(requestOptions, "application/jsonl");
+
+        // Execute the streaming request
+        const response = await this._executeRequest(url.toString(), "POST", {
+            body: readableStream as any, // TypeScript might complain about ReadableStream
+            contentType: "application/jsonl",
+            headers,
+            requestOptions,
+        });
+
+        // Parse the response
+        const responseBody = await response.text();
+        let result: WriteRecordsResponse;
+        try {
+            result = JSON.parse(responseBody) as WriteRecordsResponse;
+        } catch (error) {
+            // If response isn't JSON, return a basic success response
+            result = { success: true };
+        }
+
+        // Commit all processed records after successful write to clear dirty state
+        processedRecords.forEach(r => r.commit());
+
+        return result;
     }
 
     /**
@@ -610,3 +937,5 @@ export class RecordsV2 {
         }
     }
 }
+
+export { FlatfileRecord };
