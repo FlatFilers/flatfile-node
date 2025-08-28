@@ -8,6 +8,7 @@ import { Accounts } from "./api/resources/accounts/client/Client";
 import { Actions } from "./api/resources/actions/client/Client";
 import { AgentExports } from "./api/resources/agentExports/client/Client";
 import { Agents } from "./api/resources/agents/client/Client";
+import { Analysis } from "./api/resources/analysis/client/Client";
 import { Apps } from "./api/resources/apps/client/Client";
 import { Assistant } from "./api/resources/assistant/client/Client";
 import { Auth } from "./api/resources/auth/client/Client";
@@ -74,6 +75,7 @@ export class FlatfileClient {
     protected _actions: Actions | undefined;
     protected _agentExports: AgentExports | undefined;
     protected _agents: Agents | undefined;
+    protected _analysis: Analysis | undefined;
     protected _apps: Apps | undefined;
     protected _assistant: Assistant | undefined;
     protected _auth: Auth | undefined;
@@ -126,6 +128,10 @@ export class FlatfileClient {
 
     public get agents(): Agents {
         return (this._agents ??= new Agents(this._options));
+    }
+
+    public get analysis(): Analysis {
+        return (this._analysis ??= new Analysis(this._options));
     }
 
     public get apps(): Apps {

@@ -191,8 +191,8 @@ export class Records {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -367,8 +367,8 @@ export class Records {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -508,8 +508,8 @@ export class Records {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -639,8 +639,8 @@ export class Records {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -766,8 +766,8 @@ export class Records {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -914,8 +914,8 @@ export class Records {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -959,6 +959,152 @@ export class Records {
             case "timeout":
                 throw new errors.FlatfileTimeoutError(
                     "Timeout exceeded when calling PUT /sheets/{sheetId}/find-replace.",
+                );
+            case "unknown":
+                throw new errors.FlatfileError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * Updates multiple records at once with the same field values based on filter criteria. This is similar to a SQL UPDATE statement where you can update specific fields for all records matching certain conditions.
+     *
+     * @param {Flatfile.SheetId} sheetId - ID of sheet
+     * @param {Flatfile.BulkUpdateRecordRequest} request
+     * @param {Records.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.records.bulkUpdate("us_sh_YOUR_ID", {
+     *         fieldUpdates: {
+     *             "status": {
+     *                 value: "completed"
+     *             },
+     *             "processedAt": {
+     *                 value: "2023-11-20T16:59:40.286Z"
+     *             }
+     *         }
+     *     })
+     */
+    public bulkUpdate(
+        sheetId: Flatfile.SheetId,
+        request: Flatfile.BulkUpdateRecordRequest,
+        requestOptions?: Records.RequestOptions,
+    ): core.HttpResponsePromise<Flatfile.VersionResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__bulkUpdate(sheetId, request, requestOptions));
+    }
+
+    private async __bulkUpdate(
+        sheetId: Flatfile.SheetId,
+        request: Flatfile.BulkUpdateRecordRequest,
+        requestOptions?: Records.RequestOptions,
+    ): Promise<core.WithRawResponse<Flatfile.VersionResponse>> {
+        const { filter, filterField, searchValue, searchField, sortField, sortDirection, ids, q, silent, ..._body } =
+            request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (filter != null) {
+            _queryParams["filter"] = serializers.Filter.jsonOrThrow(filter, { unrecognizedObjectKeys: "strip" });
+        }
+
+        if (filterField != null) {
+            _queryParams["filterField"] = filterField;
+        }
+
+        if (searchValue != null) {
+            _queryParams["searchValue"] = searchValue;
+        }
+
+        if (searchField != null) {
+            _queryParams["searchField"] = searchField;
+        }
+
+        if (sortField != null) {
+            _queryParams["sortField"] = sortField;
+        }
+
+        if (sortDirection != null) {
+            _queryParams["sortDirection"] = serializers.SortDirection.jsonOrThrow(sortDirection, {
+                unrecognizedObjectKeys: "strip",
+            });
+        }
+
+        if (ids != null) {
+            if (Array.isArray(ids)) {
+                _queryParams["ids"] = ids.map((item) =>
+                    serializers.RecordId.jsonOrThrow(item, { unrecognizedObjectKeys: "strip" }),
+                );
+            } else {
+                _queryParams["ids"] = ids;
+            }
+        }
+
+        if (q != null) {
+            _queryParams["q"] = q;
+        }
+
+        if (silent != null) {
+            _queryParams["silent"] = silent.toString();
+        }
+
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.FlatfileEnvironment.Production,
+                `/sheets/${encodeURIComponent(serializers.SheetId.jsonOrThrow(sheetId))}/records/bulk-update`,
+            ),
+            method: "PATCH",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@flatfile/api",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            queryParameters: _queryParams,
+            requestType: "json",
+            body: serializers.BulkUpdateRecordRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.VersionResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.FlatfileError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.FlatfileError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.FlatfileTimeoutError(
+                    "Timeout exceeded when calling PATCH /sheets/{sheetId}/records/bulk-update.",
                 );
             case "unknown":
                 throw new errors.FlatfileError({

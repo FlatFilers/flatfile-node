@@ -79,8 +79,8 @@ export class Guests {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -177,8 +177,8 @@ export class Guests {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -261,8 +261,8 @@ export class Guests {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -312,25 +312,39 @@ export class Guests {
     }
 
     /**
-     * Deletes a single guest
+     * Deletes a single guest or removes guest access from a specific space
      *
      * @param {Flatfile.GuestId} guestId - ID of guest to return
+     * @param {Flatfile.DeleteGuestRequest} request
      * @param {Guests.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.guests.delete("us_g_YOUR_ID")
+     *
+     * @example
+     *     await client.guests.delete("us_g_YOUR_ID", {
+     *         spaceId: "us_sp_YOUR_ID"
+     *     })
      */
     public delete(
         guestId: Flatfile.GuestId,
+        request: Flatfile.DeleteGuestRequest = {},
         requestOptions?: Guests.RequestOptions,
     ): core.HttpResponsePromise<Flatfile.Success> {
-        return core.HttpResponsePromise.fromPromise(this.__delete(guestId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__delete(guestId, request, requestOptions));
     }
 
     private async __delete(
         guestId: Flatfile.GuestId,
+        request: Flatfile.DeleteGuestRequest = {},
         requestOptions?: Guests.RequestOptions,
     ): Promise<core.WithRawResponse<Flatfile.Success>> {
+        const { spaceId } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (spaceId != null) {
+            _queryParams["spaceId"] = spaceId;
+        }
+
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -344,13 +358,14 @@ export class Guests {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
             contentType: "application/json",
+            queryParameters: _queryParams,
             requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -433,8 +448,8 @@ export class Guests {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -526,8 +541,8 @@ export class Guests {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -614,8 +629,8 @@ export class Guests {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -743,8 +758,8 @@ export class Guests {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -870,8 +885,8 @@ export class Guests {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -996,8 +1011,8 @@ export class Guests {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

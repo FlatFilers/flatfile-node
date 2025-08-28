@@ -78,8 +78,8 @@ export class Foreigndb {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -155,7 +155,7 @@ export class Foreigndb {
     }
 
     /**
-     * Get database user credentials
+     * Configure the workbook
      *
      * @param {string} workbookId - the workbook id
      * @param {Foreigndb.RequestOptions} requestOptions - Request-specific configuration.
@@ -164,34 +164,34 @@ export class Foreigndb {
      * @throws {@link Flatfile.NotFoundError}
      *
      * @example
-     *     await client.foreigndb.getDatabaseUser("workbookId")
+     *     await client.foreigndb.configureWorkbook("workbookId")
      */
-    public getDatabaseUser(
+    public configureWorkbook(
         workbookId: string,
         requestOptions?: Foreigndb.RequestOptions,
-    ): core.HttpResponsePromise<Flatfile.GetDatabaseUserResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__getDatabaseUser(workbookId, requestOptions));
+    ): core.HttpResponsePromise<Flatfile.Success> {
+        return core.HttpResponsePromise.fromPromise(this.__configureWorkbook(workbookId, requestOptions));
     }
 
-    private async __getDatabaseUser(
+    private async __configureWorkbook(
         workbookId: string,
         requestOptions?: Foreigndb.RequestOptions,
-    ): Promise<core.WithRawResponse<Flatfile.GetDatabaseUserResponse>> {
+    ): Promise<core.WithRawResponse<Flatfile.Success>> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.FlatfileEnvironment.Production,
-                `/foreigndb/${encodeURIComponent(workbookId)}/user`,
+                `/foreigndb/${encodeURIComponent(workbookId)}/configure`,
             ),
-            method: "GET",
+            method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -204,7 +204,7 @@ export class Foreigndb {
         });
         if (_response.ok) {
             return {
-                data: serializers.GetDatabaseUserResponse.parseOrThrow(_response.body, {
+                data: serializers.Success.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -257,7 +257,7 @@ export class Foreigndb {
                 });
             case "timeout":
                 throw new errors.FlatfileTimeoutError(
-                    "Timeout exceeded when calling GET /foreigndb/{workbookId}/user.",
+                    "Timeout exceeded when calling POST /foreigndb/{workbookId}/configure.",
                 );
             case "unknown":
                 throw new errors.FlatfileError({
@@ -303,8 +303,8 @@ export class Foreigndb {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -414,8 +414,8 @@ export class Foreigndb {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -530,8 +530,8 @@ export class Foreigndb {
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
-                "X-Fern-SDK-Version": "1.22.0",
-                "User-Agent": "@flatfile/api/1.22.0",
+                "X-Fern-SDK-Version": "1.23.0",
+                "User-Agent": "@flatfile/api/1.23.0",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

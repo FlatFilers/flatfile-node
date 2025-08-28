@@ -10,6 +10,11 @@ import * as Flatfile from "../../../index";
  *         type: "id",
  *         id: "us_jb_YOUR_ID"
  *     }
+ *
+ * @example
+ *     {
+ *         type: "clearFilters"
+ *     }
  */
 export type JobOutcomeNext =
     | Flatfile.JobOutcomeNext.Id
@@ -19,7 +24,8 @@ export type JobOutcomeNext =
     | Flatfile.JobOutcomeNext.Wait
     | Flatfile.JobOutcomeNext.Snapshot
     | Flatfile.JobOutcomeNext.Retry
-    | Flatfile.JobOutcomeNext.View;
+    | Flatfile.JobOutcomeNext.View
+    | Flatfile.JobOutcomeNext.ClearFilters;
 
 export namespace JobOutcomeNext {
     export interface Id extends Flatfile.JobOutcomeNextId {
@@ -52,5 +58,9 @@ export namespace JobOutcomeNext {
 
     export interface View extends Flatfile.JobOutcomeNextView {
         type: "view";
+    }
+
+    export interface ClearFilters extends Flatfile.JobOutcomeNextClearFilters {
+        type: "clearFilters";
     }
 }

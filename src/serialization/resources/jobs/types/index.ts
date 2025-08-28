@@ -52,6 +52,7 @@ export * from "./JobOutcomeNext";
 export * from "./JobOutcomeNextId";
 export * from "./JobOutcomeNextUrl";
 export * from "./JobOutcomeNextDownload";
+export * from "./JobOutcomeNextClearFilters";
 export * from "./JobOutcomeNextFileObject";
 export * from "./JobOutcomeNextFiles";
 export * from "./JobOutcomeNextWait";

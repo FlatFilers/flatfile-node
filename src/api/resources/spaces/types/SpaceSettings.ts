@@ -14,4 +14,6 @@ export interface SpaceSettings {
     filesMappedAfterJob?: string;
     /** The extraction options for CSV files. */
     extractionOptions?: Flatfile.HeaderDetectionOptions;
+    /** List of action names to omit from the space interface (e.g., 'file.import', 'records.delete', 'records.download') */
+    omitActions?: string[];
 }

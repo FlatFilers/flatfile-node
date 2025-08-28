@@ -4,6 +4,7 @@ export * from "./AgentExportId";
 export * from "./AgentVersionId";
 export * from "./AccountId";
 export * from "./ActorId";
+export * from "./AnalysisId";
 export * from "./AppId";
 export * from "./CalculationId";
 export * from "./CanvasId";

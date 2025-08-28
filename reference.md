@@ -1363,6 +1363,426 @@ await client.agents.delete("us_ag_YOUR_ID");
 </dl>
 </details>
 
+## Analysis
+
+<details><summary><code>client.analysis.<a href="/src/api/resources/analysis/client/Client.ts">list</a>({ ...params }) -> Flatfile.AnalysisResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.analysis.list({
+    sheetId: "sheetId",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.ListAnalysisRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Analysis.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.analysis.<a href="/src/api/resources/analysis/client/Client.ts">create</a>({ ...params }) -> Flatfile.AnalysisResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.analysis.create({
+    sheetId: "sheetId",
+    environmentId: "environmentId",
+    spaceId: "spaceId",
+    workbookId: "workbookId",
+    analyses: [
+        {
+            field: "field",
+            result: {
+                key: "value",
+            },
+        },
+        {
+            field: "field",
+            result: {
+                key: "value",
+            },
+        },
+    ],
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.CreateAnalysisRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Analysis.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.analysis.<a href="/src/api/resources/analysis/client/Client.ts">get</a>(analysisId, { ...params }) -> Flatfile.AnalysisData</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.analysis.get("analysisId", {
+    sheetId: "sheetId",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**analysisId:** `Flatfile.AnalysisId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.GetAnalysisRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Analysis.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.analysis.<a href="/src/api/resources/analysis/client/Client.ts">delete</a>(analysisId, { ...params }) -> Flatfile.Success</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.analysis.delete("analysisId", {
+    sheetId: "sheetId",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**analysisId:** `Flatfile.AnalysisId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.DeleteAnalysisRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Analysis.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.analysis.<a href="/src/api/resources/analysis/client/Client.ts">deleteBySheet</a>({ ...params }) -> Flatfile.DeleteAnalysesResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.analysis.deleteBySheet({
+    sheetId: "sheetId",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.DeleteAnalysesBySheetRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Analysis.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.analysis.<a href="/src/api/resources/analysis/client/Client.ts">updateSuggestion</a>(analysisId, suggestionId, { ...params }) -> Flatfile.Success</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.analysis.updateSuggestion("analysisId", "suggestionId", {
+    sheetId: "sheetId",
+    suggestion: {
+        key: "value",
+    },
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**analysisId:** `Flatfile.AnalysisId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**suggestionId:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.UpdateSuggestionRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Analysis.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.analysis.<a href="/src/api/resources/analysis/client/Client.ts">deleteSuggestion</a>(analysisId, suggestionId, { ...params }) -> Flatfile.Success</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.analysis.deleteSuggestion("analysisId", "suggestionId", {
+    sheetId: "sheetId",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**analysisId:** `Flatfile.AnalysisId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**suggestionId:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.DeleteSuggestionRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Analysis.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Apps
 
 <details><summary><code>client.apps.<a href="/src/api/resources/apps/client/Client.ts">list</a>() -> Flatfile.AppsResponse</code></summary>
@@ -7046,7 +7466,7 @@ await client.foreigndb.restore("workbookId", {
 </dl>
 </details>
 
-<details><summary><code>client.foreigndb.<a href="/src/api/resources/foreigndb/client/Client.ts">getDatabaseUser</a>(workbookId) -> Flatfile.GetDatabaseUserResponse</code></summary>
+<details><summary><code>client.foreigndb.<a href="/src/api/resources/foreigndb/client/Client.ts">configureWorkbook</a>(workbookId) -> Flatfile.Success</code></summary>
 <dl>
 <dd>
 
@@ -7058,7 +7478,7 @@ await client.foreigndb.restore("workbookId", {
 <dl>
 <dd>
 
-Get database user credentials
+Configure the workbook
 
 </dd>
 </dl>
@@ -7074,7 +7494,7 @@ Get database user credentials
 <dd>
 
 ```typescript
-await client.foreigndb.getDatabaseUser("workbookId");
+await client.foreigndb.configureWorkbook("workbookId");
 ```
 
 </dd>
@@ -7523,7 +7943,7 @@ await client.guests.get("us_g_YOUR_ID");
 </dl>
 </details>
 
-<details><summary><code>client.guests.<a href="/src/api/resources/guests/client/Client.ts">delete</a>(guestId) -> Flatfile.Success</code></summary>
+<details><summary><code>client.guests.<a href="/src/api/resources/guests/client/Client.ts">delete</a>(guestId, { ...params }) -> Flatfile.Success</code></summary>
 <dl>
 <dd>
 
@@ -7535,7 +7955,7 @@ await client.guests.get("us_g_YOUR_ID");
 <dl>
 <dd>
 
-Deletes a single guest
+Deletes a single guest or removes guest access from a specific space
 
 </dd>
 </dl>
@@ -7568,6 +7988,14 @@ await client.guests.delete("us_g_YOUR_ID");
 <dd>
 
 **guestId:** `Flatfile.GuestId` — ID of guest to return
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.DeleteGuestRequest`
 
 </dd>
 </dl>
@@ -11715,6 +12143,86 @@ await client.records.findAndReplace("us_sh_YOUR_ID", {
 <dd>
 
 **request:** `Flatfile.FindAndReplaceRecordRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Records.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.records.<a href="/src/api/resources/records/client/Client.ts">bulkUpdate</a>(sheetId, { ...params }) -> Flatfile.VersionResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates multiple records at once with the same field values based on filter criteria. This is similar to a SQL UPDATE statement where you can update specific fields for all records matching certain conditions.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.records.bulkUpdate("us_sh_YOUR_ID", {
+    fieldUpdates: {
+        status: {
+            value: "completed",
+        },
+        processedAt: {
+            value: "2023-11-20T16:59:40.286Z",
+        },
+    },
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sheetId:** `Flatfile.SheetId` — ID of sheet
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Flatfile.BulkUpdateRecordRequest`
 
 </dd>
 </dl>
