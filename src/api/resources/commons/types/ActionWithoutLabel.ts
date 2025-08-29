@@ -43,4 +43,10 @@ export interface ActionWithoutLabel {
     lastPropagatedAt?: Date;
     /** The time this action was deleted */
     deletedAt?: Date;
+    /** When enabled, shows dynamic confirmation messages based on record validation status instead of the static description */
+    invalidConditionalMessaging?: boolean;
+    /** Custom message to show when all records are valid (only used when invalidConditionalMessaging is true) */
+    validRecordsMessage?: string;
+    /** Custom message to show when there are invalid records (only used when invalidConditionalMessaging is true) */
+    invalidRecordsMessage?: string;
 }

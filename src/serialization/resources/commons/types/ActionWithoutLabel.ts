@@ -40,6 +40,9 @@ export const ActionWithoutLabel: core.serialization.ObjectSchema<
     createdFrom: ActionId.optional(),
     lastPropagatedAt: core.serialization.date().optional(),
     deletedAt: core.serialization.date().optional(),
+    invalidConditionalMessaging: core.serialization.boolean().optional(),
+    validRecordsMessage: core.serialization.string().optional(),
+    invalidRecordsMessage: core.serialization.string().optional(),
 });
 
 export declare namespace ActionWithoutLabel {
@@ -65,5 +68,8 @@ export declare namespace ActionWithoutLabel {
         createdFrom?: ActionId.Raw | null;
         lastPropagatedAt?: string | null;
         deletedAt?: string | null;
+        invalidConditionalMessaging?: boolean | null;
+        validRecordsMessage?: string | null;
+        invalidRecordsMessage?: string | null;
     }
 }
