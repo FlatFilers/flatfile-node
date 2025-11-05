@@ -14,6 +14,7 @@ export const SpaceSettings: core.serialization.ObjectSchema<serializers.SpaceSet
         filesMappedAfterJob: core.serialization.string().optional(),
         extractionOptions: HeaderDetectionOptions.optional(),
         omitActions: core.serialization.list(core.serialization.string()).optional(),
+        omitRowSelectionToolbar: core.serialization.boolean().optional(),
     });
 
 export declare namespace SpaceSettings {
@@ -22,5 +23,6 @@ export declare namespace SpaceSettings {
         filesMappedAfterJob?: string | null;
         extractionOptions?: HeaderDetectionOptions.Raw | null;
         omitActions?: string[] | null;
+        omitRowSelectionToolbar?: boolean | null;
     }
 }

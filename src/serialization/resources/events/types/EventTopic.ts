@@ -26,6 +26,7 @@ export const EventTopic: core.serialization.Schema<serializers.EventTopic.Raw, F
         "workbook:updated",
         "workbook:deleted",
         "workbook:expired",
+        "workbook:thawed",
         "flag:created",
         "flag:updated",
         "flag:deleted",
@@ -111,6 +112,7 @@ export declare namespace EventTopic {
         | "workbook:updated"
         | "workbook:deleted"
         | "workbook:expired"
+        | "workbook:thawed"
         | "flag:created"
         | "flag:updated"
         | "flag:deleted"

@@ -12,11 +12,13 @@ export const JobOutcomeNextUrl: core.serialization.ObjectSchema<
 > = core.serialization.object({
     url: core.serialization.string(),
     label: core.serialization.string().optional(),
+    replace: core.serialization.boolean().optional(),
 });
 
 export declare namespace JobOutcomeNextUrl {
     export interface Raw {
         url: string;
         label?: string | null;
+        replace?: boolean | null;
     }
 }

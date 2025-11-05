@@ -16,4 +16,6 @@ export interface SpaceSettings {
     extractionOptions?: Flatfile.HeaderDetectionOptions;
     /** List of action names to omit from the space interface (e.g., 'file.import', 'records.delete', 'records.download') */
     omitActions?: string[];
+    /** Whether to hide the floating toolbar at the bottom that appears when rows are selected */
+    omitRowSelectionToolbar?: boolean;
 }

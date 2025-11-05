@@ -27,6 +27,7 @@ export type EventTopic =
     | "workbook:updated"
     | "workbook:deleted"
     | "workbook:expired"
+    | "workbook:thawed"
     | "flag:created"
     | "flag:updated"
     | "flag:deleted"
@@ -109,6 +110,7 @@ export const EventTopic = {
     WorkbookUpdated: "workbook:updated",
     WorkbookDeleted: "workbook:deleted",
     WorkbookExpired: "workbook:expired",
+    WorkbookThawed: "workbook:thawed",
     FlagCreated: "flag:created",
     FlagUpdated: "flag:updated",
     FlagDeleted: "flag:deleted",

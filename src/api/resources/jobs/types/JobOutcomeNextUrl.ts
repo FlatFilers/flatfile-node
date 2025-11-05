@@ -5,4 +5,6 @@
 export interface JobOutcomeNextUrl {
     url: string;
     label?: string;
+    /** Whether to replace the current tab or iframe when navigating to the url. Defaults to false. */
+    replace?: boolean;
 }
