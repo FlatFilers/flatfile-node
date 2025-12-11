@@ -29,7 +29,7 @@ export class FlatfileClient extends FernClient {
         });
     }
 
-    protected declare _records: Records | undefined;
+    declare protected _records: Records | undefined;
 
     public override get records(): Records {
         return (this._records ??= new Records(this._options));
