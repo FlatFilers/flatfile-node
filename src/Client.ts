@@ -53,8 +53,6 @@ export declare namespace FlatfileClient {
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Disable-Hooks header */
         xDisableHooks?: "true";
-        /** Override the Keep-Alive header */
-        keepAlive?: "timeout=200";
         fetcher?: core.FetchFunction;
     }
 
@@ -67,8 +65,6 @@ export declare namespace FlatfileClient {
         abortSignal?: AbortSignal;
         /** Override the X-Disable-Hooks header */
         xDisableHooks?: "true";
-        /** Override the Keep-Alive header */
-        keepAlive?: "timeout=200";
         /** Additional headers to include in the request. */
         headers?: Record<string, string>;
     }

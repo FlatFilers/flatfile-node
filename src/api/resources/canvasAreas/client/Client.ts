@@ -17,8 +17,6 @@ export declare namespace CanvasAreas {
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Disable-Hooks header */
         xDisableHooks?: "true";
-        /** Override the Keep-Alive header */
-        keepAlive?: "timeout=200";
         fetcher?: core.FetchFunction;
     }
 
@@ -31,8 +29,6 @@ export declare namespace CanvasAreas {
         abortSignal?: AbortSignal;
         /** Override the X-Disable-Hooks header */
         xDisableHooks?: "true";
-        /** Override the Keep-Alive header */
-        keepAlive?: "timeout=200";
         /** Additional headers to include in the request. */
         headers?: Record<string, string>;
     }
@@ -100,7 +96,6 @@ export class CanvasAreas {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
-                "Keep-Alive": requestOptions?.keepAlive ?? this._options?.keepAlive ?? "timeout=200",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
                 "X-Fern-SDK-Version": "1.23.1",
@@ -205,7 +200,6 @@ export class CanvasAreas {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
-                "Keep-Alive": requestOptions?.keepAlive ?? this._options?.keepAlive ?? "timeout=200",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
                 "X-Fern-SDK-Version": "1.23.1",
@@ -307,7 +301,6 @@ export class CanvasAreas {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
-                "Keep-Alive": requestOptions?.keepAlive ?? this._options?.keepAlive ?? "timeout=200",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
                 "X-Fern-SDK-Version": "1.23.1",
@@ -424,7 +417,6 @@ export class CanvasAreas {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
-                "Keep-Alive": requestOptions?.keepAlive ?? this._options?.keepAlive ?? "timeout=200",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
                 "X-Fern-SDK-Version": "1.23.1",
@@ -539,7 +531,6 @@ export class CanvasAreas {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Disable-Hooks": requestOptions?.xDisableHooks ?? this._options?.xDisableHooks ?? "true",
-                "Keep-Alive": requestOptions?.keepAlive ?? this._options?.keepAlive ?? "timeout=200",
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@flatfile/api",
                 "X-Fern-SDK-Version": "1.23.1",
